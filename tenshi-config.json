@@ -19,15 +19,15 @@
         "FAIL_LOGIN_MAX_NUMBER": 3,
         "DEFAULT_LANGUAGE" : "en",
         "FORMAT_DATE" : "es-ES",
-        "CUSTOMER_REGULAR_ROLE" : "94db2848-3df7-4593-b90d-1615a700bddd"
+        "CUSTOMER_REGULAR_ROLE" : null
     },
     "SUPER_ADMIN":{
-        "USER_EMAIL":"tenshitest1@gmail.com",
-        "PASSWORD":"Tenshitest1*",
-        "FIRST_NAME":"Tenshi",
-        "LAST_NAME":"Test",
+        "USER_EMAIL":"vitalinkcr2@gmail.com",
+        "PASSWORD":"VitalinkCR2",
+        "FIRST_NAME":"Vitalink",
+        "LAST_NAME":"",
         "USERNAME":"tenshitest1",
-        "ROLE_CODE":"13ebc7f8-6fae-404b-8f9b-2267a3348ca4"
+        "ROLE_CODE":"SUPER_ADMIN"
     },
     "DB": {
         "TYPE": "mariadb",
@@ -95,9 +95,9 @@
     },
     "EMAIL" : {
         "SERVICE" : "gmail",
-        "AUTH_USER": "tenshitest1@gmail.com",
+        "AUTH_USER": "vitalinkcr2@gmail.com",
         "AUTH_PASSWORD": "xnqitxldphiymoov",
-        "EMAIL_FROM": "tenshitest1@gmail.com"
+        "EMAIL_FROM": "vitalinkcr2@gmail.com"
     },
     "TEST" : {
         "JWT_TEST": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjM2ZDBhZTQ5LWUzMTMtNDUwZC1iNjE3LTcyYjNjZjg2M2ZiZSIsImVtYWlsIjoidGVuc2hpdGVzdDFAZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzMxMjc5NDQ2LCJleHAiOjE3MzEzMDk0NDZ9.SsJ2tIyXCTeu1a3_WMC-DVmxWp0bU-lz7wFvUmkn2xw",
