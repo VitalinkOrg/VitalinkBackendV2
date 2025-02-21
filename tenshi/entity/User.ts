@@ -38,6 +38,9 @@ export class User {
   @Column({ type: "varchar", length: 3, nullable: true, default: null })
   country_iso_code: string | null;
 
+  @Column({ type: "varchar", length: 250, nullable: true, default: null })
+  address: string | null;
+
   @Column({ type: "varchar", length: 200, nullable: true, default: null })
   city_name: string | null;
 
@@ -82,15 +85,6 @@ export class User {
 
   @Column({ type: "varchar", length: 45, nullable: true, default: null })
   login_ip_address: string | null;
-
-  @Column({ type: "tinyint", default: 0 })
-  two_factor_enabled: boolean;
-
-  @Column({ type: "enum", enum: ["SMS", "EMAIL", "TOTP", null], nullable: true, default: null })
-  two_factor_type: "SMS" | "EMAIL" | "TOTP" | null;
-
-  @Column({ type: "varchar", length: 250, nullable: true, default: null })
-  two_factor_secret: string | null;
 
   @Column({ type: "datetime", default: () => "CURRENT_TIMESTAMP" })
   created_at: Date;

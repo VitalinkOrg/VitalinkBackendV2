@@ -6,6 +6,7 @@ import {  UserDTO, AuthController,
      regexValidationRecoverUserAndPassList, requiredBodyRecoverUserAndPassList
    } from "@modules/auth/index";
 
+
 class AuthRoutes extends GenericRoutes {
 
 /**

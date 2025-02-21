@@ -34,12 +34,15 @@ export default class AuthController extends GenericController{
 
         //Password encryption
         userBody.password = await hashPassword(userBody.password);
-        userBody.role_code = config.SERVER.CUSTOMER_REGULAR_ROLE;
 
+        if(config.SERVER.CUSTOMER_REGULAR_ROLE != null){
+            userBody.role_code = config.SERVER.CUSTOMER_REGULAR_ROLE;
+        }
+        
         const jwtObj : JWTObject = {
             id: 0,
             email: userBody!.email,
-            role: config.SERVER.CUSTOMER_REGULAR_ROLE
+            role: userBody.role_code
         }
         
         const registerToken = JWTService.generateRegisterToken(jwtObj); 

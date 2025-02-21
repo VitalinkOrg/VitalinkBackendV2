@@ -2,8 +2,8 @@
   "roles": [
     {
       "id": 1,
-      "code": "13ebc7f8-6fae-404b-8f9b-2267a3348ca4",
-      "name": "Administrator",
+      "code": "SUPER_ADMIN",
+      "name": "Super Admin",
       "description": "Administrator role with full access to all functionalities.",
       "modules": [
         {
@@ -95,8 +95,8 @@
     },
     {
       "id": 2,
-      "code": "d4218228-306b-4aba-a282-6702242c2107",
-      "name": "Analyst",
+      "code": "SUPPLIER",
+      "name": "Supplier",
       "description": "Analyst role with access to analytical tools and reporting functionalities.",
       "modules": [
         {
@@ -119,8 +119,29 @@
     },
     {
       "id": 3,
-      "code": "94db2848-3df7-4593-b90d-1615a700bddd",
+      "code": "CUSTOMER",
       "name": "Customer",
+      "description": "Customer role with access to customer-specific functionalities.",
+      "modules": [
+        {
+          "name": "DOCUMENT",
+          "function_list": [
+            "GET_BY_ID",
+            "GET_ALL"
+          ]
+        }
+      ],
+      "screens": [
+        {
+          "name": "PRODUCTS",
+          "function_list": []
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "code": "COOPERATIVE",
+      "name": "Cooperative",
       "description": "Customer role with access to customer-specific functionalities.",
       "modules": [
         {
