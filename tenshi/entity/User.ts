@@ -1,5 +1,6 @@
 // src/entity/User.ts
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne } from "typeorm";
+import { UnitDynamicCentral } from "./UnitDynamicCentral";
 @Entity("users")
 export class User {
   @PrimaryGeneratedColumn("uuid")
@@ -7,6 +8,10 @@ export class User {
 
   @Column({ type: "int", unsigned: true, nullable: true })
   card_id: number | null;
+
+  @ManyToOne(() => UnitDynamicCentral)
+  @JoinColumn({ name: "supplier_type", referencedColumnName: "code" })
+  supplier_type: UnitDynamicCentral;
 
   @Column({ type: "varchar", length: 250 })
   first_name: string;
