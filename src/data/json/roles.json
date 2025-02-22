@@ -4,6 +4,7 @@
       "id": 1,
       "code": "SUPER_ADMIN",
       "name": "Super Admin",
+      "is_public": false,
       "description": "Administrator role with full access to all functionalities.",
       "modules": [
         {
@@ -97,6 +98,7 @@
       "id": 2,
       "code": "SUPPLIER",
       "name": "Supplier",
+      "is_public": false,
       "description": "Analyst role with access to analytical tools and reporting functionalities.",
       "modules": [
         {
@@ -121,6 +123,7 @@
       "id": 3,
       "code": "CUSTOMER",
       "name": "Customer",
+      "is_public": true,
       "description": "Customer role with access to customer-specific functionalities.",
       "modules": [
         {
@@ -140,8 +143,9 @@
     },
     {
       "id": 4,
-      "code": "COOPERATIVE",
-      "name": "Cooperative",
+      "code": "FINANCE_ENTITY",
+      "name": "Finance Entity",
+      "is_public": true,
       "description": "Customer role with access to customer-specific functionalities.",
       "modules": [
         {

@@ -11,6 +11,7 @@ interface Role {
   code: string;
   name: string;
   description: string;
+  is_public: boolean;
   modules: { name: string; function_list: string[] | null }[];
   screens: { name: string; function_list: string[] | null }[];
 }
@@ -148,6 +149,23 @@ export default class RoleRepository {
     // Return the array of screen names.
     return screenNames;
   }
+
+
+
+  
+  public async getRoleByCode(roleCode: string): Promise<Role | null> {
+    // Find the role object with the specified code.
+    const role = this.roles.find(role => role.code === roleCode);
+
+    // If no role is found or the role has no screens, return null.
+    if (!role) {
+      return null;
+    }
+
+    // Return the specific role
+    return role;
+  }
+
 
 
   /**

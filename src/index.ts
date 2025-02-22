@@ -15,7 +15,7 @@ import { Database } from "@TenshiJS/persistance/TypeORMConnection";
 import { User } from '@TenshiJS/entity/User';
 import { Document } from '@entity/Document';
 import { Notification } from '@entity/Notification';
-import { UnitDynamicCentral } from '@entity/UnitDynamicCentral';
+import { UnitDynamicCentral } from '@TenshiJS/entity/UnitDynamicCentral';
 import { UserNotification } from '@entity/UserNotification';
 
 

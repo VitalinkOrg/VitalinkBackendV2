@@ -35,8 +35,22 @@ export default class AuthController extends GenericController{
         //Password encryption
         userBody.password = await hashPassword(userBody.password);
 
+        //if the user have a customer regular code, set it
         if(config.SERVER.CUSTOMER_REGULAR_ROLE != null){
             userBody.role_code = config.SERVER.CUSTOMER_REGULAR_ROLE;
+        }
+
+        //get the role by code
+        const roleRepository : RoleRepository = await RoleRepository.getInstance();
+        const role = await roleRepository.getRoleByCode(userBody.role_code);
+
+        //if the role is null, return error
+        if(role == null){
+            return httpExec.dynamicError(ConstStatusJson.NOT_FOUND, ConstMessagesJson.ROLE_AUTH_ERROR);
+        }
+
+        if(role.is_public == false){
+            return httpExec.dynamicError(ConstStatusJson.NOT_FOUND, ConstMessagesJson.ROLE_AUTH_ERROR); 
         }
         
         const jwtObj : JWTObject = {
