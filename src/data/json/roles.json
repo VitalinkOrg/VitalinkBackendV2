@@ -96,8 +96,8 @@
     },
     {
       "id": 2,
-      "code": "SUPPLIER",
-      "name": "Supplier",
+      "code": "LEGAL_REPRESENTATIVE",
+      "name": "Representante Legal",
       "is_public": false,
       "description": "Analyst role with access to analytical tools and reporting functionalities.",
       "modules": [
@@ -122,7 +122,7 @@
     {
       "id": 3,
       "code": "CUSTOMER",
-      "name": "Customer",
+      "name": "Cliente",
       "is_public": true,
       "description": "Customer role with access to customer-specific functionalities.",
       "modules": [
@@ -144,7 +144,7 @@
     {
       "id": 4,
       "code": "FINANCE_ENTITY",
-      "name": "Finance Entity",
+      "name": "Entidad Financiera",
       "is_public": true,
       "description": "Customer role with access to customer-specific functionalities.",
       "modules": [

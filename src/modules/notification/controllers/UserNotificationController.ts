@@ -54,7 +54,7 @@ export default  class UserNotificationController extends GenericController{
                     const user : User = await repositoryUser.findById(userNotifications.id_user_receive, true);
                     
                     const variables = {
-                        userName: user.first_name + " " + user.last_name,
+                        userName: user.name,
                         emailSubject: notification.subject,
                         emailContent: notification.message
                     };

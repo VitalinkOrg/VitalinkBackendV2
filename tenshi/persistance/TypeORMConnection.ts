@@ -7,6 +7,7 @@ import { User } from "tenshi/entity/User";
 import ConfigManager  from "tenshi/config/ConfigManager";
 import { ConstMessages } from "tenshi/consts/Const";
 import { hashPassword } from "@TenshiJS/utils/encryptionUtils";
+import { UnitDynamicCentral } from "@TenshiJS/entity/UnitDynamicCentral";
 
 export class Database {
 
@@ -52,7 +53,7 @@ export class Database {
         if (entities) {
             Database.initializedEntities = [...new Set([...Database.initializedEntities, ...entities, Log, User])];
         } else if (Database.initializedEntities.length === 0) {
-            Database.initializedEntities = [Log, User];
+            Database.initializedEntities = [Log, User, UnitDynamicCentral];
         }
 
         if (!Database.instance) {
@@ -85,10 +86,10 @@ export class Database {
                     if (!existingUser) {
                         
                         const adminUser = new User();
+                        adminUser.card_id = "777";
                         adminUser.email = config.SUPER_ADMIN.USER_EMAIL;
                         adminUser.password = await hashPassword(config.SUPER_ADMIN.PASSWORD)!;
-                        adminUser.first_name = config.SUPER_ADMIN.FIRST_NAME;
-                        adminUser.last_name = config.SUPER_ADMIN.LAST_NAME;
+                        adminUser.name = config.SUPER_ADMIN.FIRST_NAME;
                         adminUser.user_name = config.SUPER_ADMIN.USERNAME;
                         adminUser.role_code = config.SUPER_ADMIN.ROLE_CODE; 
                         adminUser.is_active_from_email = true;

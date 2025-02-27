@@ -60,8 +60,7 @@ class UdcRoutes extends GenericRoutes{
 
             const requiredBodyList: Array<string> = [
                 req.body.code, 
-                req.body.name, 
-                req.body.value1
+                req.body.name
             ];
 
             const requestHandler : RequestHandler = 

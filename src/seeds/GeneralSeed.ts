@@ -98,31 +98,36 @@ async function runSeed() {
 
     // Payment Methods
     const paymentMethods = [
-        { name: "credit card", code: "CREDIT_CARD", type: "PAYMENT_METHOD" as "PAYMENT_METHOD" },
-        { name: "en consulta", code: "ON_CONSULTATION", type: "PAYMENT_METHOD" as "PAYMENT_METHOD" },
-        { name: "pago por crédito", code: "CREDIT_PAYMENT", type: "PAYMENT_METHOD" as "PAYMENT_METHOD" },
-        { name: "pago dividido", code: "SPLIT_PAYMENT", type: "PAYMENT_METHOD" as "PAYMENT_METHOD" }
+        { name: "Tarjeta de credito", code: "CREDIT_CARD", type: "PAYMENT_METHOD" as "PAYMENT_METHOD" },
+        { name: "En consulta", code: "ON_CONSULTATION", type: "PAYMENT_METHOD" as "PAYMENT_METHOD" },
+        { name: "Pago por crédito", code: "CREDIT_PAYMENT", type: "PAYMENT_METHOD" as "PAYMENT_METHOD" },
+        { name: "Pago dividido", code: "SPLIT_PAYMENT", type: "PAYMENT_METHOD" as "PAYMENT_METHOD" }
     ];
     await udcRepository.upsert(paymentMethods, ["code"]);
 
     // Asking Credit Status
     const askingCreditStatus = [
-        { name: "aprobado", code: "APPROVED", type: "ASKING_CREDIT_STATUS" as "ASKING_CREDIT_STATUS" },
-        { name: "rechazado", code: "REJECTED", type: "ASKING_CREDIT_STATUS" as "ASKING_CREDIT_STATUS" },
-        { name: "aprobado un porcentaje", code: "APPROVED_PERCENTAGE", type: "ASKING_CREDIT_STATUS" as "ASKING_CREDIT_STATUS" }
+        { name: "Aprobado", code: "APPROVED", type: "ASKING_CREDIT_STATUS" as "ASKING_CREDIT_STATUS" },
+        { name: "Rechazado", code: "REJECTED", type: "ASKING_CREDIT_STATUS" as "ASKING_CREDIT_STATUS" },
+        { name: "Aprobado un porcentaje", code: "APPROVED_PERCENTAGE", type: "ASKING_CREDIT_STATUS" as "ASKING_CREDIT_STATUS" }
     ];
     await udcRepository.upsert(askingCreditStatus, ["code"]);
 
-    // Supplier Type
-    const supplierType = [
-        { name: "EXPERIENCE", code: "EXPERIENCE", type: "SUPPLIER_TYPE" as "SUPPLIER_TYPE" },
-        { name: "EDUCATION", code: "EDUCATION", type: "SUPPLIER_TYPE" as "SUPPLIER_TYPE" }
+    const experienceType = [
+        { name: "Experiencia", code: "EXPERIENCE", type: "EXPERIENCE_TYPE" as "EXPERIENCE_TYPE" },
+        { name: "Educacion", code: "EDUCATION", type: "EXPERIENCE_TYPE" as "EXPERIENCE_TYPE" }
     ];
-    await udcRepository.upsert(supplierType, ["code"]);
+    await udcRepository.upsert(experienceType, ["code"]);
 
+    const IDType = [
+        { name: "Cedula Fisica", code: "PHYSICAL_DNI", type: "ID_TYPE" as "ID_TYPE" },
+        { name: "Cedula Juridica", code: "JURIDICAL_DNI", type: "ID_TYPE" as "ID_TYPE" },
+        { name: "Dimex", code: "DIMEX", type: "ID_TYPE" as "ID_TYPE" },
+        { name: "Pasaporte", code: "PASSPORT", type: "ID_TYPE" as "ID_TYPE" },
+    ];
+    await udcRepository.upsert(IDType, ["code"]);
 
-  
-      console.log("General seed done!");
+    console.log("General seed done!");
 }
 
 runSeed().catch((error) => console.error(error));
