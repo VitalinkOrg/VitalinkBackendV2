@@ -6,21 +6,15 @@ export class User {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ type: "int", unsigned: true, nullable: true })
-  card_id: number | null;
+  @Column({ type: "varchar", length: 500})
+  card_id: string;
 
-  @ManyToOne(() => UnitDynamicCentral)
-  @JoinColumn({ name: "supplier_type", referencedColumnName: "code" })
-  supplier_type: UnitDynamicCentral;
+  @ManyToOne(() => UnitDynamicCentral, { eager: true })
+  @JoinColumn({ name: "id_type", referencedColumnName: "code" })
+  id_type: UnitDynamicCentral;
 
-  @Column({ type: "varchar", length: 250 })
-  first_name: string;
-
-  @Column({ type: "varchar", length: 250 })
-  last_name: string;
-
-  @Column({ type: "varchar", length: 500, nullable: true, default: null })
-  bio: string;
+  @Column({ type: "varchar", length: 500 })
+  name: string;
 
   @Column({ type: "varchar", length: 250, unique: true })
   email: string;
@@ -34,13 +28,13 @@ export class User {
   @Column({ type: "varchar", length: 250 })
   password: string;
 
-  @Column({ type: "enum", enum: ["M", "F", "O"], nullable: true })
+  @Column({ type: "enum", enum: ["M", "F", "O"], nullable: true, default: null })
   gender: "M" | "F" | "O" | null;
 
   @Column({ type: "datetime", nullable: true, default: null })
   birth_date: Date | null;
 
-  @Column({ type: "varchar", length: 3, nullable: true, default: null })
+  @Column({ type: "varchar", length: 3, nullable: true, default: "CRC" })
   country_iso_code: string | null;
 
   @Column({ type: "varchar", length: 250, nullable: true, default: null })
@@ -79,7 +73,11 @@ export class User {
   @Column({ type: "decimal", precision: 11, scale: 8, nullable: true, default: null })
   longitude: number | null;
 
-  @Column({ type: "varchar", length: 10, nullable: true, default: "en" })
+  @ManyToOne(() => User, { nullable: true, lazy: true })
+  @JoinColumn({ name: "finance_entity", referencedColumnName: "id" })
+  finance_entity: User | null;
+
+  @Column({ type: "varchar", length: 10, nullable: true, default: "es" })
   language: string | null;
 
   @Column({ type: "varchar", length: 500, nullable: true, default: null })

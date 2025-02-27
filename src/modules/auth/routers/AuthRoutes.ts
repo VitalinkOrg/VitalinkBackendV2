@@ -25,6 +25,7 @@ protected initializeRoutes() {
   
 
    this.router.post(`${this.getRouterName()}/register`, async (req: Request, res: Response) => {
+
        const requestHandler: RequestHandler = 
        new RequestHandlerBuilder(res, req)
            .setAdapter(new UserDTO(req))

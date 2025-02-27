@@ -36,7 +36,7 @@ export default  class EmailController extends GenericController{
                 if (user != undefined && user != null) {
                     // Prepare the email variables
                     const variables = {
-                        userName: user.first_name + " " + user.last_name,
+                        userName: user.name,
                         emailSubject: emailStructure.subject,
                         emailContent: emailStructure.body
                     };
@@ -107,7 +107,7 @@ export default  class EmailController extends GenericController{
                     // Iterate over each user and send email
                     users.forEach(async (user) => {
                         const variables = {
-                            userName: user.first_name + " " + user.last_name,
+                            userName: user.name,
                             emailSubject: emailStructure.subject,
                             emailContent: emailStructure.body
                         };

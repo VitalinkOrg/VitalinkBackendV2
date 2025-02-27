@@ -256,7 +256,7 @@ async activeRegisterUser(reqHandler: RequestHandler){
              //IS DEBUGGING send the confiramtion to mail from backend
              if(config.SERVER.IS_DEBUGGING){
                 const variables = {
-                    userName: user.first_name + " " + user.last_name,
+                    userName: user.name,
                     loginUrl: config.COMPANY.LOGIN_URL
                 };
                 const htmlBody = await getEmailTemplate(ConstTemplate.ACTIVE_ACCOUNT_PAGE, user.language, variables);
@@ -300,7 +300,7 @@ async recoverUserByEmail(reqHandler: RequestHandler){
             const recoverEmailToken = JWTService.generateRegisterToken(jwtObj); 
 
             const variables = {
-                userName: user.first_name + " " + user.last_name,
+                userName: user.name,
                 recoverLink: config.COMPANY.BACKEND_HOST + ConstUrls.ACTIVE_USER + recoverEmailToken
             };
             const htmlBody = await getEmailTemplate(ConstTemplate.RECOVER_USER_EMAIL, user.language, variables);
@@ -341,7 +341,7 @@ async forgotPassword(reqHandler: RequestHandler){
             await (this.getRepository() as UserRepository).update(user.id, user, reqHandler.getLogicalDelete());
 
             const variables = {
-                userName: user.first_name + " " + user.last_name,
+                userName: user.name,
                 resetLink: config.COMPANY.FRONT_END_HOST + ConstUrls.FORGOT_PASSWORD_VERIFICATION + forgotUserPasswordToken
             };
             const htmlBody = await getEmailTemplate(ConstTemplate.FORGOT_PASSWORD_EMAIL, user.language, variables);

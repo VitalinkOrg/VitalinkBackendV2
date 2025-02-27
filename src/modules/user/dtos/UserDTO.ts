@@ -15,12 +15,11 @@ export default  class UserDTO implements IAdapterFromBody{
     entityFromPostBody() : User{
         const entity = new User();
         entity.card_id = this.req.body.card_id;
-        entity.first_name = this.req.body.first_name;
-        entity.last_name = this.req.body.last_name;
+        entity.id_type = this.req.body.id_type;
+        entity.name = this.req.body.name;
         entity.user_name = this.req.body.user_name;
         entity.email = this.req.body.email;
         entity.phone_number = this.req.body.phone_number;
-        entity.bio = this.req.body.bio;
         entity.password = this.req.body.password;
         entity.gender = this.req.body.gender;
         entity.birth_date = this.req.body.birth_date;
@@ -29,6 +28,7 @@ export default  class UserDTO implements IAdapterFromBody{
         entity.postal_code = this.req.body.postal_code;
         entity.latitude = this.req.body.latitude;
         entity.longitude = this.req.body.longitude;
+        entity.finance_entity = this.req.body.finance_entity;
         entity.role_code = this.req.body.role_code || config.SERVER.CUSTOMER_REGULAR_ROLE;
         entity.language = this.req.body.language || config.SERVER.DEFAULT_LANGUAGE;
         entity.profile_picture_url = this.req.body.profile_picture_url;
@@ -43,13 +43,11 @@ export default  class UserDTO implements IAdapterFromBody{
         return  {
             id : user.id,
             card_id: user.card_id,
-            first_name: user.first_name,
-            lastName: user.last_name,
-            full_name: `${user.first_name} ${user.last_name}`,
+            id_type: user.id_type,
+            name: user.name,
             user_name: user.user_name,
             email: user.email,
             phone_number: user.phone_number,
-            bio: user.bio,
             country_iso_code: user.country_iso_code,
             city_name: user.city_name,
             postal_code: user.postal_code,
@@ -58,6 +56,7 @@ export default  class UserDTO implements IAdapterFromBody{
             gender: user.gender,
             birth_date: user.birth_date,
             role: user.role_code,
+            finance_entity: user.finance_entity,
             language: user.language,
             profile_picture_url: user.profile_picture_url,
             account_status: user.account_status
@@ -75,17 +74,16 @@ export default  class UserDTO implements IAdapterFromBody{
         
         return response;
     }
-    
+   
     //PUT
     entityFromPutBody() : User{
         const entity = new User();
         entity.card_id = this.req.body.card_id;
-        entity.first_name = this.req.body.first_name;
-        entity.last_name = this.req.body.last_name;
+        entity.id_type = this.req.body.id_type;
+        entity.name = this.req.body.name;
         entity.user_name = this.req.body.user_name;
         entity.email = this.req.body.email;
         entity.phone_number = this.req.body.phone_number;
-        entity.bio = this.req.body.bio;
         entity.gender = this.req.body.gender;
         entity.birth_date = this.req.body.birth_date;
         entity.language = this.req.body.language;
@@ -95,6 +93,7 @@ export default  class UserDTO implements IAdapterFromBody{
         entity.latitude = this.req.body.latitude;
         entity.longitude = this.req.body.longitude;
         entity.role_code = this.req.body.role_code;
+        entity.finance_entity = this.req.body.finance_entity;
         entity.profile_picture_url = this.req.body.profile_picture_url;
         entity.is_active_from_email = this.req.body.is_active_from_email;
         entity.account_status = this.req.body.account_status;

@@ -18,30 +18,13 @@ export class UnitDynamicCentral {
                                 "PAYMENT_STATUS",
                                 "PAYMENT_METHOD",
                                 "ASKING_CREDIT_STATUS",
-                                "SUPPLIER_TYPE"], 
+                                "EXPERIENCE_TYPE",
+                                "ID_TYPE",], 
                                 nullable: true })
   type: string | null;
 
-  @Column({ type: "varchar", length: 400, nullable: true, default: null })
-  description: string | null;
-
   @Column({ type: "varchar", length: 300, nullable: true, default: null })
   value1: string;
-
-  @Column({ type: "varchar", length: 300, nullable: true, default: null })
-  value2: string | null;
-
-  @Column({ type: "varchar", length: 300, nullable: true, default: null })
-  value3: string | null;
-
-  @Column({ type: "varchar", length: 300, nullable: true, default: null })
-  value4: string | null;
-
-  @Column({ type: "varchar", length: 300, nullable: true, default: null })
-  value5: string | null;
-
-  @Column({ type: "varchar", length: 3, nullable: true, default: null })
-  country_iso_code: string | null;
 
   @Column({ type: "datetime", default: () => "CURRENT_TIMESTAMP" })
   created_date: Date;
@@ -51,11 +34,5 @@ export class UnitDynamicCentral {
 
   @Column({ type: "tinyint", default: 0 })
   is_deleted: boolean;
-
-  @Column({ type: "varchar", length: 300, nullable: true, default: null })
-  user_id: string | null;
-
-  @Column({ type: "int", unsigned: true, nullable: true, default: null })
-  user_updated_id: number | null;
 
 }
