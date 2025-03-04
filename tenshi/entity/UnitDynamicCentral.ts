@@ -1,6 +1,13 @@
 // src/entity/UnitDynamicCentral.ts
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
+/**
+ * The UnitDynamicCentral table is a centralized reference system for storing 
+ * various classifications such as medical specialties, procedures, products, 
+ * assessments, appointment statuses, and payment-related types. 
+ * It supports hierarchical relationships via the `father_code` field.
+ */
+
 @Entity("units_dynamic_central")
 export class UnitDynamicCentral {
   @PrimaryGeneratedColumn({ type: "int", unsigned: true })
@@ -19,9 +26,21 @@ export class UnitDynamicCentral {
                                 "PAYMENT_METHOD",
                                 "ASKING_CREDIT_STATUS",
                                 "EXPERIENCE_TYPE",
-                                "ID_TYPE",], 
+                                "ID_TYPE",
+                                "MEDICAL_SPECIALTY",
+                                "MEDICAL_PROCEDURE",
+                                "MEDICAL_PRODUCT",
+                                "ASSESSMENT",
+                                "ASSESSMENT_DETAIL",
+                                "APPOINTMENT_RESULT"], 
                                 nullable: true })
   type: string | null;
+
+  @Column({ type: "varchar", length: 500 })
+  description: string;
+
+  @Column({ type: "varchar", length: 200, nullable: true, default: null })
+  father_code: string | null;
 
   @Column({ type: "varchar", length: 300, nullable: true, default: null })
   value1: string;
