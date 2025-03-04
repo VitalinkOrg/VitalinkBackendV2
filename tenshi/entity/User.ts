@@ -1,6 +1,17 @@
 // src/entity/User.ts
 import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne } from "typeorm";
 import { UnitDynamicCentral } from "./UnitDynamicCentral";
+
+/*
+ This is the table for users, each user that need to login and register, need to be here.
+ We have some differents roles
+  SUPER_ADMIN: This is the user that can be everything.
+  LEGAL_REPRESENTATIVE: This is the legal representative/contractor of the suppliers (medical/hospitals).
+  CUSTOMER: This is the normal user to login into app to use all the flow of the app.
+  FINANCE_ENTITY: This is the cooperative/company of the last user registered.
+
+ We have the column finance entity, this is for normal users (customers), that need to have the finance entity match
+*/
 @Entity("users")
 export class User {
   @PrimaryGeneratedColumn("uuid")
@@ -36,6 +47,9 @@ export class User {
 
   @Column({ type: "varchar", length: 3, nullable: true, default: "CRC" })
   country_iso_code: string | null;
+
+  @Column({ type: "varchar", length: 250, nullable: true })
+  province: string | null;
 
   @Column({ type: "varchar", length: 250, nullable: true, default: null })
   address: string | null;
