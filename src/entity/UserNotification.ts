@@ -8,12 +8,6 @@ export class UserNotification {
   @PrimaryGeneratedColumn({ type: "int" })
   id: number;
 
-  @Column({ type: "varchar",nullable: true })
-  id_user_send: number | string | null;
-
-  @Column({ type: "varchar"})
-  id_user_receive: number | string;
-
   @Column({ type: "varchar", length: 60 })
   notification_code: string;
 
@@ -34,10 +28,10 @@ export class UserNotification {
   notification: Notification;
 
   @ManyToOne(() => User, user => user.id)
-  @JoinColumn({ name: "id_user_send", referencedColumnName: "id" })
-  userSend: User;
+  @JoinColumn({ name: "user_send", referencedColumnName: "id" })
+  user_send: User;
 
   @ManyToOne(() => User, user => user.id)
-  @JoinColumn({ name: "id_user_receive", referencedColumnName: "id" })
-  userReceive: User;
+  @JoinColumn({ name: "user_receive", referencedColumnName: "id" })
+  user_receive: User;
 }

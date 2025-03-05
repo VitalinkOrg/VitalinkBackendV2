@@ -51,7 +51,7 @@ export default  class UserNotificationController extends GenericController{
             
             if(notification != undefined && notification != null){
                 if(notification.required_send_email){
-                    const user : User = await repositoryUser.findById(userNotifications.id_user_receive, true);
+                    const user : User = await repositoryUser.findById(userNotifications.user_receive.id, true);
                     
                     const variables = {
                         userName: user.name,
@@ -108,7 +108,7 @@ export default  class UserNotificationController extends GenericController{
                 }
              
                 if(userNotification != undefined && userNotification != null){
-                    if(userId != null && userNotification.id_user_receive != userId){
+                    if(userId != null && userNotification.user_receive.id != userId){
                         return httpExec.unauthorizedError(ConstMessagesJson.ROLE_AUTH_ERROR);
                     }
                 }else{
