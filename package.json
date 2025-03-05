@@ -10,6 +10,7 @@
         "copytemp": "copyfiles -u 1 src/templates/*.html build",
         "start": "ts-node -r tsconfig-paths/register src/index.ts",
         "test": "jest",
+        "delete": "ts-node -r tsconfig-paths/register src/seeds/DeleteDBSeed.ts",
         "seed": "ts-node -r tsconfig-paths/register src/seeds/GeneralSeed.ts",
         "automation": "ts-node -r tsconfig-paths/register automation/Automation.ts",
         "autotest": "ts-node -r tsconfig-paths/register automation/AutomationTest.ts"

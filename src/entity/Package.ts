@@ -48,7 +48,7 @@ export class Package {
   @Column({ type: "json", nullable: true })
   services_offer: any;
 
-  @Column({ type: "varchar", length: 500, nullable: true, default: null })
+  @Column({ type: "varchar", length: 500, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   description: string | null;
 
   @Column({ type: "tinyint", default: 0 })

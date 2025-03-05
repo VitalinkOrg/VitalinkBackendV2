@@ -25,28 +25,28 @@ export class CertificationsExperience  {
   @Column({ type: "date", nullable: true })
   end_date: Date | null;
 
-  @Column({ type: "varchar", length: 500 })
+  @Column({ type: "varchar", length: 500, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   name: string;
 
-  @Column({ type: "varchar", length: 500 })
+  @Column({ type: "varchar", length: 500, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   company_name: string;
 
-  @Column({ type: "varchar", length: 250 })
+  @Column({ type: "varchar", length: 250, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   province: string;
 
-  @Column({ type: "varchar", length: 500 })
+  @Column({ type: "varchar", length: 500, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   address: string;
 
-  @Column({ type: "varchar", length: 250, nullable: true })
+  @Column({ type: "varchar", length: 250, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   city_name: string | null;
 
-  @Column({ type: "varchar", length: 10 })
+  @Column({ type: "varchar", length: 10, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   country_iso_code: string;
 
   @Column({ type: "boolean", default: false })
   is_currently: boolean;
 
-  @Column({ type: "varchar", length: 2000 })
+  @Column({ type: "varchar", length: 2000, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   url_document: string;
 
   //EXPERIENCE_TYPE

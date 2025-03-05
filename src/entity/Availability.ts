@@ -33,7 +33,7 @@ export class Availability {
   @JoinColumn({ name: "location", referencedColumnName: "id" })
   location: Location | null;
 
-  @Column({ type: "varchar", length: 20 })
+  @Column({ type: "varchar", length: 20, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   weekday: string;
 
   @Column({ type: "time" })

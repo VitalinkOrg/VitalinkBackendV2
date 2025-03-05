@@ -11,7 +11,7 @@ export class UserNotification {
   @Column({ type: "varchar", length: 60 })
   notification_code: string;
 
-  @Column({ type: "varchar", length: 500, nullable: true, default: null })
+  @Column({ type: "varchar", length: 500, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   body_action: string;
 
   @Column({ type: "tinyint", default: 0 })

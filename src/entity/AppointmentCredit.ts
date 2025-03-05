@@ -29,11 +29,11 @@ export class AppointmentCredit {
   @Column({ type: "decimal", precision: 10, scale: 2, nullable: true })
   approved_amount: number | null;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ type: "text", nullable: true, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   credit_observations: string | null;
 
   //the code of document for "PAGARE with payment conditions"
-  @Column({ type: "varchar", length: 100, nullable: true, default: null })
+  @Column({ type: "varchar", length: 100, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   pagare_file_code: string | null;
 
   @Column({ type: "timestamp", nullable: true, default: () => "CURRENT_TIMESTAMP" })

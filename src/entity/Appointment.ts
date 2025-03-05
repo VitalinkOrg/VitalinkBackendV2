@@ -22,7 +22,7 @@ export class Appointment {
   customer: User;
 
   //the code of document for the proforma 
-  @Column({ type: "varchar", length: 100, nullable: true, default: null })
+  @Column({ type: "varchar", length: 100, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   proforma_file_code: string | null;
 
   @Column({ type: "date" })
@@ -66,13 +66,13 @@ export class Appointment {
   @JoinColumn({ name: "appointment_result", referencedColumnName: "code" })
   appointment_result: UnitDynamicCentral | null;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ type: "text", nullable: true, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   user_description: string | null;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ type: "text", nullable: true, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   recommendation_post_appointment: string | null;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ type: "text", nullable: true, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   diagnostic: string | null;
 
   @Column({ type: "tinyint", default: 0 })

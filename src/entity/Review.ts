@@ -31,7 +31,7 @@ export class Review {
   @Column({ type: "boolean", default: false })
   is_annonymous: boolean;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ type: "text", nullable: true, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   supplier_reply: string | null;
 
   @Column({ type: "tinyint", default: 0 })

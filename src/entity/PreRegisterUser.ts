@@ -17,7 +17,7 @@ export class PreRegisterUser {
 @PrimaryGeneratedColumn({ type: "int", unsigned: true })
   id: number;
 
-  @Column({ type: "varchar", length: 500 })
+  @Column({ type: "varchar", length: 500, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   card_id: string;
 
   //ID_TYPE
@@ -25,10 +25,10 @@ export class PreRegisterUser {
   @JoinColumn({ name: "id_type", referencedColumnName: "code" })
   id_type: UnitDynamicCentral;
 
-  @Column({ type: "varchar", length: 500 })
+  @Column({ type: "varchar", length: 500, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   name: string;
 
-  @Column({ type: "varchar", length: 250, nullable: true, default: null })
+  @Column({ type: "varchar", length: 250, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   address: string | null;
 
   @Column({ type: "datetime", nullable: true, default: null })

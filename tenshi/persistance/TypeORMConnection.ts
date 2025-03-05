@@ -69,8 +69,11 @@ export class Database {
                 database: config.DB.NAME, // Name of the database
                 entities: Database.initializedEntities, // Array of entities to be used
                 synchronize: true, // Synchronize the schema with the database
+                charset: "utf8mb4",
                 extra: {
                     connectionLimit: 150, 
+                    charset: "utf8mb4", 
+                    collation: "utf8mb4_unicode_ci",
                 },
             });
 

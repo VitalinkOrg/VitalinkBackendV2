@@ -20,43 +20,43 @@ export class Supplier {
   @JoinColumn({ name: "id_type", referencedColumnName: "code" })
   id_type: UnitDynamicCentral;
 
-  @Column({ type: "varchar", length: 100 })
+  @Column({ type: "varchar", length: 100, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   card_id: string;
 
-  @Column({ type: "varchar", length: 200, nullable: true })
+  @Column({ type: "varchar", length: 200, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   num_medical_enrollment: string | null;
 
-  @Column({ type: "varchar", length: 500, nullable: true })
+  @Column({ type: "varchar", length: 500, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   name: string | null;
 
   @Column({ type: "varchar", length: 20, nullable: true })
   phone_number: string | null;
 
-  @Column({ type: "varchar", length: 250 })
+  @Column({ type: "varchar", length: 250, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   email: string;
 
-  @Column({ type: "varchar", length: 10, nullable: true, default: "CRC" })
+  @Column({ type: "varchar", length: 10, nullable: true,  default: "CRC" })
   country_iso_code: string | null;
 
-  @Column({ type: "varchar", length: 250, nullable: true })
+  @Column({ type: "varchar", length: 250, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   province: string | null;
 
-  @Column({ type: "varchar", length: 250, nullable: true })
+  @Column({ type: "varchar", length: 250, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   city_name: string | null;
 
-  @Column({ type: "varchar", length: 20, nullable: true })
+  @Column({ type: "varchar", length: 20, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   postal_code: string | null;
 
-  @Column({ type: "varchar", length: 500, nullable: true })
+  @Column({ type: "varchar", length: 500, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci"})
   profile_picture_url: string | null;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ type: "text", nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   description: string | null;
 
-  @Column({ type: "varchar", length: 500, nullable: true })
+  @Column({ type: "varchar", length: 500, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   address: string | null;
 
-  @Column({ type: "varchar", length: 50, nullable: true })
+  @Column({ type: "varchar", length: 50, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   street_number: string | null;
 
   @Column({ type: "int", nullable: true })
@@ -80,19 +80,19 @@ export class Supplier {
   @Column({ type: "boolean", default: false })
   is_hospital: boolean;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ type: "text", nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   our_history: string | null;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ type: "text", nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   mission: string | null;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ type: "text", nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   vision: string | null;
 
-  @Column({ type: "varchar", length: 100, nullable: true })
+  @Column({ type: "varchar", length: 100, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   code_card_id_file: string | null;
 
-  @Column({ type: "varchar", length: 100, nullable: true })
+  @Column({ type: "varchar", length: 100, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   code_medical_license_file: string | null;
 
   @Column({ type: "enum", enum: ["M", "F", "O"], nullable: true, default: null })
@@ -115,6 +115,6 @@ export class Supplier {
   @Column({ type: "timestamp", nullable: true, default: () => "CURRENT_TIMESTAMP" })
   created_date: Date | null;
 
-  @Column({ type: "timestamp", nullable: true, default: () => "CURRENT_TIMESTAMP", onUpdate: "CURRENT_TIMESTAMP" })
+  @Column({ type: "timestamp", nullable: true,  default: () => "CURRENT_TIMESTAMP", onUpdate: "CURRENT_TIMESTAMP" })
   updated_date: Date | null;
 }

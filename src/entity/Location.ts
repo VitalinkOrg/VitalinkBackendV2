@@ -12,22 +12,22 @@ export class Location {
   @PrimaryGeneratedColumn({ type: "int", unsigned: true })
   id: number;
 
-  @Column({ type: "varchar", length: 250 })
+  @Column({ type: "varchar", length: 250, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   name: string;
 
   @Column({ type: "varchar", length: 3, nullable: true, default: "CRC" })
   country_iso_code: string | null;
 
-  @Column({ type: "varchar", length: 250, nullable: true })
+  @Column({ type: "varchar", length: 250, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   province: string | null;
 
-  @Column({ type: "varchar", length: 250, nullable: true, default: null })
+  @Column({ type: "varchar", length: 250, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   address: string | null;
 
-  @Column({ type: "varchar", length: 200, nullable: true, default: null })
+  @Column({ type: "varchar", length: 200, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   city_name: string | null;
 
-  @Column({ type: "varchar", length: 50, nullable: true, default: null })
+  @Column({ type: "varchar", length: 50, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   postal_code: string | null;
 
   @Column({ type: "decimal", precision: 11, scale: 8, nullable: true, default: null })
