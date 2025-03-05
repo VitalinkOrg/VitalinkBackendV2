@@ -12,7 +12,11 @@ export class Location {
   @PrimaryGeneratedColumn({ type: "int", unsigned: true })
   id: number;
 
+<<<<<<< HEAD
   @Column({ type: "varchar", length: 250, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
+=======
+  @Column({ type: "varchar", length: 250 })
+>>>>>>> 2b8ec4609f47dd822dcf0d17751a4416f1a446d1
   name: string;
 
   @Column({ type: "varchar", length: 3, nullable: true, default: "CRC" })

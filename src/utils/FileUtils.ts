@@ -31,7 +31,6 @@ export function setNameDocument (file : Express.Multer.File,  documentBody : Doc
 
     // Update the file name and title properties of the document object.
     documentBody.file_name = fileName + "." + extension;
-
     documentBody.title = (!documentBody.title ? file.originalname : documentBody.title);
     documentBody.description = (!documentBody.description ? "" : documentBody.description);
     documentBody.is_public = (!documentBody.is_public ? false : documentBody.is_public);

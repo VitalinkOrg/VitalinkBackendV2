@@ -24,7 +24,7 @@ export class UserNotification {
   created_date: Date;
 
   @ManyToOne(() => Notification, notification => notification.id)
-  @JoinColumn({ name: "notification_code", referencedColumnName: "code" })
+  @JoinColumn({ name: "notification", referencedColumnName: "code" })
   notification: Notification;
 
   @ManyToOne(() => User, user => user.id)

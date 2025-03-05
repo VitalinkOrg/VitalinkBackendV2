@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "t
 import { Supplier } from "./Supplier";
 import { User } from "@TenshiJS/entity/User";
 import { Package } from "./Package";
+import { Appointment } from "./Appointment";
 
 
 @Entity("reviews")
@@ -10,20 +11,20 @@ export class Review {
   id: number;
 
   @ManyToOne(() => Supplier, { eager: true })
-  @JoinColumn({ name: "supplier_id", referencedColumnName: "id" })
+  @JoinColumn({ name: "supplier", referencedColumnName: "id" })
   supplier: Supplier;
 
   @ManyToOne(() => Package, { eager: true })
-  @JoinColumn({ name: "package_id", referencedColumnName: "id" })
+  @JoinColumn({ name: "package", referencedColumnName: "id" })
   package: Package;
 
   @ManyToOne(() => User, { eager: true })
-  @JoinColumn({ name: "customer_id", referencedColumnName: "id" })
+  @JoinColumn({ name: "customer", referencedColumnName: "id" })
   customer: User;
 
-  /*@ManyToOne(() => Appointment, { eager: true })
-  @JoinColumn({ name: "appointment_id", referencedColumnName: "id" })
-  appointment: Appointment | null;*/
+  @ManyToOne(() => Appointment, { eager: true })
+  @JoinColumn({ name: "appointment", referencedColumnName: "id" })
+  appointment: Appointment | null;
 
   @Column({ type: "text", nullable: true })
   comment: string | null;

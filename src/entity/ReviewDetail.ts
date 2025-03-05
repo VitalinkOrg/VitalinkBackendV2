@@ -9,15 +9,15 @@ export class ReviewDetail {
   id: number;
 
   @ManyToOne(() => Review, { eager: true })
-  @JoinColumn({ name: "review_id", referencedColumnName: "id" })
+  @JoinColumn({ name: "review", referencedColumnName: "id" })
   review: Review;
 
   @Column({ type: "int" })
   stars_point: number;
 
   @ManyToOne(() => UnitDynamicCentral)
-  @JoinColumn({ name: "udc_code", referencedColumnName: "code" })
-  udc_code: UnitDynamicCentral;
+  @JoinColumn({ name: "review_code", referencedColumnName: "code" })
+  review_code: UnitDynamicCentral;
 
   @Column({ type: "timestamp", nullable: true, default: () => "CURRENT_TIMESTAMP" })
   created_date: Date | null;
