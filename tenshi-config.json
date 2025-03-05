@@ -1,6 +1,6 @@
 {
     "COMPANY": {
-        "NAME" : "Tenshi",
+        "NAME" : "Vitalink",
         "LOGO" : "https://raw.githubusercontent.com/fabian7593/Tenshi/main/00_external_information/imgs/tenshi_background_2.png",
         "BACKEND_HOST": "http://localhost:3000/",
         "FRONT_END_HOST": "http://localhost:3000/",
@@ -12,12 +12,12 @@
     },
     "SERVER" : {
         "PORT": 3000,
-        "SECRET_API_KEY": "8170fcb2-ef45-4173-9a1b-f682d38ddae9",
-        "VALIDATE_API_KEY" : true,
+        "SECRET_API_KEY": "41e71d93-02b5-4661-80ed-580f3ebb41c4",
+        "VALIDATE_API_KEY" : false,
         "MAX_REQUEST_PER_SECOND": 6,
         "IS_DEBUGGING": true,
         "FAIL_LOGIN_MAX_NUMBER": 3,
-        "DEFAULT_LANGUAGE" : "en",
+        "DEFAULT_LANGUAGE" : "es",
         "FORMAT_DATE" : "es-ES",
         "CUSTOMER_REGULAR_ROLE" : null
     },
@@ -65,19 +65,19 @@
     "JWT": {
         "MAIN_TOKEN" :{
             "EXPIRE": "30000s",
-            "SECRET_KEY": "f749b45a-06e9-4dcb-a842-630184b443f6"
+            "SECRET_KEY": "592f6127-9f0b-4dff-9213-7cc36e616d7d"
         },
         "REFRESH_TOKEN" :{
             "EXPIRE": "1d",
-            "SECRET_KEY": "44e7d167-f31e-41f4-9e48-e6218fbf0a41"
+            "SECRET_KEY": "d2fa3e10-017e-421a-b026-73b2114b630c"
         },
         "FORGOT_PASS_TOKEN" :{
             "EXPIRE": "900s",
-            "SECRET_KEY": "f749b45a-45y5-77ty-12we-630184b443f6"
+            "SECRET_KEY": "5fbe80ab-6644-4477-9646-2ee002d7e08d"
         },
         "REGISTER_TOKEN" :{
             "EXPIRE": null,
-            "SECRET_KEY": "44fr2167-1oi8-55ht-3ew1-630184b443f6"
+            "SECRET_KEY": "b933e076-cf92-48ad-9b27-a3c7c59dd8af"
         }
     },
     "FILE_STORAGE":{
@@ -85,10 +85,10 @@
             "MAX_FILE_SIZE" : 50
         },
         "AWS": {
-            "BUCKET_NAME": "bucket-name-777",
+            "BUCKET_NAME": "vitalink-v2-s3",
             "REGION": "us-east-2",
-            "ACCESS_KEY": "AKIAZQ3DRSPRNUX52EUI",
-            "SECRET_ACCESS_KEY": "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",
+            "ACCESS_KEY": "",
+            "SECRET_ACCESS_KEY": "",
             "MINUTES_LIMIT_PRIVATE_FILE": 120,
             "PUBLIC_FOLDER" : "/PublicFiles/"
         }
