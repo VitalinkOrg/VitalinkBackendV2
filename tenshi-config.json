@@ -87,8 +87,7 @@
         "AWS": {
             "BUCKET_NAME": "vitalink-v2-s3",
             "REGION": "us-east-2",
-            "ACCESS_KEY": "AKIASBGQLLUVYHBCS7U3",
-            "SECRET_ACCESS_KEY": "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",
+           
             "MINUTES_LIMIT_PRIVATE_FILE": 120,
             "PUBLIC_FOLDER" : "/PublicFiles"
         }
