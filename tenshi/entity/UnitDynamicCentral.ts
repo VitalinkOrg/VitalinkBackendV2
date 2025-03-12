@@ -27,6 +27,7 @@ export class UnitDynamicCentral {
                                 "ASKING_CREDIT_STATUS",
                                 "EXPERIENCE_TYPE",
                                 "ID_TYPE",
+                                "MEDICAL_TYPE",
                                 "MEDICAL_SPECIALTY",
                                 "MEDICAL_PROCEDURE",
                                 "MEDICAL_PRODUCT",
@@ -36,8 +37,8 @@ export class UnitDynamicCentral {
                                 nullable: true })
   type: string | null;
 
-  @Column({ type: "varchar", length: 500 })
-  description: string;
+  @Column({ type: "varchar", length: 500, nullable: true, default: null })
+  description: string | null;
 
   @Column({ type: "varchar", length: 200, nullable: true, default: null })
   father_code: string | null;

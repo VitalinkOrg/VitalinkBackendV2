@@ -9,7 +9,7 @@ if (!entityName) {
 }
 
 const entityPath = path.join(__dirname, '../src', 'entity', `${entityName}.ts`);
-const modulePath = path.join(__dirname, '../src', 'modules', entityName.toLowerCase());
+const modulePath = path.join(__dirname, '../src', 'modules/02_Vitalink', entityName.toLowerCase());
 const dtoPath = path.join(modulePath, 'dtos');
 const routerPath = path.join(modulePath, 'routers');
 
@@ -197,7 +197,7 @@ const routesContent = `import { Request, Response,
          GenericController, GenericRoutes,
          FindManyOptions} from "@modules/index";
 import { ${entityName} } from "@index/entity/${entityName}";
-import ${entityName}DTO from "@modules/02_Synco/${entityName.toLowerCase()}/dtos/${entityName}DTO";
+import ${entityName}DTO from "@modules/02_Vitalink/${entityName.toLowerCase()}/dtos/${entityName}DTO";
 
 class ${entityName}Routes extends GenericRoutes {
     
@@ -278,7 +278,7 @@ class ${entityName}Routes extends GenericRoutes {
     }
 }
 
-export default new ${entityName}Routes();
+export default ${entityName}Routes;
 `;
 
 const routerFilePath = path.join(routerPath, `${entityName}Routes.ts`);

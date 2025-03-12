@@ -34,8 +34,8 @@ export class PreRegisterUser {
   @Column({ type: "datetime", nullable: true, default: null })
   birth_date: Date | null;
 
-  @ManyToOne(() => User)
-  @JoinColumn({ name: "user", referencedColumnName: "id" })
+  @ManyToOne(() => User, { eager: true })
+  @JoinColumn({ name: "finance_entity", referencedColumnName: "id" })
   finance_entity: User;
 
   @Column({ type: "tinyint", default: 0 })

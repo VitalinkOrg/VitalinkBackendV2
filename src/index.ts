@@ -18,6 +18,19 @@ import { Notification } from '@entity/Notification';
 import { UnitDynamicCentral } from '@TenshiJS/entity/UnitDynamicCentral';
 import { UserNotification } from '@entity/UserNotification';
 
+import { Location } from '@entity/Location';
+import { Supplier } from '@entity/Supplier';
+import { Appointment } from '@entity/Appointment';
+import { AppointmentCredit } from '@entity/AppointmentCredit';
+import { Availability } from '@entity/Availability';
+import { CertificationsExperience } from '@entity/CertificationsExperience';
+import { Package } from '@entity/Package';
+import { PreRegisterUser } from '@entity/PreRegisterUser';
+import { ProcedureBySpecialty } from '@entity/ProcedureBySpecialty';
+import { Review } from '@entity/Review';
+import { ReviewDetail } from '@entity/ReviewDetail';
+import { SpecialtyBySupplier } from '@entity/SpecialtyBySupplier';
+
 
 //*************************************** */
 //              IMPORTS
@@ -32,15 +45,18 @@ import { default as cors } from 'cors';
 import { default as bodyParser } from 'body-parser';
 
 //Import Routes
-import AuthRoutes from '@index/modules/auth/routers/AuthRoutes';
-import UserRoutes from '@modules/user/routers/UserRoutes';
-import RoleRoutes from '@modules/role/routers/RoleRoutes';
-import UdcRoutes from '@modules/udc/routers/UdcRoutes';
-import NotificationRoutes from '@modules/notification/routers/NotificationRoutes';
-import UserNotificationRoutes from '@modules/notification/routers/UserNotificationRoutes';
-import LogRoutes from '@modules/log/routers/LogRoutes';
-import EmailRoutes from '@modules/email/routers/EmailRoutes';
-import DocumentRoutes from '@modules/document/routers/DocumentRoutes';
+import AuthRoutes from '@modules/01_General/auth/routers/AuthRoutes';
+import UserRoutes from '@modules/01_General/user/routers/UserRoutes';
+import RoleRoutes from '@modules/01_General/role/routers/RoleRoutes';
+import UdcRoutes from '@modules/01_General/udc/routers/UdcRoutes';
+import NotificationRoutes from '@modules/01_General/notification/routers/NotificationRoutes';
+import UserNotificationRoutes from '@modules/01_General/notification/routers/UserNotificationRoutes';
+import LogRoutes from '@index/modules/01_General/log/routers/LogRoutes';
+import EmailRoutes from '@modules/01_General/email/routers/EmailRoutes';
+import DocumentRoutes from '@index/modules/01_General/document/routers/DocumentRoutes';
+
+import LocationRoutes from '@modules/02_Vitalink/location/routers/LocationRoutes';
+import SupplierRoutes from '@modules/02_Vitalink/supplier/routers/SupplierRoutes';
 
 //Import internal classes and functions
 import StartMiddleware from '@TenshiJS/middlewares/StartMiddleware';
@@ -51,6 +67,11 @@ import { ConstGeneral } from '@TenshiJS/consts/Const';
 import RouteNotFoundMiddleware from '@TenshiJS/middlewares/RouteNotFoundMiddleware';
 import { CorsHandlerMiddleware } from '@TenshiJS/middlewares/CorsHandlerMiddleware';
 import LoggingHandlerMiddleware from '@TenshiJS/middlewares/LoggingHandlerMiddleware';
+import ValidJsonBodyMiddleware from '@TenshiJS/middlewares/ValidJsonBodyMiddleware';
+
+
+
+
 
 
 //*************************************** */
@@ -83,7 +104,25 @@ export let httpServer: ReturnType<typeof http.createServer>;
 //*************************************** */
 export const TenshiMain = async() => {
 
-    await Database.getInstance([User, Document, Notification, UnitDynamicCentral, UserNotification]);
+    await Database.getInstance([
+      User, 
+      Document, 
+      Notification, 
+      UnitDynamicCentral, 
+      UserNotification,
+      Location,
+      Supplier,
+      Appointment,
+      AppointmentCredit,
+      Availability,
+      CertificationsExperience,
+      Package,
+      PreRegisterUser,
+      ProcedureBySpecialty,
+      Review,
+      ReviewDetail,
+      SpecialtyBySupplier,
+    ]);
 
     //Cors handler middle ware
     app.use(CorsHandlerMiddleware);
@@ -127,11 +166,14 @@ export const TenshiMain = async() => {
     app.use(new EmailRoutes().getRouter());
     app.use(new DocumentRoutes().getRouter());
 
+    app.use(new LocationRoutes().getRouter());
+    app.use(new SupplierRoutes().getRouter());
+
     //*************************************** */
     //       NOT FOUND ROUTE MIDDLEWARE
     //*************************************** */
     app.use(RouteNotFoundMiddleware);
-
+    app.use(ValidJsonBodyMiddleware);
 
     //*************************************** */
     //              LISTENER

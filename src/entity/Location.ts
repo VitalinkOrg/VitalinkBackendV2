@@ -36,8 +36,8 @@ export class Location {
   @Column({ type: "decimal", precision: 11, scale: 8, nullable: true, default: null })
   longitude: number | null;
 
-  @ManyToOne(() => User, { eager: true })
-  @JoinColumn({ name: "user", referencedColumnName: "id" })
+  @ManyToOne(() => User)
+  @JoinColumn({ name: "legal_representative", referencedColumnName: "id" })
   legal_representative: User | null;
 
   @Column({ type: "tinyint", default: 0 })

@@ -1,0 +1,183 @@
+{
+  "info": {
+    "name": "Supplier",
+    "item": [
+      {
+        "name": "Create Supplier",
+        "request": {
+          "method": "POST",
+          "header": [
+            {
+              "key": "authorization",
+              "value": "{{auth_jwt}}",
+              "type": "text"
+            },
+            {
+              "key": "x-api-key",
+              "value": "{{secret_api_key}}",
+              "type": "text"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"id_type\": \"\\\"test_id_type\\\"\",\n  \"card_id\": \"\\\"test_card_id\\\"\",\n  \"num_medical_enrollment\": \"\\\"test_num_medical_enrollment\\\"\",\n  \"name\": \"\\\"test_name\\\"\",\n  \"phone_number\": \"\\\"test_phone_number\\\"\",\n  \"email\": \"\\\"test_email\\\"\",\n  \"country_iso_code\": \"\\\"test_country_iso_code\\\"\",\n  \"province\": \"\\\"test_province\\\"\",\n  \"city_name\": \"\\\"test_city_name\\\"\",\n  \"postal_code\": \"\\\"test_postal_code\\\"\",\n  \"profile_picture_url\": \"\\\"test_profile_picture_url\\\"\",\n  \"description\": \"\\\"test_description\\\"\",\n  \"address\": \"\\\"test_address\\\"\",\n  \"street_number\": \"\\\"test_street_number\\\"\",\n  \"floor\": \"\\\"test_floor\\\"\",\n  \"door_number\": \"\\\"test_door_number\\\"\",\n  \"latitude\": \"\\\"test_latitude\\\"\",\n  \"longitude\": \"\\\"test_longitude\\\"\",\n  \"experience_years\": \"\\\"test_experience_years\\\"\",\n  \"patients_number\": \"\\\"test_patients_number\\\"\",\n  \"is_hospital\": true,\n  \"our_history\": \"\\\"test_our_history\\\"\",\n  \"mission\": \"\\\"test_mission\\\"\",\n  \"vision\": \"\\\"test_vision\\\"\",\n  \"code_card_id_file\": \"\\\"test_code_card_id_file\\\"\",\n  \"code_medical_license_file\": \"\\\"test_code_medical_license_file\\\"\",\n  \"gender\": \"\\\"test_gender\\\"\",\n  \"medical_type\": \"\\\"test_medical_type\\\"\",\n  \"legal_representative\": \"\\\"test_legal_representative\\\"\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "url": {
+            "raw": "{{host}}/${entityName.toLowerCase()}/add",
+            "host": [
+              "{{host}}"
+            ],
+            "path": [
+              "supplier",
+              "add"
+            ]
+          }
+        }
+      },
+      {
+        "name": "Update Supplier",
+        "request": {
+          "method": "PUT",
+          "header": [
+            {
+              "key": "authorization",
+              "value": "{{auth_jwt}}",
+              "type": "text"
+            },
+            {
+              "key": "x-api-key",
+              "value": "{{secret_api_key}}",
+              "type": "text"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"id_type\": \"\\\"test_id_type\\\"\",\n  \"card_id\": \"\\\"test_card_id\\\"\",\n  \"num_medical_enrollment\": \"\\\"test_num_medical_enrollment\\\"\",\n  \"name\": \"\\\"test_name\\\"\",\n  \"phone_number\": \"\\\"test_phone_number\\\"\",\n  \"email\": \"\\\"test_email\\\"\",\n  \"country_iso_code\": \"\\\"test_country_iso_code\\\"\",\n  \"province\": \"\\\"test_province\\\"\",\n  \"city_name\": \"\\\"test_city_name\\\"\",\n  \"postal_code\": \"\\\"test_postal_code\\\"\",\n  \"profile_picture_url\": \"\\\"test_profile_picture_url\\\"\",\n  \"description\": \"\\\"test_description\\\"\",\n  \"address\": \"\\\"test_address\\\"\",\n  \"street_number\": \"\\\"test_street_number\\\"\",\n  \"floor\": \"\\\"test_floor\\\"\",\n  \"door_number\": \"\\\"test_door_number\\\"\",\n  \"latitude\": \"\\\"test_latitude\\\"\",\n  \"longitude\": \"\\\"test_longitude\\\"\",\n  \"experience_years\": \"\\\"test_experience_years\\\"\",\n  \"patients_number\": \"\\\"test_patients_number\\\"\",\n  \"is_hospital\": true,\n  \"our_history\": \"\\\"test_our_history\\\"\",\n  \"mission\": \"\\\"test_mission\\\"\",\n  \"vision\": \"\\\"test_vision\\\"\",\n  \"code_card_id_file\": \"\\\"test_code_card_id_file\\\"\",\n  \"code_medical_license_file\": \"\\\"test_code_medical_license_file\\\"\",\n  \"gender\": \"\\\"test_gender\\\"\",\n  \"medical_type\": \"\\\"test_medical_type\\\"\",\n  \"legal_representative\": \"\\\"test_legal_representative\\\"\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "url": {
+            "raw": "{{host}}/${entityName.toLowerCase()}/edit?id=1",
+            "host": [
+              "{{host}}"
+            ],
+            "path": [
+              "supplier",
+              "edit"
+            ],
+            "query": [
+              {
+                "key": "id",
+                "value": "1"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "Get Supplier by ID",
+        "request": {
+          "method": "GET",
+          "header": [
+            {
+              "key": "authorization",
+              "value": "{{auth_jwt}}",
+              "type": "text"
+            },
+            {
+              "key": "x-api-key",
+              "value": "{{secret_api_key}}",
+              "type": "text"
+            }
+          ],
+          "url": {
+            "raw": "{{host}}/${entityName.toLowerCase()}/get?id=1",
+            "host": [
+              "{{host}}"
+            ],
+            "path": [
+              "supplier",
+              "get"
+            ],
+            "query": [
+              {
+                "key": "id",
+                "value": "1"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "Get All Supplier",
+        "request": {
+          "method": "GET",
+          "header": [
+            {
+              "key": "authorization",
+              "value": "{{auth_jwt}}",
+              "type": "text"
+            },
+            {
+              "key": "x-api-key",
+              "value": "{{secret_api_key}}",
+              "type": "text"
+            }
+          ],
+          "url": {
+            "raw": "{{host}}/${entityName.toLowerCase()}/get_all",
+            "host": [
+              "{{host}}"
+            ],
+            "path": [
+              "supplier",
+              "get_all"
+            ]
+          }
+        }
+      },
+      {
+        "name": "Delete Supplier",
+        "request": {
+          "method": "DELETE",
+          "header": [
+            {
+              "key": "authorization",
+              "value": "{{auth_jwt}}",
+              "type": "text"
+            },
+            {
+              "key": "x-api-key",
+              "value": "{{secret_api_key}}",
+              "type": "text"
+            }
+          ],
+          "url": {
+            "raw": "{{host}}/${entityName.toLowerCase()}/delete?id=1",
+            "host": [
+              "{{host}}"
+            ],
+            "path": [
+              "supplier",
+              "delete"
+            ],
+            "query": [
+              {
+                "key": "id",
+                "value": "1"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

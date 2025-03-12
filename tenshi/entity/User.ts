@@ -8,7 +8,7 @@ import { UnitDynamicCentral } from "./UnitDynamicCentral";
   SUPER_ADMIN: This is the user that can be everything.
   LEGAL_REPRESENTATIVE: This is the legal representative/contractor of the suppliers (medical/hospitals).
   CUSTOMER: This is the normal user to login into app to use all the flow of the app.
-  FINANCE_ENTITY: This is the cooperative/company of the last user registered.
+  FINANCE_ENTITY: This is the cooperative/company of the preview user registered.
 
  We have the column finance entity, this is for normal users (customers), that need to have the finance entity match
 */

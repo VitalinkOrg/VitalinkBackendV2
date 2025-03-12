@@ -17,6 +17,8 @@
     "ROUTE_DONT_EXISTS": "Route doesn't exists",
     "RESET_PASSWORD": "Change Password Success",
 
+    "ERROR_BODY_JSON": "The body json has an structure error",
+
     "INVALID_TOKEN": "Invalid JWT",
     "INVALID_API_KEY": "Invalid Api Key",
     "VALID_TOKEN_SUCCESS": "Valid Token Successful",
