@@ -52,6 +52,20 @@ export default class AuthController extends GenericController{
         if(role.is_public == false){
             return httpExec.dynamicError(ConstStatusJson.NOT_FOUND, ConstMessagesJson.ROLE_AUTH_ERROR); 
         }
+
+        //if the role y customer and not have finance entity, return error
+        if(role.code == "CUSTOMER"){
+            if(reqHandler.getRequest().body.finance_entity == null || reqHandler.getRequest().body.finance_entity == undefined){
+                return httpExec.dynamicError(ConstStatusJson.ERROR, ConstMessagesJson.ERROR_ROLE_CUSTOMER);
+            }
+
+            const userFinanceEntity = await this.getRepository().findById(
+                reqHandler.getRequest().body.finance_entity, reqHandler.getLogicalDelete(), null);
+
+            if(userFinanceEntity == null){
+                return httpExec.dynamicError(ConstStatusJson.ERROR, ConstMessagesJson.ERROR_ROLE_CUSTOMER);
+            }
+        }
         
         const jwtObj : JWTObject = {
             id: 0,

@@ -1,4 +1,5 @@
 // src/entity/User.ts
+import { Exclude } from "class-transformer";
 import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne } from "typeorm";
 import { UnitDynamicCentral } from "./UnitDynamicCentral";
 
@@ -10,14 +11,14 @@ import { UnitDynamicCentral } from "./UnitDynamicCentral";
   CUSTOMER: This is the normal user to login into app to use all the flow of the app.
   FINANCE_ENTITY: This is the cooperative/company of the preview user registered.
 
- We have the column finance entity, this is for normal users (customers), that need to have the finance entity match
+ We have the column finance entity, this is for normal users (customers), that need to have the finance entity match, is the only user with this file "required"
 */
 @Entity("users")
 export class User {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ type: "varchar", length: 500})
+  @Column({ type: "varchar", length: 500, unique: true})
   card_id: string;
 
   @ManyToOne(() => UnitDynamicCentral, { eager: true })
@@ -36,7 +37,8 @@ export class User {
   @Column({ type: "varchar", length: 250, nullable: true, default: null })
   phone_number: string | null;
 
-  @Column({ type: "varchar", length: 250 })
+  @Exclude()
+  @Column({ type: "varchar", length: 250, select: false })
   password: string;
 
   @Column({ type: "enum", enum: ["M", "F", "O"], nullable: true, default: null })

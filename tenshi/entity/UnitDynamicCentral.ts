@@ -33,7 +33,8 @@ export class UnitDynamicCentral {
                                 "MEDICAL_PRODUCT",
                                 "ASSESSMENT",
                                 "ASSESSMENT_DETAIL",
-                                "APPOINTMENT_RESULT"], 
+                                "APPOINTMENT_RESULT",
+                                "LANGUAGE_PROFICIENCY"], 
                                 nullable: true })
   type: string | null;
 

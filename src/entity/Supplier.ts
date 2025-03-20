@@ -20,7 +20,7 @@ export class Supplier {
   @JoinColumn({ name: "id_type", referencedColumnName: "code" })
   id_type: UnitDynamicCentral;
 
-  @Column({ type: "varchar", length: 100, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
+  @Column({ type: "varchar", length: 100, unique: true, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   card_id: string;
 
   @Column({ type: "varchar", length: 200, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })

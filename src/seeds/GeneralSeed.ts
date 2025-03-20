@@ -61,7 +61,7 @@ async function runSeed() {
     /*
         Unit Dynamic Central Data Set
     */
-    const udcRepository = dataSource.getRepository(UnitDynamicCentral);
+    const udcRepository = await dataSource.getRepository(UnitDynamicCentral);
 
     //Reservation Types
     const reservationTypes = [
@@ -400,6 +400,54 @@ async function runSeed() {
     await udcRepository.upsert(appointmentResults, ["code"]);
     
 
+
+    const languageProficiencyLevels = [
+        { 
+            name: "Nativo", 
+            code: "NATIVE", 
+            type: "LANGUAGE_PROFICIENCY" as "LANGUAGE_PROFICIENCY",
+            description: "Habla el idioma como lengua materna con fluidez total en todas las áreas." 
+        },
+        { 
+            name: "Bilingüe", 
+            code: "BILINGUAL", 
+            type: "LANGUAGE_PROFICIENCY" as "LANGUAGE_PROFICIENCY",
+            description: "Maneja el idioma al nivel de un hablante nativo, aunque no sea su lengua materna." 
+        },
+        { 
+            name: "Fluido", 
+            code: "FLUENT", 
+            type: "LANGUAGE_PROFICIENCY" as "LANGUAGE_PROFICIENCY",
+            description: "Habla el idioma con soltura y facilidad en entornos profesionales y cotidianos." 
+        },
+        { 
+            name: "Avanzado", 
+            code: "ADVANCED", 
+            type: "LANGUAGE_PROFICIENCY" as "LANGUAGE_PROFICIENCY",
+            description: "Puede comunicarse con confianza en la mayoría de las situaciones, aunque con errores ocasionales." 
+        },
+        { 
+            name: "Intermedio", 
+            code: "INTERMEDIATE", 
+            type: "LANGUAGE_PROFICIENCY" as "LANGUAGE_PROFICIENCY",
+            description: "Maneja conversaciones básicas y algunas complejas con limitaciones." 
+        },
+        { 
+            name: "Básico", 
+            code: "BASIC", 
+            type: "LANGUAGE_PROFICIENCY" as "LANGUAGE_PROFICIENCY",
+            description: "Capaz de entender y expresar frases simples y conceptos básicos." 
+        },
+        { 
+            name: "Principiante", 
+            code: "BEGINNER", 
+            type: "LANGUAGE_PROFICIENCY" as "LANGUAGE_PROFICIENCY",
+            description: "Tiene un conocimiento mínimo del idioma y puede decir algunas palabras y frases básicas." 
+        }
+    ];
+    
+    await udcRepository.upsert(languageProficiencyLevels, ["code"]);
+    
 
     console.log("General seed done!");
 }

@@ -30,6 +30,7 @@ import { ProcedureBySpecialty } from '@entity/ProcedureBySpecialty';
 import { Review } from '@entity/Review';
 import { ReviewDetail } from '@entity/ReviewDetail';
 import { SpecialtyBySupplier } from '@entity/SpecialtyBySupplier';
+import { LanguageSupplier } from '@entity/LanguageSupplier';
 
 
 //*************************************** */
@@ -122,6 +123,7 @@ export const TenshiMain = async() => {
       Review,
       ReviewDetail,
       SpecialtyBySupplier,
+      LanguageSupplier,
     ]);
 
     //Cors handler middle ware

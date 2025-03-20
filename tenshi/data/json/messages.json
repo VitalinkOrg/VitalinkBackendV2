@@ -18,6 +18,7 @@
     "RESET_PASSWORD": "Change Password Success",
 
     "ERROR_BODY_JSON": "The body json has an structure error",
+    "ERROR_ROLE_CUSTOMER": "The patient need a verified Finance Entity Associated",
 
     "INVALID_TOKEN": "Invalid JWT",
     "INVALID_API_KEY": "Invalid Api Key",
