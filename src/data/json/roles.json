@@ -98,6 +98,36 @@
             "GET_BY_ID",
             "GET_ALL"
           ]
+        },
+        {
+          "name": "SPECIALTY_BY_SUPPLIER",
+          "function_list": [ 
+            "CREATE",
+            "UPDATE",
+            "DELETE",
+            "GET_BY_ID",
+            "GET_ALL"
+          ]
+        },
+        {
+          "name": "PROCEDURE_BY_SPECIALTY",
+          "function_list": [ 
+            "CREATE",
+            "UPDATE",
+            "DELETE",
+            "GET_BY_ID",
+            "GET_ALL"
+          ]
+        },
+        {
+          "name": "PACKAGE",
+          "function_list": [ 
+            "CREATE",
+            "UPDATE",
+            "DELETE",
+            "GET_BY_ID",
+            "GET_ALL"
+          ]
         } 
       ],
       "screens": [

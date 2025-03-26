@@ -17,7 +17,7 @@ export class Package {
   @PrimaryGeneratedColumn({ type: "int", unsigned: true })
   id: number;
 
-  @ManyToOne(() => ProcedureBySpecialty, { eager: true })
+  @ManyToOne(() => ProcedureBySpecialty)
   @JoinColumn({ name: "procedure", referencedColumnName: "id" })
   procedure: ProcedureBySpecialty;
 
@@ -29,8 +29,8 @@ export class Package {
   @Column({ type: "decimal", scale: 2, nullable: false })
   reference_price: number;
 
-  @Column({ type: "decimal", scale: 2, nullable: true, default: 0 })
-  discount: number;
+  @Column({ type: "decimal", scale: 2, nullable: true, default: null })
+  discount: number | null;
 
   /*
   {
@@ -46,7 +46,7 @@ export class Package {
   */
  //This fill the list of assesments to check the list of "services" in packages
   @Column({ type: "json", nullable: true })
-  services_offer: any;
+  services_offer: any|null;
 
   @Column({ type: "varchar", length: 500, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   description: string | null;

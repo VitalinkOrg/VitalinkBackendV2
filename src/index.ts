@@ -58,6 +58,9 @@ import DocumentRoutes from '@index/modules/01_General/document/routers/DocumentR
 
 import LocationRoutes from '@modules/02_Vitalink/location/routers/LocationRoutes';
 import SupplierRoutes from '@modules/02_Vitalink/supplier/routers/SupplierRoutes';
+import SpecialtyBySupplierRoutes from '@modules/02_Vitalink/specialtybysupplier/routers/SpecialtyBySupplierRoutes';
+import ProcedureBySpecialtyRoutes from '@modules/02_Vitalink/procedurebyspecialty/routers/ProcedureBySpecialtyRoutes';
+import PackageRoutes from '@modules/02_Vitalink/package/routers/PackageRoutes';
 
 //Import internal classes and functions
 import StartMiddleware from '@TenshiJS/middlewares/StartMiddleware';
@@ -170,6 +173,9 @@ export const TenshiMain = async() => {
 
     app.use(new LocationRoutes().getRouter());
     app.use(new SupplierRoutes().getRouter());
+    app.use(new SpecialtyBySupplierRoutes().getRouter());
+    app.use(new ProcedureBySpecialtyRoutes().getRouter());
+    app.use(new PackageRoutes().getRouter());
 
     //*************************************** */
     //       NOT FOUND ROUTE MIDDLEWARE

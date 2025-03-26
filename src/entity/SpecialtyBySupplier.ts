@@ -19,7 +19,7 @@ export class SpecialtyBySupplier {
   @PrimaryGeneratedColumn({ type: "int", unsigned: true })
   id: number;
 
-  @ManyToOne(() => Supplier, { eager: true })
+  @ManyToOne(() => Supplier)
   @JoinColumn({ name: "supplier", referencedColumnName: "id" })
   supplier: Supplier;
 

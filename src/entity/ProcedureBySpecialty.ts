@@ -25,7 +25,7 @@ export class ProcedureBySpecialty {
   @PrimaryGeneratedColumn({ type: "int", unsigned: true })
   id: number;
 
-  @ManyToOne(() => SpecialtyBySupplier, { eager: true })
+  @ManyToOne(() => SpecialtyBySupplier)
   @JoinColumn({ name: "specialty", referencedColumnName: "id" })
   specialty: SpecialtyBySupplier;
 

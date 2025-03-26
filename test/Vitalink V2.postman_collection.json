@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "05c88d68-7287-4ab6-bf28-9d8306eea75c",
+		"_postman_id": "af830e18-2cb9-451e-92e7-c88f47f6e6a2",
 		"name": "Vitalink V2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "619775"
@@ -443,7 +443,7 @@
 											}
 										],
 										"url": {
-											"raw": "{{host}}/user/get?id=783ae704-73b8-479c-be37-e75418ae0b16",
+											"raw": "{{host}}/user/get?id=bc166f73-048f-4c28-9593-ffa774416f29",
 											"host": [
 												"{{host}}"
 											],
@@ -454,7 +454,7 @@
 											"query": [
 												{
 													"key": "id",
-													"value": "783ae704-73b8-479c-be37-e75418ae0b16"
+													"value": "bc166f73-048f-4c28-9593-ffa774416f29"
 												}
 											]
 										}
@@ -631,7 +631,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/udc/get_by_code?code=CLUSTER7777",
+									"raw": "{{host}}/udc/get_by_code?code=MEDICAL_PROCEDURE",
 									"host": [
 										"{{host}}"
 									],
@@ -642,7 +642,7 @@
 									"query": [
 										{
 											"key": "code",
-											"value": "CLUSTER7777"
+											"value": "MEDICAL_PROCEDURE"
 										}
 									]
 								}
@@ -730,7 +730,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/udc/get_all?type=CAMP_TYPES&page=1&size=10",
+									"raw": "{{host}}/udc/get_all?type=MEDICAL_PROCEDURE&page=1&size=10",
 									"host": [
 										"{{host}}"
 									],
@@ -741,7 +741,7 @@
 									"query": [
 										{
 											"key": "type",
-											"value": "CAMP_TYPES"
+											"value": "MEDICAL_PROCEDURE"
 										},
 										{
 											"key": "page",
@@ -1404,7 +1404,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"id_type\": \"PHYSICAL_DNI\",\n  \"card_id\": \"12345678X\",\n  \"email\": \"juan.perez@hospitalcentral.com\",\n  \"medical_type\": \"GENERAL_MEDICAL\",\n  \"legal_representative\": \"bc166f73-048f-4c28-9593-ffa774416f29\"\n  //\"num_medical_enrollment\": \"MED-987654\",\n  //\"name\": \"Dr. Juan Pérez\",\n  //\"phone_number\": \"+506 11 2345-6789\",\n  //\"country_iso_code\": \"CRC\",\n  //\"province\": \"San Jose\",\n  //\"city_name\": \"Guadalupe\",\n  //\"postal_code\": \"1301\",\n  //\"profile_picture_url\": \"https://hospitalcentral.com/profiles/juan_perez.jpg\",\n  //\"description\": \"Especialista en cirugía general con más de 10 años de experiencia en hospitales de alto nivel.\",\n  //\"address\": \"Av. 13 y Calle 50\",\n  //\"street_number\": \"123\",\n  //\"floor\": \"5\",\n  //\"door_number\": \"A\",\n  //\"latitude\": \"-34.9215\",\n  //\"longitude\": \"-57.9545\",\n  //\"experience_years\": \"15\",\n  //\"patients_number\": \"5000\",\n  //\"is_hospital\": false,\n  //\"our_history\": \"Fundada en 2005, nuestra clínica ha atendido a más de 50,000 pacientes.\",\n  //\"mission\": \"Brindar atención médica de calidad con un enfoque humanitario.\",\n  //\"vision\": \"Ser un referente en salud en Latinoamérica.\",\n  //\"code_card_id_file\": \"ID12345678X\",\n  //\"code_medical_license_file\": \"MED-987654\",\n  //\"gender\": \"M\"\n}\n",
+									"raw": "{\n  \"id_type\": \"PHYSICAL_DNI\",\n  \"card_id\": \"12345678X\",\n  \"email\": \"juan.perez@hospitalcentral.com\",\n  \"medical_type\": \"GENERAL_MEDICAL\",\n  \"legal_representative\": \"d0b47084-2888-4e7e-9347-0aa62fb6aa8f\"\n  //\"num_medical_enrollment\": \"MED-987654\",\n  //\"name\": \"Dr. Juan Pérez\",\n  //\"phone_number\": \"+506 11 2345-6789\",\n  //\"country_iso_code\": \"CRC\",\n  //\"province\": \"San Jose\",\n  //\"city_name\": \"Guadalupe\",\n  //\"postal_code\": \"1301\",\n  //\"profile_picture_url\": \"https://hospitalcentral.com/profiles/juan_perez.jpg\",\n  //\"description\": \"Especialista en cirugía general con más de 10 años de experiencia en hospitales de alto nivel.\",\n  //\"address\": \"Av. 13 y Calle 50\",\n  //\"street_number\": \"123\",\n  //\"floor\": \"5\",\n  //\"door_number\": \"A\",\n  //\"latitude\": \"-34.9215\",\n  //\"longitude\": \"-57.9545\",\n  //\"experience_years\": \"15\",\n  //\"patients_number\": \"5000\",\n  //\"is_hospital\": false,\n  //\"our_history\": \"Fundada en 2005, nuestra clínica ha atendido a más de 50,000 pacientes.\",\n  //\"mission\": \"Brindar atención médica de calidad con un enfoque humanitario.\",\n  //\"vision\": \"Ser un referente en salud en Latinoamérica.\",\n  //\"code_card_id_file\": \"ID12345678X\",\n  //\"code_medical_license_file\": \"MED-987654\",\n  //\"gender\": \"M\"\n}\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1442,7 +1442,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  //\"id_type\": \"PHYSICAL_DNI\",\n  //\"card_id\": \"12345678X\",\n  \"email\": \"juan.perez@hospitalcentral.com\",\n  \"medical_type\": \"GENERAL_MEDICAL\",\n  \"legal_representative\": \"bc166f73-048f-4c28-9593-ffa774416f29\"\n  //\"num_medical_enrollment\": \"MED-987654\",\n  //\"name\": \"Dr. Juan Pérez\",\n  //\"phone_number\": \"+506 11 2345-6789\",\n  //\"country_iso_code\": \"CRC\",\n  //\"province\": \"San Jose\",\n  //\"city_name\": \"Guadalupe\",\n  //\"postal_code\": \"1301\",\n  //\"profile_picture_url\": \"https://hospitalcentral.com/profiles/juan_perez.jpg\",\n  //\"description\": \"Especialista en cirugía general con más de 10 años de experiencia en hospitales de alto nivel.\",\n  //\"address\": \"Av. 13 y Calle 50\",\n  //\"street_number\": \"123\",\n  //\"floor\": \"5\",\n  //\"door_number\": \"A\",\n  //\"latitude\": \"-34.9215\",\n  //\"longitude\": \"-57.9545\",\n  //\"experience_years\": \"15\",\n  //\"patients_number\": \"5000\",\n  //\"is_hospital\": false,\n  //\"our_history\": \"Fundada en 2005, nuestra clínica ha atendido a más de 50,000 pacientes.\",\n  //\"mission\": \"Brindar atención médica de calidad con un enfoque humanitario.\",\n  //\"vision\": \"Ser un referente en salud en Latinoamérica.\",\n  //\"code_card_id_file\": \"ID12345678X\",\n  //\"code_medical_license_file\": \"MED-987654\",\n  //\"gender\": \"M\"\n}\n",
+									"raw": "{\n  //\"id_type\": \"PHYSICAL_DNI\",\n  //\"card_id\": \"12345678X\",\n  //\"email\": \"juan.perez@hospitalcentral.com\",\n  //\"medical_type\": \"GENERAL_MEDICAL\",\n  //\"legal_representative\": \"d0b47084-2888-4e7e-9347-0aa62fb6aa8f\",\n  //\"num_medical_enrollment\": \"MED-987654\",\n  \"name\": \"Dr. Juan Pérez\"\n  //\"phone_number\": \"+506 11 2345-6789\",\n  //\"country_iso_code\": \"CRC\",\n  //\"province\": \"San Jose\",\n  //\"city_name\": \"Guadalupe\",\n  //\"postal_code\": \"1301\",\n  //\"profile_picture_url\": \"https://hospitalcentral.com/profiles/juan_perez.jpg\",\n  //\"description\": \"Especialista en cirugía general con más de 10 años de experiencia en hospitales de alto nivel.\",\n  //\"address\": \"Av. 13 y Calle 50\",\n  //\"street_number\": \"123\",\n  //\"floor\": \"5\",\n  //\"door_number\": \"A\",\n  //\"latitude\": \"-34.9215\",\n  //\"longitude\": \"-57.9545\",\n  //\"experience_years\": \"15\",\n  //\"patients_number\": \"5000\",\n  //\"is_hospital\": false,\n  //\"our_history\": \"Fundada en 2005, nuestra clínica ha atendido a más de 50,000 pacientes.\",\n  //\"mission\": \"Brindar atención médica de calidad con un enfoque humanitario.\",\n  //\"vision\": \"Ser un referente en salud en Latinoamérica.\",\n  //\"code_card_id_file\": \"ID12345678X\",\n  //\"code_medical_license_file\": \"MED-987654\",\n  //\"gender\": \"M\"\n}\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1450,7 +1450,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}/supplier/edit?id=1",
+									"raw": "{{host}}/supplier/edit?id=7",
 									"host": [
 										"{{host}}"
 									],
@@ -1461,7 +1461,7 @@
 									"query": [
 										{
 											"key": "id",
-											"value": "1"
+											"value": "7"
 										}
 									]
 								}
@@ -1485,7 +1485,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/supplier/get?id=1",
+									"raw": "{{host}}/supplier/get?id=7",
 									"host": [
 										"{{host}}"
 									],
@@ -1496,7 +1496,7 @@
 									"query": [
 										{
 											"key": "id",
-											"value": "1"
+											"value": "7"
 										}
 									]
 								}
@@ -1555,6 +1555,564 @@
 									],
 									"path": [
 										"supplier",
+										"delete"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "SpecialtyBySupplier",
+					"item": [
+						{
+							"name": "Create SpecialtyBySupplier",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"supplier\": 7,\n  \"medical_specialty\": \"CARDIOLOGY\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/specialtybysupplier/add",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"specialtybysupplier",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update SpecialtyBySupplier",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"supplier\": 7,\n  \"medical_specialty\": \"CARDIOLOGY\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/specialtybysupplier/edit?id=10",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"specialtybysupplier",
+										"edit"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get SpecialtyBySupplier by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/specialtybysupplier/get?id=10",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"specialtybysupplier",
+										"get"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All SpecialtyBySupplier",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/specialtybysupplier/get_all",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"specialtybysupplier",
+										"get_all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete SpecialtyBySupplier",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/specialtybysupplier/delete?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"specialtybysupplier",
+										"delete"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ProcedureBySpecialty",
+					"item": [
+						{
+							"name": "Create ProcedureBySpecialty",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"specialty\": 10,\n  \"procedure\": \"CARDIO_INTERVENTION\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/procedurebyspecialty/add",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"procedurebyspecialty",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update ProcedureBySpecialty",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"specialty\": \"CARDIOLOGIA\",\n  \"procedure\": \"ECOCARDIOGRAMA\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/procedurebyspecialty/edit?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"procedurebyspecialty",
+										"edit"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get ProcedureBySpecialty by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/procedurebyspecialty/get?id=14",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"procedurebyspecialty",
+										"get"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "14"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All ProcedureBySpecialty",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/procedurebyspecialty/get_all",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"procedurebyspecialty",
+										"get_all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete ProcedureBySpecialty",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/procedurebyspecialty/delete?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"procedurebyspecialty",
+										"delete"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Package",
+					"item": [
+						{
+							"name": "Create Package",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"procedure\": 14,\n  \"product\": \"CARDIO_CATH\",\n  \"reference_price\": 120000\n // \"discount\": 0,\n  /*\"services_offer\": \"  {\n    \"ASSESSMENT_DETAILS\": [\n        \"GENERAL_ANESTHESIA\",\n        \"REGIONAL_ANESTHESIA\",\n        \"POSTOP_PAIN_CONTROL\",\n        \"POSTOP_ULTRASOUND\",\n        \"POSTOP_CT\",\n        \"POSTOP_PHYSIOTHERAPY\"\n    ]\n  }\",*/\n  //\"description\": \"Paquete completo de diagnóstico cardiológico\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/package/add",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"package",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Package",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"procedure\": 14,\n  \"product\": \"CARDIO_CATH\",\n  \"reference_price\": 120000,\n  \"discount\": 0\n  /*\"services_offer\": \"  {\n    \"ASSESSMENT_DETAILS\": [\n        \"GENERAL_ANESTHESIA\",\n        \"REGIONAL_ANESTHESIA\",\n        \"POSTOP_PAIN_CONTROL\",\n        \"POSTOP_ULTRASOUND\",\n        \"POSTOP_CT\",\n        \"POSTOP_PHYSIOTHERAPY\"\n    ]\n  }\",*/\n  //\"description\": \"Paquete completo de diagnóstico cardiológico\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/package/edit?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"package",
+										"edit"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Package by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/package/get?id=16",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"package",
+										"get"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "16"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Package",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/package/get_all",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"package",
+										"get_all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Package",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/package/delete?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"package",
 										"delete"
 									],
 									"query": [
