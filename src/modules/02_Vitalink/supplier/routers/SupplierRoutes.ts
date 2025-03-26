@@ -49,7 +49,7 @@ class SupplierRoutes extends GenericRoutes {
                 req.body.card_id,
                 req.body.email,
                 req.body.legal_representative,
-                req.body.medical_type
+                req.body.medical_type_code
             ];
             
             const requestHandler: RequestHandler = 

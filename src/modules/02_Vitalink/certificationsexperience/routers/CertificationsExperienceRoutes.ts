@@ -2,15 +2,15 @@ import { Request, Response,
          RequestHandler, RequestHandlerBuilder, 
          GenericController, GenericRoutes,
          FindManyOptions} from "@modules/index";
-import { SpecialtyBySupplier } from "@index/entity/SpecialtyBySupplier";
-import SpecialtyBySupplierDTO from "@modules/02_Vitalink/specialtybysupplier/dtos/SpecialtyBySupplierDTO";
+import { CertificationsExperience } from "@index/entity/CertificationsExperience";
+import CertificationsExperienceDTO from "@modules/02_Vitalink/certificationsexperience/dtos/CertificationsExperienceDTO";
 
-class SpecialtyBySupplierRoutes extends GenericRoutes {
+class CertificationsExperienceRoutes extends GenericRoutes {
     
     private filters: FindManyOptions = {};
     constructor() {
-        super(new GenericController(SpecialtyBySupplier), "/specialtybysupplier");
-        this.filters.relations = ["supplier","medical_specialty"];
+        super(new GenericController(CertificationsExperience), "/certificationsexperience");
+        this.filters.relations = ["supplier","experience_type"];
     }
 
     protected initializeRoutes() {
@@ -18,9 +18,10 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
 
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
-                                    .setAdapter(new SpecialtyBySupplierDTO(req))
-                                    .setMethod("getSpecialtyBySupplierById")
-                                    .isValidateRole("SPECIALTY_BY_SUPPLIER")
+                                    .setAdapter(new CertificationsExperienceDTO(req))
+                                    .setMethod("getCertificationsExperienceById")
+                                    .isValidateRole("CERTIFICATIONS_EXPERIENCE")
+                                    .isLogicalDelete()
                                     .setFilters(this.filters)
                                     .build();
         
@@ -31,9 +32,10 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
         
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
-                                    .setAdapter(new SpecialtyBySupplierDTO(req))
-                                    .setMethod("getSpecialtyBySuppliers")
-                                    .isValidateRole("SPECIALTY_BY_SUPPLIER")
+                                    .setAdapter(new CertificationsExperienceDTO(req))
+                                    .setMethod("getCertificationsExperiences")
+                                    .isValidateRole("CERTIFICATIONS_EXPERIENCE")
+                                    .isLogicalDelete()
                                     .setFilters(this.filters)
                                     .build();
         
@@ -44,15 +46,18 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
 
             const requiredBodyList: Array<string> = [
                 req.body.supplier_id,
-                req.body.medical_specialty_code
+                req.body.start_date,
+                req.body.name,
+                req.body.company_name,
+                req.body.experience_type_code
             ];
             
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
-                                    .setAdapter(new SpecialtyBySupplierDTO(req))
-                                    .setMethod("insertSpecialtyBySupplier")
+                                    .setAdapter(new CertificationsExperienceDTO(req))
+                                    .setMethod("insertCertificationsExperience")
                                     .setRequiredFiles(requiredBodyList)
-                                    .isValidateRole("SPECIALTY_BY_SUPPLIER")
+                                    .isValidateRole("CERTIFICATIONS_EXPERIENCE")
                                     .build();
         
             this.getController().insert(requestHandler);
@@ -61,9 +66,9 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
         this.router.put(`${this.getRouterName()}/edit`, async (req: Request, res: Response) => {
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
-                                    .setAdapter(new SpecialtyBySupplierDTO(req))
-                                    .setMethod("updateSpecialtyBySupplier")
-                                    .isValidateRole("SPECIALTY_BY_SUPPLIER")
+                                    .setAdapter(new CertificationsExperienceDTO(req))
+                                    .setMethod("updateCertificationsExperience")
+                                    .isValidateRole("CERTIFICATIONS_EXPERIENCE")
                                     .build();
         
             this.getController().update(requestHandler);
@@ -72,9 +77,10 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
         this.router.delete(`${this.getRouterName()}/delete`, async (req: Request, res: Response) => {
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
-                                    .setAdapter(new SpecialtyBySupplierDTO(req))
-                                    .setMethod("deleteSpecialtyBySupplier")
-                                    .isValidateRole("SPECIALTY_BY_SUPPLIER")
+                                    .setAdapter(new CertificationsExperienceDTO(req))
+                                    .setMethod("deleteCertificationsExperience")
+                                    .isValidateRole("CERTIFICATIONS_EXPERIENCE")
+                                    .isLogicalDelete()
                                     .build();
         
             this.getController().delete(requestHandler);
@@ -82,4 +88,4 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
     }
 }
 
-export default SpecialtyBySupplierRoutes;
+export default CertificationsExperienceRoutes;

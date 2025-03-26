@@ -32,15 +32,15 @@ export class CertificationsExperience  {
   company_name: string;
 
   @Column({ type: "varchar", length: 250, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
-  province: string;
+  province: string | null;
 
   @Column({ type: "varchar", length: 500, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
-  address: string;
+  address: string | null;
 
   @Column({ type: "varchar", length: 250, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   city_name: string | null;
 
-  @Column({ type: "varchar", length: 10, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
+  @Column({ type: "varchar", length: 10, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", default: "CRC" })
   country_iso_code: string;
 
   @Column({ type: "boolean", default: false })

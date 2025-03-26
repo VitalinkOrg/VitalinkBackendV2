@@ -38,7 +38,7 @@ export default class SupplierDTO implements IAdapterFromBody {
         entity.code_card_id_file = this.req.body.code_card_id_file;
         entity.code_medical_license_file = this.req.body.code_medical_license_file;
         entity.gender = this.req.body.gender;
-        entity.medical_type = this.req.body.medical_type;
+        entity.medical_type = this.req.body.medical_type_code;
         entity.legal_representative = this.req.body.legal_representative;
      
         if (isCreating) {

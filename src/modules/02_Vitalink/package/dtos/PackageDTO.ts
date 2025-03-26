@@ -11,8 +11,8 @@ export default class PackageDTO implements IAdapterFromBody {
 
     private getEntity(isCreating: boolean): Package {
         const entity = new Package();
-        entity.procedure = this.req.body.procedure;
-        entity.product = this.req.body.product;
+        entity.procedure = this.req.body.procedure_by_specialty_id;
+        entity.product = this.req.body.product_code;
         entity.reference_price = this.req.body.reference_price;
         entity.discount = this.req.body.discount;
         entity.services_offer = this.req.body.services_offer;

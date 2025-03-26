@@ -43,8 +43,8 @@ class ProcedureBySpecialtyRoutes extends GenericRoutes {
         this.router.post(`${this.getRouterName()}/add`, async (req: Request, res: Response) => {
 
             const requiredBodyList: Array<string> = [
-                req.body.specialty,
-                req.body.procedure
+                req.body.specialty_id,
+                req.body.procedure_code
             ];
             
             const requestHandler: RequestHandler = 

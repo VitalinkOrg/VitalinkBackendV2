@@ -7,7 +7,7 @@ export class LanguageSupplier  {
   @PrimaryGeneratedColumn({ type: "int", unsigned: true })
   id: number;
 
-  @ManyToOne(() => Supplier, { eager: true })
+  @ManyToOne(() => Supplier)
   @JoinColumn({ name: "supplier_id", referencedColumnName: "id" })
   supplier: Supplier;
 

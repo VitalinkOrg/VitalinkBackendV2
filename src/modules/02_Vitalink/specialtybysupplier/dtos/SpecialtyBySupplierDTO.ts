@@ -11,8 +11,8 @@ export default class SpecialtyBySupplierDTO implements IAdapterFromBody {
 
     private getEntity(isCreating: boolean): SpecialtyBySupplier {
         const entity = new SpecialtyBySupplier();
-        entity.supplier = this.req.body.supplier;
-        entity.medical_specialty = this.req.body.medical_specialty;
+        entity.supplier = this.req.body.supplier_id;
+        entity.medical_specialty = this.req.body.medical_specialty_code;
      
         if (isCreating) {
             entity.created_date = new Date();

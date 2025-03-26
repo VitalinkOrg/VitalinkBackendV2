@@ -45,7 +45,7 @@ class PackageRoutes extends GenericRoutes {
         this.router.post(`${this.getRouterName()}/add`, async (req: Request, res: Response) => {
 
             const requiredBodyList: Array<string> = [
-                req.body.procedure,
+                req.body.procedure_by_specialty_id,
                 req.body.reference_price
             ];
             

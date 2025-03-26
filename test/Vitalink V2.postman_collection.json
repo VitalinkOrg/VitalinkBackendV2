@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "af830e18-2cb9-451e-92e7-c88f47f6e6a2",
+		"_postman_id": "e91001e2-060a-4b89-b575-d28cb4e7eb64",
 		"name": "Vitalink V2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "619775"
@@ -1404,7 +1404,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"id_type\": \"PHYSICAL_DNI\",\n  \"card_id\": \"12345678X\",\n  \"email\": \"juan.perez@hospitalcentral.com\",\n  \"medical_type\": \"GENERAL_MEDICAL\",\n  \"legal_representative\": \"d0b47084-2888-4e7e-9347-0aa62fb6aa8f\"\n  //\"num_medical_enrollment\": \"MED-987654\",\n  //\"name\": \"Dr. Juan Pérez\",\n  //\"phone_number\": \"+506 11 2345-6789\",\n  //\"country_iso_code\": \"CRC\",\n  //\"province\": \"San Jose\",\n  //\"city_name\": \"Guadalupe\",\n  //\"postal_code\": \"1301\",\n  //\"profile_picture_url\": \"https://hospitalcentral.com/profiles/juan_perez.jpg\",\n  //\"description\": \"Especialista en cirugía general con más de 10 años de experiencia en hospitales de alto nivel.\",\n  //\"address\": \"Av. 13 y Calle 50\",\n  //\"street_number\": \"123\",\n  //\"floor\": \"5\",\n  //\"door_number\": \"A\",\n  //\"latitude\": \"-34.9215\",\n  //\"longitude\": \"-57.9545\",\n  //\"experience_years\": \"15\",\n  //\"patients_number\": \"5000\",\n  //\"is_hospital\": false,\n  //\"our_history\": \"Fundada en 2005, nuestra clínica ha atendido a más de 50,000 pacientes.\",\n  //\"mission\": \"Brindar atención médica de calidad con un enfoque humanitario.\",\n  //\"vision\": \"Ser un referente en salud en Latinoamérica.\",\n  //\"code_card_id_file\": \"ID12345678X\",\n  //\"code_medical_license_file\": \"MED-987654\",\n  //\"gender\": \"M\"\n}\n",
+									"raw": "{\n  \"id_type\": \"PHYSICAL_DNI\",\n  \"card_id\": \"12345678X\",\n  \"email\": \"juan.perez@hospitalcentral.com\",\n  \"medical_type_code\": \"GENERAL_MEDICAL\",\n  \"legal_representative\": \"d0b47084-2888-4e7e-9347-0aa62fb6aa8f\"\n  //\"num_medical_enrollment\": \"MED-987654\",\n  //\"name\": \"Dr. Juan Pérez\",\n  //\"phone_number\": \"+506 11 2345-6789\",\n  //\"country_iso_code\": \"CRC\",\n  //\"province\": \"San Jose\",\n  //\"city_name\": \"Guadalupe\",\n  //\"postal_code\": \"1301\",\n  //\"profile_picture_url\": \"https://hospitalcentral.com/profiles/juan_perez.jpg\",\n  //\"description\": \"Especialista en cirugía general con más de 10 años de experiencia en hospitales de alto nivel.\",\n  //\"address\": \"Av. 13 y Calle 50\",\n  //\"street_number\": \"123\",\n  //\"floor\": \"5\",\n  //\"door_number\": \"A\",\n  //\"latitude\": \"-34.9215\",\n  //\"longitude\": \"-57.9545\",\n  //\"experience_years\": \"15\",\n  //\"patients_number\": \"5000\",\n  //\"is_hospital\": false,\n  //\"our_history\": \"Fundada en 2005, nuestra clínica ha atendido a más de 50,000 pacientes.\",\n  //\"mission\": \"Brindar atención médica de calidad con un enfoque humanitario.\",\n  //\"vision\": \"Ser un referente en salud en Latinoamérica.\",\n  //\"code_card_id_file\": \"ID12345678X\",\n  //\"code_medical_license_file\": \"MED-987654\",\n  //\"gender\": \"M\"\n}\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1442,7 +1442,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  //\"id_type\": \"PHYSICAL_DNI\",\n  //\"card_id\": \"12345678X\",\n  //\"email\": \"juan.perez@hospitalcentral.com\",\n  //\"medical_type\": \"GENERAL_MEDICAL\",\n  //\"legal_representative\": \"d0b47084-2888-4e7e-9347-0aa62fb6aa8f\",\n  //\"num_medical_enrollment\": \"MED-987654\",\n  \"name\": \"Dr. Juan Pérez\"\n  //\"phone_number\": \"+506 11 2345-6789\",\n  //\"country_iso_code\": \"CRC\",\n  //\"province\": \"San Jose\",\n  //\"city_name\": \"Guadalupe\",\n  //\"postal_code\": \"1301\",\n  //\"profile_picture_url\": \"https://hospitalcentral.com/profiles/juan_perez.jpg\",\n  //\"description\": \"Especialista en cirugía general con más de 10 años de experiencia en hospitales de alto nivel.\",\n  //\"address\": \"Av. 13 y Calle 50\",\n  //\"street_number\": \"123\",\n  //\"floor\": \"5\",\n  //\"door_number\": \"A\",\n  //\"latitude\": \"-34.9215\",\n  //\"longitude\": \"-57.9545\",\n  //\"experience_years\": \"15\",\n  //\"patients_number\": \"5000\",\n  //\"is_hospital\": false,\n  //\"our_history\": \"Fundada en 2005, nuestra clínica ha atendido a más de 50,000 pacientes.\",\n  //\"mission\": \"Brindar atención médica de calidad con un enfoque humanitario.\",\n  //\"vision\": \"Ser un referente en salud en Latinoamérica.\",\n  //\"code_card_id_file\": \"ID12345678X\",\n  //\"code_medical_license_file\": \"MED-987654\",\n  //\"gender\": \"M\"\n}\n",
+									"raw": "{\n  //\"id_type\": \"PHYSICAL_DNI\",\n  //\"card_id\": \"12345678X\",\n  //\"email\": \"juan.perez@hospitalcentral.com\",\n  //\"medical_type_code\": \"GENERAL_MEDICAL\",\n  //\"legal_representative\": \"d0b47084-2888-4e7e-9347-0aa62fb6aa8f\",\n  //\"num_medical_enrollment\": \"MED-987654\",\n  \"name\": \"Dr. Juan Pérez\"\n  //\"phone_number\": \"+506 11 2345-6789\",\n  //\"country_iso_code\": \"CRC\",\n  //\"province\": \"San Jose\",\n  //\"city_name\": \"Guadalupe\",\n  //\"postal_code\": \"1301\",\n  //\"profile_picture_url\": \"https://hospitalcentral.com/profiles/juan_perez.jpg\",\n  //\"description\": \"Especialista en cirugía general con más de 10 años de experiencia en hospitales de alto nivel.\",\n  //\"address\": \"Av. 13 y Calle 50\",\n  //\"street_number\": \"123\",\n  //\"floor\": \"5\",\n  //\"door_number\": \"A\",\n  //\"latitude\": \"-34.9215\",\n  //\"longitude\": \"-57.9545\",\n  //\"experience_years\": \"15\",\n  //\"patients_number\": \"5000\",\n  //\"is_hospital\": false,\n  //\"our_history\": \"Fundada en 2005, nuestra clínica ha atendido a más de 50,000 pacientes.\",\n  //\"mission\": \"Brindar atención médica de calidad con un enfoque humanitario.\",\n  //\"vision\": \"Ser un referente en salud en Latinoamérica.\",\n  //\"code_card_id_file\": \"ID12345678X\",\n  //\"code_medical_license_file\": \"MED-987654\",\n  //\"gender\": \"M\"\n}\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1590,7 +1590,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"supplier\": 7,\n  \"medical_specialty\": \"CARDIOLOGY\"\n}",
+									"raw": "{\n  \"supplier_id\": 7,\n  \"medical_specialty_code\": \"CARDIOLOGY\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1628,7 +1628,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"supplier\": 7,\n  \"medical_specialty\": \"CARDIOLOGY\"\n}",
+									"raw": "{\n  \"supplier_id\": 7,\n  \"medical_specialty_code\": \"CARDIOLOGY\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1776,7 +1776,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"specialty\": 10,\n  \"procedure\": \"CARDIO_INTERVENTION\"\n}",
+									"raw": "{\n  \"specialty_id\": 10,\n  \"procedure_code\": \"CARDIO_INTERVENTION\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1814,7 +1814,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"specialty\": \"CARDIOLOGIA\",\n  \"procedure\": \"ECOCARDIOGRAMA\"\n}",
+									"raw": "{\n  \"specialty_id\": 10,\n  \"procedure_code\": \"ECOCARDIOGRAMA\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1962,7 +1962,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"procedure\": 14,\n  \"product\": \"CARDIO_CATH\",\n  \"reference_price\": 120000\n // \"discount\": 0,\n  /*\"services_offer\": \"  {\n    \"ASSESSMENT_DETAILS\": [\n        \"GENERAL_ANESTHESIA\",\n        \"REGIONAL_ANESTHESIA\",\n        \"POSTOP_PAIN_CONTROL\",\n        \"POSTOP_ULTRASOUND\",\n        \"POSTOP_CT\",\n        \"POSTOP_PHYSIOTHERAPY\"\n    ]\n  }\",*/\n  //\"description\": \"Paquete completo de diagnóstico cardiológico\"\n}",
+									"raw": "{\n  \"procedure_by_specialty_id\": 14,\n  \"product_code\": \"CARDIO_CATH\",\n  \"reference_price\": 120000\n // \"discount\": 0,\n  /*\"services_offer\": \"  {\n    \"ASSESSMENT_DETAILS\": [\n        \"GENERAL_ANESTHESIA\",\n        \"REGIONAL_ANESTHESIA\",\n        \"POSTOP_PAIN_CONTROL\",\n        \"POSTOP_ULTRASOUND\",\n        \"POSTOP_CT\",\n        \"POSTOP_PHYSIOTHERAPY\"\n    ]\n  }\",*/\n  //\"description\": \"Paquete completo de diagnóstico cardiológico\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2000,7 +2000,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"procedure\": 14,\n  \"product\": \"CARDIO_CATH\",\n  \"reference_price\": 120000,\n  \"discount\": 0\n  /*\"services_offer\": \"  {\n    \"ASSESSMENT_DETAILS\": [\n        \"GENERAL_ANESTHESIA\",\n        \"REGIONAL_ANESTHESIA\",\n        \"POSTOP_PAIN_CONTROL\",\n        \"POSTOP_ULTRASOUND\",\n        \"POSTOP_CT\",\n        \"POSTOP_PHYSIOTHERAPY\"\n    ]\n  }\",*/\n  //\"description\": \"Paquete completo de diagnóstico cardiológico\"\n}",
+									"raw": "{\n  \"procedure_id\": 14,\n  \"product_code\": \"CARDIO_CATH\",\n  \"reference_price\": 120000,\n  \"discount\": 0\n  /*\"services_offer\": \"  {\n    \"ASSESSMENT_DETAILS\": [\n        \"GENERAL_ANESTHESIA\",\n        \"REGIONAL_ANESTHESIA\",\n        \"POSTOP_PAIN_CONTROL\",\n        \"POSTOP_ULTRASOUND\",\n        \"POSTOP_CT\",\n        \"POSTOP_PHYSIOTHERAPY\"\n    ]\n  }\",*/\n  //\"description\": \"Paquete completo de diagnóstico cardiológico\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2113,6 +2113,564 @@
 									],
 									"path": [
 										"package",
+										"delete"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Availability",
+					"item": [
+						{
+							"name": "Create Availability",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"supplier_id\": 7,\n  \"procedure_by_specialty_id\": 14,\n  \"location_id\": 3,\n  \"weekday\": \"MONDAY\",\n  \"from_hour\": \"08:00\",\n  \"to_hour\": \"14:00\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/availability/add",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"availability",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Availability",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  //\"supplier_id\": 7,\n  //\"procedure_by_specialty_id\": 14,\n  //\"location_id\": 3,\n  \"weekday\": \"FRIDAY\"\n  //\"from_hour\": \"08:00\",\n  //\"to_hour\": \"14:00\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/availability/edit?id=21",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"availability",
+										"edit"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "21"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Availability by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/availability/get?id=21",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"availability",
+										"get"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "21"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Availability",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/availability/get_all",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"availability",
+										"get_all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Availability",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/availability/delete?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"availability",
+										"delete"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "CertificationsExperience",
+					"item": [
+						{
+							"name": "Create CertificationsExperience",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"supplier_id\": 5,\n  \"start_date\": \"2020-01-01\",\n  //\"end_date\": \"2022-12-31\",\n  \"name\": \"Certificación en Medicina General\",\n  \"company_name\": \"Universidad de Costa Rica\",\n  //\"province\": \"San José\",\n  //\"address\": \"Av. Central, Edificio Principal\",\n  //\"city_name\": \"San José\",\n  //\"country_iso_code\": \"CR\",\n  //\"is_currently\": false,\n  //\"url_document\": \"https://cdn.ejemplo.com/docs/certificado-123.pdf\",\n  \"experience_type_code\": \"CERTIFICATION\" //EXPERIENCE, EDUCATION, CERTIFICATION, AWARD_RECOGNITION, ACCREDITATION, SCIENTIFIC_PUBLICATION, CONFERENCE_PARTICIPATION, MEDICAL_RESEARCH\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/certificationsexperience/add",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"certificationsexperience",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update CertificationsExperience",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  //\"supplier_id\": 5,\n  //\"start_date\": \"2020-01-01\",\n  //\"end_date\": \"2022-12-31\",\n  //\"name\": \"Certificación en Medicina General\",\n  //\"company_name\": \"Universidad de Costa Rica\",\n  //\"province\": \"San José\",\n  //\"address\": \"Av. Central, Edificio Principal\",\n  //\"city_name\": \"San José\",\n  //\"country_iso_code\": \"CR\",\n  //\"is_currently\": false,\n  \"url_document\": \"https://cdn.com/test.pdf\"\n //\"experience_type_code\": \"CERTIFICATION\" //EXPERIENCE, EDUCATION, CERTIFICATION, AWARD_RECOGNITION, ACCREDITATION, SCIENTIFIC_PUBLICATION, CONFERENCE_PARTICIPATION, MEDICAL_RESEARCH\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/certificationsexperience/edit?id=8",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"certificationsexperience",
+										"edit"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "8"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get CertificationsExperience by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/certificationsexperience/get?id=8",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"certificationsexperience",
+										"get"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "8"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All CertificationsExperience",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/certificationsexperience/get_all",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"certificationsexperience",
+										"get_all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete CertificationsExperience",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/certificationsexperience/delete?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"certificationsexperience",
+										"delete"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "LanguageSupplier",
+					"item": [
+						{
+							"name": "Create LanguageSupplier",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"supplier_id\": 5,\n  \"language_proficiency_code\": \"ADVANCED\",\n  \"language_code\": \"en\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/languagesupplier/add",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"languagesupplier",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update LanguageSupplier",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"supplier_id\": 5,\n  \"language_proficiency_code\": \"ADVANCED\",\n  \"language_code\": \"fr\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/languagesupplier/edit?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"languagesupplier",
+										"edit"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get LanguageSupplier by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/languagesupplier/get?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"languagesupplier",
+										"get"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All LanguageSupplier",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/languagesupplier/get_all",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"languagesupplier",
+										"get_all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete LanguageSupplier",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/languagesupplier/delete?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"languagesupplier",
 										"delete"
 									],
 									"query": [

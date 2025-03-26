@@ -1,4 +1,5 @@
 import { ConstUrls, ConstTemplate } from "@index/consts/Const";
+import { PreRegisterUser } from "@index/entity/PreRegisterUser";
 import { config } from "@index/index";
 import { hashPassword, JWTService, UserDTO, UserRepository, verifyPassword } from "@index/modules/01_General/user";
 import { ConstGeneral, ConstStatusJson, ConstLogs, ConstHTTPRequest, ConstMessagesJson } from "@TenshiJS/consts/Const";
@@ -6,6 +7,7 @@ import { User } from "@TenshiJS/entity/User";
 import { AccountStatusEnum } from "@TenshiJS/enums/AccountStatusEnum";
 import { RequestHandler } from "@TenshiJS/generics";
 import GenericController from "@TenshiJS/generics/Controller/GenericController";
+import GenericRepository from "@TenshiJS/generics/Repository/GenericRepository";
 import RoleRepository from "@TenshiJS/generics/Role/RoleRepository";
 import HttpAction from "@TenshiJS/helpers/HttpAction";
 import Validations from "@TenshiJS/helpers/Validations";
@@ -54,6 +56,7 @@ export default class AuthController extends GenericController{
         }
 
         //if the role y customer and not have finance entity, return error
+        //if the user not exist in the pre register user, return error
         if(role.code == "CUSTOMER"){
             if(reqHandler.getRequest().body.finance_entity == null || reqHandler.getRequest().body.finance_entity == undefined){
                 return httpExec.dynamicError(ConstStatusJson.ERROR, ConstMessagesJson.ERROR_ROLE_CUSTOMER);
@@ -63,6 +66,13 @@ export default class AuthController extends GenericController{
                 reqHandler.getRequest().body.finance_entity, reqHandler.getLogicalDelete(), null);
 
             if(userFinanceEntity == null){
+                return httpExec.dynamicError(ConstStatusJson.ERROR, ConstMessagesJson.ERROR_ROLE_CUSTOMER);
+            }
+
+            const preRegisterUserrepository = new GenericRepository(PreRegisterUser);
+            const preRegisterUser = await preRegisterUserrepository.findByOptions(false, true, {where: {card_id: userBody.card_id}});
+            
+            if(preRegisterUser == null){
                 return httpExec.dynamicError(ConstStatusJson.ERROR, ConstMessagesJson.ERROR_ROLE_CUSTOMER);
             }
         }

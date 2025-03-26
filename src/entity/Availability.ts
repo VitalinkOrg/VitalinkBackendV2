@@ -21,15 +21,15 @@ export class Availability {
   @PrimaryGeneratedColumn({ type: "int", unsigned: true })
   id: number;
 
-  @ManyToOne(() => Supplier, { eager: true })
+  @ManyToOne(() => Supplier)
   @JoinColumn({ name: "supplier_id", referencedColumnName: "id" })
   supplier: Supplier;
 
-  @ManyToOne(() => ProcedureBySpecialty, { eager: true })
+  @ManyToOne(() => ProcedureBySpecialty)
   @JoinColumn({ name: "procedure", referencedColumnName: "id" })
   procedure: ProcedureBySpecialty;
 
-  @ManyToOne(() => Location, { eager: true })
+  @ManyToOne(() => Location)
   @JoinColumn({ name: "location", referencedColumnName: "id" })
   location: Location | null;
 

@@ -2,15 +2,15 @@ import { Request, Response,
          RequestHandler, RequestHandlerBuilder, 
          GenericController, GenericRoutes,
          FindManyOptions} from "@modules/index";
-import { SpecialtyBySupplier } from "@index/entity/SpecialtyBySupplier";
-import SpecialtyBySupplierDTO from "@modules/02_Vitalink/specialtybysupplier/dtos/SpecialtyBySupplierDTO";
+import { Availability } from "@index/entity/Availability";
+import AvailabilityDTO from "@modules/02_Vitalink/availability/dtos/AvailabilityDTO";
 
-class SpecialtyBySupplierRoutes extends GenericRoutes {
+class AvailabilityRoutes extends GenericRoutes {
     
     private filters: FindManyOptions = {};
     constructor() {
-        super(new GenericController(SpecialtyBySupplier), "/specialtybysupplier");
-        this.filters.relations = ["supplier","medical_specialty"];
+        super(new GenericController(Availability), "/availability");
+        this.filters.relations = ["supplier","procedure","location", "procedure.procedure"];
     }
 
     protected initializeRoutes() {
@@ -18,9 +18,9 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
 
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
-                                    .setAdapter(new SpecialtyBySupplierDTO(req))
-                                    .setMethod("getSpecialtyBySupplierById")
-                                    .isValidateRole("SPECIALTY_BY_SUPPLIER")
+                                    .setAdapter(new AvailabilityDTO(req))
+                                    .setMethod("getAvailabilityById")
+                                    .isValidateRole("AVAILABILITY")
                                     .setFilters(this.filters)
                                     .build();
         
@@ -31,9 +31,9 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
         
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
-                                    .setAdapter(new SpecialtyBySupplierDTO(req))
-                                    .setMethod("getSpecialtyBySuppliers")
-                                    .isValidateRole("SPECIALTY_BY_SUPPLIER")
+                                    .setAdapter(new AvailabilityDTO(req))
+                                    .setMethod("getAvailabilitys")
+                                    .isValidateRole("AVAILABILITY")
                                     .setFilters(this.filters)
                                     .build();
         
@@ -44,15 +44,19 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
 
             const requiredBodyList: Array<string> = [
                 req.body.supplier_id,
-                req.body.medical_specialty_code
+                req.body.procedure_by_specialty_id,
+                req.body.location_id,
+                req.body.weekday,
+                req.body.from_hour,
+                req.body.to_hour
             ];
             
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
-                                    .setAdapter(new SpecialtyBySupplierDTO(req))
-                                    .setMethod("insertSpecialtyBySupplier")
+                                    .setAdapter(new AvailabilityDTO(req))
+                                    .setMethod("insertAvailability")
                                     .setRequiredFiles(requiredBodyList)
-                                    .isValidateRole("SPECIALTY_BY_SUPPLIER")
+                                    .isValidateRole("AVAILABILITY")
                                     .build();
         
             this.getController().insert(requestHandler);
@@ -61,9 +65,9 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
         this.router.put(`${this.getRouterName()}/edit`, async (req: Request, res: Response) => {
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
-                                    .setAdapter(new SpecialtyBySupplierDTO(req))
-                                    .setMethod("updateSpecialtyBySupplier")
-                                    .isValidateRole("SPECIALTY_BY_SUPPLIER")
+                                    .setAdapter(new AvailabilityDTO(req))
+                                    .setMethod("updateAvailability")
+                                    .isValidateRole("AVAILABILITY")
                                     .build();
         
             this.getController().update(requestHandler);
@@ -72,9 +76,9 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
         this.router.delete(`${this.getRouterName()}/delete`, async (req: Request, res: Response) => {
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
-                                    .setAdapter(new SpecialtyBySupplierDTO(req))
-                                    .setMethod("deleteSpecialtyBySupplier")
-                                    .isValidateRole("SPECIALTY_BY_SUPPLIER")
+                                    .setAdapter(new AvailabilityDTO(req))
+                                    .setMethod("deleteAvailability")
+                                    .isValidateRole("AVAILABILITY")
                                     .build();
         
             this.getController().delete(requestHandler);
@@ -82,4 +86,4 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
     }
 }
 
-export default SpecialtyBySupplierRoutes;
+export default AvailabilityRoutes;

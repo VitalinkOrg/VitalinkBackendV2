@@ -61,6 +61,10 @@ import SupplierRoutes from '@modules/02_Vitalink/supplier/routers/SupplierRoutes
 import SpecialtyBySupplierRoutes from '@modules/02_Vitalink/specialtybysupplier/routers/SpecialtyBySupplierRoutes';
 import ProcedureBySpecialtyRoutes from '@modules/02_Vitalink/procedurebyspecialty/routers/ProcedureBySpecialtyRoutes';
 import PackageRoutes from '@modules/02_Vitalink/package/routers/PackageRoutes';
+import AvailabilityRoutes from '@modules/02_Vitalink/availability/routers/AvailabilityRoutes';
+import CertificationsExperienceRoutes from '@modules/02_Vitalink/certificationsexperience/routers/CertificationsExperienceRoutes';
+import LanguageSupplierRoutes from '@modules/02_Vitalink/languagesupplier/routers/LanguageSupplierRoutes';
+
 
 //Import internal classes and functions
 import StartMiddleware from '@TenshiJS/middlewares/StartMiddleware';
@@ -176,6 +180,10 @@ export const TenshiMain = async() => {
     app.use(new SpecialtyBySupplierRoutes().getRouter());
     app.use(new ProcedureBySpecialtyRoutes().getRouter());
     app.use(new PackageRoutes().getRouter());
+    app.use(new AvailabilityRoutes().getRouter());
+    app.use(new CertificationsExperienceRoutes().getRouter());
+    app.use(new LanguageSupplierRoutes().getRouter());
+    
 
     //*************************************** */
     //       NOT FOUND ROUTE MIDDLEWARE

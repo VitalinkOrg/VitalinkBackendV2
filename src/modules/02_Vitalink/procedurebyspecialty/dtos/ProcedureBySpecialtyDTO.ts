@@ -12,8 +12,8 @@ export default class ProcedureBySpecialtyDTO implements IAdapterFromBody {
 
     private getEntity(isCreating: boolean): ProcedureBySpecialty {
         const entity = new ProcedureBySpecialty();
-        entity.specialty = this.req.body.specialty;
-        entity.procedure = this.req.body.procedure;
+        entity.specialty = this.req.body.specialty_id;
+        entity.procedure = this.req.body.procedure_code;
      
         if (isCreating) {
             entity.created_date = new Date();

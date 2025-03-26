@@ -2,15 +2,15 @@ import { Request, Response,
          RequestHandler, RequestHandlerBuilder, 
          GenericController, GenericRoutes,
          FindManyOptions} from "@modules/index";
-import { SpecialtyBySupplier } from "@index/entity/SpecialtyBySupplier";
-import SpecialtyBySupplierDTO from "@modules/02_Vitalink/specialtybysupplier/dtos/SpecialtyBySupplierDTO";
+import { LanguageSupplier } from "@index/entity/LanguageSupplier";
+import LanguageSupplierDTO from "@modules/02_Vitalink/languagesupplier/dtos/LanguageSupplierDTO";
 
-class SpecialtyBySupplierRoutes extends GenericRoutes {
+class LanguageSupplierRoutes extends GenericRoutes {
     
     private filters: FindManyOptions = {};
     constructor() {
-        super(new GenericController(SpecialtyBySupplier), "/specialtybysupplier");
-        this.filters.relations = ["supplier","medical_specialty"];
+        super(new GenericController(LanguageSupplier), "/languagesupplier");
+        this.filters.relations = ["supplier","language_proficiency"];
     }
 
     protected initializeRoutes() {
@@ -18,9 +18,9 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
 
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
-                                    .setAdapter(new SpecialtyBySupplierDTO(req))
-                                    .setMethod("getSpecialtyBySupplierById")
-                                    .isValidateRole("SPECIALTY_BY_SUPPLIER")
+                                    .setAdapter(new LanguageSupplierDTO(req))
+                                    .setMethod("getLanguageSupplierById")
+                                    .isValidateRole("LANGUAGE_SUPPLIER")
                                     .setFilters(this.filters)
                                     .build();
         
@@ -31,9 +31,9 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
         
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
-                                    .setAdapter(new SpecialtyBySupplierDTO(req))
-                                    .setMethod("getSpecialtyBySuppliers")
-                                    .isValidateRole("SPECIALTY_BY_SUPPLIER")
+                                    .setAdapter(new LanguageSupplierDTO(req))
+                                    .setMethod("getLanguageSuppliers")
+                                    .isValidateRole("LANGUAGE_SUPPLIER")
                                     .setFilters(this.filters)
                                     .build();
         
@@ -44,15 +44,15 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
 
             const requiredBodyList: Array<string> = [
                 req.body.supplier_id,
-                req.body.medical_specialty_code
+                req.body.language_code
             ];
             
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
-                                    .setAdapter(new SpecialtyBySupplierDTO(req))
-                                    .setMethod("insertSpecialtyBySupplier")
+                                    .setAdapter(new LanguageSupplierDTO(req))
+                                    .setMethod("insertLanguageSupplier")
                                     .setRequiredFiles(requiredBodyList)
-                                    .isValidateRole("SPECIALTY_BY_SUPPLIER")
+                                    .isValidateRole("LANGUAGE_SUPPLIER")
                                     .build();
         
             this.getController().insert(requestHandler);
@@ -61,9 +61,9 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
         this.router.put(`${this.getRouterName()}/edit`, async (req: Request, res: Response) => {
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
-                                    .setAdapter(new SpecialtyBySupplierDTO(req))
-                                    .setMethod("updateSpecialtyBySupplier")
-                                    .isValidateRole("SPECIALTY_BY_SUPPLIER")
+                                    .setAdapter(new LanguageSupplierDTO(req))
+                                    .setMethod("updateLanguageSupplier")
+                                    .isValidateRole("LANGUAGE_SUPPLIER")
                                     .build();
         
             this.getController().update(requestHandler);
@@ -72,9 +72,9 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
         this.router.delete(`${this.getRouterName()}/delete`, async (req: Request, res: Response) => {
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
-                                    .setAdapter(new SpecialtyBySupplierDTO(req))
-                                    .setMethod("deleteSpecialtyBySupplier")
-                                    .isValidateRole("SPECIALTY_BY_SUPPLIER")
+                                    .setAdapter(new LanguageSupplierDTO(req))
+                                    .setMethod("deleteLanguageSupplier")
+                                    .isValidateRole("LANGUAGE_SUPPLIER")
                                     .build();
         
             this.getController().delete(requestHandler);
@@ -82,4 +82,4 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
     }
 }
 
-export default SpecialtyBySupplierRoutes;
+export default LanguageSupplierRoutes;
