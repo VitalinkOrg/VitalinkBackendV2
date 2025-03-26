@@ -26,7 +26,7 @@ export class UserNotification {
 
   @ManyToOne(() => User, user => user.id)
   @JoinColumn({ name: "user_send", referencedColumnName: "id" })
-  user_send: User;
+  user_send: User | null;
 
   @ManyToOne(() => User, user => user.id)
   @JoinColumn({ name: "user_receive", referencedColumnName: "id" })

@@ -148,9 +148,19 @@
             "GET_BY_ID",
             "GET_ALL"
           ]
-        }  ,
+        },
         {
           "name": "LANGUAGE_SUPPLIER",
+          "function_list": [ 
+            "CREATE",
+            "UPDATE",
+            "DELETE",
+            "GET_BY_ID",
+            "GET_ALL"
+          ]
+        },
+        {
+          "name": "REVIEW",
           "function_list": [ 
             "CREATE",
             "UPDATE",

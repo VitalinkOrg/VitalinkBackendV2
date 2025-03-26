@@ -10,19 +10,19 @@ export class Review {
   @PrimaryGeneratedColumn({ type: "int", unsigned: true })
   id: number;
 
-  @ManyToOne(() => Supplier, { eager: true })
+  @ManyToOne(() => Supplier)
   @JoinColumn({ name: "supplier", referencedColumnName: "id" })
   supplier: Supplier;
 
-  @ManyToOne(() => Package, { eager: true })
+  @ManyToOne(() => Package)
   @JoinColumn({ name: "package", referencedColumnName: "id" })
   package: Package;
 
-  @ManyToOne(() => User, { eager: true })
+  @ManyToOne(() => User)
   @JoinColumn({ name: "customer", referencedColumnName: "id" })
   customer: User;
 
-  @ManyToOne(() => Appointment, { eager: true })
+  @ManyToOne(() => Appointment)
   @JoinColumn({ name: "appointment", referencedColumnName: "id" })
   appointment: Appointment | null;
 

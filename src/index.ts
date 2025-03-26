@@ -64,6 +64,7 @@ import PackageRoutes from '@modules/02_Vitalink/package/routers/PackageRoutes';
 import AvailabilityRoutes from '@modules/02_Vitalink/availability/routers/AvailabilityRoutes';
 import CertificationsExperienceRoutes from '@modules/02_Vitalink/certificationsexperience/routers/CertificationsExperienceRoutes';
 import LanguageSupplierRoutes from '@modules/02_Vitalink/languagesupplier/routers/LanguageSupplierRoutes';
+import ReviewRoutes from '@modules/02_Vitalink/review/routers/ReviewRoutes';
 
 
 //Import internal classes and functions
@@ -183,7 +184,7 @@ export const TenshiMain = async() => {
     app.use(new AvailabilityRoutes().getRouter());
     app.use(new CertificationsExperienceRoutes().getRouter());
     app.use(new LanguageSupplierRoutes().getRouter());
-    
+    app.use(new ReviewRoutes().getRouter());
 
     //*************************************** */
     //       NOT FOUND ROUTE MIDDLEWARE

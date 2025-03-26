@@ -1,0 +1,183 @@
+{
+  "info": {
+    "name": "Review",
+    "item": [
+      {
+        "name": "Create Review",
+        "request": {
+          "method": "POST",
+          "header": [
+            {
+              "key": "authorization",
+              "value": "{{auth_jwt}}",
+              "type": "text"
+            },
+            {
+              "key": "x-api-key",
+              "value": "{{secret_api_key}}",
+              "type": "text"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"supplier\": 5,\n  \"package\": 12,\n  \"customer\": 33,\n  \"appointment\": 101,\n  \"comment\": \"Excelente atención, muy profesional.\",\n  \"is_annonymous\": false,\n  \"supplier_reply\": \"Gracias por tu comentario. Siempre a la orden.\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "url": {
+            "raw": "{{host}}/review/add",
+            "host": [
+              "{{host}}"
+            ],
+            "path": [
+              "review",
+              "add"
+            ]
+          }
+        }
+      },
+      {
+        "name": "Update Review",
+        "request": {
+          "method": "PUT",
+          "header": [
+            {
+              "key": "authorization",
+              "value": "{{auth_jwt}}",
+              "type": "text"
+            },
+            {
+              "key": "x-api-key",
+              "value": "{{secret_api_key}}",
+              "type": "text"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"supplier\": 5,\n  \"package\": 12,\n  \"customer\": 33,\n  \"appointment\": 101,\n  \"comment\": \"Excelente atención, muy profesional.\",\n  \"is_annonymous\": false,\n  \"supplier_reply\": \"Gracias por tu comentario. Siempre a la orden.\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "url": {
+            "raw": "{{host}}/review/edit?id=1",
+            "host": [
+              "{{host}}"
+            ],
+            "path": [
+              "review",
+              "edit"
+            ],
+            "query": [
+              {
+                "key": "id",
+                "value": "1"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "Get Review by ID",
+        "request": {
+          "method": "GET",
+          "header": [
+            {
+              "key": "authorization",
+              "value": "{{auth_jwt}}",
+              "type": "text"
+            },
+            {
+              "key": "x-api-key",
+              "value": "{{secret_api_key}}",
+              "type": "text"
+            }
+          ],
+          "url": {
+            "raw": "{{host}}/review/get?id=1",
+            "host": [
+              "{{host}}"
+            ],
+            "path": [
+              "review",
+              "get"
+            ],
+            "query": [
+              {
+                "key": "id",
+                "value": "1"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "Get All Review",
+        "request": {
+          "method": "GET",
+          "header": [
+            {
+              "key": "authorization",
+              "value": "{{auth_jwt}}",
+              "type": "text"
+            },
+            {
+              "key": "x-api-key",
+              "value": "{{secret_api_key}}",
+              "type": "text"
+            }
+          ],
+          "url": {
+            "raw": "{{host}}/review/get_all",
+            "host": [
+              "{{host}}"
+            ],
+            "path": [
+              "review",
+              "get_all"
+            ]
+          }
+        }
+      },
+      {
+        "name": "Delete Review",
+        "request": {
+          "method": "DELETE",
+          "header": [
+            {
+              "key": "authorization",
+              "value": "{{auth_jwt}}",
+              "type": "text"
+            },
+            {
+              "key": "x-api-key",
+              "value": "{{secret_api_key}}",
+              "type": "text"
+            }
+          ],
+          "url": {
+            "raw": "{{host}}/review/delete?id=1",
+            "host": [
+              "{{host}}"
+            ],
+            "path": [
+              "review",
+              "delete"
+            ],
+            "query": [
+              {
+                "key": "id",
+                "value": "1"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
