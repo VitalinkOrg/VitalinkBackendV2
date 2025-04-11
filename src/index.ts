@@ -65,7 +65,8 @@ import AvailabilityRoutes from '@modules/02_Vitalink/availability/routers/Availa
 import CertificationsExperienceRoutes from '@modules/02_Vitalink/certificationsexperience/routers/CertificationsExperienceRoutes';
 import LanguageSupplierRoutes from '@modules/02_Vitalink/languagesupplier/routers/LanguageSupplierRoutes';
 import ReviewRoutes from '@modules/02_Vitalink/review/routers/ReviewRoutes';
-
+import ReviewDetailRoutes from '@modules/02_Vitalink/reviewdetail/routers/ReviewDetailRoutes';
+import PreRegisterUserRoutes from '@modules/02_Vitalink/preregisteruser/routers/PreRegisterUserRoutes';
 
 //Import internal classes and functions
 import StartMiddleware from '@TenshiJS/middlewares/StartMiddleware';
@@ -77,6 +78,7 @@ import RouteNotFoundMiddleware from '@TenshiJS/middlewares/RouteNotFoundMiddlewa
 import { CorsHandlerMiddleware } from '@TenshiJS/middlewares/CorsHandlerMiddleware';
 import LoggingHandlerMiddleware from '@TenshiJS/middlewares/LoggingHandlerMiddleware';
 import ValidJsonBodyMiddleware from '@TenshiJS/middlewares/ValidJsonBodyMiddleware';
+
 
 
 
@@ -185,6 +187,8 @@ export const TenshiMain = async() => {
     app.use(new CertificationsExperienceRoutes().getRouter());
     app.use(new LanguageSupplierRoutes().getRouter());
     app.use(new ReviewRoutes().getRouter());
+    app.use(new ReviewDetailRoutes().getRouter());
+    app.use(new PreRegisterUserRoutes().getRouter());
 
     //*************************************** */
     //       NOT FOUND ROUTE MIDDLEWARE

@@ -22,7 +22,7 @@ export class Availability {
   id: number;
 
   @ManyToOne(() => Supplier)
-  @JoinColumn({ name: "supplier_id", referencedColumnName: "id" })
+  @JoinColumn({ name: "supplier", referencedColumnName: "id" })
   supplier: Supplier;
 
   @ManyToOne(() => ProcedureBySpecialty)

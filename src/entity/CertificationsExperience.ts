@@ -16,7 +16,7 @@ export class CertificationsExperience  {
   id: number;
 
   @ManyToOne(() => Supplier, { eager: true })
-  @JoinColumn({ name: "supplier_id", referencedColumnName: "id" })
+  @JoinColumn({ name: "supplier", referencedColumnName: "id" })
   supplier: Supplier;
 
   @Column({ type: "date" })

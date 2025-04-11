@@ -8,7 +8,7 @@ export class LanguageSupplier  {
   id: number;
 
   @ManyToOne(() => Supplier)
-  @JoinColumn({ name: "supplier_id", referencedColumnName: "id" })
+  @JoinColumn({ name: "supplier", referencedColumnName: "id" })
   supplier: Supplier;
 
   //LANGUAGE_PROFICIENCY

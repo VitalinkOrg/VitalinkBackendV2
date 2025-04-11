@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9109cc51-97e6-4c1a-9ea3-efb7e14c2634",
+		"_postman_id": "13625e4a-5d69-4622-8035-1a69a35c010c",
 		"name": "Vitalink V2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "619775"
@@ -2874,182 +2874,373 @@
 				{
 					"name": "ReviewDetail",
 					"item": [
-					  {
-						"name": "Create ReviewDetail",
-						"request": {
-						  "method": "POST",
-						  "header": [
-							{
-							  "key": "authorization",
-							  "value": "{{auth_jwt}}",
-							  "type": "text"
+						{
+							"name": "Create ReviewDetail",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"review\": \"Test review\",\n  \"stars_point\": 5,\n  \"review_code\": \"QUALITY_PRICE_RATIO\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/reviewdetail/add",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"reviewdetail",
+										"add"
+									]
+								}
 							},
-							{
-							  "key": "x-api-key",
-							  "value": "{{secret_api_key}}",
-							  "type": "text"
-							}
-						  ],
-						  "body": {
-							"mode": "raw",
-							"raw": "{\n  \"review\": \"\\\"test_review\\\"\",\n  \"stars_point\": 100,\n  \"review_code\": \"\\\"test_review_code\\\"\"\n}",
-							"options": {
-							  "raw": {
-								"language": "json"
-							  }
-							}
-						  },
-						  "url": {
-							"raw": "{{host}}/${entityName.toLowerCase()}/add",
-							"host": [
-							  "{{host}}"
-							],
-							"path": [
-							  "reviewdetail",
-							  "add"
-							]
-						  }
-						}
-					  },
-					  {
-						"name": "Update ReviewDetail",
-						"request": {
-						  "method": "PUT",
-						  "header": [
-							{
-							  "key": "authorization",
-							  "value": "{{auth_jwt}}",
-							  "type": "text"
+							"response": []
+						},
+						{
+							"name": "Update ReviewDetail",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"review\": \"Test review 77\",\n  \"stars_point\": 3.5,\n  \"review_code\": \"QUALITY_PRICE_RATIO\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/reviewdetail/edit?id=16",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"reviewdetail",
+										"edit"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "16"
+										}
+									]
+								}
 							},
-							{
-							  "key": "x-api-key",
-							  "value": "{{secret_api_key}}",
-							  "type": "text"
-							}
-						  ],
-						  "body": {
-							"mode": "raw",
-							"raw": "{\n  \"review\": \"\\\"test_review\\\"\",\n  \"stars_point\": 100,\n  \"review_code\": \"\\\"test_review_code\\\"\"\n}",
-							"options": {
-							  "raw": {
-								"language": "json"
-							  }
-							}
-						  },
-						  "url": {
-							"raw": "{{host}}/${entityName.toLowerCase()}/edit?id=1",
-							"host": [
-							  "{{host}}"
-							],
-							"path": [
-							  "reviewdetail",
-							  "edit"
-							],
-							"query": [
-							  {
-								"key": "id",
-								"value": "1"
-							  }
-							]
-						  }
-						}
-					  },
-					  {
-						"name": "Get ReviewDetail by ID",
-						"request": {
-						  "method": "GET",
-						  "header": [
-							{
-							  "key": "authorization",
-							  "value": "{{auth_jwt}}",
-							  "type": "text"
+							"response": []
+						},
+						{
+							"name": "Get ReviewDetail by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/reviewdetail/get?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"reviewdetail",
+										"get"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
 							},
-							{
-							  "key": "x-api-key",
-							  "value": "{{secret_api_key}}",
-							  "type": "text"
-							}
-						  ],
-						  "url": {
-							"raw": "{{host}}/${entityName.toLowerCase()}/get?id=1",
-							"host": [
-							  "{{host}}"
-							],
-							"path": [
-							  "reviewdetail",
-							  "get"
-							],
-							"query": [
-							  {
-								"key": "id",
-								"value": "1"
-							  }
-							]
-						  }
-						}
-					  },
-					  {
-						"name": "Get All ReviewDetail",
-						"request": {
-						  "method": "GET",
-						  "header": [
-							{
-							  "key": "authorization",
-							  "value": "{{auth_jwt}}",
-							  "type": "text"
+							"response": []
+						},
+						{
+							"name": "Get All ReviewDetail",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/reviewdetail/get_all",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"reviewdetail",
+										"get_all"
+									]
+								}
 							},
-							{
-							  "key": "x-api-key",
-							  "value": "{{secret_api_key}}",
-							  "type": "text"
-							}
-						  ],
-						  "url": {
-							"raw": "{{host}}/${entityName.toLowerCase()}/get_all",
-							"host": [
-							  "{{host}}"
-							],
-							"path": [
-							  "reviewdetail",
-							  "get_all"
-							]
-						  }
-						}
-					  },
-					  {
-						"name": "Delete ReviewDetail",
-						"request": {
-						  "method": "DELETE",
-						  "header": [
-							{
-							  "key": "authorization",
-							  "value": "{{auth_jwt}}",
-							  "type": "text"
+							"response": []
+						},
+						{
+							"name": "Delete ReviewDetail",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/reviewdetail/delete?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"reviewdetail",
+										"delete"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
 							},
-							{
-							  "key": "x-api-key",
-							  "value": "{{secret_api_key}}",
-							  "type": "text"
-							}
-						  ],
-						  "url": {
-							"raw": "{{host}}/${entityName.toLowerCase()}/delete?id=1",
-							"host": [
-							  "{{host}}"
-							],
-							"path": [
-							  "reviewdetail",
-							  "delete"
-							],
-							"query": [
-							  {
-								"key": "id",
-								"value": "1"
-							  }
-							]
-						  }
+							"response": []
 						}
-					  }
+					]
+				},
+				{
+					"name": "PreRegisterUser",
+					"item": [
+						{
+							"name": "Create PreRegisterUser",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"card_id\": \"11777\",\n  \"id_type\": \"PHYSICAL_DNI\",\n  \"name\": \"Fabian Esq\",\n  //\"address\": \"Heredia Costa Rica\",\n  //\"birth_date\": \"1993-05-07\",\n  \"finance_entity\": \"8401b1be-7e1d-4357-a632-15172a647b8d\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/preregisteruser/add",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"preregisteruser",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update PreRegisterUser",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"card_id\": \"11777\",\n  \"id_type\": \"PHYSICAL_DNI\",\n  \"name\": \"Fabian Esq\",\n  \"address\": \"Heredia Costa Rica\",\n  \"birth_date\": \"1993-05-07\",\n  \"finance_entity\": \"8401b1be-7e1d-4357-a632-15172a647b8d\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/preregisteruser/edit?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"preregisteruser",
+										"edit"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get PreRegisterUser by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/preregisteruser/get?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"preregisteruser",
+										"get"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All PreRegisterUser",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/preregisteruser/get_all",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"preregisteruser",
+										"get_all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete PreRegisterUser",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/preregisteruser/delete?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"preregisteruser",
+										"delete"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
 					]
 				}
 			]

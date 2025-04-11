@@ -15,7 +15,7 @@ export class AppointmentCredit {
   id: number;
 
   @ManyToOne(() => Appointment, { eager: true })
-  @JoinColumn({ name: "appointment_id", referencedColumnName: "id" })
+  @JoinColumn({ name: "appointment", referencedColumnName: "id" })
   appointment: Appointment;
 
   //ASKING_CREDIT_STATUS

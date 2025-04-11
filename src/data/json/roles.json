@@ -178,6 +178,16 @@
             "GET_BY_ID",
             "GET_ALL"
           ]
+        },
+        {
+          "name": "PRE_REGISTER_USER",
+          "function_list": [ 
+            "CREATE",
+            "UPDATE",
+            "DELETE",
+            "GET_BY_ID",
+            "GET_ALL"
+          ]
         }
       ],
       "screens": [

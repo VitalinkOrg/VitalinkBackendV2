@@ -18,7 +18,7 @@ export class Appointment {
   id: number;
 
   @ManyToOne(() => User, { eager: true })
-  @JoinColumn({ name: "customer_id", referencedColumnName: "id" })
+  @JoinColumn({ name: "customer", referencedColumnName: "id" })
   customer: User;
 
   //the code of document for the proforma 

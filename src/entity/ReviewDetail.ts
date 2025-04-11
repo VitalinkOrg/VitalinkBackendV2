@@ -12,7 +12,7 @@ export class ReviewDetail {
   @JoinColumn({ name: "review", referencedColumnName: "id" })
   review: Review;
 
-  @Column({ type: "int" })
+  @Column({ type: "double", nullable: false, default: 0 })
   stars_point: number;
 
   @ManyToOne(() => UnitDynamicCentral)
