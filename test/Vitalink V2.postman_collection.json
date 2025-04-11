@@ -2870,6 +2870,187 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "ReviewDetail",
+					"item": [
+					  {
+						"name": "Create ReviewDetail",
+						"request": {
+						  "method": "POST",
+						  "header": [
+							{
+							  "key": "authorization",
+							  "value": "{{auth_jwt}}",
+							  "type": "text"
+							},
+							{
+							  "key": "x-api-key",
+							  "value": "{{secret_api_key}}",
+							  "type": "text"
+							}
+						  ],
+						  "body": {
+							"mode": "raw",
+							"raw": "{\n  \"review\": \"\\\"test_review\\\"\",\n  \"stars_point\": 100,\n  \"review_code\": \"\\\"test_review_code\\\"\"\n}",
+							"options": {
+							  "raw": {
+								"language": "json"
+							  }
+							}
+						  },
+						  "url": {
+							"raw": "{{host}}/${entityName.toLowerCase()}/add",
+							"host": [
+							  "{{host}}"
+							],
+							"path": [
+							  "reviewdetail",
+							  "add"
+							]
+						  }
+						}
+					  },
+					  {
+						"name": "Update ReviewDetail",
+						"request": {
+						  "method": "PUT",
+						  "header": [
+							{
+							  "key": "authorization",
+							  "value": "{{auth_jwt}}",
+							  "type": "text"
+							},
+							{
+							  "key": "x-api-key",
+							  "value": "{{secret_api_key}}",
+							  "type": "text"
+							}
+						  ],
+						  "body": {
+							"mode": "raw",
+							"raw": "{\n  \"review\": \"\\\"test_review\\\"\",\n  \"stars_point\": 100,\n  \"review_code\": \"\\\"test_review_code\\\"\"\n}",
+							"options": {
+							  "raw": {
+								"language": "json"
+							  }
+							}
+						  },
+						  "url": {
+							"raw": "{{host}}/${entityName.toLowerCase()}/edit?id=1",
+							"host": [
+							  "{{host}}"
+							],
+							"path": [
+							  "reviewdetail",
+							  "edit"
+							],
+							"query": [
+							  {
+								"key": "id",
+								"value": "1"
+							  }
+							]
+						  }
+						}
+					  },
+					  {
+						"name": "Get ReviewDetail by ID",
+						"request": {
+						  "method": "GET",
+						  "header": [
+							{
+							  "key": "authorization",
+							  "value": "{{auth_jwt}}",
+							  "type": "text"
+							},
+							{
+							  "key": "x-api-key",
+							  "value": "{{secret_api_key}}",
+							  "type": "text"
+							}
+						  ],
+						  "url": {
+							"raw": "{{host}}/${entityName.toLowerCase()}/get?id=1",
+							"host": [
+							  "{{host}}"
+							],
+							"path": [
+							  "reviewdetail",
+							  "get"
+							],
+							"query": [
+							  {
+								"key": "id",
+								"value": "1"
+							  }
+							]
+						  }
+						}
+					  },
+					  {
+						"name": "Get All ReviewDetail",
+						"request": {
+						  "method": "GET",
+						  "header": [
+							{
+							  "key": "authorization",
+							  "value": "{{auth_jwt}}",
+							  "type": "text"
+							},
+							{
+							  "key": "x-api-key",
+							  "value": "{{secret_api_key}}",
+							  "type": "text"
+							}
+						  ],
+						  "url": {
+							"raw": "{{host}}/${entityName.toLowerCase()}/get_all",
+							"host": [
+							  "{{host}}"
+							],
+							"path": [
+							  "reviewdetail",
+							  "get_all"
+							]
+						  }
+						}
+					  },
+					  {
+						"name": "Delete ReviewDetail",
+						"request": {
+						  "method": "DELETE",
+						  "header": [
+							{
+							  "key": "authorization",
+							  "value": "{{auth_jwt}}",
+							  "type": "text"
+							},
+							{
+							  "key": "x-api-key",
+							  "value": "{{secret_api_key}}",
+							  "type": "text"
+							}
+						  ],
+						  "url": {
+							"raw": "{{host}}/${entityName.toLowerCase()}/delete?id=1",
+							"host": [
+							  "{{host}}"
+							],
+							"path": [
+							  "reviewdetail",
+							  "delete"
+							],
+							"query": [
+							  {
+								"key": "id",
+								"value": "1"
+							  }
+							]
+						  }
+						}
+					  }
+					]
 				}
 			]
 		}

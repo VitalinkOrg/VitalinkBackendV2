@@ -168,6 +168,16 @@
             "GET_BY_ID",
             "GET_ALL"
           ]
+        },
+        {
+          "name": "REVIEW_DETAIL",
+          "function_list": [ 
+            "CREATE",
+            "UPDATE",
+            "DELETE",
+            "GET_BY_ID",
+            "GET_ALL"
+          ]
         }
       ],
       "screens": [
