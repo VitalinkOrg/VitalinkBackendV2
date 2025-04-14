@@ -67,6 +67,8 @@ import LanguageSupplierRoutes from '@modules/02_Vitalink/languagesupplier/router
 import ReviewRoutes from '@modules/02_Vitalink/review/routers/ReviewRoutes';
 import ReviewDetailRoutes from '@modules/02_Vitalink/reviewdetail/routers/ReviewDetailRoutes';
 import PreRegisterUserRoutes from '@modules/02_Vitalink/preregisteruser/routers/PreRegisterUserRoutes';
+import AppointmentRoutes from '@modules/02_Vitalink/appointment/routers/AppointmentRoutes';
+import AppointmentCreditRoutes from '@modules/02_Vitalink/appointmentcredit/routers/AppointmentCreditRoutes';
 
 //Import internal classes and functions
 import StartMiddleware from '@TenshiJS/middlewares/StartMiddleware';
@@ -189,6 +191,8 @@ export const TenshiMain = async() => {
     app.use(new ReviewRoutes().getRouter());
     app.use(new ReviewDetailRoutes().getRouter());
     app.use(new PreRegisterUserRoutes().getRouter());
+    app.use(new AppointmentRoutes().getRouter());
+    app.use(new AppointmentCreditRoutes().getRouter());
 
     //*************************************** */
     //       NOT FOUND ROUTE MIDDLEWARE

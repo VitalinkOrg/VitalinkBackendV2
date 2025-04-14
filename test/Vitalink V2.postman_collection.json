@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "13625e4a-5d69-4622-8035-1a69a35c010c",
+		"_postman_id": "542bdbf2-7901-4d51-96e3-b0b95c173197",
 		"name": "Vitalink V2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "619775"
@@ -3229,6 +3229,378 @@
 									],
 									"path": [
 										"preregisteruser",
+										"delete"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Appointment",
+					"item": [
+						{
+							"name": "Create Appointment",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"customer\": \"f1635823-7d9a-4df9-bd1e-ad8bd985de0b\",\n  //\"proforma_file_code\": \"PROF-011\",\n  \"appointment_date\": \"2025-04-14\",\n  \"appointment_hour\": \"09:30:00\",\n  \"reservation_type\": \"RESERVATION\",\n  //\"appointment_status\": \"PENDING\",\n  \"supplier\": 1\n  //\"application_date\": \"2025-04-12T08:00:00.000Z\",\n  //\"payment_status\": \"PENDING\",\n  //\"payment_method\": \"CREDIT_CARD\",\n  //\"appointment_result\": \"FIT_FOR_PROCEDURE\",\n  //\"user_description\": \"Consulta general preventiva.\",\n  //\"recommendation_post_appointment\": \"Mantener una dieta balanceada.\",\n  //\"diagnostic\": \"Salud estable.\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/appointment/add",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"appointment",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Appointment",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"customer\": \"f1635823-7d9a-4df9-bd1e-ad8bd985de0b\",\n  //\"proforma_file_code\": \"PROF-011\",\n  \"appointment_date\": \"2025-04-14\",\n  \"appointment_hour\": \"09:30:00\",\n  \"reservation_type\": \"RESERVATION\",\n  //\"appointment_status\": \"PENDING\",\n  \"supplier\": 1\n  //\"application_date\": \"2025-04-12T08:00:00.000Z\",\n  //\"payment_status\": \"PENDING\",\n  //\"payment_method\": \"CREDIT_CARD\",\n  //\"appointment_result\": \"FIT_FOR_PROCEDURE\",\n  //\"user_description\": \"Consulta general preventiva.\",\n  //\"recommendation_post_appointment\": \"Mantener una dieta balanceada.\",\n  //\"diagnostic\": \"Salud estable.\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/appointment/edit?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"appointment",
+										"edit"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Appointment by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/appointment/get?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"appointment",
+										"get"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Appointment",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/appointment/get_all",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"appointment",
+										"get_all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Appointment",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/appointment/delete?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"appointment",
+										"delete"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "AppointmentCredit",
+					"item": [
+						{
+							"name": "Create AppointmentCredit",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"appointment\": 1,\n  \"credit_status\": \"REQUIRED\"\n  //\"requested_amount\": \"1500.00\",\n  //\"approved_amount\": \"1200.00\",\n  //\"credit_observations\": \"Solicitud en evaluación.\",\n  //\"pagare_file_code\": \"PAGARE-TEST-001\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/appointmentcredit/add",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"appointmentcredit",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update AppointmentCredit",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"appointment\": 1,\n  \"credit_status\": \"REQUIRED\"\n  //\"requested_amount\": \"1500.00\",\n  //\"approved_amount\": \"1200.00\",\n  //\"credit_observations\": \"Solicitud en evaluación.\",\n  //\"pagare_file_code\": \"PAGARE-TEST-001\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/appointmentcredit/edit?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"appointmentcredit",
+										"edit"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get AppointmentCredit by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/appointmentcredit/get?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"appointmentcredit",
+										"get"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All AppointmentCredit",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/appointmentcredit/get_all",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"appointmentcredit",
+										"get_all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete AppointmentCredit",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/appointmentcredit/delete?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"appointmentcredit",
 										"delete"
 									],
 									"query": [

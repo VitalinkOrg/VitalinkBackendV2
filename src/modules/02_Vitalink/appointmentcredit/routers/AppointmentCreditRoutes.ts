@@ -1,0 +1,88 @@
+import { Request, Response, 
+         RequestHandler, RequestHandlerBuilder, 
+         GenericController, GenericRoutes,
+         FindManyOptions} from "@modules/index";
+import { AppointmentCredit } from "@index/entity/AppointmentCredit";
+import AppointmentCreditDTO from "@modules/02_Vitalink/appointmentcredit/dtos/AppointmentCreditDTO";
+
+class AppointmentCreditRoutes extends GenericRoutes {
+    
+    private filters: FindManyOptions = {};
+    constructor() {
+        super(new GenericController(AppointmentCredit), "/appointmentcredit");
+        this.filters.relations = ["appointment","credit_status"];
+    }
+
+    protected initializeRoutes() {
+        this.router.get(`${this.getRouterName()}/get`, async (req: Request, res: Response) => {
+
+            const requestHandler: RequestHandler = 
+                                    new RequestHandlerBuilder(res, req)
+                                    .setAdapter(new AppointmentCreditDTO(req))
+                                    .setMethod("getAppointmentCreditById")
+                                    .isValidateRole("APPOINTMENT_CREDIT")
+                                    .isLogicalDelete()
+                                    .setFilters(this.filters)
+                                    .build();
+        
+            this.getController().getById(requestHandler);
+        });
+        
+        this.router.get(`${this.getRouterName()}/get_all`, async (req: Request, res: Response) => {
+        
+            const requestHandler: RequestHandler = 
+                                    new RequestHandlerBuilder(res, req)
+                                    .setAdapter(new AppointmentCreditDTO(req))
+                                    .setMethod("getAppointmentCredits")
+                                    .isValidateRole("APPOINTMENT_CREDIT")
+                                    .isLogicalDelete()
+                                    .setFilters(this.filters)
+                                    .build();
+        
+            this.getController().getAll(requestHandler);
+        });
+        
+        this.router.post(`${this.getRouterName()}/add`, async (req: Request, res: Response) => {
+
+            const requiredBodyList: Array<string> = [
+                req.body.appointment,
+                req.body.credit_status
+            ];
+            
+            const requestHandler: RequestHandler = 
+                                    new RequestHandlerBuilder(res, req)
+                                    .setAdapter(new AppointmentCreditDTO(req))
+                                    .setMethod("insertAppointmentCredit")
+                                    .setRequiredFiles(requiredBodyList)
+                                    .isValidateRole("APPOINTMENT_CREDIT")
+                                    .build();
+        
+            this.getController().insert(requestHandler);
+        });
+        
+        this.router.put(`${this.getRouterName()}/edit`, async (req: Request, res: Response) => {
+            const requestHandler: RequestHandler = 
+                                    new RequestHandlerBuilder(res, req)
+                                    .setAdapter(new AppointmentCreditDTO(req))
+                                    .setMethod("updateAppointmentCredit")
+                                    .isValidateRole("APPOINTMENT_CREDIT")
+                                    .build();
+        
+            this.getController().update(requestHandler);
+        });
+        
+        this.router.delete(`${this.getRouterName()}/delete`, async (req: Request, res: Response) => {
+            const requestHandler: RequestHandler = 
+                                    new RequestHandlerBuilder(res, req)
+                                    .setAdapter(new AppointmentCreditDTO(req))
+                                    .setMethod("deleteAppointmentCredit")
+                                    .isValidateRole("APPOINTMENT_CREDIT")
+                                    .isLogicalDelete()
+                                    .build();
+        
+            this.getController().delete(requestHandler);
+        });
+    }
+}
+
+export default AppointmentCreditRoutes;
