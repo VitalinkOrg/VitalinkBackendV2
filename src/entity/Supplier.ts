@@ -106,7 +106,7 @@ export class Supplier {
   medical_type: UnitDynamicCentral | null;
 
   @ManyToOne(() => User, { eager: true })
-  @JoinColumn({ name: "user", referencedColumnName: "id" })
+  @JoinColumn({ name: "legal_representative", referencedColumnName: "id" })
   legal_representative: User;
 
   @Column({ type: "tinyint", default: 0 })

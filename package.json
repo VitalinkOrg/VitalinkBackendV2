@@ -6,7 +6,6 @@
     "scripts": {
         "dev": "ts-node-dev -r tsconfig-paths/register src/index.ts",
         "start": "ts-node -r tsconfig-paths/register src/index.ts",
-
         "test": "jest",
 
         "delete": "ts-node -r tsconfig-paths/register src/seeds/DeleteDBSeed.ts",

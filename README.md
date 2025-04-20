@@ -127,20 +127,115 @@ Tenshi is a highly flexible framework, not just a library. To get started:
 
 <br><br>
 
-## Start Backend Server
-1. Scripts to start the server:
-   you can see the package.json to see another scripts
-   ```bash
-   //this is for compile the project completely
-   npm run compile
 
-   //this is for start server in development environment
-   npm run dev
+## 🚀 Start Backend Server
 
-   //this is for start server in production environment
-   npm run start
-   ```
-<br><br>
+This project provides a set of NPM scripts to compile, seed, test, and run the backend in different environments.
+
+### 📦 Scripts
+
+```bash
+# Start server in development mode with live reload
+npm run dev
+
+# Start server in production mode (compiles and runs TypeScript source directly)
+npm run start
+
+# Compile TypeScript project (outputs to /build directory)
+npm run compile
+
+# Run full build process: compile + copy config/templates + static JSON files
+npm run build
+
+# Run compiled production build (from /build directory)
+npm run prod
+
+# Run Jest test suite
+npm run test
+
+# Execute script for create basic CRUD from entity
+npm run automation
+
+# Execute script for create basic test from entity
+npm run autotest
+
+# Seed the database with initial data (in this example just UDC)
+npm run generalseed
+
+# Delete all data from the database (to start again from 0)
+npm run delete
+
+# Copy JSON config file to /build directory
+npm run copyjsonconfig
+
+# Copy JSON files from /src/data/json to /build/src
+npm run copyjsonsrc
+
+# Copy JSON files from /tenshi/data/json to /build/tenshi
+npm run copyjsontenshi
+
+# Copy HTML templates from /src/templates to /build
+npm run copytemp
+```
+
+---
+
+## 🛠️ Build & Run in Production
+
+To prepare and run the backend server in a production environment:
+
+### 1. Build the project
+
+```bash
+npm run build
+```
+
+This will:
+- Compile TypeScript to JavaScript
+- Copy all necessary JSON files and templates to the `/build` directory
+
+### 2. Install PM2 globally (Linux)
+
+```bash
+npm install -g pm2
+```
+
+### 3. Start the production build using PM2
+
+```bash
+pm2 start npm --name "tenshibackend" -- run prod
+```
+
+This command:
+- Starts the compiled backend located in `/build/src/index.js`
+- Names the process `tenshibackend` for easier management
+
+---
+
+## 🧪 Useful PM2 Commands
+
+```bash
+# Show status of all processes
+pm2 list
+
+# Restart the backend process
+pm2 restart tenshibackend
+
+# Stop the backend process
+pm2 stop tenshibackend
+
+# View logs
+pm2 logs tenshibackend
+
+# Save current process list to restart on server reboot
+pm2 save
+
+# Launch PM2 on system startup
+pm2 startup
+```
+
+---
+
 
 ## Configuration:
 Tenshi allows intuitive project configuration via the `tenshi-config.json` file, which is divided into the following sections:

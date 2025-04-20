@@ -38,9 +38,24 @@ class UdcRoutes extends GenericRoutes{
         this.router.get(`${this.getRouterName()}/get_all`, async (req: Request, res: Response) => {
         
             const type : string | null = getUrlParam("type", req) || null;
+            const code : string | null = getUrlParam("code", req) || null;
+            const father_code : string | null = getUrlParam("father_code", req) || null;
+            const id : string | null = getUrlParam("id", req) || null;
             const options: FindManyOptions = {};
             if(type != null){
                 options.where = { ...options.where, type: type};
+            }
+
+            if(code != null){
+                options.where = { ...options.where, code: code};
+            }
+
+            if(id != null){
+                options.where = { ...options.where, id: id};
+            }
+
+            if(father_code != null){
+                options.where = { ...options.where, father_code: father_code};
             }
 
             const requestHandler : RequestHandler = 
