@@ -18,12 +18,12 @@
         "compile": "tsc",
         "copyjsonconfig": "copyfiles tenshi-config.json build",
         "copyjsonsrc": "copyfiles -u 1 src/data/json/*.json build/src",
+        "copyjsonsemailmessages": "copyfiles -u 1 src/data/json/emailMessages/*.json build/src",
         "copyjsontenshi": "copyfiles -u 1 tenshi/data/json/*.json build/tenshi",
-        "copytemp": "copyfiles -u 1 src/templates/*.html build",
+        "copytemp": "copyfiles -u 1 src/templates/*.html build/src",
         
-        "build": "npm run compile && npm run copyjsonsrc && npm run copyjsontenshi && npm run copyjsonconfig && npm run copytemp",
+        "build": "npm run compile && npm run copyjsonsrc && npm run copyjsonsemailmessages && npm run copyjsontenshi && npm run copyjsonconfig && npm run copytemp",
         "prod": "node -r module-alias/register build/src/index.js"
-
     },
     "keywords": [],
     "author": "",
