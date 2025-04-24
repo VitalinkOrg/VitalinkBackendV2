@@ -99,6 +99,9 @@ export default class SupplierDTO implements IAdapterFromBody {
         };
     }
 
+
+  
+
     entitiesToResponse(entities: Supplier[] | null): any {
         const response: any[] = [];
         if (entities != null) {
@@ -108,4 +111,51 @@ export default class SupplierDTO implements IAdapterFromBody {
         }
         return response;
     }
+
+
+    entityToResponseMain(entity: any): any {
+        return {
+            id: entity.id,
+            id_type: entity.id_type,
+            card_id: entity.card_id,
+            num_medical_enrollment: entity.num_medical_enrollment,
+            name: entity.name,
+            phone_number: entity.phone_number,
+            email: entity.email,
+            province: entity.province,
+            city_name: entity.city_name,
+            postal_code: entity.postal_code,
+            profile_picture_url: entity.profile_picture_url,
+            description: entity.description,
+            address: entity.address,
+            street_number: entity.street_number,
+            floor: entity.floor,
+            door_number: entity.door_number,
+            latitude: entity.latitude,
+            longitude: entity.longitude,
+            experience_years: entity.experience_years,
+            patients_number: entity.patients_number,
+            is_hospital: entity.is_hospital,
+            our_history: entity.our_history,
+            mission: entity.mission,
+            vision: entity.vision,
+            code_card_id_file: entity.code_card_id_file,
+            code_medical_license_file: entity.code_medical_license_file,
+            gender: entity.gender,
+            medical_type: entity.medical_type,
+            legal_representative: entity.legal_representative,
+            availability: entity.availability,
+        };
+    }
+
+    entitiesToResponseMain(entities: any[] | null): any {
+        const response: any[] = [];
+        if (entities != null) {
+            for (const entity of entities) {
+                response.push(this.entityToResponseMain(entity));
+            }
+        }
+        return response;
+    }
+
 }

@@ -118,3 +118,4 @@ export class Supplier {
   @Column({ type: "timestamp", nullable: true,  default: () => "CURRENT_TIMESTAMP", onUpdate: "CURRENT_TIMESTAMP" })
   updated_date: Date | null;
 }
+

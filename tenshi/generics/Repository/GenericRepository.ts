@@ -283,7 +283,7 @@ export default  class GenericRepository implements IGenericRepository{
      * @return {Promise<any[] | null>} The entities found.
      */
     async findAll(hasLogicalDeleted: boolean, options: FindManyOptions | null = {},
-                  page: number = 1, size: number = 3000): Promise<any[] | null> {
+                  page: number = 1, size: number = 300000): Promise<any[] | null> {
         try {
 
             // Calculate the offset based on the page and size

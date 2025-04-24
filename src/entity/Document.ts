@@ -22,7 +22,9 @@ export class Document {
   extension: string;
 
   @Column({ type: "enum", 
-            enum: ["PROFILE_PICTURE", "GENERAL_GALLERY", "PERSONAL_DOCUMENT"], 
+            enum: ["PROFILE_PICTURE", "GENERAL_GALLERY", 
+                    "PERSONAL_DOCUMENT", "PRIVATE_CONTRACT", 
+                    "MEDICAL_PROCEDURE_ATTACHMENT", "OTHER"], 
             default: "GENERAL_GALLERY" })
   action_type: string; 
 

@@ -4,14 +4,16 @@ import { Request, Response,
          FindManyOptions} from "@modules/index";
 import { Supplier } from "@index/entity/Supplier";
 import SupplierDTO from "@modules/02_Vitalink/supplier/dtos/SupplierDTO";
+import SupplierController from "../controllers/SupplierController";
 
 class SupplierRoutes extends GenericRoutes {
     
     private filters: FindManyOptions = {};
     constructor() {
-        super(new GenericController(Supplier), "/supplier");
+        super(new SupplierController(), "/supplier");
         this.filters.relations = ["id_type","medical_type","legal_representative"];
     }
+
 
     protected initializeRoutes() {
         this.router.get(`${this.getRouterName()}/get`, async (req: Request, res: Response) => {
@@ -40,6 +42,21 @@ class SupplierRoutes extends GenericRoutes {
                                     .build();
         
             this.getController().getAll(requestHandler);
+        });
+
+          
+        this.router.get(`${this.getRouterName()}/get_all_main`, async (req: Request, res: Response) => {
+        
+            const requestHandler: RequestHandler = 
+                                    new RequestHandlerBuilder(res, req)
+                                    .setAdapter(new SupplierDTO(req))
+                                    .setMethod("getSuppliers")
+                                    .isValidateRole("SUPPLIER")
+                                    .isLogicalDelete()
+                                    .setFilters(this.filters)
+                                    .build();
+        
+            (this.getController() as SupplierController).getSuppliersMainDashboard(requestHandler);
         });
         
         this.router.post(`${this.getRouterName()}/add`, async (req: Request, res: Response) => {

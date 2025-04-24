@@ -29,6 +29,7 @@ export default  class UserDTO implements IAdapterFromBody{
         entity.latitude = this.req.body.latitude;
         entity.longitude = this.req.body.longitude;
         entity.finance_entity = this.req.body.finance_entity;
+        entity.code_contract = this.req.body.code_contract;
         entity.role_code = this.req.body.role_code || config.SERVER.CUSTOMER_REGULAR_ROLE;
         entity.language = this.req.body.language || config.SERVER.DEFAULT_LANGUAGE;
         entity.profile_picture_url = this.req.body.profile_picture_url;
@@ -57,6 +58,7 @@ export default  class UserDTO implements IAdapterFromBody{
             birth_date: user.birth_date,
             role: user.role_code,
             finance_entity: user.finance_entity,
+            code_contract: user.code_contract,
             language: user.language,
             profile_picture_url: user.profile_picture_url,
             account_status: user.account_status
@@ -94,6 +96,7 @@ export default  class UserDTO implements IAdapterFromBody{
         entity.longitude = this.req.body.longitude;
         entity.role_code = this.req.body.role_code;
         entity.finance_entity = this.req.body.finance_entity;
+        entity.code_contract = this.req.body.code_contract;
         entity.profile_picture_url = this.req.body.profile_picture_url;
         entity.is_active_from_email = this.req.body.is_active_from_email;
         entity.account_status = this.req.body.account_status;

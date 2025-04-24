@@ -93,6 +93,9 @@ export class User {
   @JoinColumn({ name: "finance_entity", referencedColumnName: "id" })
   finance_entity: User | null;
 
+  @Column({ type: "varchar", length: 100, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
+  code_contract: string | null;
+
   @Column({ type: "varchar", length: 10, nullable: true, default: "es" })
   language: string | null;
 
