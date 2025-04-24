@@ -12,7 +12,7 @@
     },
     "SERVER" : {
         "PORT": 3000,
-        "SECRET_API_KEY": "41e71d93-02b5-4661-80ed-580f3ebb41c4",
+        "SECRET_API_KEY": "8170fcb2-ef45-4173-9a1b-f682d38ddae9",
         "VALIDATE_API_KEY" : false,
         "MAX_REQUEST_PER_SECOND": 6,
         "IS_DEBUGGING": true,
@@ -32,9 +32,9 @@
     "DB": {
         "TYPE": "mariadb",
         "PORT": 3307,
-        "HOST": "localhost",
-        "USER": "root",
-        "PASSWORD": "",
+        "HOST": "vitalink.cpcqo6224pz7.us-east-2.rds.amazonaws.com",
+        "USER": "vitadmin",
+        "PASSWORD": "X2l#0j*omxwDpW",
         "NAME": "vitalink",
         "CONNECTION_LIMIT": 150
     },
@@ -90,7 +90,7 @@
             "ACCESS_KEY": "AKIASBGQLLUVYHBCS7U3",
             "SECRET_ACCESS_KEY": "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",
             "MINUTES_LIMIT_PRIVATE_FILE": 120,
-            "PUBLIC_FOLDER" : "/PublicFiles"
+            "PUBLIC_FOLDER" : "/PublicFiles/"
         }
     },
     "EMAIL" : {
@@ -100,7 +100,7 @@
         "EMAIL_FROM": "tenshitest1@gmail.com"
     },
     "TEST" : {
-        "JWT_TEST": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjM2ZDBhZTQ5LWUzMTMtNDUwZC1iNjE3LTcyYjNjZjg2M2ZiZSIsImVtYWlsIjoidGVuc2hpdGVzdDFAZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzMxMjc5NDQ2LCJleHAiOjE3MzEzMDk0NDZ9.SsJ2tIyXCTeu1a3_WMC-DVmxWp0bU-lz7wFvUmkn2xw",
+        "JWT_TEST": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNGI3MjY4LTkzODQtNDc0Yy1hYzI2LTU5Y2IwMmZhOGIyNiIsImVtYWlsIjoic2FtYmFzb2NjZXIyNEBnbWFpbC5jb20iLCJyb2xlIjoiOWIxZTZjNGEtNGNiNi00ZmYzLTlhNDQtMmRlOGQyNDUxMDRhIiwiaWF0IjoxNzMxMjY4ODQ0LCJleHAiOjE3MzEyOTg4NDR9.gBs2ryB1bYl2FHFn9xmvVQavIuZ6lFEKep4p5A89Fug",
         "ROLE_TEST": "TEST"
     }
 }
