@@ -62,7 +62,17 @@ export default class SupplierController extends GenericController{
         });
 
 
-        supplier.availability = availabilities;
+        const locations: any[] = [];
+        for (const availability of availabilities) {
+        const location = availability.location;
+
+        if (location && !locations.find(loc => loc.id === location.id)) {
+            locations.push(location);
+        }
+        }
+        supplier.locations = locations;
+        
+        supplier.availabilities = availabilities;
     }
 
 
