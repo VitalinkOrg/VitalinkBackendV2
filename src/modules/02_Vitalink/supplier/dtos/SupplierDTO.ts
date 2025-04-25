@@ -144,7 +144,21 @@ export default class SupplierDTO implements IAdapterFromBody {
             gender: entity.gender,
             medical_type: entity.medical_type,
             legal_representative: entity.legal_representative,
+
+            date_availability: entity.date_availability,
+            hour_availability: entity.hour_availability,
+            location_number: entity.location_number,
+            search_procedure_name: entity.search_procedure_name,
+            search_reference_price: entity.search_reference_price,
+            search_original_price: entity.search_original_price,
+            stars_by_supplier: entity.stars_by_supplier,
+            review_quantity_by_supplier: entity.review_quantity_by_supplier,
+            reviews: entity.reviews,
+            review_details_summary: entity.review_details_summary,
+
+            services: entity.services,
             availabilities: entity.availabilities,
+            locations: entity.locations,
         };
     }
 

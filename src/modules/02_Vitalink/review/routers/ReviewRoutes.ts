@@ -10,7 +10,7 @@ class ReviewRoutes extends GenericRoutes {
     private filters: FindManyOptions = {};
     constructor() {
         super(new GenericController(Review), "/review");
-        this.filters.relations = ["supplier","package","customer","appointment"];
+        this.filters.relations = ["customer","appointment"];
     }
 
     protected initializeRoutes() {
@@ -45,8 +45,6 @@ class ReviewRoutes extends GenericRoutes {
         this.router.post(`${this.getRouterName()}/add`, async (req: Request, res: Response) => {
 
             const requiredBodyList: Array<string> = [
-                req.body.supplier_id,
-                req.body.package_id,
                 req.body.customer_id
             ];
             

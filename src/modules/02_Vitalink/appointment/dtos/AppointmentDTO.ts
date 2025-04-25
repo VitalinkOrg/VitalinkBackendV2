@@ -11,17 +11,19 @@ export default class AppointmentDTO implements IAdapterFromBody {
 
     private getEntity(isCreating: boolean): Appointment {
         const entity = new Appointment();
-        entity.customer = this.req.body.customer;
+        entity.customer = this.req.body.customer_id;
         entity.proforma_file_code = this.req.body.proforma_file_code;
         entity.appointment_date = this.req.body.appointment_date;
         entity.appointment_hour = this.req.body.appointment_hour;
-        entity.reservation_type = this.req.body.reservation_type;
-        entity.appointment_status = this.req.body.appointment_status;
-        entity.supplier = this.req.body.supplier;
+        entity.reservation_type = this.req.body.reservation_type_code;
+        entity.appointment_status = this.req.body.appointment_status_code;
+        entity.supplier = this.req.body.supplier_id;
+        entity.procedure = this.req.body.procedure_id;
+        entity.package = this.req.body.package_id;
         entity.application_date = this.req.body.application_date;
-        entity.payment_status = this.req.body.payment_status;
-        entity.payment_method = this.req.body.payment_method;
-        entity.appointment_result = this.req.body.appointment_result;
+        entity.payment_status = this.req.body.payment_status_code;
+        entity.payment_method = this.req.body.payment_method_code;
+        entity.appointment_result = this.req.body.appointment_result_code;
         entity.user_description = this.req.body.user_description;
         entity.recommendation_post_appointment = this.req.body.recommendation_post_appointment;
         entity.diagnostic = this.req.body.diagnostic;
@@ -56,6 +58,8 @@ export default class AppointmentDTO implements IAdapterFromBody {
             reservation_type: entity.reservation_type,
             appointment_status: entity.appointment_status,
             supplier: entity.supplier,
+            procedure: entity.procedure,
+            package: entity.package,
             application_date: entity.application_date,
             payment_status: entity.payment_status,
             payment_method: entity.payment_method,

@@ -10,7 +10,7 @@ class AvailabilityRoutes extends GenericRoutes {
     private filters: FindManyOptions = {};
     constructor() {
         super(new GenericController(Availability), "/availability");
-        this.filters.relations = ["supplier","procedure","location", "procedure.procedure"];
+        this.filters.relations = ["supplier","location"];
     }
 
     protected initializeRoutes() {
@@ -44,7 +44,6 @@ class AvailabilityRoutes extends GenericRoutes {
 
             const requiredBodyList: Array<string> = [
                 req.body.supplier_id,
-                req.body.procedure_by_specialty_id,
                 req.body.location_id,
                 req.body.weekday,
                 req.body.from_hour,

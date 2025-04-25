@@ -11,8 +11,6 @@ export default class ReviewDTO implements IAdapterFromBody {
 
     private getEntity(isCreating: boolean): Review {
         const entity = new Review();
-        entity.supplier = this.req.body.supplier_id;
-        entity.package = this.req.body.package_id;
         entity.customer = this.req.body.customer_id;
         entity.appointment = this.req.body.appointment_id;
         entity.comment = this.req.body.comment;
@@ -43,8 +41,6 @@ export default class ReviewDTO implements IAdapterFromBody {
     entityToResponse(entity: Review): any {
         return {
             id: entity.id,
-            supplier: entity.supplier,
-            package: entity.package,
             customer: entity.customer,
             appointment: entity.appointment,
             comment: entity.comment,

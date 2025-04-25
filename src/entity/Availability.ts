@@ -9,7 +9,7 @@ import { Location } from "./Location";
  * The Availability table stores the availability schedule of a supplier 
  * (doctor or hospital) for specific medical procedures. It includes 
  * the day of the week, available time slots, and the location where 
- * the procedure is performed. This table helps manage scheduling and 
+ *  This table helps manage scheduling and 
  * appointments efficiently.
  * 
  * 
@@ -24,10 +24,6 @@ export class Availability {
   @ManyToOne(() => Supplier)
   @JoinColumn({ name: "supplier", referencedColumnName: "id" })
   supplier: Supplier;
-
-  @ManyToOne(() => ProcedureBySpecialty)
-  @JoinColumn({ name: "procedure", referencedColumnName: "id" })
-  procedure: ProcedureBySpecialty;
 
   @ManyToOne(() => Location)
   @JoinColumn({ name: "location", referencedColumnName: "id" })

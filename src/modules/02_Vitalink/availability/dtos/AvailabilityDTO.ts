@@ -13,7 +13,6 @@ export default class AvailabilityDTO implements IAdapterFromBody {
     private getEntity(isCreating: boolean): Availability {
         const entity = new Availability();
         entity.supplier = this.req.body.supplier_id;
-        entity.procedure = this.req.body.procedure_by_specialty_id;
         entity.location = this.req.body.location_id;
         entity.weekday = this.req.body.weekday;
         entity.from_hour = this.req.body.from_hour;
@@ -43,7 +42,6 @@ export default class AvailabilityDTO implements IAdapterFromBody {
         return {
             id: entity.id,
             supplier: entity.supplier,
-            procedure: entity.procedure,
             location: entity.location,
             weekday: entity.weekday,
             from_hour: entity.from_hour,

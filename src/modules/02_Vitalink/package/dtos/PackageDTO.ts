@@ -17,6 +17,7 @@ export default class PackageDTO implements IAdapterFromBody {
         entity.discount = this.req.body.discount;
         entity.services_offer = this.req.body.services_offer;
         entity.description = this.req.body.description;
+        entity.is_king = this.req.body.is_king;
      
         if (isCreating) {
             entity.created_date = new Date();
@@ -48,6 +49,7 @@ export default class PackageDTO implements IAdapterFromBody {
             discount: entity.discount,
             services_offer: entity.services_offer,
             description: entity.description,
+            is_king: entity.is_king,
             is_deleted: entity.is_deleted,
             created_date: entity.created_date,
             updated_date: entity.updated_date,

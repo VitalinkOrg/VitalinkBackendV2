@@ -1030,7 +1030,7 @@ const availabilities = [
         supplier: { id: 1 }, // Alejandro Vargas (Cardiología)
         procedure: { id: 6 }, // Intervención Cardiovascular
         location: { id: 1 }, // Hospital Clínica Bíblica - Sede Central
-        weekday: "Monday",
+        weekday: "",
         from_hour: "08:00:00",
         to_hour: "12:00:00",
     },

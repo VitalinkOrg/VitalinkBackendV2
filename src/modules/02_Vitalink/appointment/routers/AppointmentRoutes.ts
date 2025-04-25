@@ -15,6 +15,8 @@ class AppointmentRoutes extends GenericRoutes {
             "reservation_type",
             "appointment_status",
             "supplier",
+            "package",
+            "procedure",
             "payment_status",
             "payment_method",
             "appointment_result"];

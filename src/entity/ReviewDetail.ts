@@ -22,3 +22,5 @@ export class ReviewDetail {
   @Column({ type: "timestamp", nullable: true, default: () => "CURRENT_TIMESTAMP" })
   created_date: Date | null;
 }
+
+
