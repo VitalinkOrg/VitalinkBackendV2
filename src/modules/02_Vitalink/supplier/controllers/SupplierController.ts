@@ -6,7 +6,7 @@ import GenericController from "@TenshiJS/generics/Controller/GenericController";
 import GenericRepository from "@TenshiJS/generics/Repository/GenericRepository";
 import SupplierDTO from "../dtos/SupplierDTO";
 import { getUrlParam } from "@TenshiJS/utils/generalUtils";
-import moment from "moment-timezone";
+import moment, { min } from "moment-timezone";
 import "moment/locale/es";
 import { SpecialtyBySupplier } from "@index/entity/SpecialtyBySupplier";
 import { ProcedureBySpecialty } from "@index/entity/ProcedureBySpecialty";
@@ -30,6 +30,11 @@ export default class SupplierController extends GenericController {
             try {
                 const specialty_code = getUrlParam("specialty_code", reqHandler.getRequest()) || null;
                 const procedure_code = getUrlParam("procedure_code", reqHandler.getRequest()) || null;
+                const min_stars = Number(getUrlParam("min_stars", reqHandler.getRequest()) || 0); 
+                const province_filter = getUrlParam("province", reqHandler.getRequest())?.toLowerCase() || null;
+                const min_price = Number(getUrlParam("min_price", reqHandler.getRequest()) || 0);
+                const max_price = Number(getUrlParam("max_price", reqHandler.getRequest()) || Number.MAX_SAFE_INTEGER);
+
 
                 const suppliers = await this.getRepository().findAll(reqHandler.getLogicalDelete(), {
                     where: { is_deleted: false },
@@ -44,7 +49,7 @@ export default class SupplierController extends GenericController {
                 const filteredSuppliers = [];
                 for (const supplier of suppliers) {
                    
-                    const shouldInclude = await this.addSupplierData(supplier, specialty_code, procedure_code);
+                    const shouldInclude = await this.addSupplierData(supplier, specialty_code, procedure_code, min_stars, province_filter, min_price, max_price);
                     if (shouldInclude) filteredSuppliers.push(supplier);
                 }
 
@@ -63,7 +68,14 @@ export default class SupplierController extends GenericController {
 
 
 
-    private async addSupplierData(supplier: any, specialty_code: string | null, procedure_code: string | null): Promise<boolean> {
+    private async addSupplierData(  supplier: any, 
+                                    specialty_code: string | null, 
+                                    procedure_code: string | null, 
+                                    minStars: number,  
+                                    provinceFilter: string | null,
+                                    minPrice: number,
+                                    maxPrice: number
+                                ): Promise<boolean> {
         const availabilities = await this.availabilityRepository.findByOptions(false, true, {
             where: { supplier: { id: supplier.id } },
             relations: ["location"]
@@ -71,10 +83,39 @@ export default class SupplierController extends GenericController {
 
         const nextAvailability = this.getNextAvailability(availabilities);
         const locations = availabilities.map((av: { location: any; }) => av.location).filter((loc: { id: any; }, i: any, self: any[]) => loc && self.findIndex(l => l.id === loc.id) === i);
-        const services = await this.loadSupplierServices(supplier.id, specialty_code, procedure_code);
+
+        if (provinceFilter && !locations.some((loc: any) => loc.province?.toLowerCase() === provinceFilter)) {
+            return false;
+        }
+
+
+        const supplierReview = await this.getSupplierReviewAverage(supplier.id);
+
+        if (minStars > 0 && (!supplierReview || supplierReview.stars_average < minStars)) {
+            return false; // No cumple con el filtro
+        }
+
+        const services = await this.loadSupplierServices(supplier.id, specialty_code, procedure_code, minPrice, maxPrice);
+        
+        const flatPackages = services.flatMap(service =>
+            service.procedures.flatMap((proc: { packages: any[]; }) =>
+                proc.packages.map((pkg: any) => pkg.reference_price)
+            )
+        );
+        
+        const hasValidPrice = flatPackages.some((price: number) => {
+            return price >= minPrice && price <= maxPrice;
+        });
+        
+        // Solo aplicar el filtro si min o max price fueron enviados
+        if ((minPrice > 0 || maxPrice < Number.MAX_SAFE_INTEGER) && !hasValidPrice) {
+            return false;
+        }
+        
+
+        
         const reviews = await this.getReviewDetailsGroupedBySupplier(supplier.id);
         const reviewsSummary = await this.getReviewDetailAveragesBySupplier(supplier.id);
-
 
         const filtersApplied = !!specialty_code || !!procedure_code;
         if (filtersApplied && services.length === 0) return false;
@@ -108,7 +149,7 @@ export default class SupplierController extends GenericController {
             supplier.search_original_price = originalPrice !== null ? `${originalPrice}` : null;
         }
 
-        const supplierReview = await this.getSupplierReviewAverage(supplier.id);
+        
         supplier.stars_by_supplier = supplierReview?.stars_average ?? null;
         supplier.review_quantity_by_supplier = supplierReview?.quantity ?? null;
 
@@ -279,7 +320,9 @@ export default class SupplierController extends GenericController {
     private async loadSupplierServices(
         supplierId: number,
         specialty_code: string | null,
-        procedure_code: string | null
+        procedure_code: string | null,
+        minPrice: number,
+        maxPrice: number
     ): Promise<any[]> {
         const specialties = await this.specialtyBySupplierRepository.findByOptions(false, true, {
             where: { supplier: { id: supplierId } },
@@ -312,8 +355,12 @@ export default class SupplierController extends GenericController {
                     procedure: procedure.procedure,
                     //stars_by_procedure: procReview?.stars_average ?? null,
                     //review_quantity_by_procedure: procReview?.quantity ?? null,
-                    packages: packages.map( (pkg: any) => {
-                        //const pkgReview = await this.getPackageReviewAverage(supplierId, pkg.product.code);
+                    packages: packages
+                    .filter((pkg: any) => {
+                        const price = Number(pkg.reference_price);
+                        return price >= minPrice && price <= maxPrice;
+                    })
+                    .map((pkg: any) => {
                         return {
                             id: pkg.id,
                             product: pkg.product,
@@ -322,10 +369,9 @@ export default class SupplierController extends GenericController {
                             services_offer: pkg.services_offer,
                             description: pkg.description,
                             is_king: pkg.is_king,
-                           // stars_by_package: pkgReview?.stars_average ?? null,
-                           // review_quantity_by_package: pkgReview?.quantity ?? null
                         };
                     })
+                
                 });
                 
             }
