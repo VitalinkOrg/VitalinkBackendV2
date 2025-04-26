@@ -617,7 +617,7 @@ const specialties = [
     // Médicos individuales
     { id: 1, supplier: { id: 1 }, medical_specialty: { code: "CARDIOLOGY" } }, // Alejandro Vargas (Cirujano Cardiovascular)
     { id: 2, supplier: { id: 2 }, medical_specialty: { code: "DERMATOLOGY" } }, // Sofía Araya (Dermatóloga)
-    { id: 3, supplier: { id: 3 }, medical_specialty: { code: "GENERAL_MEDICAL" } }, // Fernando López (Médico General)
+    { id: 3, supplier: { id: 3 }, medical_specialty: { code: "NEUROLOGY" } }, // Fernando López (Médico General)
 
     // Hospitales con múltiples especialidades
     { id: 4, supplier: { id: 4 }, medical_specialty: { code: "CARDIOLOGY" } }, // Hospital Clínica Santa Fe (Cardiología)

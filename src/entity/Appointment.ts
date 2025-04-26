@@ -86,6 +86,12 @@ export class Appointment {
   diagnostic: string | null;
 
   @Column({ type: "tinyint", default: 0 })
+  is_for_external_user: boolean;
+
+  @Column({ type: "varchar", length: 250, nullable: true, default: null })
+  phone_number_external_user: string | null;
+
+  @Column({ type: "tinyint", default: 0 })
   is_deleted: boolean;
 
   @Column({ type: "timestamp", nullable: true, default: () => "CURRENT_TIMESTAMP" })

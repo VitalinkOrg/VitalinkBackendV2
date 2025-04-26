@@ -27,6 +27,8 @@ export default class AppointmentDTO implements IAdapterFromBody {
         entity.user_description = this.req.body.user_description;
         entity.recommendation_post_appointment = this.req.body.recommendation_post_appointment;
         entity.diagnostic = this.req.body.diagnostic;
+        entity.is_for_external_user = this.req.body.is_for_external_user;
+        entity.phone_number_external_user = this.req.body.phone_number_external_user;
      
         if (isCreating) {
             entity.created_date = new Date();
@@ -67,6 +69,8 @@ export default class AppointmentDTO implements IAdapterFromBody {
             user_description: entity.user_description,
             recommendation_post_appointment: entity.recommendation_post_appointment,
             diagnostic: entity.diagnostic,
+            is_for_external_user: entity.is_for_external_user,
+            phone_number_external_user: entity.phone_number_external_user,
             created_date: entity.created_date,
             updated_date: entity.updated_date,
         };

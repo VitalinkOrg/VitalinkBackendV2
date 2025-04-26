@@ -23,9 +23,11 @@ export class AppointmentCredit {
   @JoinColumn({ name: "credit_status", referencedColumnName: "code" })
   credit_status: UnitDynamicCentral;
 
+  //request amount from user
   @Column({ type: "decimal", precision: 10, scale: 2, nullable: true })
   requested_amount: number | null;
 
+  //approved amount from legal entity
   @Column({ type: "decimal", precision: 10, scale: 2, nullable: true })
   approved_amount: number | null;
 

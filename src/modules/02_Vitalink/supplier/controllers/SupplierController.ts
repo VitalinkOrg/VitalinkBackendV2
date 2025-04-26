@@ -41,6 +41,11 @@ export default class SupplierController extends GenericController {
                     relations: ["id_type", "medical_type"]
                 }, page, size);
 
+                const pagination = await this.getRepository().count(reqHandler.getLogicalDelete(), {
+                    where: { is_deleted: false },
+                    relations: ["id_type", "medical_type"]
+                }, page, size);
+
                 if (!suppliers || suppliers.length === 0) {
                     return httpExec.dynamicError(ConstStatusJson.NOT_FOUND, ConstMessagesJson.DONT_EXISTS);
                 }
@@ -361,11 +366,16 @@ export default class SupplierController extends GenericController {
                         return price >= minPrice && price <= maxPrice;
                     })
                     .map((pkg: any) => {
+                        const referencePrice = Number(pkg.reference_price);
+                        const discount = pkg.discount ? Number(pkg.discount) : 0;
+                        const discountedPrice = referencePrice * (1 - discount / 100);
+                
                         return {
                             id: pkg.id,
                             product: pkg.product,
-                            reference_price: pkg.reference_price,
-                            discount: pkg.discount,
+                            reference_price: referencePrice,
+                            discount: discount,
+                            discounted_price: Math.round(discountedPrice), // Puedes usar Math.round o dejarlo exacto
                             services_offer: pkg.services_offer,
                             description: pkg.description,
                             is_king: pkg.is_king,
