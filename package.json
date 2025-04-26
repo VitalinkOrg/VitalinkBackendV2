@@ -66,5 +66,15 @@
         "tsconfig-paths": "^4.2.0",
         "typeorm": "^0.3.20",
         "typescript": "^5.5.4"
+    },
+    "_moduleAliases": {
+        "tenshi": "build/tenshi",     
+        "@TenshiJS": "build/tenshi",
+        "@index": "build/src",
+        "@modules": "build/src/modules",
+        "@templates": "build/templates",
+        "@entity": "build/src/entity",
+        "@data": "build/data/json",
+        "@utils": "build/src/utils"
     }
 }
