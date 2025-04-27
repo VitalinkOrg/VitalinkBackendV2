@@ -1,5 +1,5 @@
 [![alt tag](https://raw.githubusercontent.com/fabian7593/Tenshi/main/00_external_information/imgs/tenshi_background.png)]([https://github.com/fabian7593/Tenshi](https://github.com/fabian7593/Tenshi/tree/main))
-# Tenshi JS
+# Tenshi Backend TS
 
 Tenshi is a modular and scalable backend REST API framework developed in Node.js with TypeScript and Express.js. It is **completely open-source** and designed to facilitate the development of robust applications through a clean and modular architecture.
 
@@ -9,53 +9,82 @@ With Tenshi, developers benefit from a well-organized structure that enhances pr
 
 <br><br>
 
+---
+
 ## Navigation Menu
 
-- [Key Features](#key-features-of-tenshijs)
-  - [General](#general)
-  - [Security](#security)
-  - [Validations](#validations)
-  - [Document Management](#document-management)
-  - [Modules](#modules)
-- [Installation](#installation)
-- [Versioning](#versioning)
-- [Start Backend Server](#start-backend-server)
-- [Configuration](#configuration)
-  - [COMPANY](#company)
-  - [SERVER](#server)
-  - [DB](#db)
-  - [URL_FILES](#url_files)
-  - [LOG](#log)
-  - [HTTP_REQUEST](#http_request)
-  - [JWT](#jwt)
-  - [FILE_STORAGE](#file_storage)
-  - [EMAIL](#email)
-  - [TEST](#test)
-- [Import Postman](#import-postman)
-- [Project Architecture](#project-architecture)
-  - [GenericRepository](#genericrepository)
-  - [GenericController](#genericcontroller)
-  - [GenericRouter](#genericrouter)
-- [RequestHandler Builder Logic](#requesthandler-builder-logic)
-- [Application Flow Diagram](#application-flow-diagram)
-- [Database Management](#database-management)
-- [Insert Seeds](#insert-seeds)
-- [Testing](#testing)
-- [Automation](#automation)
-- [Response Structure](#response-structure)
-- [Managing Roles](#managing-roles)
-  - [How to Create and Modify Roles](#how-to-create-and-modify-roles)
-- [Managing Regex Patterns](#managing-regex-patterns)
-- [Customizing and Adding Email Templates](#customizing-and-adding-email-templates)
-- [Dependencies](#dependencies)
-- [Contribution](#contribution)
-  - [TODO List for Tenshi](#todo-list-for-tenshi)
+- [Key Features](#key-features-of-tenshits)  
+  - [General](#general)  
+  - [Security](#security)  
+  - [Validations](#validations)  
+  - [Document Management](#document-management)  
+  - [Modules](#modules)  
+- [Versioning](#versioning)  
+- [Installation](#installation)  
+- [Start Backend Server](#start-backend-server)  
+  - [Scripts](#scripts)  
+- [Build & Run in Production](#build--run-in-production)  
+  - [Set up module aliases for production](#set-up-module-aliases-for-production)  
+  - [Build the project](#build-the-project)  
+  - [Install PM2 globally (Linux)](#install-pm2-globally-linux)  
+  - [Start the production build using PM2](#start-the-production-build-using-pm2)  
+- [Docker Deployment](#docker-deployment)  
+  - [Dockerfile](#dockerfile)  
+  - [Linux – Build and Run](#linux--build-and-run)  
+  - [Stop and Remove Container](#stop-and-remove-container)  
+  - [One-Line Deployment (Linux only)](#one-line-deployment-linux-only)  
+- [Useful PM2 Commands](#useful-pm2-commands)  
+- [Configuration](#configuration)  
+  - [COMPANY](#1-company)  
+  - [SERVER](#2-server)  
+  - [SUPER_ADMIN](#3-super_admin)  
+  - [DB](#4-db)  
+  - [URL_FILES](#5-url_files)  
+  - [LOG](#6-log)  
+  - [HTTP_REQUEST](#7-http_request)  
+  - [JWT](#8-jwt)  
+  - [FILE_STORAGE](#9-file_storage)  
+  - [EMAIL](#10-email)  
+  - [TEST](#11-test)  
+- [Import Postman](#import-postman)  
+  - [Import the Collection](#1-import-the-collection)  
+  - [Configure Environment Variables](#2-configure-environment-variables)  
+  - [Authentication Flow](#3-authentication-flow)  
+  - [Suggested Usage Flow for Frontend Integration](#suggested-usage-flow-for-frontend-integration)  
+    - [Auth Module](#auth-module)  
+    - [Users Module](#users-module)  
+    - [UDC Module](#udc-module-unit-dynamic-central)  
+    - [Documents Module](#documents-module)  
+    - [Email Module](#email-module)  
+    - [Logs Module](#logs-module)  
+    - [Roles Module](#roles-module)  
+- [Project Architecture](#project-architecture)  
+  - [GenericRepository](#genericrepository)  
+  - [GenericController](#genericcontroller)  
+  - [GenericRouter](#genericrouter)  
+- [RequestHandler Builder Logic](#requesthandler-builder-logic)  
+- [Application Flow Diagram](#application-flow-diagram)  
+- [Database Management](#database-management)  
+- [Insert Seeds](#insert-seeds)  
+- [Testing](#testing)  
+- [Automation](#automation)  
+- [Response Structure](#response-structure)  
+- [Managing Roles](#managing-roles)  
+  - [How Roles Work](#how-roles-work)  
+  - [Role Structure Explained](#role-structure-explained)  
+  - [User ID Validation Logic](#user-id-validation-logic)  
+  - [Quick Summary](#quick-summary)  
+- [Managing Regex Patterns](#managing-regex-patterns)  
+- [Customizing and Adding Email Templates](#customizing-and-adding-email-templates)  
+- [Dependencies](#dependencies)  
+- [Contribution](#contribution)  
+  - [TODO List for Tenshi](#todo-list-for-tenshi)  
 - [License](#license)
 
 <br><br>
 
 
-## Key Features of TenshiJS
+## Key Features of TenshiTS
 
 ### General
 - Rapid development of robust backend REST APIs with essential security validations.
@@ -104,7 +133,7 @@ With Tenshi, developers benefit from a well-organized structure that enhances pr
 
 # Versioning 
    ```bash
-Tenshi Framework - Version 1.0.9
+Tenshi Framework - Version 1.0.13
    ```
 <br><br>
 
@@ -128,11 +157,11 @@ Tenshi is a highly flexible framework, not just a library. To get started:
 <br><br>
 
 
-## 🚀 Start Backend Server
+## Start Backend Server
 
 This project provides a set of NPM scripts to compile, seed, test, and run the backend in different environments.
 
-### 📦 Scripts
+### Scripts
 
 ```bash
 # Start server in development mode with live reload
@@ -180,11 +209,40 @@ npm run copytemp
 
 ---
 
-## 🛠️ Build & Run in Production
 
-To prepare and run the backend server in a production environment:
 
-### 1. Build the project
+## Build & Run in Production
+
+To prepare and run the backend server in a production environment using PM2:
+
+### Set up module aliases for production
+
+Before building the project, make sure the correct `_moduleAliases` are in place. These aliases should point to the compiled `/build` directory and are defined in the `package.prod.json` file at the root of the project.
+
+```json
+"_moduleAliases": {
+  "tenshi": "build/tenshi",
+  "@TenshiJS": "build/tenshi",
+  "@index": "build/src",
+  "@modules": "build/src/modules",
+  "@templates": "build/templates",
+  "@entity": "build/src/entity",
+  "@data": "build/data/json",
+  "@utils": "build/src/utils"
+}
+```
+
+You can either:
+- Manually copy the content of `package.prod.json` into your `package.json`, or
+- Rename the file before building:
+
+```bash
+mv package.prod.json package.json
+```
+
+This step ensures your import paths resolve correctly when running the compiled code.
+
+### Build the project
 
 ```bash
 npm run build
@@ -194,13 +252,13 @@ This will:
 - Compile TypeScript to JavaScript
 - Copy all necessary JSON files and templates to the `/build` directory
 
-### 2. Install PM2 globally (Linux)
+### Install PM2 globally (Linux)
 
 ```bash
 npm install -g pm2
 ```
 
-### 3. Start the production build using PM2
+### Start the production build using PM2
 
 ```bash
 pm2 start npm --name "tenshibackend" -- run prod
@@ -210,9 +268,67 @@ This command:
 - Starts the compiled backend located in `/build/src/index.js`
 - Names the process `tenshibackend` for easier management
 
+
+If you need to run withouth build or compile, just use, this run directly from typescript 
+(In this case you need to delete the module Aliases from package.json):
+```bash
+pm2 start npm --name "tenshibackend" -- run start
+```
+
 ---
 
-## 🧪 Useful PM2 Commands
+## Docker Deployment
+
+You can also deploy the backend using Docker, which encapsulates all dependencies and ensures environment consistency.
+
+### Dockerfile
+
+### Linux – Build and Run
+
+1. Make sure Docker is installed and running:
+
+```bash
+docker --version
+```
+
+2. Rename `package.prod.json` or copy the content to:
+
+```bash
+mv package.prod.json package.json
+```
+
+3. Build the image:
+
+```bash
+docker build -t tenshi-backend .
+```
+
+4. Run the container:
+
+```bash
+docker run -d -p 3000:3000 --name tenshi-backend tenshi-backend
+```
+
+This maps your container's port 3000 to your local port 3000. Adjust as needed.
+
+### Stop and Remove Container
+
+```bash
+docker stop tenshi-backend
+docker rm tenshi-backend
+```
+
+### One-Line Deployment (Linux only)
+
+If you're using Linux, you can run the entire Docker build and deployment process with one command:
+
+```bash
+chmod +x deploy-prod.sh
+./deploy-prod.sh
+```
+
+
+##  Useful PM2 Commands
 
 ```bash
 # Show status of all processes
@@ -227,8 +343,8 @@ pm2 stop tenshibackend
 # View logs
 pm2 logs tenshibackend
 
-# Save current process list to restart on server reboot
-pm2 save
+# Delete the process to the list
+pm2 delete tenshibackend
 
 # Launch PM2 on system startup
 pm2 startup
@@ -363,8 +479,186 @@ Configuration related to run npm run test.
 
 <br><br>
 
-## Import Postman:
-You need to import your [Postman collection for Tenshi](https://github.com/fabian7593/Tenshi/raw/main/00_external_information/Tenshi.postman_collection.json) to gain access to all the endpoints provided by the Tenshi modules.
+---
+
+## Import Postman
+
+To test and explore the available endpoints in Tenshi, you can use the official [Tenshi Postman Collection](https://github.com/fabian7593/Tenshi/raw/main/00_external_information/Tenshi.postman_collection.json).
+
+### 1. Import the Collection
+
+- Download and open the `.postman_collection.json` file.
+- In Postman, go to **File → Import**, then choose the file or paste the URL above.
+- The collection is organized by modules (Auth, Users, Documents, UDCs, Logs, etc.), reflecting the backend's modular architecture.
+
+### 2. Configure Environment Variables
+
+Before using the endpoints, configure a Postman Environment with the following variables:
+
+| Variable         | Description                                |
+|------------------|--------------------------------------------|
+| `host`           | Backend base URL (e.g., `http://localhost:3000`) or anyonw published|
+| `auth_jwt`       | JWT token obtained after logging in        |
+| `secret_api_key` | API key defined in your `tenshi-config.json` |
+
+> By default, both JWT and API Key are required for most protected endpoints.  
+> You can modify access in the configuration:
+>
+> - Use `HTTP_REQUEST.REQUEST_WITHOUT_JWT` to exclude routes from requiring JWT.
+> - Use `SERVER.VALIDATE_API_KEY: false` to disable API key validation completely.
+
+---
+
+### 3. Authentication Flow
+
+1. Use the `/auth/login` endpoint to authenticate a user (e.g., Super Admin, Admin or Regular).
+2. Copy the `access_token` from the response and assign it to `auth_jwt` in your Postman environment.
+3. Use this token in your `authorization` header for authenticated requests.
+4. Ensure `secret_api_key` is set for API requests that require it.
+
+---
+
+### Suggested Usage Flow for Frontend Integration
+
+Here’s a modular breakdown of how to explore Tenshi’s API and how access is controlled by roles:
+
+---
+
+#### Auth Module
+
+Manages login, registration, token refresh, logout, and password recovery.
+
+**Endpoints:**
+
+- `POST /auth/register`: Allows registering a user with a public role (e.g., CUSTOMER).
+- `POST /auth/login`: Authenticate and get a JWT.
+- `POST /auth/logout`: Ends user session.
+- `POST /forgot_password` and `POST /reset_password`: Password recovery flow.
+- `GET /confirmation_register`: Confirms email verification.
+
+**Role Access:**
+
+- Only roles with `"is_public": true` can be registered through `/auth/register`.
+- All users (public or authenticated) can use password recovery and login.
+- Admins can assign private roles during `/user/add` but public roles are self-assignable.
+
+---
+
+#### Users Module
+
+Manages full CRUD operations on users.
+
+**Endpoints:**
+
+- `POST /user/add`: Create a new user (with any role).
+- `GET /user/get`, `GET /user/get_all`: Fetch users or user details.
+- `PUT /user/edit`: Update user data.
+- `DELETE /user/delete`: Soft-delete a user.
+
+**Role Access:**
+
+- **Admin**: Has full access to all user-related functions: CREATE, UPDATE, DELETE, GET_ALL, GET_BY_ID.
+- **Non-admin roles**:
+  - Cannot create new users.
+  - Can only edit or retrieve their own data if the controller uses `isValidateWhereByUserId()`, which enforces a match between the authenticated user's ID and the ID in the URL.
+  - Cannot access `GET_ALL` or `DELETE` unless explicitly permitted.
+
+> Note: Role logic is defined in `roles.json`. If a role lacks `"CREATE"` under the `USER` module, `/user/add` will be forbidden even if the token is valid.
+
+---
+
+#### UDC Module (Unit Dynamic Central)
+
+Stores reusable codes used throughout the application (like enums, categories, settings).
+
+**Endpoints:**
+
+- `POST /udc/add`, `PUT /udc/edit`, `DELETE /udc/delete`: Manage dynamic values.
+- `GET /udc/get_all`, `GET /udc/get_by_code`: Retrieve UDCs for filters or dropdowns.
+
+**Role Access:**
+
+- Only roles with `"CREATE"`, `"UPDATE"`, or `"DELETE"` under the `UDC` module (if defined) can modify UDCs.
+- `GET_ALL` and `GET_BY_CODE` can be made accessible to any authenticated role, depending on `roles.json`.
+
+**Frontend Tip:**  
+Use this to dynamically populate dropdowns such as "Event Types", "Camp Categories", etc., from the backend. This allows content administrators to manage options without code changes.
+
+---
+
+#### Documents Module
+
+Handles file management for all modules (user profile pictures, attachments, uploads).
+
+**Endpoints:**
+
+- `POST /document/add`: Upload document using form-data.
+- `GET /document/get_all`, `GET /document/get_by_code`, `GET /document/get_by_filters`: List or retrieve documents.
+- `PUT /document/edit`, `DELETE /document/delete`: Update or remove documents.
+
+**Role Access:**
+
+- Admins: Full access to upload, modify, and delete documents.
+- Users: Can only modify or view documents tied to their user ID when the controller uses `isValidateWhereByUserId()`.
+- `is_public: true` documents can be accessed even without login if configured.
+
+**Frontend Tip:**  
+When uploading a file, include metadata like `table`, `id_for_table`, and `action_type`. This allows linking the document to any specific entity like a USER or PROJECT.
+
+---
+
+#### Email Module
+
+Sends templated emails to users.
+
+**Endpoints:**
+
+- `POST /email/send_email`: Send to specific user.
+- `POST /email/send_email_all_users`: Send broadcast email.
+
+**Role Access:**
+
+- Restricted to roles with `"SEND_EMAIL"` or equivalent custom permission in `roles.json`.
+- Typically reserved for Admins or internal roles with mass-communication responsibilities.
+
+**Frontend Tip:**  
+Useful for triggering onboarding, confirmation, or campaign emails directly from your interface (e.g., admin panel actions).
+
+---
+
+#### Logs Module
+
+Allows the frontend or backend to report internal or external events/errors.
+
+**Endpoints:**
+
+- `POST /log/add`: Send error/debug logs from the client or frontend.
+- `GET /log/get_all`: Retrieve logs.
+
+**Role Access:**
+
+- All authenticated users can send logs.
+- Only Admins can retrieve them unless another role has the `LOG → GET_ALL` permission.
+
+**Frontend Tip:**  
+Use this to report frontend-level issues (e.g., file upload errors, token validation failures) to your backend team automatically.
+
+---
+
+#### Roles Module
+
+Returns information about the roles and access levels in the system.
+
+**Endpoint:**
+
+- `GET /role/get_all`
+
+**Role Access:**
+
+- Only Admins or roles with permission under the `ROLE` module can access this.
+- Useful for displaying available roles in admin user management screens.
+
+---
 
 
 <br><br>
@@ -436,14 +730,49 @@ This method enables role validation for the current request. If enabled, the sys
 
 This method flags the request to perform a logical delete instead of a physical delete. This means that the record will not be removed from the database but will be marked as deleted (e.g., setting an `isDeleted` field to `true`). This is used in almost all HTTP requests. For GET requests, this method considers whether a record is logically deleted (e.g., if `is_deleted = true`, the record will not be shown in the GET response).
 
-- #### `isValidateWhereByUserId()`
-
-This method enables the validation of WHERE conditions in a query, ensuring that the necessary validations by `UserId` (in DB `user_id`) are included. This is useful in situations where data needs to be specifically filtered for the user making the request.
-
 - #### `setCodeMessageResponse(codeMessage: string)`
 
 This method set the new code message for get a dynamic reply for any request.
 You need to set the code and the message from `src/data/json/messages.json`.
+
+- #### `isValidateWhereByUserId()`
+  Enables validation based on the `user_id` field, ensuring that users can **only access their own records**.  
+  If the user is a `SUPER_ADMIN`, this validation is bypassed automatically.  
+  If this validation is active and the user does not own the record, the operation will be **denied with an unauthorized error**.
+
+  To **bypass this validation for specific roles**, see [`setAllowRoleList`](#setallowrolelistallowrolelist-arraystring).
+
+  > If you wish to **customize or disable** how this validation behaves, you can modify the `validateWhereByUserId` or `validateGetAllByUserId` methods located in the `GenericValidation` class.
+
+  These methods internally validate ownership by comparing the authenticated user (`jwtData.id`) against one of the following fields in the database entity:
+
+  - `user_id`
+  - `customer_id`
+  - `customer.id`
+  - `booked_by`
+
+  If none of these fields match or are present, access will be denied.
+
+- #### `setAllowRoleList(allowRoleList: Array<string>)`
+  Configures an exception list of roles that are allowed to bypass the `isValidateWhereByUserId` restriction.  
+  This provides flexibility when certain roles (such as managers, auditors, or specific customers) need broader access without being full `SUPER_ADMIN`s.
+
+  Example:
+
+  ```typescript
+  const allow_role_list: Array<string> = ["CUSTOMER", "MANAGER"];
+
+  const requestHandler: RequestHandler = 
+    new RequestHandlerBuilder(res, req)
+      .setAdapter(new AppointmentDTO(req))
+      .setMethod("getAppointments")
+      .isValidateRole("APPOINTMENT")
+      .isLogicalDelete()
+      .isValidateWhereByUserId()
+      .setAllowRoleList(allow_role_list)
+      .setFilters(this.filters)
+      .build();
+  ```
 
 <br><br>
 
@@ -589,11 +918,17 @@ Example Response for get only one entity:
 
 <br><br>
 
+
 ## Managing Roles
 
-### How to Create and Modify Roles
+Tenshi uses a local `roles.json` file (in `src/data/json/roles.json`) instead of storing roles in a database. 
+This is intentional and based on the framework’s modular and microservice-oriented philosophy:
 
-Roles are defined in the `src/data/json/roles.json` file. The structure of the JSON file is designed to manage user roles and their associated permissions effectively. Here’s a breakdown of the role structure:
+- **No dependency on external auth modules.** Each microservice can define and validate its own role-based permissions.
+- **Static config for performance.** Roles are loaded on server boot.
+- **Restart required.** If you modify `roles.json`, you must restart the backend server for changes to take effect.
+
+### Breakdown of Role Structure 
 
 ```json
 {
@@ -602,6 +937,7 @@ Roles are defined in the `src/data/json/roles.json` file. The structure of the J
       "id": 1,
       "code": "ADMIN",
       "name": "Administrator",
+      "is_public": true,
       "description": "Administrator role with full access to all functionalities.",
       "modules": [
         {
@@ -636,26 +972,59 @@ Roles are defined in the `src/data/json/roles.json` file. The structure of the J
 }
 ```
 
-### Structure Breakdown
+### Role Structure Explained
+- `code`: The internal identifier that is linked to each user (`user.role_code`).
+- `is_public`: Defines whether users with this role can be registered via the `/auth/register` endpoint. If `false`, they can only be created by an admin via `/user/add`.
+- `modules`: Defines which modules and which functions (`CREATE`, `GET_ALL`, etc.) a role can access.
+- `screens`: Optional UI-related metadata for frontend interfaces.
 
-- **id**: A unique identifier for the role.
-- **code**: A short code representing the role.
-- **name**: The display name of the role.
-- **description**: A brief description of the role’s permissions and capabilities.
-- **modules**: An array of modules associated with the role, where each module has:
-  - **name**: The name of the module.
-  - **function_list**: A list of functions or actions that can be performed within this module (e.g., CREATE, UPDATE, DELETE).
-- **screens**: An array of screens or views that are accessible by the role, where each screen has:
-  - **name**: The name of the screen.
 
-### Adding or Modifying Roles
+### User ID Validation Logic
 
-To add a new role or modify an existing one:
+The logic for validating ownership (whether a user is allowed to access or modify a record) is centralized in two methods inside `GenericValidation`:
 
-1. **Edit the JSON file**: Add or update role objects in the `roles` array.
-2. **Define new modules and screens**: Ensure that any new modules or screens are properly defined and associated with the appropriate functions.
-3. **Save changes**: Ensure that the JSON structure remains valid and that all roles are correctly represented.
+- #### `validateWhereByUserId`
+  Used mainly in `DELETE` and `UPDATE` operations.
 
+- #### `validateGetAllByUserId`
+  Used mainly in `GET` operations that retrieve lists or single items.
+
+### How validation works internally:
+The system checks if the authenticated user's ID (`jwtData.id`) matches any of these fields on the entity:
+
+```typescript
+const entityUserId = 'user_id' in entity ? entity.user_id : undefined;
+const entityUserNestedId = 'user' in entity && entity.user ? entity.user.id : undefined;
+const entityCustomerId = 'customer' in entity && entity.customer ? entity.customer.id : undefined;
+const entityBookedBy = 'booked_by' in entity ? entity.booked_by : undefined;
+```
+
+If none of these fields match the current user, the operation is blocked with an `Unauthorized` error.
+
+If none of these fields exist at all, access is also denied by default to ensure strict security.
+
+### Customizing Validation Behavior:
+If you need different fields or a different validation logic, you can modify the corresponding method:
+
+- For `DELETE` and `UPDATE`, edit `validateWhereByUserId`.
+- For `GET` operations, edit `validateGetAllByUserId`.
+
+Both are located in the `GenericValidation` class.
+
+---
+
+### Quick Summary
+
+| Topic | Purpose |
+|:------|:--------|
+| `isValidateWhereByUserId` | Forces user-specific access control |
+| `setAllowRoleList` | Allows exceptions to user-specific control |
+| `validateWhereByUserId` | Validation for DELETE and UPDATE operations |
+| `validateGetAllByUserId` | Validation for GET operations |
+| Fields checked | `user_id`, `customer_id`, `customer.id`, `booked_by` |
+| Customization | Modify validation methods in `GenericValidation` |
+
+---
 
 <br><br>
 
@@ -772,12 +1141,14 @@ As time goes on, Tenshi will continue updating its list of modules that may be u
 - **Library:** Migrate all logic of Tenshi to a TypeScript library. ***URGENT***
 - **Factory Pattern Documents:** Implement logic for adding documents to other services such as Azure and/or local servers.
 - **Oauth:** Develop OAuth implementation for Google.
-- **Security:** Add Two Factor Authentication into login.
+- **Security:** Add Two Factor Authentication logic.
+- **Better:** Add logic of create folder by app code and by user id in folder S3 from document module.
+- **Better:** Add logic of rollback when 1 execution is wrong, when ypu shot a lot of db executions.
 - **Module:** Add payments methods module.
 - **Module:** Add subscriptions module.
-- **DevOps:** Create Devops Docker File and publish.
-- **Documentation:** Create Postman Endpoints Documentation.
-- **Videos:** Create some explanation video tutorials for explain how to use tenshi version 1.0.9
+- **Module:** Add gamification module.
+- **Logic:** Add notifications between endpoints, without calla  ntoification request.
+- **Videos:** Create some explanation video tutorials for explain how to use tenshi version 1.0.13
 
 
 <br><br><br>

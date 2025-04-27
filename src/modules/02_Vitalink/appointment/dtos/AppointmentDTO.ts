@@ -60,7 +60,6 @@ export default class AppointmentDTO implements IAdapterFromBody {
             reservation_type: entity.reservation_type,
             appointment_status: entity.appointment_status,
             supplier: entity.supplier,
-            procedure: entity.procedure,
             package: entity.package,
             application_date: entity.application_date,
             payment_status: entity.payment_status,

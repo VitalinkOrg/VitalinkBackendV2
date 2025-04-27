@@ -1,7 +1,8 @@
 import { Request, Response, 
          RequestHandler, RequestHandlerBuilder, 
          GenericController, GenericRoutes,
-         FindManyOptions} from "@modules/index";
+         FindManyOptions,
+         getUrlParam} from "@modules/index";
 import { Appointment } from "@index/entity/Appointment";
 import AppointmentDTO from "@modules/02_Vitalink/appointment/dtos/AppointmentDTO";
 
@@ -16,7 +17,9 @@ class AppointmentRoutes extends GenericRoutes {
             "appointment_status",
             "supplier",
             "package",
-            "procedure",
+            "package.product",
+            "package.procedure",
+            "package.procedure.procedure",
             "payment_status",
             "payment_method",
             "appointment_result"];
@@ -38,6 +41,16 @@ class AppointmentRoutes extends GenericRoutes {
         });
         
         this.router.get(`${this.getRouterName()}/get_all`, async (req: Request, res: Response) => {
+
+            const customer_id: string | null = getUrlParam("customer_id", req) || null;
+            
+            if (customer_id != "") {
+                this.filters.where = { ...this.filters.where, customer:{ id: customer_id}  };
+            }
+
+            const allow_role_list: Array<string> = [
+                "CUSTOMER"
+            ];
         
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
@@ -45,6 +58,8 @@ class AppointmentRoutes extends GenericRoutes {
                                     .setMethod("getAppointments")
                                     .isValidateRole("APPOINTMENT")
                                     .isLogicalDelete()
+                                    .isValidateWhereByUserId()
+                                    //.setAllowRoleList(allow_role_list)
                                     .setFilters(this.filters)
                                     .build();
         
@@ -54,11 +69,11 @@ class AppointmentRoutes extends GenericRoutes {
         this.router.post(`${this.getRouterName()}/add`, async (req: Request, res: Response) => {
 
             const requiredBodyList: Array<string> = [
-                req.body.customer,
+                req.body.customer_id,
                 req.body.appointment_date,
                 req.body.appointment_hour,
-                req.body.reservation_type,
-                req.body.supplier,
+                req.body.reservation_type_code,
+                req.body.supplier_id,
             ];
             
             const requestHandler: RequestHandler = 
@@ -78,6 +93,7 @@ class AppointmentRoutes extends GenericRoutes {
                                     .setAdapter(new AppointmentDTO(req))
                                     .setMethod("updateAppointment")
                                     .isValidateRole("APPOINTMENT")
+                                    .isValidateWhereByUserId()
                                     .build();
         
             this.getController().update(requestHandler);
@@ -90,6 +106,7 @@ class AppointmentRoutes extends GenericRoutes {
                                     .setMethod("deleteAppointment")
                                     .isValidateRole("APPOINTMENT")
                                     .isLogicalDelete()
+                                    .isValidateWhereByUserId()
                                     .build();
         
             this.getController().delete(requestHandler);

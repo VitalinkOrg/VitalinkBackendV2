@@ -290,8 +290,31 @@ export default  class GenericService extends GenericValidation implements IGener
 
             if(jwtData != null){
                 // Validate the role of the user
-                if (await this.validateRole(reqHandler, jwtData.role, ConstFunctions.GET_ALL, httpExec) !== true) {
-                    return;
+                if (await this.validateRole(reqHandler, jwtData.role, ConstFunctions.GET_ALL, httpExec) !== true) { return; }
+
+                const allowRoleList = reqHandler.getAllowRoleList();
+                const isSuperAdmin = jwtData.role === config.SUPER_ADMIN.ROLE_CODE;
+                const isAllowedRole = allowRoleList ? allowRoleList.includes(jwtData.role) : false;
+
+                if (!isSuperAdmin && !isAllowedRole) {
+
+                    const filters = reqHandler.getFilters();
+                    let extractedId: string | null = null;
+
+                    if (!Array.isArray(filters?.where) && filters?.where) {
+                        extractedId = filters.where.customer?.id
+                                || filters.where.customer_id
+                                || filters.where.user?.id
+                                || filters.where.user_id
+                                || filters.where.booked_by
+                                || null;
+                    }
+                    
+                    if (extractedId == null) {
+                        return httpExec.paramsError();
+                    }
+
+                    if(await this.validateGetAllByUserId(reqHandler, httpExec, jwtData) !== true){ return; }
                 }
             }
 

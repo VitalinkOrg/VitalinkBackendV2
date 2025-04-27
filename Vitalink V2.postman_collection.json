@@ -54,6 +54,44 @@
 									"response": []
 								},
 								{
+									"name": "Login User - Customer",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "x-api-key",
+												"value": "{{secret_api_key}}",
+												"type": "text"
+											},
+											{
+												"key": "device-info",
+												"value": "{\"userAgent\":\"Mozilla/5.0 (Linux; Android 10; SM-G973F Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/88.0.4324.152 Mobile Safari/537.36\",\"platform\":\"Android\",\"environment\":\"Mobile\",\"language\":\"en-US\",\"screenResolution\":\"1080x2280\"}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"email\": \"mjimenez@example.com\",\r\n  \"user_name\": null,\r\n  \"password\": \"Vitatest25*\"\r\n}\r\n\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/auth/login",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
 									"name": "Logout",
 									"request": {
 										"method": "POST",
@@ -478,13 +516,19 @@
 											}
 										],
 										"url": {
-											"raw": "{{host}}/user/get_all",
+											"raw": "{{host}}/user/get_all?size=3",
 											"host": [
 												"{{host}}"
 											],
 											"path": [
 												"user",
 												"get_all"
+											],
+											"query": [
+												{
+													"key": "size",
+													"value": "3"
+												}
 											]
 										}
 									},
@@ -695,7 +739,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/udc/get_all?type=REVIEW",
+									"raw": "{{host}}/udc/get_all?type=MEDICAL_PRODUCT&page=2",
 									"host": [
 										"{{host}}"
 									],
@@ -726,7 +770,16 @@
 										},
 										{
 											"key": "type",
-											"value": "REVIEW"
+											"value": "MEDICAL_PRODUCT"
+										},
+										{
+											"key": "size",
+											"value": "5",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "2"
 										}
 									]
 								}
@@ -760,11 +813,11 @@
 										{
 											"key": "file",
 											"type": "file",
-											"src": "/C:/Users/fabia/OneDrive/Escritorio/Berserk/berserk-4k-guts-in-black-armour-8pwgk6k4jrfhsb5g.jpg"
+											"src": "/C:/Users/fabia/OneDrive/Escritorio/1744935316612 (3).png"
 										},
 										{
 											"key": "fields",
-											"value": "{\"title\":\"Front end SSS\",\"type\": \"DOC\", \"description\": \"Descripción del documento\", \"id_for_table\": 1, \"table\": \"USER\",  \"action_type\":  \"PROFILE_PICTURE\", \"user_id\": 5, \"is_public\":0}",
+											"value": "{\"title\":\"Front end SSS\",\"type\": \"IMG\", \"description\": \"PROFILE PICTURE\", \"id_for_table\": 3, \"table\": \"SUPPLIER\",  \"action_type\":  \"PROFILE_PICTURE\", \"user_id\": \"28ed40ad-3cc3-42c0-af9c-86d18c926bd7\", \"is_public\":1}",
 											"type": "text"
 										},
 										{
@@ -795,7 +848,7 @@
 							"response": []
 						},
 						{
-							"name": "Get Document by Code",
+							"name": "Get Private Document by Code",
 							"request": {
 								"method": "GET",
 								"header": [
@@ -875,7 +928,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/document/get_by_filters?table=USER&user_id=5",
+									"raw": "{{host}}/document/get_by_filters?table=SUPPLIER&id_for_table=3&action_type=GENERAL_GALLERY",
 									"host": [
 										"{{host}}"
 									],
@@ -886,11 +939,37 @@
 									"query": [
 										{
 											"key": "table",
-											"value": "USER"
+											"value": "SUPPLIER"
 										},
 										{
 											"key": "user_id",
-											"value": "5"
+											"value": "3",
+											"disabled": true
+										},
+										{
+											"key": "id_for_table",
+											"value": "3"
+										},
+										{
+											"key": "name",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "ext",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "action_type",
+											"value": "GENERAL_GALLERY",
+											"description": "PROFILE_PICTURE, GENERAL_GALLERY, PERSONAL_DOCUMENT, PRIVATE_CONTRACT, MEDICAL_PROCEDURE_ATTACHMENT, OTHER"
+										},
+										{
+											"key": "type",
+											"value": "",
+											"description": "DOC, IMG, OTHER",
+											"disabled": true
 										}
 									]
 								}
@@ -914,7 +993,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/document/delete?id=3",
+									"raw": "{{host}}/document/delete?id=2",
 									"host": [
 										"{{host}}"
 									],
@@ -925,7 +1004,7 @@
 									"query": [
 										{
 											"key": "id",
-											"value": "3"
+											"value": "2"
 										}
 									]
 								}
@@ -1157,13 +1236,13 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/log/get_all?size=2&page=5",
+									"raw": "{{host}}/log/get_by_filters?size=2&page=1",
 									"host": [
 										"{{host}}"
 									],
 									"path": [
 										"log",
-										"get_all"
+										"get_by_filters"
 									],
 									"query": [
 										{
@@ -1172,7 +1251,7 @@
 										},
 										{
 											"key": "page",
-											"value": "5"
+											"value": "1"
 										}
 									]
 								}
@@ -1538,7 +1617,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/supplier/get_all_main?specialty_code=DERMATOLOGY&procedure_code=MYOPIA_SURGERY",
+									"raw": "{{host}}/supplier/get_all_main?size=1&page=1",
 									"host": [
 										"{{host}}"
 									],
@@ -1549,11 +1628,41 @@
 									"query": [
 										{
 											"key": "specialty_code",
-											"value": "DERMATOLOGY"
+											"value": "DERMATOLOGY",
+											"disabled": true
 										},
 										{
 											"key": "procedure_code",
-											"value": "MYOPIA_SURGERY"
+											"value": "MYOPIA_SURGERY",
+											"disabled": true
+										},
+										{
+											"key": "min_stars",
+											"value": "5",
+											"disabled": true
+										},
+										{
+											"key": "province",
+											"value": "Guanacaste",
+											"disabled": true
+										},
+										{
+											"key": "min_price",
+											"value": "18000",
+											"disabled": true
+										},
+										{
+											"key": "max_price",
+											"value": "25000",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "1"
+										},
+										{
+											"key": "page",
+											"value": "1"
 										}
 									]
 								}
@@ -2257,7 +2366,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/availability/get?id=21",
+									"raw": "{{host}}/availability/get?id=1",
 									"host": [
 										"{{host}}"
 									],
@@ -2268,7 +2377,7 @@
 									"query": [
 										{
 											"key": "id",
-											"value": "21"
+											"value": "1"
 										}
 									]
 								}
@@ -2734,7 +2843,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"supplier_id\": 1,\n  \"package_id\": 2,\n  \"customer_id\": \"f1635823-7d9a-4df9-bd1e-ad8bd985de0b\",\n  \"appointment_id\": 1,\n  \"comment\": \"Excelente atención, muy profesional.\"\n  //\"is_annonymous\": false,\n  //\"supplier_reply\": \"Gracias por tu comentario. Siempre a la orden.\"\n}",
+									"raw": "{\n  \"customer_id\": \"f1635823-7d9a-4df9-bd1e-ad8bd985de0b\",\n  \"appointment_id\": 1,\n  \"comment\": \"Excelente atención, muy profesional.\"\n  //\"is_annonymous\": false,\n  //\"supplier_reply\": \"Gracias por tu comentario. Siempre a la orden.\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2772,7 +2881,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  //\"supplier_id\": 5,\n  //\"package_id\": 12,\n  //\"customer_id\": 33,\n  //\"appointment_id\": 101,\n // \"comment\": \"Excelente atención, muy profesional.\",\n  //\"is_annonymous\": false,\n  \"supplier_reply\": \"Gracias por tu comentario. Siempre a la orden.\"\n}",
+									"raw": "{\n  //\"customer_id\": \"f1635823-7d9a-4df9-bd1e-ad8bd985de0b\",\n  //\"appointment_id\": 1,\n  //\"comment\": \"Excelente atención, muy profesional.\"\n  //\"is_annonymous\": false,\n  \"supplier_reply\": \"Gracias por tu comentario. Siempre a la orden.\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -3001,7 +3110,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/reviewdetail/get?id=1",
+									"raw": "{{host}}/reviewdetail/get?id=2",
 									"host": [
 										"{{host}}"
 									],
@@ -3012,7 +3121,7 @@
 									"query": [
 										{
 											"key": "id",
-											"value": "1"
+											"value": "2"
 										}
 									]
 								}
@@ -3292,7 +3401,45 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"customer_id\": \"f1635823-7d9a-4df9-bd1e-ad8bd985de0b\",\n  //\"proforma_file_code\": \"PROF-011\",\n  \"appointment_date\": \"2025-04-14\",\n  \"appointment_hour\": \"09:30:00\",\n  \"reservation_type\": \"RESERVATION\",\n  //\"appointment_status_code\": \"PENDING\",\n  \"supplier_id\": 1\n  //\"package_id\": 1,\n  //\"procedure_id\": 1\n  //\"application_date\": \"2025-04-12T08:00:00.000Z\",\n  //\"payment_status_code\": \"PENDING\",\n  //\"payment_method_code\": \"CREDIT_CARD\",\n  //\"appointment_result_code\": \"FIT_FOR_PROCEDURE\",\n  //\"user_description\": \"Consulta general preventiva.\",\n  //\"recommendation_post_appointment\": \"Mantener una dieta balanceada.\",\n  //\"diagnostic\": \"Salud estable.\"\n}\n",
+									"raw": "{\n  \"customer_id\": \"f1635823-7d9a-4df9-bd1e-ad8bd985de0b\",\n  //\"proforma_file_code\": \"PROF-011\",\n  \"appointment_date\": \"2025-04-14\",\n  \"appointment_hour\": \"09:30:00\",\n  \"reservation_type_code\": \"RESERVATION\",\n  //\"appointment_status_code\": \"PENDING\",\n  \"supplier_id\": 1\n  //\"package_id\": 1,\n  //\"procedure_id\": 1\n  //\"application_date\": \"2025-04-12T08:00:00.000Z\",\n  //\"payment_status_code\": \"PENDING\",\n  //\"payment_method_code\": \"CREDIT_CARD\",\n  //\"appointment_result_code\": \"FIT_FOR_PROCEDURE\",\n  //\"user_description\": \"Consulta general preventiva.\",\n  //\"recommendation_post_appointment\": \"Mantener una dieta balanceada.\",\n  //\"diagnostic\": \"Salud estable.\"\n  //\"is_for_external_user\": false,\n  // \"phone_number_external_user\":\"+506 8346-1166\"\n}\n\n\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/appointment/add",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"appointment",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Appointment Copy",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"customer_id\": \"f1635823-7d9a-4df9-bd1e-ad8bd985de0b\",\n  \"is_for_external_user\": false, //default false\n  //\"phone_number_external_user\":\"+506 8346-1166\"\n  \"user_description\": \"Consulta general preventiva.\",\n  \"supplier_id\": 1,\n  \"appointment_date\": \"2025-04-14\",\n  \"appointment_hour\": \"09:30:00\",\n  \"procedure_id\": 1,\n  \"package_id\": 1,\n  \"payment_status_code\": \"PENDING\",\n  \"reservation_type_code\": \"RESERVATION\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -3330,7 +3477,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"customer_id\": \"f1635823-7d9a-4df9-bd1e-ad8bd985de0b\",\n  //\"proforma_file_code\": \"PROF-011\",\n  \"appointment_date\": \"2025-04-14\",\n  \"appointment_hour\": \"09:30:00\",\n  \"reservation_type\": \"RESERVATION\",\n  //\"appointment_status_code\": \"PENDING\",\n  \"supplier_id\": 1\n  //\"package_id\": 1,\n  //\"procedure_id\": 1\n  //\"application_date\": \"2025-04-12T08:00:00.000Z\",\n  //\"payment_status_code\": \"PENDING\",\n  //\"payment_method_code\": \"CREDIT_CARD\",\n  //\"appointment_result_code\": \"FIT_FOR_PROCEDURE\",\n  //\"user_description\": \"Consulta general preventiva.\",\n  //\"recommendation_post_appointment\": \"Mantener una dieta balanceada.\",\n  //\"diagnostic\": \"Salud estable.\"\n}\n",
+									"raw": "{\n  \"customer_id\": \"f1635823-7d9a-4df9-bd1e-ad8bd985de0b\",\n  //\"proforma_file_code\": \"PROF-011\",\n  \"appointment_date\": \"2025-04-14\",\n  \"appointment_hour\": \"09:30:00\",\n  \"reservation_type\": \"RESERVATION\",\n  //\"appointment_status_code\": \"PENDING\",\n  \"supplier_id\": 1\n  //\"package_id\": 1,\n  //\"procedure_id\": 1\n  //\"application_date\": \"2025-04-12T08:00:00.000Z\",\n  //\"payment_status_code\": \"PENDING\",\n  //\"payment_method_code\": \"CREDIT_CARD\",\n  //\"appointment_result_code\": \"FIT_FOR_PROCEDURE\",\n  //\"user_description\": \"Consulta general preventiva.\",\n  //\"recommendation_post_appointment\": \"Mantener una dieta balanceada.\",\n  //\"diagnostic\": \"Salud estable.\",\n   //\"is_for_external_user\": false,\n  // \"phone_number_external_user\":\"+506 8346-1166\"\n}\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -3408,13 +3555,19 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/appointment/get_all",
+									"raw": "{{host}}/appointment/get_all?customer_id=728237d9-c16d-4ca8-bbbe-240a697fb3c3",
 									"host": [
 										"{{host}}"
 									],
 									"path": [
 										"appointment",
 										"get_all"
+									],
+									"query": [
+										{
+											"key": "customer_id",
+											"value": "728237d9-c16d-4ca8-bbbe-240a697fb3c3"
+										}
 									]
 								}
 							},

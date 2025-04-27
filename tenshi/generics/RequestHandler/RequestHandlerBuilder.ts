@@ -28,7 +28,9 @@ private requireValidWhereByUserId: boolean = false;
 //the list of regular expression
 private regexValidatorList: [string, string][];
 //List of required fields
-private requiredFieldsList: Array<string> 
+private requiredFieldsList: Array<string>;
+//List of roles that can access to any method
+private allowRoleList: Array<string>;
 //the filters for the gets
 private filters: FindManyOptions;
 //If the update service need the id required into url, by default it is true
@@ -37,6 +39,10 @@ private requireIdFromQueryParam: boolean = true;
 constructor(res: Response, req: Request) {
    this.res = res;
    this.req = req;
+}
+setAllowRoleList(allowRoleList: Array<string>): IRequestHandlerBuilder {
+   this.allowRoleList = allowRoleList;
+   return this;
 }
    
 isRequireIdFromQueryParams(isRequired : boolean): IRequestHandlerBuilder {
@@ -108,6 +114,7 @@ build(): RequestHandler {
                              this.requiredFieldsList,
                              this.filters,
                              this.codeMessageResponse,
-                             this.requireIdFromQueryParam);
+                             this.requireIdFromQueryParam,
+                           this.allowRoleList);
 }
 }
