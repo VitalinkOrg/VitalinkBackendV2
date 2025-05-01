@@ -94,6 +94,7 @@ async function runSeed() {
     // Payment Status
     const paymentStatus = [
         { name: "Pagado", code: "PAID", type: "PAYMENT_STATUS" as "PAYMENT_STATUS" },
+        { name: "Pagado por credito", code: "PAID_BY_CREDIT", type: "PAYMENT_STATUS" as "PAYMENT_STATUS" },
         { name: "Pendiente", code: "PENDING", type: "PAYMENT_STATUS" as "PAYMENT_STATUS" },
         { name: "No Pagado", code: "NOT_PAID", type: "PAYMENT_STATUS" as "PAYMENT_STATUS" }
     ];
@@ -324,7 +325,8 @@ async function runSeed() {
         { name: "Imágenes y Diagnóstico", code: "IMAGING_DIAGNOSIS", type: "ASSESSMENT" },
         { name: "Medicamentos Postoperatorios", code: "POSTOP_MEDICATIONS", type: "ASSESSMENT" },
         { name: "Tratamiento Médico Postoperatorio", code: "POSTOP_TREATMENT", type: "ASSESSMENT" },
-        
+      
+
         // Valoraciones Preoperatorias
         { name: "Evaluación prequirúrgica general", code: "GENERAL_PRE_SURGERY_EVAL", type: "ASSESSMENT_DETAIL", father_code: "PREOPERATIVE_ASSESSMENT" },
         { name: "Exámenes de laboratorio prequirúrgicos", code: "PRE_SURGERY_LAB_TESTS", type: "ASSESSMENT_DETAIL", father_code: "PREOPERATIVE_ASSESSMENT" },

@@ -58,7 +58,6 @@ class AppointmentRoutes extends GenericRoutes {
                                     .setMethod("getAppointments")
                                     .isValidateRole("APPOINTMENT")
                                     .isLogicalDelete()
-                                    .isValidateWhereByUserId()
                                     //.setAllowRoleList(allow_role_list)
                                     .setFilters(this.filters)
                                     .build();
@@ -93,7 +92,6 @@ class AppointmentRoutes extends GenericRoutes {
                                     .setAdapter(new AppointmentDTO(req))
                                     .setMethod("updateAppointment")
                                     .isValidateRole("APPOINTMENT")
-                                    .isValidateWhereByUserId()
                                     .build();
         
             this.getController().update(requestHandler);
@@ -106,7 +104,6 @@ class AppointmentRoutes extends GenericRoutes {
                                     .setMethod("deleteAppointment")
                                     .isValidateRole("APPOINTMENT")
                                     .isLogicalDelete()
-                                    .isValidateWhereByUserId()
                                     .build();
         
             this.getController().delete(requestHandler);

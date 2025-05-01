@@ -50,7 +50,10 @@ export default class AppointmentDTO implements IAdapterFromBody {
     }
 
     // GET
-    entityToResponse(entity: Appointment): any {
+    entityToResponse(entity: any): any {
+
+        console.log("entityToResponse", entity.package?.procedure);
+
         return {
             id: entity.id,
             customer: entity.customer,
@@ -60,6 +63,7 @@ export default class AppointmentDTO implements IAdapterFromBody {
             reservation_type: entity.reservation_type,
             appointment_status: entity.appointment_status,
             supplier: entity.supplier,
+            procedure: entity.package?.procedure || null,
             package: entity.package,
             application_date: entity.application_date,
             payment_status: entity.payment_status,
@@ -75,7 +79,7 @@ export default class AppointmentDTO implements IAdapterFromBody {
         };
     }
 
-    entitiesToResponse(entities: Appointment[] | null): any {
+    entitiesToResponse(entities: any[] | null): any {
         const response: any[] = [];
         if (entities != null) {
             for (const entity of entities) {

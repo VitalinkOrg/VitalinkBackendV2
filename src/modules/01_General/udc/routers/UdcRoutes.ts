@@ -107,7 +107,6 @@ class UdcRoutes extends GenericRoutes{
                                     .setMethod("deleteUdc")
                                     .isValidateRole("UNIT_DYNAMIC_CENTRAL")
                                     .isLogicalDelete()
-                                    .isValidateWhereByUserId()
                                     .build();
         
             this.getController().delete(requestHandler);
