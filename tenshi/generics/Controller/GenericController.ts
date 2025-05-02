@@ -13,7 +13,6 @@ import GenericValidation from '../Validation/GenericValidation';
 import { camelToUpperSnakeCase, getEntityName } from 'tenshi/utils/generalUtils';
 import IGenericService from '../Services/IGenericService';
 import GenericService from '../Services/GenericService';
-import { structPagination } from '@TenshiJS/objects/BodyResObject';
 
 /*
     This class have the necessary methods (CRUDS) to send into the routing
@@ -290,7 +289,7 @@ export default  class GenericController extends GenericValidation implements IGe
                     reqHandler.getCodeMessageResponse() != null ? 
                     reqHandler.getCodeMessageResponse() as string :
                     ConstHTTPRequest.GET_ALL_SUCCESS;
-
+    
                     // Return the success response
                     return httpExec.successAction(
                         reqHandler.getAdapter().entitiesToResponse(await entities), 
@@ -307,4 +306,89 @@ export default  class GenericController extends GenericValidation implements IGe
             }
         });
     }
+
+
+
+
+   /**************************************************** */
+   //                    ADD MULTIPLE
+   /**************************************************** */
+   async insertMultiple(reqHandler: RequestHandler): Promise<any> {
+    return this.service.insertMultipleService(
+            reqHandler,
+            async (jwtData, httpExec, item) => {
+                try {
+                    // Insert the entity into the database
+                    const createdEntity = await this.getRepository().add(item);
+
+                    return reqHandler.getAdapter().entityToResponse(createdEntity);
+                } catch (error: any) {
+
+                    throw new Error(error.message || "Insert failed");
+                }
+            }
+        );
+    }
+
+
+
+    async updateMultiple(reqHandler: RequestHandler): Promise<any> {
+        return this.service.updateMultipleService(
+          reqHandler,
+          async (jwtData, httpExec, id, item) => {
+            try{
+                // Use the adapter to build the entity from the per‐item body
+                // Perform update in repository
+                const updatedEntity = await this.getRepository().update(id, item, reqHandler.getLogicalDelete());
+                if (!updatedEntity) {
+                    throw new Error(ConstMessagesJson.DONT_EXISTS);
+                }
+
+                // Return the transformed response
+                return reqHandler.getAdapter().entityToResponse(updatedEntity);
+            }catch(error : any){
+                throw new Error(error.message || "Update failed");
+            }
+          }
+        );
+    }
+
+
+    /**
+     * PATCH /bulk_update_by_ids
+     * Bulk‐update a set of records by IDs, using the payload fields.
+     */
+    async updateMultipleByIds(reqHandler: RequestHandler): Promise<any> {
+        return this.service.updateMultipleByIdsService(
+            reqHandler,
+            // per‐item update callback
+            async (jwtData, httpExec, id, payload) => {
+                // call your generic repository update(id, data, logicalDeleteFlag)
+                const updatedEntity = await this.getRepository().update(id, payload, reqHandler.getLogicalDelete());
+
+                if (!updatedEntity) {
+                    // not found → bubble up as error
+                    throw new Error(`Entity not found for id ${id}`);
+                }
+                // transform for response
+                return reqHandler.getAdapter().entityToResponse(updatedEntity);
+            }
+        );
+    }
+
+    async deleteMultiple(reqHandler: RequestHandler): Promise<any> {
+        return this.service.deleteMultipleService(
+          reqHandler,
+          // callback invoked for each id
+          async (jwtData, httpExec, id) => {
+            // pick logical vs hard delete:
+            if (reqHandler.getLogicalDelete()) {
+              return await this.getRepository().logicalRemove(id);
+            } else {
+              return await this.getRepository().remove(id);
+            }
+          }
+        );
+      }
+
 }

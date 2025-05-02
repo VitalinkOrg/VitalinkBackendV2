@@ -111,6 +111,63 @@ class UdcRoutes extends GenericRoutes{
         
             this.getController().delete(requestHandler);
         });
+
+
+        // ************************************************************
+        //                          BULK Routers
+        // ************************************************************
+        this.router.post(`${this.getRouterName()}/add_multiple`, async (req: Request, res: Response) => {
+
+            const requestHandler : RequestHandler = 
+                                    new RequestHandlerBuilder(res,req)
+                                    .setAdapter(new UdcDTO(req))
+                                    .setMethod("insertMultipleUdc")
+                                    .isValidateRole("UNIT_DYNAMIC_CENTRAL")
+                                    .build();
+        
+            this.getController().insertMultiple(requestHandler);
+        });
+
+        this.router.patch(`${this.getRouterName()}/edit_multiple`, async (req: Request, res: Response) => {
+
+            const requestHandler = new RequestHandlerBuilder(res, req)
+                .setAdapter(new UdcDTO(req))
+                .setMethod('updateMultipleUdc')
+                .isValidateRole('UNIT_DYNAMIC_CENTRAL')
+                .build();
+        
+            this.getController().updateMultiple(requestHandler);
+            }
+        );
+
+        this.router.patch(`${this.getRouterName()}/edit_multiple_by_ids`,async (req: Request, res: Response) => {
+              // require that `ids` array exists in body
+
+              const requestHandler: RequestHandler = new RequestHandlerBuilder(res, req)
+                .setAdapter(new UdcDTO(req))
+                .setMethod('editMultipleByIds')
+                .setRequiredFiles([req.body.ids])       // ensure `ids` is present
+                .isValidateRole('UNIT_DYNAMIC_CENTRAL') // role validation
+                .build();
+      
+              // dispatch to controller
+              this.getController().updateMultipleByIds(requestHandler);
+            }
+          );
+  
+
+        this.router.post(`${this.getRouterName()}/delete_multiple`,async (req: Request, res: Response) => {
+              // we expect { ids: [1,2,3] }
+              const requestHandler: RequestHandler = new RequestHandlerBuilder(res, req)
+                .setAdapter(new UdcDTO(req))
+                .setMethod("deleteMultipleUdc")
+                .isValidateRole("UNIT_DYNAMIC_CENTRAL")
+                .isLogicalDelete()  
+                .build();
+          
+              this.getController().deleteMultiple(requestHandler);
+            }
+        );
     }
 }
 export default UdcRoutes;

@@ -14,6 +14,9 @@ export class ConstHTTPRequest {
     public static readonly INSERT_SUCCESS: string = "INSERT_SUCCESS";
     public static readonly UPDATE_SUCCESS: string = "UPDATE_SUCCESS";
     public static readonly DELETE_SUCCESS: string = "DELETE_SUCCESS";
+    public static readonly INSERT_ENTRIES_SUCCESS: string = "INSERT_ENTRIES_SUCCESS";
+    public static readonly UPDATE_ENTRIES_SUCCESS: string = "UPDATE_ENTRIES_SUCCESS";
+    public static readonly DELETE_ENTRIES_SUCCESS: string = "DELETE_ENTRIES_SUCCESS";
     public static readonly GET_ALL_SUCCESS: string = "GET_SUCCESS";
     public static readonly GET_BY_ID_SUCCESS: string = "GET_BY_ID_SUCCESS";
     public static readonly SEND_MAIL_SUCCESS: string = "SEND_MAIL_SUCCESS";
@@ -53,6 +56,8 @@ export class ConstMessagesJson {
     public static readonly EMAIL_SENT_SUCCESS: string = "EMAIL_SENT_SUCCESS";
     public static readonly ERROR_BODY_JSON: string = "ERROR_BODY_JSON";
     public static readonly REGISTER_CONFIRMATION_SUCCESSFUL: string = "REGISTER_CONFIRMATION_SUCCESSFUL";
+    public static readonly INVALID_BODY_REQUEST: string = "INVALID_BODY_REQUEST";
+    public static readonly EXPECTED_OBJECT_ARRAY: string = "EXPECTED_OBJECT_ARRAY";
 }
 
 export class ConstMessages {
