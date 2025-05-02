@@ -1,5 +1,5 @@
 import { User } from "@TenshiJS/entity/User";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Supplier } from "./Supplier";
 import { UnitDynamicCentral } from "@TenshiJS/entity/UnitDynamicCentral";
 import { Package } from "./Package";
@@ -15,6 +15,12 @@ import { ProcedureBySpecialty } from "./ProcedureBySpecialty";
  */
 
 @Entity("appointments")
+@Index(["supplier"])
+@Index(["customer"])
+@Index(["procedure"])
+@Index(["package"])
+@Index(["appointment_result"])
+@Index(["payment_status"])
 export class Appointment {
   @PrimaryGeneratedColumn({ type: "int", unsigned: true })
   id: number;

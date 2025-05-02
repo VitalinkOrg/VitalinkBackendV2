@@ -6,481 +6,262 @@ import GenericController from "@TenshiJS/generics/Controller/GenericController";
 import GenericRepository from "@TenshiJS/generics/Repository/GenericRepository";
 import SupplierDTO from "../dtos/SupplierDTO";
 import { getUrlParam } from "@TenshiJS/utils/generalUtils";
-import moment, { min } from "moment-timezone";
+import moment from "moment-timezone";
 import "moment/locale/es";
 import { SpecialtyBySupplier } from "@index/entity/SpecialtyBySupplier";
 import { ProcedureBySpecialty } from "@index/entity/ProcedureBySpecialty";
 import { Package } from "@index/entity/Package";
 import { ReviewDetail } from "@index/entity/ReviewDetail";
 
-export default class SupplierController extends GenericController {
 
+export default class SupplierController extends GenericController {
     private availabilityRepository = new GenericRepository(Availability);
     private specialtyBySupplierRepository = new GenericRepository(SpecialtyBySupplier);
     private procedureBySpecialtyRepository = new GenericRepository(ProcedureBySpecialty);
     private packageRepository = new GenericRepository(Package);
     private reviewDetailRepository = new GenericRepository(ReviewDetail);
-
+  
     constructor() {
-        super(Supplier);
+      super(Supplier);
     }
-
+  
     async getSuppliersMainDashboard(reqHandler: RequestHandler): Promise<any> {
-        return this.getService().getAllService(reqHandler, async (jwtData, httpExec, page: number, size: number) => {
-            try {
-                const specialty_code = getUrlParam("specialty_code", reqHandler.getRequest()) || null;
-                const procedure_code = getUrlParam("procedure_code", reqHandler.getRequest()) || null;
-                const min_stars = Number(getUrlParam("min_stars", reqHandler.getRequest()) || 0); 
-                const province_filter = getUrlParam("province", reqHandler.getRequest())?.toLowerCase() || null;
-                const min_price = Number(getUrlParam("min_price", reqHandler.getRequest()) || 0);
-                const max_price = Number(getUrlParam("max_price", reqHandler.getRequest()) || Number.MAX_SAFE_INTEGER);
+      return this.getService().getAllService(reqHandler, async (jwtData, httpExec, page: number, size: number) => {
+        try {
+          const specialty_code = getUrlParam("specialty_code", reqHandler.getRequest()) || null;
+          const procedure_code = getUrlParam("procedure_code", reqHandler.getRequest()) || null;
+          const min_stars = Number(getUrlParam("min_stars", reqHandler.getRequest()) || 0);
+          const province_filter = getUrlParam("province", reqHandler.getRequest())?.toLowerCase() || null;
+          const min_price = Number(getUrlParam("min_price", reqHandler.getRequest()) || 0);
+          const max_price = Number(getUrlParam("max_price", reqHandler.getRequest()) || Number.MAX_SAFE_INTEGER);
+  
+          const [suppliers, allSpecialties, allProcedures, allPackages, allReviews, allAvailabilities] = await Promise.all([
+            this.getRepository().findAll(reqHandler.getLogicalDelete(), {
+              where: { is_deleted: false },
+            }, page, size),
+            this.specialtyBySupplierRepository.findByOptions(false, true, {
+                relations: ["supplier", "medical_specialty"]
+              }),
+            this.procedureBySpecialtyRepository.findByOptions(false, true, { relations: ["specialty", "procedure"] }),
+            this.packageRepository.findByOptions(false, true, { relations: ["procedure", "product"] }),
+            this.reviewDetailRepository.findByOptions(false, true, {
+                relations: ["review", "review.appointment", "review.appointment.supplier"]
+            }),
+            this.availabilityRepository.findByOptions(false, true, {
+                relations: ["location", "supplier"]
+              })
+          ]);
 
 
-                const suppliers = await this.getRepository().findAll(reqHandler.getLogicalDelete(), {
-                    where: { is_deleted: false },
-                    relations: ["id_type", "medical_type"]
-                }, page, size);
+  
+          if (!suppliers || suppliers.length === 0) {
+            return httpExec.dynamicError(ConstStatusJson.NOT_FOUND, ConstMessagesJson.DONT_EXISTS);
+          }
 
-                const pagination = await this.getRepository().count(reqHandler.getLogicalDelete(), {
-                    where: { is_deleted: false },
-                    relations: ["id_type", "medical_type"]
-                }, page, size);
-
-                if (!suppliers || suppliers.length === 0) {
-                    return httpExec.dynamicError(ConstStatusJson.NOT_FOUND, ConstMessagesJson.DONT_EXISTS);
-                }
-
-                
-                const filteredSuppliers = [];
-                for (const supplier of suppliers) {
-                   
-                    const shouldInclude = await this.addSupplierData(supplier, specialty_code, procedure_code, min_stars, province_filter, min_price, max_price);
-                    if (shouldInclude) filteredSuppliers.push(supplier);
-                }
-
-                return httpExec.successAction(
-                    (reqHandler.getAdapter() as SupplierDTO).entitiesToResponseMain(filteredSuppliers),
-                    ConstHTTPRequest.GET_ALL_SUCCESS
-                );
-
-            } catch (error: any) {
-                return await httpExec.databaseError(error, null, reqHandler.getMethod(), this.getControllerName());
-            }
-        });
-    }
-
-
-
-
-
-    private async addSupplierData(  supplier: any, 
-                                    specialty_code: string | null, 
-                                    procedure_code: string | null, 
-                                    minStars: number,  
-                                    provinceFilter: string | null,
-                                    minPrice: number,
-                                    maxPrice: number
-                                ): Promise<boolean> {
-        const availabilities = await this.availabilityRepository.findByOptions(false, true, {
-            where: { supplier: { id: supplier.id } },
-            relations: ["location"]
-        });
-
-        const nextAvailability = this.getNextAvailability(availabilities);
-        const locations = availabilities.map((av: { location: any; }) => av.location).filter((loc: { id: any; }, i: any, self: any[]) => loc && self.findIndex(l => l.id === loc.id) === i);
-
-        if (provinceFilter && !locations.some((loc: any) => loc.province?.toLowerCase() === provinceFilter)) {
-            return false;
-        }
-
-
-        const supplierReview = await this.getSupplierReviewAverage(supplier.id);
-
-        if (minStars > 0 && (!supplierReview || supplierReview.stars_average < minStars)) {
-            return false; // No cumple con el filtro
-        }
-
-        const services = await this.loadSupplierServices(supplier.id, specialty_code, procedure_code, minPrice, maxPrice);
-        
-        const flatPackages = services.flatMap(service =>
-            service.procedures.flatMap((proc: { packages: any[]; }) =>
-                proc.packages.map((pkg: any) => pkg.reference_price)
-            )
-        );
-        
-        const hasValidPrice = flatPackages.some((price: number) => {
-            return price >= minPrice && price <= maxPrice;
-        });
-        
-        // Solo aplicar el filtro si min o max price fueron enviados
-        if ((minPrice > 0 || maxPrice < Number.MAX_SAFE_INTEGER) && !hasValidPrice) {
-            return false;
-        }
-        
-
-        
-        const reviews = await this.getReviewDetailsGroupedBySupplier(supplier.id);
-        const reviewsSummary = await this.getReviewDetailAveragesBySupplier(supplier.id);
-
-        const filtersApplied = !!specialty_code || !!procedure_code;
-        if (filtersApplied && services.length === 0) return false;
-
-        if (specialty_code || (!specialty_code && !procedure_code)) {
-            supplier.search_procedure_name = "Cita de Valoración";
-            supplier.search_reference_price = "18000";
-        } else if (procedure_code && services.length > 0) {
-            let procedureName = "";
-            let minDiscountedPrice: number | null = null;
-            let originalPrice: number | null = null;
-
-            for (const service of services) {
-                for (const proc of service.procedures) {
-                    if (proc.procedure.code === procedure_code) {
-                        procedureName = proc.procedure.name;
-                        for (const pkg of proc.packages) {
-                            const price = parseFloat(pkg.reference_price);
-                            const discount = parseFloat(pkg.discount || "0");
-                            const discounted = price * (1 - discount / 100);
-                            if (minDiscountedPrice === null || discounted < minDiscountedPrice) {
-                                minDiscountedPrice = discounted;
-                                originalPrice = price;
-                            }
-                        }
-                    }
-                }
-            }
-            supplier.search_procedure_name = procedureName || "Procedimiento";
-            supplier.search_reference_price = minDiscountedPrice !== null ? `${minDiscountedPrice}` : null;
-            supplier.search_original_price = originalPrice !== null ? `${originalPrice}` : null;
-        }
-
-        
-        supplier.stars_by_supplier = supplierReview?.stars_average ?? null;
-        supplier.review_quantity_by_supplier = supplierReview?.quantity ?? null;
-
-        supplier.reviews = reviews;
-        supplier.review_details_summary = reviewsSummary;
-
-        supplier.locations = locations;
-        supplier.availabilities = availabilities;
-        supplier.services = services;
-        supplier.date_availability = nextAvailability?.date_availability || null;
-        supplier.hour_availability = nextAvailability?.hour_availability || null;
-        supplier.location_number = locations.length || 0;
-
-        return true;
-    }
-
-
-    private async getReviewDetailsGroupedBySupplier(supplierId: number): Promise<any[]> {
-        const reviewDetails = await this.reviewDetailRepository.findByOptions(false, true, {
-            where: {
-                review: {
-                    appointment: {
-                        supplier: { id: supplierId },
-                        is_deleted: false
-                    }
-                }
-            },
-            relations: [
-                "review",
-                "review.appointment",
-                "review.customer",
-                "review_code"
-            ]
-        });
-    
-        const groupedReviews: any[] = [];
-    
-        for (const detail of reviewDetails) {
-            const review = detail.review;
-            const appointment = review?.appointment;
-    
-            if (!appointment || appointment.is_deleted) continue;
-    
-            let existingReview = groupedReviews.find(r => r.id === review.id);
-    
-            if (!existingReview) {
-                existingReview = {
-                    id: review.id,
-                    customer: review.customer?.id || null,
-                    comment: review.comment,
-                    is_annonymous: review.is_annonymous,
-                    supplier_reply: review.supplier_reply,
-                    created_date: review.created_date,
-                    updated_date: review.updated_date,
-                    stars: []
-                };
-                groupedReviews.push(existingReview);
-            }
-    
-            existingReview.stars.push(detail.stars_point);
-        }
-    
-        for (const review of groupedReviews) {
-            const total = review.stars.reduce((a: number, b: number) => a + b, 0);
-            review.stars_average = Math.round(total / review.stars.length);
-            delete review.stars;
-        }
-    
-        return groupedReviews;
-    }
-    
-    private async getReviewDetailAveragesBySupplier(supplierId: number): Promise<any[]> {
-        const reviewDetails = await this.reviewDetailRepository.findByOptions(false, true, {
-            where: {
-                review: {
-                    appointment: {
-                        supplier: { id: supplierId },
-                        is_deleted: false
-                    }
-                }
-            },
-            relations: [
-                "review",
-                "review.appointment",
-                "review_code"
-            ]
-        });
-    
-        const grouped: Record<string, { total: number, count: number, created_date: Date | null }> = {};
-    
-        for (const detail of reviewDetails) {
-            const code = detail.review_code?.code;
-            if (!code) continue;
-    
-            if (!grouped[code]) {
-                grouped[code] = { total: 0, count: 0, created_date: detail.created_date };
-            }
-    
-            grouped[code].total += detail.stars_point;
-            grouped[code].count += 1;
-        }
-    
-        const result = [];
-        for (const code in grouped) {
-            const group = grouped[code];
-            result.push({
-                stars_point_average: Math.round(group.total / group.count),
-                review: code,
-                created_date: group.created_date
+          
+            const reviewsBySupplier = new Map<number, ReviewDetail[]>();
+            allReviews.forEach((r: ReviewDetail) => {
+            const supplierId = r.review?.appointment?.supplier?.id;
+            if (!supplierId) return;
+            if (!reviewsBySupplier.has(supplierId)) reviewsBySupplier.set(supplierId, []);
+            reviewsBySupplier.get(supplierId)!.push(r);
             });
+  
+            const specialtiesBySupplier = new Map<number, SpecialtyBySupplier[]>();
+            allSpecialties.forEach((s: SpecialtyBySupplier) => {
+            if (!s.supplier || !s.supplier.id) return;
+            if (!specialtiesBySupplier.has(s.supplier.id)) specialtiesBySupplier.set(s.supplier.id, []);
+            specialtiesBySupplier.get(s.supplier.id)!.push(s);
+            });
+
+  
+            const proceduresBySpecialty = new Map<number, ProcedureBySpecialty[]>();
+            allProcedures.forEach((p: ProcedureBySpecialty) => {
+              if (!p.specialty || !p.specialty.id) return;
+              if (!proceduresBySpecialty.has(p.specialty.id)) proceduresBySpecialty.set(p.specialty.id, []);
+              proceduresBySpecialty.get(p.specialty.id)!.push(p);
+            });
+            
+  
+            const packagesByProcedure = new Map<number, Package[]>();
+            allPackages.forEach((p: Package) => {
+              if (!p.procedure || !p.procedure.id) return;
+              if (!packagesByProcedure.has(p.procedure.id)) packagesByProcedure.set(p.procedure.id, []);
+              packagesByProcedure.get(p.procedure.id)!.push(p);
+            });
+
+            const availabilitiesBySupplier = new Map<number, Availability[]>();
+            allAvailabilities.forEach((a: Availability) => {
+              const supplierId = a.supplier?.id;
+              if (!supplierId) return;
+              if (!availabilitiesBySupplier.has(supplierId)) availabilitiesBySupplier.set(supplierId, []);
+              availabilitiesBySupplier.get(supplierId)!.push(a);
+            });
+            
+            
+  
+          const filteredSuppliers = (await Promise.all(suppliers.map(async supplier => {
+            const shouldInclude = await this.addSupplierData(
+              supplier,
+              specialty_code,
+              procedure_code,
+              min_stars,
+              province_filter,
+              min_price,
+              max_price,
+              specialtiesBySupplier.get(supplier.id) || [],
+              proceduresBySpecialty,
+              packagesByProcedure,
+              reviewsBySupplier,
+              availabilitiesBySupplier 
+            );
+            return shouldInclude ? supplier : null;
+          }))).filter(Boolean);
+  
+          return httpExec.successAction(
+            (reqHandler.getAdapter() as SupplierDTO).entitiesToResponseMain(filteredSuppliers),
+            ConstHTTPRequest.GET_ALL_SUCCESS
+          );
+  
+        } catch (error: any) {
+          return await httpExec.databaseError(error, null, reqHandler.getMethod(), this.getControllerName());
         }
-    
-        return result;
+      });
     }
+  
+    private async addSupplierData(supplier: any, specialty_code: string | null, procedure_code: string | null,
+      minStars: number, provinceFilter: string | null, minPrice: number, maxPrice: number,
+      specialties: SpecialtyBySupplier[], proceduresBySpecialty: Map<number, ProcedureBySpecialty[]>,
+      packagesByProcedure: Map<number, Package[]>, reviewsBySupplier: Map<number, ReviewDetail[]>,  availabilitiesBySupplier: Map<number, Availability[]>): Promise<boolean> {
+  
+        const supplierAvailabilities = availabilitiesBySupplier.get(supplier.id) || [];
 
+        const locations = supplierAvailabilities
+        .map(a => a.location)
+        .filter((loc, i, self) => loc && self.findIndex(l => l && l.id === loc.id) === i);
 
+        if (provinceFilter && !locations.some(loc => loc && loc.province?.toLowerCase() === provinceFilter)) {
+        return false;
+        }
+  
+      //reviewsBySupplier
+      const supplierReviews = reviewsBySupplier.get(supplier.id) || [];
+      let supplierReview: { stars_average: number, quantity: number } | null = null;
 
-
+      if (supplierReviews.length) {
+        const total = supplierReviews.reduce((sum, r) => sum + r.stars_point, 0);
+        supplierReview = {
+          stars_average: Math.round(total / supplierReviews.length),
+          quantity: supplierReviews.length
+        };
+      }
+      
+      if (minStars > 0 && (!supplierReview || supplierReview.stars_average < minStars)) {
+        return false;
+      }
+  
+      const services = this.buildSupplierServices(specialties, proceduresBySpecialty, packagesByProcedure, specialty_code, procedure_code, minPrice, maxPrice);
+  
+      const flatPrices = services.flatMap(s => s.procedures.flatMap((p: { packages: any[]; }) => p.packages.map(pkg => pkg.reference_price)));
+      const hasValidPrice = flatPrices.some(price => price >= minPrice && price <= maxPrice);
+      if ((minPrice > 0 || maxPrice < Number.MAX_SAFE_INTEGER) && !hasValidPrice) return false;
+  
+      if ((specialty_code || procedure_code) && services.length === 0) return false;
+  
+      supplier.search_procedure_name = procedure_code ? (services.find(s => s.procedures.find((p: { procedure: { code: string; }; }) => p.procedure.code === procedure_code))?.procedures.find((p: { procedure: { code: string; }; }) => p.procedure.code === procedure_code)?.procedure.name ?? "Procedimiento") : "Cita de Valoración";
+      supplier.search_reference_price = procedure_code ? `${Math.min(...flatPrices)}` : "18000";
+  
+      supplier.stars_by_supplier = supplierReview?.stars_average ?? null;
+      supplier.review_quantity_by_supplier = supplierReview?.quantity ?? null;
+  
+      const next = this.getNextAvailability(supplierAvailabilities);
+      supplier.date_availability = next?.date_availability ?? null;
+      supplier.hour_availability = next?.hour_availability ?? null;
+      supplier.location_number = locations.length;
+  
+      return true;
+    }
+  
+    private buildSupplierServices(specialties: SpecialtyBySupplier[], proceduresBySpecialty: Map<number, ProcedureBySpecialty[]>,
+      packagesByProcedure: Map<number, Package[]>, specialty_code: string | null, procedure_code: string | null,
+      minPrice: number, maxPrice: number): any[] {
+  
+      return specialties.filter(s => !specialty_code || s.medical_specialty.code === specialty_code).map(s => {
+        const procedures = (proceduresBySpecialty.get(s.id) || []).filter(p => !procedure_code || p.procedure.code === procedure_code).map(p => {
+          const packages = (packagesByProcedure.get(p.id) || []).filter(pkg => {
+            const price = Number(pkg.reference_price);
+            return price >= minPrice && price <= maxPrice;
+          }).map(pkg => ({
+            id: pkg.id,
+            product: pkg.product,
+            reference_price: Number(pkg.reference_price),
+            discount: Number(pkg.discount || 0),
+            discounted_price: Math.round(Number(pkg.reference_price) * (1 - Number(pkg.discount || 0) / 100)),
+            services_offer: pkg.services_offer,
+            description: pkg.description,
+            is_king: pkg.is_king,
+          }));
+  
+          return { id: p.id, procedure: p.procedure, packages };
+        });
+        return { id: s.id, medical_specialty: s.medical_specialty, procedures };
+      }).filter(service => service.procedures.length > 0);
+    }
+  
     private getNextAvailability(availabilities: Availability[]): { date_availability: string, hour_availability: string } | null {
         const now = moment().tz("America/Costa_Rica");
-        const nowPlus2 = now.clone().add(2, 'hours');
-        const currentWeekday = now.format("dddd").toLowerCase();
-
-        const availableToday = availabilities.find(av => {
-            if (av.weekday.toLowerCase() !== currentWeekday) return false;
-            const from = moment(av.from_hour, "HH:mm");
-            const to = moment(av.to_hour, "HH:mm");
-            return from.isBefore(nowPlus2) && to.isAfter(nowPlus2);
-        });
-
-        if (availableToday) {
-            return {
-                date_availability: now.format("DD/MM/YYYY"),
-                hour_availability: nowPlus2.format("HH:mm")
-            };
-        }
-
+        const minDate = now.clone().add(7, "days").startOf("day");
+      
         const dayMap: Record<string, number> = {
-            monday: 1, tuesday: 2, wednesday: 3, thursday: 4,
-            friday: 5, saturday: 6, sunday: 0
+          sunday: 0, monday: 1, tuesday: 2, wednesday: 3,
+          thursday: 4, friday: 5, saturday: 6
         };
-
+      
         const proximas = availabilities.map(av => {
+          const targetDay = dayMap[av.weekday.toLowerCase()];
+          let targetDate = minDate.clone().day(targetDay);
+      
+          // Si el día calculado está antes que la fecha mínima (por ejemplo, targetDate es lunes pero hoy+7 es viernes)
+          if (targetDate.isBefore(minDate)) targetDate.add(7, 'days');
+      
+          const fromTime = moment(av.from_hour, "HH:mm");
+          const fullDateTime = targetDate.clone().hour(fromTime.hour()).minute(fromTime.minute());
+      
+          return { ...av, fullDateTime };
+        }).sort((a, b) => a.fullDateTime.valueOf() - b.fullDateTime.valueOf());
+      
+        const next = proximas[0];
+      
+        return next ? {
+          date_availability: next.fullDateTime.format("DD/MM/YYYY"),
+          hour_availability: next.fullDateTime.format("HH:mm")
+        } : null;
+      }
 
-            const dayIndex = dayMap[av.weekday.toLowerCase()];
-            let date = moment().tz("America/Costa_Rica").startOf('day');
-            date.day(dayIndex);
-            if (date.isBefore(now, 'day') || date.isSame(now, 'day')) {
-                date.add(7, 'days');
-            }
-            
-            const fromTime = moment(av.from_hour, "HH:mm");
-            const nextDateTime = date.clone().hour(fromTime.hour()).minute(fromTime.minute());
-            return { ...av, nextDateTime };
-        }).sort((a, b) => a.nextDateTime.valueOf() - b.nextDateTime.valueOf());
 
-        const nextAvailability = proximas[0];
-        if (nextAvailability) {
-            return {
-                date_availability: nextAvailability.nextDateTime.format("DD/MM/YYYY"),
-                hour_availability: moment(nextAvailability.from_hour, "HH:mm").format("HH:mm")
-            };
-        }
 
-        return null;
-    }
 
-    private async loadSupplierServices(
-        supplierId: number,
-        specialty_code: string | null,
-        procedure_code: string | null,
-        minPrice: number,
-        maxPrice: number
-    ): Promise<any[]> {
-        const specialties = await this.specialtyBySupplierRepository.findByOptions(false, true, {
-            where: { supplier: { id: supplierId } },
-            relations: ["medical_specialty"]
-        });
+    async getById(reqHandler: RequestHandler): Promise<any> {
+        return this.getService().getByIdService(reqHandler, async (jwtData, httpExec, id) => {
+            try{
+                // Execute the get by code action in the database
+                const entity : Supplier = await this.getRepository().findById(id, reqHandler.getLogicalDelete(), reqHandler.getFilters());
 
-        const services = [];
-
-        for (const specialty of specialties) {
-            if (specialty_code && specialty.medical_specialty.code !== specialty_code) continue;
-
-            const procedures = await this.procedureBySpecialtyRepository.findByOptions(false, true, {
-                where: { specialty: { id: specialty.id } },
-                relations: ["procedure"]
-            });
-
-            const formattedProcedures = [];
-
-            for (const procedure of procedures) {
-                if (procedure_code && procedure.procedure.code !== procedure_code) continue;
-
-                const packages = await this.packageRepository.findByOptions(false, true, {
-                    where: { procedure: { id: procedure.id }, is_deleted: false },
-                    relations: ["product"]
-                });
-
-                //const procReview = await this.getProcedureReviewAverage(supplierId, procedure.procedure.code);
-                formattedProcedures.push({
-                    id: procedure.id,
-                    procedure: procedure.procedure,
-                    //stars_by_procedure: procReview?.stars_average ?? null,
-                    //review_quantity_by_procedure: procReview?.quantity ?? null,
-                    packages: packages
-                    .filter((pkg: any) => {
-                        const price = Number(pkg.reference_price);
-                        return price >= minPrice && price <= maxPrice;
-                    })
-                    .map((pkg: any) => {
-                        const referencePrice = Number(pkg.reference_price);
-                        const discount = pkg.discount ? Number(pkg.discount) : 0;
-                        const discountedPrice = referencePrice * (1 - discount / 100);
-                
-                        return {
-                            id: pkg.id,
-                            product: pkg.product,
-                            reference_price: referencePrice,
-                            discount: discount,
-                            discounted_price: Math.round(discountedPrice), // Puedes usar Math.round o dejarlo exacto
-                            services_offer: pkg.services_offer,
-                            description: pkg.description,
-                            is_king: pkg.is_king,
-                        };
-                    })
-                
-                });
-                
-            }
-
-            if (formattedProcedures.length > 0) {
-                services.push({
-                    id: specialty.id,
-                    medical_specialty: specialty.medical_specialty,
-                    procedures: formattedProcedures
-                });
-            }
-        }
-
-        return services;
-    }
-
-    private async getSupplierReviewAverage(supplierId: number): Promise<{ stars_average: number, quantity: number } | null> {
-        const reviewDetails = await this.reviewDetailRepository.findByOptions(false, true, {
-            where: {
-                review: {
-                    appointment: {
-                        supplier: { id: supplierId },
-                        is_deleted: false
-                    }
+                if(entity != null && entity != undefined){
+                    
+                    // Return the success response
+                    return httpExec.successAction(reqHandler.getAdapter().entityToResponse(entity), ConstHTTPRequest.GET_BY_ID_SUCCESS);
+                }else{
+                    return httpExec.dynamicError(ConstStatusJson.NOT_FOUND, ConstMessagesJson.DONT_EXISTS);
                 }
-            },
-            relations: ["review", "review.appointment"]
+            }catch(error : any){
+                // Return the database error response
+                return await httpExec.databaseError(error, jwtData.id.toString(), 
+                reqHandler.getMethod(), this.getControllerName());
+            }
         });
-    
-        const stars = reviewDetails.map((r: { stars_point: any; }) => r.stars_point);
-        if (stars.length === 0) return null;
-    
-        let total = 0;
-        for (const s of stars) {
-            total += s;
-        }
-        return {
-            stars_average: Math.round(total / stars.length),
-            quantity: stars.length
-        };
-    }
-    
-    private async getProcedureReviewAverage(supplierId: number, procedureCode: string): Promise<{ stars_average: number, quantity: number } | null> {
-        const reviewDetails = await this.reviewDetailRepository.findByOptions(false, true, {
-            where: {
-                review: {
-                    appointment: {
-                        supplier: { id: supplierId },
-                        procedure: {
-                            procedure: { code: procedureCode }
-                        },
-                        is_deleted: false
-                    }
-                }
-            },
-            relations: ["review", "review.appointment", "review.appointment.procedure", "review.appointment.procedure.procedure" ]
-        });
-    
-        const stars = reviewDetails.map((r: { stars_point: any; }) => r.stars_point);
-        if (stars.length === 0) return null;
-    
-        let total = 0;
-        for (const s of stars) {
-            total += s;
-        }
+     }
 
-        return {
-            stars_average: Math.round(total / stars.length),
-            quantity: stars.length
-        };
-    }
-    
-    private async getPackageReviewAverage(supplierId: number, packageCode: string): Promise<{ stars_average: number, quantity: number } | null> {
-        const reviewDetails = await this.reviewDetailRepository.findByOptions(false, true, {
-            where: {
-                review: {
-                    appointment: {
-                        supplier: { id: supplierId },
-                        package: {
-                            product: { code: packageCode }
-                        },
-                        is_deleted: false
-                    }
-                }
-            },
-            relations: ["review", "review.appointment", "review.appointment.package", "review.appointment.package.product"]
-        });
-    
-        const stars = reviewDetails.map((r: { stars_point: any; }) => r.stars_point);
-        if (stars.length === 0) return null;
-    
-        let total = 0;
-        for (const s of stars) {
-            total += s;
-        }
-        return {
-            stars_average: Math.round(total / stars.length),
-            quantity: stars.length
-        };
-    }
 
 }
+  

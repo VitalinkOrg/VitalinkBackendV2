@@ -1,6 +1,6 @@
 import { UnitDynamicCentral } from "@TenshiJS/entity/UnitDynamicCentral";
 import { User } from "@TenshiJS/entity/User";
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, Index } from "typeorm";
 
 /**
  * The Supplier table stores information about healthcare providers, 
@@ -11,6 +11,13 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "t
  */
 
 @Entity("suppliers")
+@Index(["card_id"], { unique: true }) 
+@Index(["email"])                     
+@Index(["name"])                      // búsquedas por nombre       
+@Index(["medical_type"])              // FK - tipo de médico
+@Index(["legal_representative"])      
+@Index(["is_hospital"])              
+@Index(["city_name", "province"]) 
 export class Supplier {
   @PrimaryGeneratedColumn({ type: "int", unsigned: true })
   id: number;
