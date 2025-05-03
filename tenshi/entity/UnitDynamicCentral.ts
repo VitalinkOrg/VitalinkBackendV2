@@ -44,6 +44,7 @@ export class UnitDynamicCentral {
   @Column({ type: "varchar", length: 200, nullable: true, default: null })
   father_code: string | null;
 
+  //PRODUCT -> PRICE REFERENCE
   @Column({ type: "varchar", length: 300, nullable: true, default: null })
   value1: string;
 

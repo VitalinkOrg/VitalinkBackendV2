@@ -189,16 +189,18 @@ export default class SupplierController extends GenericController {
       return specialties.filter(s => !specialty_code || s.medical_specialty.code === specialty_code).map(s => {
         const procedures = (proceduresBySpecialty.get(s.id) || []).filter(p => !procedure_code || p.procedure.code === procedure_code).map(p => {
           const packages = (packagesByProcedure.get(p.id) || []).filter(pkg => {
-            const price = Number(pkg.reference_price);
+            const price = Number(pkg.product?.value1 || 0);
             return price >= minPrice && price <= maxPrice;
-          }).map(pkg => ({
+          }).map(pkg => 
+            (
+            
+            {
             id: pkg.id,
             product: pkg.product,
-            reference_price: Number(pkg.reference_price),
+            reference_price: Number( pkg.product?.value1 || 0),
             discount: Number(pkg.discount || 0),
-            discounted_price: Math.round(Number(pkg.reference_price) * (1 - Number(pkg.discount || 0) / 100)),
+            discounted_price: Math.round(Number(pkg.product?.value1) * (1 - Number(pkg.discount || 0) / 100)),
             services_offer: pkg.services_offer,
-            description: pkg.description,
             is_king: pkg.is_king,
           }));
   
@@ -217,18 +219,24 @@ export default class SupplierController extends GenericController {
           thursday: 4, friday: 5, saturday: 6
         };
       
-        const proximas = availabilities.map(av => {
-          const targetDay = dayMap[av.weekday.toLowerCase()];
-          let targetDate = minDate.clone().day(targetDay);
+        const proximas = availabilities
+        .map(av => {
+          const weekday = av.weekday?.toLowerCase();
+          const targetDay = dayMap[weekday];
       
-          // Si el día calculado está antes que la fecha mínima (por ejemplo, targetDate es lunes pero hoy+7 es viernes)
+          if (targetDay === undefined) return null;
+      
+          let targetDate = minDate.clone().day(targetDay);
           if (targetDate.isBefore(minDate)) targetDate.add(7, 'days');
       
           const fromTime = moment(av.from_hour, "HH:mm");
           const fullDateTime = targetDate.clone().hour(fromTime.hour()).minute(fromTime.minute());
       
           return { ...av, fullDateTime };
-        }).sort((a, b) => a.fullDateTime.valueOf() - b.fullDateTime.valueOf());
+        })
+        .filter((x): x is Availability & { fullDateTime: moment.Moment } => x !== null)
+        .sort((a, b) => a.fullDateTime.valueOf() - b.fullDateTime.valueOf());
+      
       
         const next = proximas[0];
       
@@ -237,31 +245,207 @@ export default class SupplierController extends GenericController {
           hour_availability: next.fullDateTime.format("HH:mm")
         } : null;
       }
+      
 
 
 
-
-    async getById(reqHandler: RequestHandler): Promise<any> {
+      async getById(reqHandler: RequestHandler): Promise<any> {
         return this.getService().getByIdService(reqHandler, async (jwtData, httpExec, id) => {
-            try{
-                // Execute the get by code action in the database
-                const entity : Supplier = await this.getRepository().findById(id, reqHandler.getLogicalDelete(), reqHandler.getFilters());
-
-                if(entity != null && entity != undefined){
-                    
-                    // Return the success response
-                    return httpExec.successAction(reqHandler.getAdapter().entityToResponse(entity), ConstHTTPRequest.GET_BY_ID_SUCCESS);
-                }else{
-                    return httpExec.dynamicError(ConstStatusJson.NOT_FOUND, ConstMessagesJson.DONT_EXISTS);
-                }
-            }catch(error : any){
-                // Return the database error response
-                return await httpExec.databaseError(error, jwtData.id.toString(), 
-                reqHandler.getMethod(), this.getControllerName());
+          try {
+            const supplier: any | null = await this.getRepository().findById(id, reqHandler.getLogicalDelete(), {
+              relations: ["id_type", "medical_type"]
+            });
+      
+            if (!supplier) {
+              return httpExec.dynamicError(ConstStatusJson.NOT_FOUND, ConstMessagesJson.DONT_EXISTS);
             }
+      
+            // 📌 1. Reviews agrupadas
+            const reviewDetails = await this.reviewDetailRepository.findByOptions(false, true, {
+              where: {
+                review: {
+                  appointment: {
+                    supplier: { id },
+                    is_deleted: false
+                  }
+                }
+              },
+              relations: [
+                "review",
+                "review.appointment",
+                "review.customer",
+                "review_code"
+              ]
+            });
+      
+            const groupedReviews: any[] = [];
+            const reviewCodeSummary: Record<string, { total: number; count: number; created_date: Date | null }> = {};
+      
+            reviewDetails.forEach((detail: { review: any; stars_point: number; review_code: { code: any; }; created_date: any; }) => {
+              const rev = detail.review;
+              const app = rev?.appointment;
+              if (!app || app.is_deleted) return;
+      
+              // Agrupar comentarios por review.id
+              let reviewItem = groupedReviews.find(r => r.id === rev.id);
+              if (!reviewItem) {
+                reviewItem = {
+                  id: rev.id,
+                  customer: rev.customer?.id || null,
+                  comment: rev.comment,
+                  is_annonymous: rev.is_annonymous,
+                  supplier_reply: rev.supplier_reply,
+                  created_date: rev.created_date,
+                  updated_date: rev.updated_date,
+                  stars: []
+                };
+                groupedReviews.push(reviewItem);
+              }
+      
+              reviewItem.stars.push(detail.stars_point);
+      
+              // Agrupación por review_code
+              const code = detail.review_code?.code;
+              if (code) {
+                if (!reviewCodeSummary[code]) {
+                  reviewCodeSummary[code] = { total: 0, count: 0, created_date: detail.created_date };
+                }
+                reviewCodeSummary[code].total += detail.stars_point;
+                reviewCodeSummary[code].count += 1;
+              }
+            });
+      
+            groupedReviews.forEach(r => {
+              const total = r.stars.reduce((a: number, b: number) => a + b, 0);
+              r.stars_average = Math.round(total / r.stars.length);
+              delete r.stars;
+            });
+      
+            const reviewsSummary = Object.keys(reviewCodeSummary).map(code => {
+              const data = reviewCodeSummary[code];
+              return {
+                review: code,
+                stars_point_average: Math.round(data.total / data.count),
+                created_date: data.created_date
+              };
+            });
+      
+            // 📌 2. Disponibilidades y ubicaciones
+            const availabilities = await this.availabilityRepository.findByOptions(false, true, {
+                where: { supplier: { id } },
+                relations: ["location"]
+              });
+              
+              const now = moment().tz("America/Costa_Rica");
+              const minDate = now.clone().add(7, "days").startOf("day");
+              
+              const dayMap: Record<string, number> = {
+                sunday: 0,
+                monday: 1,
+                tuesday: 2,
+                wednesday: 3,
+                thursday: 4,
+                friday: 5,
+                saturday: 6,
+              };
+              
+              const next = availabilities
+                .map((av: { weekday: string; from_hour: moment.MomentInput; }) => {
+                  const weekday = av.weekday?.toLowerCase();
+                  const targetDay = dayMap[weekday];
+              
+                  if (targetDay === undefined) return null; // <- ignora si no es válido
+              
+                  let date = minDate.clone().day(targetDay);
+              
+                  if (date.isBefore(minDate)) date.add(7, "days");
+              
+                  const from = moment(av.from_hour, "HH:mm");
+              
+                  return {
+                    ...av,
+                    fullDate: date.clone().hour(from.hour()).minute(from.minute())
+                  };
+                })
+                .filter(Boolean) // elimina nulls
+                .sort((a: { fullDate: number; }, b: { fullDate: number; }) => a.fullDate.valueOf() - b.fullDate.valueOf())[0];
+              
+              const locations = availabilities
+                .map((av: { location: any; }) => av.location)
+                .filter((loc: { id: any; }, i: any, self: any[]) => loc && self.findIndex(l => l.id === loc.id) === i);
+              
+      
+            // 📌 3. Servicios del proveedor
+            const specialties = await this.specialtyBySupplierRepository.findByOptions(false, true, {
+              where: { supplier: { id } },
+              relations: ["medical_specialty"]
+            });
+      
+            const services = [];
+      
+            for (const spec of specialties) {
+              const procedures = await this.procedureBySpecialtyRepository.findByOptions(false, true, {
+                where: { specialty: { id: spec.id } },
+                relations: ["procedure"]
+              });
+      
+              const formattedProcedures = [];
+      
+              for (const proc of procedures) {
+                const packages = await this.packageRepository.findByOptions(false, true, {
+                  where: { procedure: { id: proc.id } },
+                  relations: ["product"]
+                });
+      
+                formattedProcedures.push({
+                  id: proc.id,
+                  procedure: proc.procedure,
+                  packages: packages.map((pkg: { reference_price: any; discount: any; id: any; product: any; services_offer: any; description: any; is_king: any; }) => {
+                    const price = Number(pkg.reference_price);
+                    const discount = Number(pkg.discount || 0);
+                    return {
+                      id: pkg.id,
+                      product: pkg.product,
+                      reference_price: price,
+                      discount,
+                      discounted_price: Math.round(price * (1 - discount / 100)),
+                      services_offer: pkg.services_offer,
+                      description: pkg.description,
+                      is_king: pkg.is_king
+                    };
+                  })
+                });
+              }
+      
+              if (formattedProcedures.length > 0) {
+                services.push({
+                  id: spec.id,
+                  medical_specialty: spec.medical_specialty,
+                  procedures: formattedProcedures
+                });
+              }
+            }
+      
+            // 📌 4. Agregar toda la info al objeto final
+            supplier.reviews = groupedReviews;
+            supplier.review_details_summary = reviewsSummary;
+            supplier.availabilities = availabilities;
+            supplier.locations = locations;
+            supplier.location_number = locations.length;
+            supplier.services = services;
+            supplier.date_availability = next ? next.fullDate.format("DD/MM/YYYY") : null;
+            supplier.hour_availability = next ? next.fullDate.format("HH:mm") : null;
+      
+            return httpExec.successAction(
+              reqHandler.getAdapter().entityToResponse(supplier),
+              ConstHTTPRequest.GET_BY_ID_SUCCESS
+            );
+      
+          } catch (error: any) {
+            return await httpExec.databaseError(error, jwtData.id.toString(), reqHandler.getMethod(), this.getControllerName());
+          }
         });
-     }
-
-
+      }
+     
 }
   

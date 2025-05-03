@@ -62,7 +62,7 @@ export default class SupplierDTO implements IAdapterFromBody {
     }
 
     // GET
-    entityToResponse(entity: Supplier): any {
+    entityToResponse(entity: any): any {
         return {
             id: entity.id,
             id_type: entity.id_type,
@@ -96,13 +96,28 @@ export default class SupplierDTO implements IAdapterFromBody {
             legal_representative: entity.legal_representative,
             created_date: entity.created_date,
             updated_date: entity.updated_date,
+
+            date_availability: entity.date_availability,
+            hour_availability: entity.hour_availability,
+            location_number: entity.location_number,
+            search_procedure_name: entity.search_procedure_name,
+            search_reference_price: entity.search_reference_price,
+            search_original_price: entity.search_original_price,
+            stars_by_supplier: entity.stars_by_supplier,
+            review_quantity_by_supplier: entity.review_quantity_by_supplier,
+            reviews: entity.reviews,
+            review_details_summary: entity.review_details_summary,
+
+            services: entity.services,
+            availabilities: entity.availabilities,
+            locations: entity.locations,
         };
     }
 
 
   
 
-    entitiesToResponse(entities: Supplier[] | null): any {
+    entitiesToResponse(entities: any[] | null): any {
         const response: any[] = [];
         if (entities != null) {
             for (const entity of entities) {

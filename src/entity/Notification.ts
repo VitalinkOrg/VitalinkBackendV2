@@ -2,7 +2,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, Index } from "typeorm";
 
 @Entity("notifications")
-@Index("idx_code", ["code"])
 export class Notification {
   @PrimaryGeneratedColumn({ type: "int" })
   id: number;

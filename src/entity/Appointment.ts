@@ -15,12 +15,6 @@ import { ProcedureBySpecialty } from "./ProcedureBySpecialty";
  */
 
 @Entity("appointments")
-@Index(["supplier"])
-@Index(["customer"])
-@Index(["procedure"])
-@Index(["package"])
-@Index(["appointment_result"])
-@Index(["payment_status"])
 export class Appointment {
   @PrimaryGeneratedColumn({ type: "int", unsigned: true })
   id: number;

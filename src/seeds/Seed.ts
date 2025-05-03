@@ -27,6 +27,7 @@ import { Appointment } from '@index/entity/Appointment';
 import { AppointmentCredit } from '@index/entity/AppointmentCredit';
 import { Review } from '@index/entity/Review';
 import { ReviewDetail } from '@index/entity/ReviewDetail';
+import { isNull } from 'util';
 
 
 async function createDatabaseIfNotExists() {
@@ -97,6 +98,7 @@ async function runSeed() {
 
         const locations = [
           {
+            id: 1,
             name: "Hospital Clínica Bíblica - Sede Central",
             country_iso_code: "CRC",
             province: "San José",
@@ -107,6 +109,7 @@ async function runSeed() {
             longitude: -84.0890355,
           },
           {
+            id: 2,
             name: "Hospital Clínica Bíblica - Santa Ana",
             country_iso_code: "CRC",
             province: "San José",
@@ -117,6 +120,7 @@ async function runSeed() {
             longitude: -84.184,
           },
           {
+            id: 3,
             name: "Hospital Metropolitano - Sede Central",
             country_iso_code: "CRC",
             province: "San José",
@@ -127,6 +131,7 @@ async function runSeed() {
             longitude: -84.0833,
           },
           {
+            id: 4,
             name: "Hospital Metropolitano - Lincoln Plaza",
             country_iso_code: "CRC",
             province: "San José",
@@ -137,6 +142,7 @@ async function runSeed() {
             longitude: -84.0488,
           },
           {
+            id: 5,
             name: "Hospital Metropolitano - Quepos",
             country_iso_code: "CRC",
             province: "Puntarenas",
@@ -147,6 +153,7 @@ async function runSeed() {
             longitude: -84.1618,
           },
           {
+            id: 6,
             name: "Hospital Metropolitano - Huacas",
             country_iso_code: "CRC",
             province: "Guanacaste",
@@ -157,6 +164,7 @@ async function runSeed() {
             longitude: -85.7967,
           },
           {
+            id: 7,
             name: "Hospital Metropolitano - Lindora",
             country_iso_code: "CRC",
             province: "San José",
@@ -167,6 +175,7 @@ async function runSeed() {
             longitude: -84.1839,
           },
           {
+            id: 8,
             name: "Hospital Metropolitano - Liberia",
             country_iso_code: "CRC",
             province: "Guanacaste",
@@ -177,6 +186,7 @@ async function runSeed() {
             longitude: -85.4333,
           },
           {
+            id: 9,
             name: "Hospital CIMA San José",
             country_iso_code: "CRC",
             province: "San José",
@@ -187,6 +197,7 @@ async function runSeed() {
             longitude: -84.1407,
           },
           {
+            id: 10,
             name: "Hospital Clínica Católica",
             country_iso_code: "CRC",
             province: "San José",
@@ -197,6 +208,7 @@ async function runSeed() {
             longitude: -84.0595,
           },
           {
+            id: 11,
             name: "Hospital UNIBE",
             country_iso_code: "CRC",
             province: "San José",
@@ -207,6 +219,7 @@ async function runSeed() {
             longitude: -84.0739,
           },
           {
+            id: 12,
             name: "Clínica Hospital Santa Catalina",
             country_iso_code: "CRC",
             province: "San José",
@@ -217,6 +230,7 @@ async function runSeed() {
             longitude: -84.0685,
           },
           {
+            id: 13,
             name: "Clínica Zahha",
             country_iso_code: "CRC",
             province: "San José",
@@ -227,6 +241,7 @@ async function runSeed() {
             longitude: -84.0306,
           },
           {
+            id: 14,
             name: "Hospital Cristiano Jerusalem",
             country_iso_code: "CRC",
             province: "San José",
@@ -237,6 +252,7 @@ async function runSeed() {
             longitude: -84.0555,
           },
           {
+            id: 15,
             name: "Clínicas Sin Fronteras",
             country_iso_code: "CRC",
             province: "San José",
@@ -362,6 +378,22 @@ async function runSeed() {
               province: "Puntarenas",
               address: "Centro de Puntarenas",
               city_name: "Puntarenas",
+              postal_code: "60101",
+              role_code: "LEGAL_REPRESENTATIVE",
+          },
+          {
+              id: "892dfdc0-3fc3-4910-a9ad-e052f320e7a6",
+              card_id: "00000000",
+              id_type: { code: "JURIDICAL_DNI" },
+              name: "Clínica Bíbilica",
+              email: "clinicabiblica@example.com",
+              user_name: "cbiblica",
+              phone_number: "2266-2109",
+              password,
+              country_iso_code: "CRC",
+              province: "San José",
+              address: "Centro Medico Central",
+              city_name: "Curridabat",
               postal_code: "60101",
               role_code: "LEGAL_REPRESENTATIVE",
           }
@@ -600,6 +632,34 @@ const suppliers = [
         code_medical_license_file: null,
         medical_type: null,
         legal_representative: { id: legalRepresentatives[2].id },
+    },
+    {
+        id:6,
+        id_type: { code: "JURIDICAL_DNI" },
+        card_id: "000000000",
+        num_medical_enrollment: null,
+        name: "Oftalmóloga 1 ",
+        phone_number: "2266-2109",
+        email: "contacto@clinicabiblica.com",
+        country_iso_code: "CRC",
+        province: "San José",
+        city_name: "San José",
+        postal_code: "60101",
+        profile_picture_url: null,
+        description: null,
+        address: null,
+        latitude: 9.9796,
+        longitude: -84.1005,
+        experience_years: null,
+        patients_number: null,
+        is_hospital: true,
+        our_history: "Desde 1990, hemos atendido miles de pacientes con calidad y calidez.",
+        mission: "Ofrecer salud con innovación.",
+        vision: "Expandir nuestros servicios en todo Costa Rica.",
+        code_card_id_file: null,
+        code_medical_license_file: null,
+        medical_type: null,
+        legal_representative: { id: legalRepresentatives[4].id },
     }
 ];
 
@@ -627,6 +687,8 @@ const specialties = [
     { id: 7, supplier: { id: 5 }, medical_specialty: { code: "GASTROENTEROLOGY" } }, // Centro Médico del Pacífico (Gastroenterología)
     { id: 8, supplier: { id: 5 }, medical_specialty: { code: "DERMATOLOGY" } }, // Centro Médico del Pacífico (Dermatología)
     { id: 9, supplier: { id: 5 }, medical_specialty: { code: "ORTHOPEDICS_AND_TRAUMATOLOGY" } }, // Centro Médico del Pacífico (Ortopedia)
+
+    { id: 10, supplier: { id: 6 }, medical_specialty: { code: "OPHTHALMOLOGY" } },
 ];
 
 await specialtyRepository.upsert(specialties, ["id"]);
@@ -640,9 +702,8 @@ const procedureRepository = dataSource.getRepository(ProcedureBySpecialty);
 // Asignamos procedimientos a cada especialidad
 const procedures = [
     // Oftalmología
-    { id: 1, specialty: { id: 2 }, procedure: { code: "MYOPIA_SURGERY" } }, // Cirugía de Miopía
+    { id: 1, specialty: { id: 2 }, procedure: { code: "REFRACTIVE_SURGERY" } }, // Cirugía de Miopía
     { id: 2, specialty: { id: 2 }, procedure: { code: "CATARACT_SURGERY" } }, // Cirugía de Cataratas
-    { id: 3, specialty: { id: 2 }, procedure: { code: "GLAUCOMA_TREATMENT" } }, // Tratamiento de Glaucoma
 
     // Neurología
     { id: 4, specialty: { id: 3 }, procedure: { code: "EPILEPSY_TREATMENT" } }, // Tratamiento de Epilepsia
@@ -659,6 +720,10 @@ const procedures = [
     // Ortopedia
     { id: 12, specialty: { id: 9 }, procedure: { code: "ORTHO_KNEE_SURGERY" } }, // Cirugía de Rodilla
     { id: 13, specialty: { id: 9 }, procedure: { code: "ORTHO_SHOULDER_SURGERY" } }, // Cirugía de Hombro*/
+
+     // Oftalmología
+     { id: 14, specialty: { id: 10 }, procedure: { code: "CATARACT_SURGERY" } }, // MONOFOCAL
+     { id: 15, specialty: { id: 10 }, procedure: { code: "REFRACTIVE_SURGERY" } }, //MULTIFOCAL
 ];
 
 await procedureRepository.upsert(procedures, ["id"]);
@@ -672,138 +737,150 @@ const packages = [
     {
         id: 1,
         procedure: { id: 1 }, // Cirugía de Miopía
-        product: { code: "MYOPIA_LASER" },
-        reference_price: 2500.00,
+        product: { code: "REFRACTIVE_PRK" },
         discount: 10.00,
         services_offer: { "ASSESSMENT_DETAILS": ["GENERAL_ANESTHESIA", "POSTOP_ULTRASOUND", "POSTOP_PHYSIOTHERAPY"] },
-        description: "Cirugía láser para corregir la miopía con tecnología avanzada."
     },
     {
         id: 2,
         procedure: { id: 1 }, 
-        product: { code: "MYOPIA_LENSES" },
-        reference_price: 3200.00,
+        product: { code: "REFRACTIVE_LASIK" },
         discount: 5.00,
         services_offer: { "ASSESSMENT_DETAILS": ["GENERAL_ANESTHESIA", "POSTOP_CT", "POSTOP_PAIN_CONTROL"] },
-        description: "Implante de lentes intraoculares para corregir la miopía severa."
     },
     {
         id: 3,
         procedure: { id: 1 }, 
-        product: { code: "MYOPIA_RINGS" },
-        reference_price: 2800.00,
+        product: { code: "REFRACTIVE_LASIK_GUIDED" },
         discount: 8.00,
         services_offer: { "ASSESSMENT_DETAILS": ["REGIONAL_ANESTHESIA", "POSTOP_XRAY", "POSTOP_SURGEON_FOLLOWUP"] },
-        description: "Cirugía con anillos intracorneales para mejorar la visión en pacientes con queratocono."
     },
     {
         id: 4,
         procedure: { id: 6 }, // Intervención Cardiovascular
         product: { code: "CARDIO_STENT" },
-        reference_price: 5000.00,
         discount: 7.50,
-        services_offer: { "ASSESSMENT_DETAILS": ["GENERAL_ANESTHESIA", "SURGICAL_RISK_ASSESSMENT", "POSTOP_PHYSIOTHERAPY"] },
-        description: "Colocación de stent coronario para mejorar el flujo sanguíneo."
+        services_offer: { "ASSESSMENT_DETAILS": ["GENERAL_ANESTHESIA", "SURGICAL_RISK_ASSESSMENT", "POSTOP_PHYSIOTHERAPY"] }
     },
     {
         id: 5,
         procedure: { id: 6 },
         product: { code: "CARDIO_BYPASS" },
-        reference_price: 12000.00,
         discount: 15.00,
         services_offer: { "ASSESSMENT_DETAILS": ["GENERAL_ANESTHESIA", "POSTOP_CT", "POSTOP_PAIN_CONTROL"] },
-        description: "Cirugía de revascularización miocárdica para pacientes con enfermedad arterial coronaria avanzada."
     },
     {
         id: 6,
         procedure: { id: 10 }, // Endoscopía Digestiva
         product: { code: "GASTRO_COLONOSCOPY" },
-        reference_price: 800.00,
         discount: 5.00,
         services_offer: { "ASSESSMENT_DETAILS": ["PREOPERATIVE_ASSESSMENT", "POSTOP_ULTRASOUND"] },
-        description: "Colonoscopía para diagnóstico y tratamiento de enfermedades del tracto digestivo."
     },
     {
         id: 7,
         procedure: { id: 10 },
         product: { code: "GASTRO_GASTROSCOPY" },
-        reference_price: 750.00,
         discount: 4.00,
         services_offer: { "ASSESSMENT_DETAILS": ["PREOPERATIVE_ASSESSMENT", "POSTOP_MEDICATIONS"] },
-        description: "Gastroscopia para evaluación del esófago, estómago y duodeno."
     },
     {
         id: 8,
         procedure: { id: 12 }, // Cirugía de Rodilla
         product: { code: "ORTHO_KNEE_REPLACEMENT" },
-        reference_price: 14000.00,
         discount: 12.00,
         services_offer: { "ASSESSMENT_DETAILS": ["GENERAL_ANESTHESIA", "POSTOP_REHAB", "POSTOP_PHYSIOTHERAPY"] },
-        description: "Reemplazo total de rodilla con implantes de última generación."
     },
     {
         id: 9,
         procedure: { id: 12 },
         product: { code: "ORTHO_ACL_SURGERY" },
-        reference_price: 5000.00,
         discount: 10.00,
         services_offer: { "ASSESSMENT_DETAILS": ["PREOPERATIVE_ASSESSMENT", "POSTOP_REHAB"] },
-        description: "Reconstrucción de ligamento cruzado anterior con injerto autólogo."
     },
     {
         id: 10,
         procedure: { id: 13 }, // Cirugía de Hombro
         product: { code: "ORTHO_ROTATOR_CUFF" },
-        reference_price: 7000.00,
         discount: 8.00,
         services_offer: { "ASSESSMENT_DETAILS": ["GENERAL_ANESTHESIA", "POSTOP_PHYSIOTHERAPY"] },
-        description: "Reparación del manguito rotador para mejorar la movilidad del hombro."
     },
     {
         id: 11,
         procedure: { id: 13 },
         product: { code: "ORTHO_SHOULDER_DISLOCATION" },
-        reference_price: 6000.00,
         discount: 9.00,
         services_offer: { "ASSESSMENT_DETAILS": ["GENERAL_ANESTHESIA", "POSTOP_SURGEON_FOLLOWUP"] },
-        description: "Cirugía de luxación de hombro con estabilización artroscópica."
     },
     {
         id: 12,
         procedure: { id: 4 }, // Tratamiento de Epilepsia
         product: { code: "VAGUS_NERVE_STIMULATION" },
-        reference_price: 18000.00,
         discount: 10.00,
         services_offer: { "ASSESSMENT_DETAILS": ["PREOPERATIVE_ASSESSMENT", "POSTOP_CT", "POSTOP_MEDICATIONS"] },
-        description: "Estimulación del nervio vago para control de crisis epilépticas."
     },
     {
         id: 13,
         procedure: { id: 4 },
         product: { code: "EPILEPSY_SURGERY" },
-        reference_price: 25000.00,
         discount: 12.00,
         services_offer: { "ASSESSMENT_DETAILS": ["GENERAL_ANESTHESIA", "POSTOP_REHAB", "POSTOP_MEDICATIONS"] },
-        description: "Cirugía para remover focos epilépticos en el cerebro."
     },
     {
         id: 14,
         procedure: { id: 5 }, // Tratamiento de Parkinson
         product: { code: "DEEP_BRAIN_STIMULATION" },
-        reference_price: 30000.00,
         discount: 15.00,
         services_offer: { "ASSESSMENT_DETAILS": ["GENERAL_ANESTHESIA", "POSTOP_CT", "POSTOP_PHYSIOTHERAPY"] },
-        description: "Estimulación cerebral profunda para mejorar síntomas motores en pacientes con Parkinson."
     },
     {
         id: 15,
         procedure: { id: 5 },
         product: { code: "DOPAMINE_THERAPY" },
-        reference_price: 2000.00,
         discount: 5.00,
         services_offer: { "ASSESSMENT_DETAILS": ["PREOPERATIVE_ASSESSMENT", "POSTOP_MEDICATIONS"] },
-        description: "Terapia de dopamina para mejorar los síntomas del Parkinson."
-    }
+    },
+    {
+        id: 16,
+        procedure: { id: 14 },
+        product: { code: "LIO_MONOFOCAL" },
+        discount: 5,
+        services_offer: { "ASSESSMENT_DETAILS": ["MEDICAL_SPENDING", "POSTOP_APPOINTMENT", "POSTOP_MEDICAL"] },
+    },
+    {
+      id: 17,
+      procedure: { id: 14 },
+      product: { code: "LIO_MULTIFOCAL" },
+      discount: 0,
+      services_offer: { "ASSESSMENT_DETAILS": ["MEDICAL_SPENDING", "POSTOP_APPOINTMENT", "POSTOP_MEDICAL"] },
+    },
+    {
+      id: 18,
+      procedure: { id: 15 },
+      product: { code: "REFRACTIVE_PRK" },
+      discount: 0,
+      services_offer: { "ASSESSMENT_DETAILS": ["MEDICAL_SPENDING", "POSTOP_APPOINTMENT", "POSTOP_MEDICAL"] },
+    },
+    {
+      id: 19,
+      procedure: { id: 15 },
+      product: { code: "REFRACTIVE_LASIK" },
+      discount: 0,
+      services_offer: { "ASSESSMENT_DETAILS": ["MEDICAL_SPENDING", "POSTOP_APPOINTMENT", "POSTOP_MEDICAL"] },
+    },
+    {
+      id: 20,
+      procedure: { id: 15 },
+      product: { code: "REFRACTIVE_LASIK_GUIDED" },
+      discount: 0,
+      services_offer: { },
+    },
+    {
+      id: 21,
+      procedure: { id: 15 },
+      product: { code: "REFRACTIVE_FEMOTOLASIK" },
+      discount: 0,
+      services_offer: { "ASSESSMENT_DETAILS": [] },
+    },
 ];
 
 await packageRepository.upsert(packages, ["id"]);
@@ -1028,7 +1105,6 @@ const availabilities = [
     {
         id: 1,
         supplier: { id: 1 }, // Alejandro Vargas (Cardiología)
-        procedure: { id: 6 }, // Intervención Cardiovascular
         location: { id: 1 }, // Hospital Clínica Bíblica - Sede Central
         weekday: "",
         from_hour: "08:00:00",
@@ -1037,7 +1113,6 @@ const availabilities = [
     {
         id: 2,
         supplier: { id: 1 },
-        procedure: { id: 7 }, // Marcapasos
         location: { id: 1 },
         weekday: "Wednesday",
         from_hour: "14:00:00",
@@ -1046,7 +1121,6 @@ const availabilities = [
     {
         id: 3,
         supplier: { id: 2 }, // Sofía Araya (Dermatología)
-        procedure: { id: 2 }, // Cirugía de Cataratas
         location: { id: 5 }, // Centro Médico del Pacífico - Sede Central
         weekday: "Tuesday",
         from_hour: "10:00:00",
@@ -1055,7 +1129,6 @@ const availabilities = [
     {
         id: 4,
         supplier: { id: 2 },
-        procedure: { id: 3 }, // Tratamiento de Glaucoma
         location: { id: 5 },
         weekday: "Thursday",
         from_hour: "09:00:00",
@@ -1064,7 +1137,6 @@ const availabilities = [
     {
         id: 5,
         supplier: { id: 3 }, // Fernando López (Médico General)
-        procedure: { id: 4 }, // Tratamiento de Epilepsia
         location: { id: 7 }, // Hospital Metropolitano - Quepos
         weekday: "Friday",
         from_hour: "08:00:00",
@@ -1073,7 +1145,6 @@ const availabilities = [
     {
         id: 6,
         supplier: { id: 3 },
-        procedure: { id: 5 }, // Tratamiento de Parkinson
         location: { id: 7 },
         weekday: "Monday",
         from_hour: "14:00:00",
@@ -1082,7 +1153,6 @@ const availabilities = [
     {
         id: 7,
         supplier: { id: 4 }, // Hospital Clínica Santa Fe (Cardiología)
-        procedure: { id: 6 }, // Intervención Cardiovascular
         location: { id: 4 }, // Hospital Metropolitano - Lincoln Plaza
         weekday: "Wednesday",
         from_hour: "10:00:00",
@@ -1091,7 +1161,6 @@ const availabilities = [
     {
         id: 8,
         supplier: { id: 5 }, // Centro Médico del Pacífico (Gastroenterología)
-        procedure: { id: 10 }, // Endoscopía Digestiva
         location: { id: 6 }, // Hospital Metropolitano - Huacas
         weekday: "Thursday",
         from_hour: "09:00:00",
@@ -1100,7 +1169,6 @@ const availabilities = [
     {
         id: 9,
         supplier: { id: 5 },
-        procedure: { id: 11 }, // Tratamiento de Úlceras
         location: { id: 6 },
         weekday: "Friday",
         from_hour: "08:00:00",
@@ -1109,7 +1177,6 @@ const availabilities = [
     {
         id: 10,
         supplier: { id: 5 },
-        procedure: { id: 12 }, // Cirugía de Rodilla
         location: null, // No requiere ubicación específica
         weekday: "Monday",
         from_hour: "14:00:00",
@@ -1118,7 +1185,6 @@ const availabilities = [
     {
       id: 11,
       supplier: { id: 1 }, // Alejandro Vargas
-      procedure: { id: 2 }, // Cirugía de Cataratas (ejemplo)
       location: { id: 1 }, // Hospital Clínica Bíblica - Sede Central
       weekday: "Tuesday",
       from_hour: "08:00:00",
@@ -1127,7 +1193,6 @@ const availabilities = [
     {
       id: 12,
       supplier: { id: 2 }, // Sofía Araya
-      procedure: { id: 4 }, // Tratamiento de Epilepsia
       location: { id: 5 }, // Centro Médico del Pacífico - Sede Central
       weekday: "Friday",
       from_hour: "15:00:00",
@@ -1136,7 +1201,6 @@ const availabilities = [
     {
       id: 13,
       supplier: { id: 2 }, // Sofía Araya
-      procedure: { id: 7 }, // Marcapasos (ejemplo)
       location: { id: 5 },
       weekday: "Monday",
       from_hour: "10:00:00",
@@ -1145,7 +1209,6 @@ const availabilities = [
     {
       id: 14,
       supplier: { id: 3 }, // Fernando López
-      procedure: { id: 5 }, // Tratamiento de Parkinson
       location: { id: 7 }, // Hospital Metropolitano - Quepos (ejemplo)
       weekday: "Wednesday",
       from_hour: "12:00:00",
@@ -1154,7 +1217,6 @@ const availabilities = [
     {
       id: 15,
       supplier: { id: 3 }, // Fernando López
-      procedure: { id: 6 }, // Intervención Cardiovascular
       location: { id: 7 },
       weekday: "Thursday",
       from_hour: "09:00:00",
@@ -1163,7 +1225,6 @@ const availabilities = [
     {
       id: 16,
       supplier: { id: 4 }, // Hospital Clínica Santa Fe
-      procedure: { id: 7 }, // Marcapasos (ejemplo)
       location: { id: 4 }, // Hospital Metropolitano - Lincoln Plaza (ejemplo)
       weekday: "Friday",
       from_hour: "08:00:00",
@@ -1172,7 +1233,6 @@ const availabilities = [
     {
       id: 17,
       supplier: { id: 4 }, // Hospital Clínica Santa Fe
-      procedure: { id: 6 }, // Intervención Cardiovascular
       location: { id: 4 },
       weekday: "Saturday",
       from_hour: "10:00:00",
@@ -1181,7 +1241,6 @@ const availabilities = [
     {
       id: 18,
       supplier: { id: 5 }, // Centro Médico del Pacífico
-      procedure: { id: 10 }, // Endoscopía Digestiva
       location: { id: 6 }, // Hospital Metropolitano - Huacas (ejemplo)
       weekday: "Sunday",
       from_hour: "09:00:00",
@@ -1190,7 +1249,6 @@ const availabilities = [
     {
       id: 19,
       supplier: { id: 5 }, // Centro Médico del Pacífico
-      procedure: { id: 11 }, // Tratamiento de Úlceras
       location: { id: 6 },
       weekday: "Tuesday",
       from_hour: "11:00:00",
@@ -1199,12 +1257,29 @@ const availabilities = [
     {
       id: 20,
       supplier: { id: 5 }, // Centro Médico del Pacífico
-      procedure: { id: 12 }, // Cirugía de Rodilla
       location: { id: 6 },
       weekday: "Wednesday",
       from_hour: "13:00:00",
       to_hour: "17:00:00",
-    }
+    },
+
+    //HAPPY PATH MVP  
+    {
+      id: 21,
+      supplier: { id: 6 }, // Centro Médico del Pacífico
+      location: { id: 1 },
+      weekday: "Monday",
+      from_hour: "10:00:00",
+      to_hour: "11:00:00",
+    },
+    {
+      id: 22,
+      supplier: { id: 6 }, // Centro Médico del Pacífico
+      location: { id: 1 },
+      weekday: "Thursday",
+      from_hour: "14:00:00",
+      to_hour: "16:00:00",
+    },
 ];
 
 await availabilityRepository.upsert(availabilities, ["id"]);

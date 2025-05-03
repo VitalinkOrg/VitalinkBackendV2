@@ -9,7 +9,7 @@ const configPath = path.resolve(__dirname, '../../tenshi-config.json');
 const configManager = ConfigManager.getInstance(configPath);
 const config = configManager.getConfig();
 
-import { DataSource } from 'typeorm';
+import { DataSource, ServerDescription } from 'typeorm';
 import { UnitDynamicCentral } from '@TenshiJS/entity/UnitDynamicCentral';
 
 
@@ -251,65 +251,282 @@ async function runSeed() {
     //Medical procedures and products or packages
     const ProceduresAndProducts = [
         // OFTALMOLOGÍA
-        { name: "Cirugía de Miopía", code: "MYOPIA_SURGERY", type: "MEDICAL_PROCEDURE", father_code: "OPHTHALMOLOGY" },
-        { name: "Cirugía Miopía Láser", code: "MYOPIA_LASER", type: "MEDICAL_PRODUCT", father_code: "MYOPIA_SURGERY" },
-        { name: "Cirugía Miopía Lentes Intraoculares", code: "MYOPIA_LENSES", type: "MEDICAL_PRODUCT", father_code: "MYOPIA_SURGERY" },
-        { name: "Cirugía Miopía Anillos", code: "MYOPIA_RINGS", type: "MEDICAL_PRODUCT", father_code: "MYOPIA_SURGERY" },
+        {name: "Cirugía Refractiva (miopía, hipermetropía y astigmatismo)",code: "REFRACTIVE_SURGERY",type: "MEDICAL_PROCEDURE",father_code: "OPHTHALMOLOGY"},
+        {
+            name: "PRK",
+            code: "REFRACTIVE_PRK",
+            type: "MEDICAL_PRODUCT",
+            father_code: "REFRACTIVE_SURGERY",
+            value1: "1080000",
+            description: "Incisión refractiva en la córnea, se usa para describir remodelación de la córnea con láser excímer sin colgajo"
+        },
+        {
+            name: "LASIK",
+            code: "REFRACTIVE_LASIK",
+            type: "MEDICAL_PRODUCT",
+            father_code: "REFRACTIVE_SURGERY",
+            value1: "1311428",
+            description: "Keratomileusis, incluye técnicas en las que se levanta un colgajo corneal y se remodela con láser"
+        },
+        {
+            name: "LASIK Guiada",
+            code: "REFRACTIVE_LASIK_GUIDED",
+            type: "MEDICAL_PRODUCT",
+            father_code: "REFRACTIVE_SURGERY",
+            value1: "1500000",
+            description: "Keratomileusis, incluye técnicas en las que se levanta un colgajo corneal y se remodela con láser"
+        },
+        {
+            name: "Femotolasik",
+            code: "REFRACTIVE_FEMOTOLASIK",
+            type: "MEDICAL_PRODUCT",
+            father_code: "REFRACTIVE_SURGERY",
+            value1: "1697142",
+            description: "Keratomileusis, incluye técnicas en las que se levanta un colgajo corneal y se remodela con láser, sin cuchillas"
+        },
+
+
         { name: "Cirugía de Cataratas", code: "CATARACT_SURGERY", type: "MEDICAL_PROCEDURE", father_code: "OPHTHALMOLOGY" },
-        { name: "Facoemulsificación de Cataratas", code: "FACOEMULSIFICATION", type: "MEDICAL_PRODUCT", father_code: "CATARACT_SURGERY" },
-        { name: "Implante de Lente Intraocular", code: "IOL_IMPLANT", type: "MEDICAL_PRODUCT", father_code: "CATARACT_SURGERY" },
-        { name: "Tratamiento de Glaucoma", code: "GLAUCOMA_TREATMENT", type: "MEDICAL_PROCEDURE", father_code: "OPHTHALMOLOGY" },
-        { name: "Cirugía de Glaucoma con Láser", code: "GLAUCOMA_LASER", type: "MEDICAL_PRODUCT", father_code: "GLAUCOMA_TREATMENT" },
-        { name: "Implante de Drenaje para Glaucoma", code: "GLAUCOMA_DRAINAGE", type: "MEDICAL_PRODUCT", father_code: "GLAUCOMA_TREATMENT" },
-        
+        {
+            name: "LIO Monofocal",
+            code: "LIO_MONOFOCAL",
+            type: "MEDICAL_PRODUCT",
+            father_code: "CATARACT_SURGERY",
+            value1: "845902",
+            description: "Elemento quirúrgico con alta eficacia en recuperación funcional"
+        },
+        {
+            name: "LIO Multifocal",
+            code: "LIO_MULTIFOCAL",
+            type: "MEDICAL_PRODUCT",
+            father_code: "CATARACT_SURGERY",
+            value1: "1352284",
+            description: "Producto médico especializado utilizado en procedimientos avanzados"
+        },
         // NEUROLOGÍA
         { name: "Tratamiento de Epilepsia", code: "EPILEPSY_TREATMENT", type: "MEDICAL_PROCEDURE", father_code: "NEUROLOGY" },
-        { name: "Estimulación del Nervio Vago", code: "VAGUS_NERVE_STIMULATION", type: "MEDICAL_PRODUCT", father_code: "EPILEPSY_TREATMENT" },
-        { name: "Cirugía de Epilepsia", code: "EPILEPSY_SURGERY", type: "MEDICAL_PRODUCT", father_code: "EPILEPSY_TREATMENT" },
+        {
+            name: "Estimulación del Nervio Vago",
+            code: "VAGUS_NERVE_STIMULATION",
+            type: "MEDICAL_PRODUCT",
+            father_code: "EPILEPSY_TREATMENT",
+            value1: "1822880",
+            description: "Tratamiento innovador aprobado en medicina especializada"
+        },
+        {
+            name: "Cirugía de Epilepsia",
+            code: "EPILEPSY_SURGERY",
+            type: "MEDICAL_PRODUCT",
+            father_code: "EPILEPSY_TREATMENT",
+            value1: "536259",
+            description: "Dispositivo o tratamiento con fines terapéuticos específicos"
+        },
         { name: "Tratamiento de Parkinson", code: "PARKINSON_TREATMENT", type: "MEDICAL_PROCEDURE", father_code: "NEUROLOGY" },
-        { name: "Estimulación Cerebral Profunda", code: "DEEP_BRAIN_STIMULATION", type: "MEDICAL_PRODUCT", father_code: "PARKINSON_TREATMENT" },
-        { name: "Terapia de Dopamina", code: "DOPAMINE_THERAPY", type: "MEDICAL_PRODUCT", father_code: "PARKINSON_TREATMENT" },
-        
+        {
+            name: "Estimulación Cerebral Profunda",
+            code: "DEEP_BRAIN_STIMULATION",
+            type: "MEDICAL_PRODUCT",
+            father_code: "PARKINSON_TREATMENT",
+            value1: "1065387",
+            description: "Elemento quirúrgico con alta eficacia en recuperación funcional"
+        },
+        {
+            name: "Terapia de Dopamina",
+            code: "DOPAMINE_THERAPY",
+            type: "MEDICAL_PRODUCT",
+            father_code: "PARKINSON_TREATMENT",
+            value1: "1812375",
+            description: "Producto médico especializado utilizado en procedimientos avanzados"
+        },
+
         // GINECOLOGÍA Y OBSTETRICIA
         { name: "Cirugía de Endometriosis", code: "ENDOMETRIOSIS_SURGERY", type: "MEDICAL_PROCEDURE", father_code: "GYNECOLOGY_AND_OBSTETRICS" },
-        { name: "Laparoscopía para Endometriosis", code: "ENDOMETRIOSIS_LAPAROSCOPY", type: "MEDICAL_PRODUCT", father_code: "ENDOMETRIOSIS_SURGERY" },
-        { name: "Resección de Tejido Endometriósico", code: "ENDOMETRIOSIS_RESECTION", type: "MEDICAL_PRODUCT", father_code: "ENDOMETRIOSIS_SURGERY" },
+        {
+            name: "Laparoscopía para Endometriosis",
+            code: "ENDOMETRIOSIS_LAPAROSCOPY",
+            type: "MEDICAL_PRODUCT",
+            father_code: "ENDOMETRIOSIS_SURGERY",
+            value1: "1189115",
+            description: "Elemento quirúrgico con alta eficacia en recuperación funcional"
+        },
+        {
+            name: "Resección de Tejido Endometriósico",
+            code: "ENDOMETRIOSIS_RESECTION",
+            type: "MEDICAL_PRODUCT",
+            father_code: "ENDOMETRIOSIS_SURGERY",
+            value1: "1248224",
+            description: "Dispositivo o tratamiento con fines terapéuticos específicos"
+        },
         { name: "Tratamiento de Infertilidad", code: "INFERTILITY_TREATMENT", type: "MEDICAL_PROCEDURE", father_code: "GYNECOLOGY_AND_OBSTETRICS" },
-        { name: "Fertilización In Vitro (FIV)", code: "IVF", type: "MEDICAL_PRODUCT", father_code: "INFERTILITY_TREATMENT" },
-        { name: "Inseminación Artificial", code: "ARTIFICIAL_INSEMINATION", type: "MEDICAL_PRODUCT", father_code: "INFERTILITY_TREATMENT" },
-        
+        {
+            name: "Fertilización In Vitro (FIV)",
+            code: "IVF",
+            type: "MEDICAL_PRODUCT",
+            father_code: "INFERTILITY_TREATMENT",
+            value1: "647302",
+            description: "Producto médico especializado utilizado en procedimientos avanzados"
+        },
+        {
+            name: "Inseminación Artificial",
+            code: "ARTIFICIAL_INSEMINATION",
+            type: "MEDICAL_PRODUCT",
+            father_code: "INFERTILITY_TREATMENT",
+            value1: "481888",
+            description: "Tratamiento innovador aprobado en medicina especializada"
+        },
+
         // ONCOLOGÍA MÉDICA
         { name: "Tratamiento del Cáncer de Mama", code: "BREAST_CANCER_TREATMENT", type: "MEDICAL_PROCEDURE", father_code: "MEDICAL_ONCOLOGY" },
-        { name: "Mastectomía Radical", code: "MASTECTOMY_RADICAL", type: "MEDICAL_PRODUCT", father_code: "BREAST_CANCER_TREATMENT" },
-        { name: "Cirugía Conservadora de Mama", code: "BREAST_CONSERVATIVE_SURGERY", type: "MEDICAL_PRODUCT", father_code: "BREAST_CANCER_TREATMENT" },
+        {
+            name: "Mastectomía Radical",
+            code: "MASTECTOMY_RADICAL",
+            type: "MEDICAL_PRODUCT",
+            father_code: "BREAST_CANCER_TREATMENT",
+            value1: "1693703",
+            description: "Producto médico especializado utilizado en procedimientos avanzados"
+        },
+        {
+            name: "Cirugía Conservadora de Mama",
+            code: "BREAST_CONSERVATIVE_SURGERY",
+            type: "MEDICAL_PRODUCT",
+            father_code: "BREAST_CANCER_TREATMENT",
+            value1: "1343277",
+            description: "Elemento quirúrgico con alta eficacia en recuperación funcional"
+        },
         { name: "Tratamiento del Cáncer de Pulmón", code: "LUNG_CANCER_TREATMENT", type: "MEDICAL_PROCEDURE", father_code: "MEDICAL_ONCOLOGY" },
-        { name: "Resección Pulmonar", code: "LUNG_RESECTION", type: "MEDICAL_PRODUCT", father_code: "LUNG_CANCER_TREATMENT" },
-        { name: "Terapia Dirigida para Cáncer de Pulmón", code: "LUNG_TARGETED_THERAPY", type: "MEDICAL_PRODUCT", father_code: "LUNG_CANCER_TREATMENT" },
+        {
+            name: "Resección Pulmonar",
+            code: "LUNG_RESECTION",
+            type: "MEDICAL_PRODUCT",
+            father_code: "LUNG_CANCER_TREATMENT",
+            value1: "1308304",
+            description: "Tratamiento innovador aprobado en medicina especializada"
+        },
+        {
+            name: "Terapia Dirigida para Cáncer de Pulmón",
+            code: "LUNG_TARGETED_THERAPY",
+            type: "MEDICAL_PRODUCT",
+            father_code: "LUNG_CANCER_TREATMENT",
+            value1: "914399",
+            description: "Intervención tecnológica aplicada en cirugía de precisión"
+        },
 
         // CARDIOLOGÍA
         { name: "Intervención Cardiovascular", code: "CARDIO_INTERVENTION", type: "MEDICAL_PROCEDURE", father_code: "CARDIOLOGY" },
-        { name: "Colocación de Stent Coronario", code: "CARDIO_STENT", type: "MEDICAL_PRODUCT", father_code: "CARDIO_INTERVENTION" },
-        { name: "Revascularización Miocárdica", code: "CARDIO_BYPASS", type: "MEDICAL_PRODUCT", father_code: "CARDIO_INTERVENTION" },
-        { name: "Cateterismo Diagnóstico", code: "CARDIO_CATH", type: "MEDICAL_PRODUCT", father_code: "CARDIO_INTERVENTION" },
+        {
+            name: "Colocación de Stent Coronario",
+            code: "CARDIO_STENT",
+            type: "MEDICAL_PRODUCT",
+            father_code: "CARDIO_INTERVENTION",
+            value1: "1585397",
+            description: "Dispositivo o tratamiento con fines terapéuticos específicos"
+        },
+        {
+            name: "Revascularización Miocárdica",
+            code: "CARDIO_BYPASS",
+            type: "MEDICAL_PRODUCT",
+            father_code: "CARDIO_INTERVENTION",
+            value1: "1004410",
+            description: "Intervención tecnológica aplicada en cirugía de precisión"
+        },
+        {
+            name: "Cateterismo Diagnóstico",
+            code: "CARDIO_CATH",
+            type: "MEDICAL_PRODUCT",
+            father_code: "CARDIO_INTERVENTION",
+            value1: "1041185",
+            description: "Producto médico especializado utilizado en procedimientos avanzados"
+        },
         { name: "Marcapasos", code: "PACEMAKER_IMPLANT", type: "MEDICAL_PROCEDURE", father_code: "CARDIOLOGY" },
-        { name: "Implantación de Marcapasos Unicameral", code: "PACEMAKER_SINGLE", type: "MEDICAL_PRODUCT", father_code: "PACEMAKER_IMPLANT" },
-        { name: "Implantación de Marcapasos Bicameral", code: "PACEMAKER_DUAL", type: "MEDICAL_PRODUCT", father_code: "PACEMAKER_IMPLANT" },
-        
+        {
+            name: "Implantación de Marcapasos Unicameral",
+            code: "PACEMAKER_SINGLE",
+            type: "MEDICAL_PRODUCT",
+            father_code: "PACEMAKER_IMPLANT",
+            value1: "1678870",
+            description: "Elemento quirúrgico con alta eficacia en recuperación funcional"
+        },
+        {
+            name: "Implantación de Marcapasos Bicameral",
+            code: "PACEMAKER_DUAL",
+            type: "MEDICAL_PRODUCT",
+            father_code: "PACEMAKER_IMPLANT",
+            value1: "1834566",
+            description: "Tratamiento innovador aprobado en medicina especializada"
+        },
+
         // GASTROENTEROLOGÍA
         { name: "Endoscopía Digestiva", code: "GASTRO_ENDOSCOPY", type: "MEDICAL_PROCEDURE", father_code: "GASTROENTEROLOGY" },
-        { name: "Colonoscopía", code: "GASTRO_COLONOSCOPY", type: "MEDICAL_PRODUCT", father_code: "GASTRO_ENDOSCOPY" },
-        { name: "Gastroscopia", code: "GASTRO_GASTROSCOPY", type: "MEDICAL_PRODUCT", father_code: "GASTRO_ENDOSCOPY" },
+        {
+            name: "Colonoscopía",
+            code: "GASTRO_COLONOSCOPY",
+            type: "MEDICAL_PRODUCT",
+            father_code: "GASTRO_ENDOSCOPY",
+            value1: "1645232",
+            description: "Producto médico especializado utilizado en procedimientos avanzados"
+        },
+        {
+            name: "Gastroscopia",
+            code: "GASTRO_GASTROSCOPY",
+            type: "MEDICAL_PRODUCT",
+            father_code: "GASTRO_ENDOSCOPY",
+            value1: "870973",
+            description: "Dispositivo o tratamiento con fines terapéuticos específicos"
+        },
         { name: "Tratamiento de Úlceras", code: "GASTRO_ULCER_TREATMENT", type: "MEDICAL_PROCEDURE", father_code: "GASTROENTEROLOGY" },
-        { name: "Terapia con Inhibidores de Bomba de Protones", code: "GASTRO_PPI_THERAPY", type: "MEDICAL_PRODUCT", father_code: "GASTRO_ULCER_TREATMENT" },
-        { name: "Erradicación de Helicobacter Pylori", code: "GASTRO_H_PYLORI", type: "MEDICAL_PRODUCT", father_code: "GASTRO_ULCER_TREATMENT" },
-        
+        {
+            name: "Terapia con Inhibidores de Bomba de Protones",
+            code: "GASTRO_PPI_THERAPY",
+            type: "MEDICAL_PRODUCT",
+            father_code: "GASTRO_ULCER_TREATMENT",
+            value1: "1462123",
+            description: "Intervención tecnológica aplicada en cirugía de precisión"
+        },
+        {
+            name: "Erradicación de Helicobacter Pylori",
+            code: "GASTRO_H_PYLORI",
+            type: "MEDICAL_PRODUCT",
+            father_code: "GASTRO_ULCER_TREATMENT",
+            value1: "1463294",
+            description: "Tratamiento innovador aprobado en medicina especializada"
+        },
+
         // TRAUMATOLOGÍA Y ORTOPEDIA
         { name: "Cirugía de Rodilla", code: "ORTHO_KNEE_SURGERY", type: "MEDICAL_PROCEDURE", father_code: "ORTHOPEDICS_AND_TRAUMATOLOGY" },
-        { name: "Reemplazo Total de Rodilla", code: "ORTHO_KNEE_REPLACEMENT", type: "MEDICAL_PRODUCT", father_code: "ORTHO_KNEE_SURGERY" },
-        { name: "Cirugía de Ligamento Cruzado Anterior", code: "ORTHO_ACL_SURGERY", type: "MEDICAL_PRODUCT", father_code: "ORTHO_KNEE_SURGERY" },
+        {
+            name: "Reemplazo Total de Rodilla",
+            code: "ORTHO_KNEE_REPLACEMENT",
+            type: "MEDICAL_PRODUCT",
+            father_code: "ORTHO_KNEE_SURGERY",
+            value1: "1612106",
+            description: "Producto médico especializado utilizado en procedimientos avanzados"
+        },
+        {
+            name: "Cirugía de Ligamento Cruzado Anterior",
+            code: "ORTHO_ACL_SURGERY",
+            type: "MEDICAL_PRODUCT",
+            father_code: "ORTHO_KNEE_SURGERY",
+            value1: "1729026",
+            description: "Elemento quirúrgico con alta eficacia en recuperación funcional"
+        },
         { name: "Cirugía de Hombro", code: "ORTHO_SHOULDER_SURGERY", type: "MEDICAL_PROCEDURE", father_code: "ORTHOPEDICS_AND_TRAUMATOLOGY" },
-        { name: "Reparación de Manguito Rotador", code: "ORTHO_ROTATOR_CUFF", type: "MEDICAL_PRODUCT", father_code: "ORTHO_SHOULDER_SURGERY" },
-        { name: "Cirugía de Luxación de Hombro", code: "ORTHO_SHOULDER_DISLOCATION", type: "MEDICAL_PRODUCT", father_code: "ORTHO_SHOULDER_SURGERY" }
+        {
+            name: "Reparación de Manguito Rotador",
+            code: "ORTHO_ROTATOR_CUFF",
+            type: "MEDICAL_PRODUCT",
+            father_code: "ORTHO_SHOULDER_SURGERY",
+            value1: "1300533",
+            description: "Dispositivo o tratamiento con fines terapéuticos específicos"
+        },
+        {
+            name: "Cirugía de Luxación de Hombro",
+            code: "ORTHO_SHOULDER_DISLOCATION",
+            type: "MEDICAL_PRODUCT",
+            father_code: "ORTHO_SHOULDER_SURGERY",
+            value1: "1611914",
+            description: "Tratamiento innovador aprobado en medicina especializada"
+        }
+
     ];
     
     await udcRepository.upsert(ProceduresAndProducts, ["code"]);
@@ -325,6 +542,8 @@ async function runSeed() {
         { name: "Imágenes y Diagnóstico", code: "IMAGING_DIAGNOSIS", type: "ASSESSMENT" },
         { name: "Medicamentos Postoperatorios", code: "POSTOP_MEDICATIONS", type: "ASSESSMENT" },
         { name: "Tratamiento Médico Postoperatorio", code: "POSTOP_TREATMENT", type: "ASSESSMENT" },
+        { name: "Tratamiento Médico Postoperatorio", code: "POSTOP_TREATMENT", type: "ASSESSMENT" },
+        { name: "General", code: "GENERAL", type: "ASSESSMENT" },
       
 
         // Valoraciones Preoperatorias
@@ -363,7 +582,13 @@ async function runSeed() {
         // Tratamiento Médico Postoperatorio
         { name: "Seguimiento postquirúrgico con el cirujano", code: "POSTOP_SURGEON_FOLLOWUP", type: "ASSESSMENT_DETAIL", father_code: "POSTOP_TREATMENT" },
         { name: "Rehabilitación postoperatoria", code: "POSTOP_REHAB", type: "ASSESSMENT_DETAIL", father_code: "POSTOP_TREATMENT" },
-        { name: "Fisioterapia para recuperación de movilidad", code: "POSTOP_PHYSIOTHERAPY", type: "ASSESSMENT_DETAIL", father_code: "POSTOP_TREATMENT" }
+        { name: "Fisioterapia para recuperación de movilidad", code: "POSTOP_PHYSIOTHERAPY", type: "ASSESSMENT_DETAIL", father_code: "POSTOP_TREATMENT" },
+        { name: "Medicamentos post operatorios", code: "POSTOP_MEDICAL", type: "ASSESSMENT_DETAIL", father_code: "POSTOP_TREATMENT" },
+        { name: "Cita de Valoracion post operatoria", code: "POSTOP_APPOINTMENT", type: "ASSESSMENT_DETAIL", father_code: "POSTOP_TREATMENT" },
+
+        //General
+        { name: "Incluye todos los gastos médicos", code: "MEDICAL_SPENDING", type: "ASSESSMENT_DETAIL", father_code: "GENERAL" },
+
     ];
     
     await udcRepository.upsert(Assessments, ["code"]);

@@ -26,9 +26,6 @@ export class Package {
   @JoinColumn({ name: "product", referencedColumnName: "code" })
   product: UnitDynamicCentral | null;
 
-  @Column({ type: "decimal", scale: 2, nullable: false })
-  reference_price: number;
-
   @Column({ type: "decimal", scale: 2, nullable: true, default: null })
   discount: number | null;
 
@@ -47,9 +44,6 @@ export class Package {
  //This fill the list of assesments to check the list of "services" in packages
   @Column({ type: "json", nullable: true })
   services_offer: any|null;
-
-  @Column({ type: "varchar", length: 500, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
-  description: string | null;
 
   @Column({ type: "tinyint", default: 0 })
   is_king: boolean;
