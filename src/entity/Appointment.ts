@@ -33,6 +33,9 @@ export class Appointment {
   @Column({ type: "time" })
   appointment_hour: string;
 
+  @Column({ name: "reservation_type", default: "PRE_RESERVATION" })
+  reservation_type_code: string;
+
   //RESERVATION_TYPE
   @ManyToOne(() => UnitDynamicCentral)
   @JoinColumn({ name: "reservation_type", referencedColumnName: "code" })
@@ -58,10 +61,13 @@ export class Appointment {
   @Column({ type: "timestamp", nullable: true, default: () => "CURRENT_TIMESTAMP" })
   application_date: Date | null;
 
+  @Column({ name: "payment_status", default: "PENDING" })
+  payment_status_code: string;
+
   //PAYMENT_STATUS
   @ManyToOne(() => UnitDynamicCentral)
   @JoinColumn({ name: "payment_status", referencedColumnName: "code" })
-  payment_status: UnitDynamicCentral | null;
+  payment_status: UnitDynamicCentral;
 
   //PAYMENT_METHOD
   //This can be in different table for add information when the user pays with different payment methods

@@ -71,7 +71,73 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n  \"email\": \"mjimenez@example.com\",\r\n  \"user_name\": null,\r\n  \"password\": \"Vitatest25*\"\r\n}\r\n\r\n",
+											"raw": "{\r\n  \"email\": \"lfernandez@example.com\",\r\n  \"user_name\": null,\r\n  \"password\": \"Vitatest25*\"\r\n}\r\n\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/auth/login",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Login User - Finance Entity",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "x-api-key",
+												"value": "{{secret_api_key}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"email\": \"fabian7593+test1@gmail.com\",\r\n  \"password\": \"Cbiblica77@gmail.com\"\r\n}\r\n\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/auth/login",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Login User - Legal Representative",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "x-api-key",
+												"value": "{{secret_api_key}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"email\": \"gulate@example.com\",\r\n  \"password\": \"Vitatest25*\"\r\n}\r\n\r\n",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -115,39 +181,6 @@
 											"path": [
 												"auth",
 												"logout"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "Login User - Finance Entity",
-									"request": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "x-api-key",
-												"value": "{{secret_api_key}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\r\n  \"email\": \"fabian7593+test1@gmail.com\",\r\n  \"password\": \"Cbiblica77@gmail.com\"\r\n}\r\n\r\n",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{host}}/auth/login",
-											"host": [
-												"{{host}}"
-											],
-											"path": [
-												"auth",
-												"login"
 											]
 										}
 									},
@@ -739,7 +772,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/udc/get_all?type=MEDICAL_PRODUCT&page=2",
+									"raw": "{{host}}/udc/get_all?type=APPOINTMENT_RESULT",
 									"host": [
 										"{{host}}"
 									],
@@ -769,17 +802,13 @@
 											"disabled": true
 										},
 										{
-											"key": "type",
-											"value": "MEDICAL_PRODUCT"
-										},
-										{
 											"key": "size",
 											"value": "5",
 											"disabled": true
 										},
 										{
-											"key": "page",
-											"value": "2"
+											"key": "type",
+											"value": "APPOINTMENT_RESULT"
 										}
 									]
 								}
@@ -1553,7 +1582,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/supplier/get?id=7",
+									"raw": "{{host}}/supplier/get?id=1",
 									"host": [
 										"{{host}}"
 									],
@@ -1564,7 +1593,7 @@
 									"query": [
 										{
 											"key": "id",
-											"value": "7"
+											"value": "1"
 										}
 									]
 								}
@@ -1617,7 +1646,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/supplier/get_all_main?size=1&page=1",
+									"raw": "{{host}}/supplier/get_all_main",
 									"host": [
 										"{{host}}"
 									],
@@ -1633,7 +1662,7 @@
 										},
 										{
 											"key": "procedure_code",
-											"value": "MYOPIA_SURGERY",
+											"value": "REFRACTIVE_SURGERY",
 											"disabled": true
 										},
 										{
@@ -1658,11 +1687,13 @@
 										},
 										{
 											"key": "size",
-											"value": "1"
+											"value": "1",
+											"disabled": true
 										},
 										{
 											"key": "page",
-											"value": "1"
+											"value": "1",
+											"disabled": true
 										}
 									]
 								}
@@ -2099,7 +2130,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"procedure_by_specialty_id\": 14,\n  \"product_code\": \"CARDIO_CATH\",\n  \"reference_price\": 120000\n // \"discount\": 0,\n  /*\"services_offer\": \"  {\n    \"ASSESSMENT_DETAILS\": [\n        \"GENERAL_ANESTHESIA\",\n        \"REGIONAL_ANESTHESIA\",\n        \"POSTOP_PAIN_CONTROL\",\n        \"POSTOP_ULTRASOUND\",\n        \"POSTOP_CT\",\n        \"POSTOP_PHYSIOTHERAPY\"\n    ]\n  }\",*/\n  //\"description\": \"Paquete completo de diagnóstico cardiológico\"\n}",
+									"raw": "{\n  \"procedure_by_specialty_id\": 14,\n  \"product_code\": \"CARDIO_CATH\"\n // \"discount\": 0,\n  /*\"services_offer\": \"  {\n    \"ASSESSMENT_DETAILS\": [\n        \"GENERAL_ANESTHESIA\",\n        \"REGIONAL_ANESTHESIA\",\n        \"POSTOP_PAIN_CONTROL\",\n        \"POSTOP_ULTRASOUND\",\n        \"POSTOP_CT\",\n        \"POSTOP_PHYSIOTHERAPY\"\n    ]\n  }\",*/\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2137,7 +2168,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"procedure_id\": 14,\n  \"product_code\": \"CARDIO_CATH\",\n  \"reference_price\": 120000,\n  \"discount\": 0\n  /*\"services_offer\": \"  {\n    \"ASSESSMENT_DETAILS\": [\n        \"GENERAL_ANESTHESIA\",\n        \"REGIONAL_ANESTHESIA\",\n        \"POSTOP_PAIN_CONTROL\",\n        \"POSTOP_ULTRASOUND\",\n        \"POSTOP_CT\",\n        \"POSTOP_PHYSIOTHERAPY\"\n    ]\n  }\",*/\n  //\"description\": \"Paquete completo de diagnóstico cardiológico\"\n}",
+									"raw": "{\n  \"procedure_id\": 14,\n  \"product_code\": \"CARDIO_CATH\",\n  \"discount\": 0\n  /*\"services_offer\": \"  {\n    \"ASSESSMENT_DETAILS\": [\n        \"GENERAL_ANESTHESIA\",\n        \"REGIONAL_ANESTHESIA\",\n        \"POSTOP_PAIN_CONTROL\",\n        \"POSTOP_ULTRASOUND\",\n        \"POSTOP_CT\",\n        \"POSTOP_PHYSIOTHERAPY\"\n    ]\n  }\",*/\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -3422,7 +3453,7 @@
 							"response": []
 						},
 						{
-							"name": "Create Appointment Copy",
+							"name": "Create Appointment Example",
 							"request": {
 								"method": "POST",
 								"header": [
@@ -3439,7 +3470,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"customer_id\": \"f1635823-7d9a-4df9-bd1e-ad8bd985de0b\",\n  \"is_for_external_user\": false, //default false\n  //\"phone_number_external_user\":\"+506 8346-1166\"\n  \"user_description\": \"Consulta general preventiva.\",\n  \"supplier_id\": 1,\n  \"appointment_date\": \"2025-04-14\",\n  \"appointment_hour\": \"09:30:00\",\n  \"procedure_id\": 1,\n  \"package_id\": 1,\n  \"payment_status_code\": \"PENDING\",\n  \"reservation_type_code\": \"RESERVATION\"\n}",
+									"raw": "{\n  \"customer_id\": \"f1635823-7d9a-4df9-bd1e-ad8bd985de0b\",\n  //\"is_for_external_user\": false, //default false\n  //\"phone_number_external_user\":\"+506 8346-1166\"\n  \"user_description\": \"Consulta gOftalmologica\",\n  \"supplier_id\": 1,\n  \"appointment_date\": \"2025-04-14\",\n  \"appointment_hour\": \"09:30:00\",\n  //\"procedure_id\": 1,\n  \"package_id\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -3504,6 +3535,50 @@
 							"response": []
 						},
 						{
+							"name": "Update Appointment Example Cancel",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"appointment_status_code\": \"CANCEL\",\n  \"payment_status_code\": \"NOT_PAID\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/appointment/edit?id=2",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"appointment",
+										"edit"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Get Appointment by ID",
 							"request": {
 								"method": "GET",
@@ -3555,19 +3630,13 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/appointment/get_all?customer_id=728237d9-c16d-4ca8-bbbe-240a697fb3c3",
+									"raw": "{{host}}/appointment/get_all",
 									"host": [
 										"{{host}}"
 									],
 									"path": [
 										"appointment",
 										"get_all"
-									],
-									"query": [
-										{
-											"key": "customer_id",
-											"value": "728237d9-c16d-4ca8-bbbe-240a697fb3c3"
-										}
 									]
 								}
 							},
@@ -3590,7 +3659,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/appointment/delete?id=1",
+									"raw": "{{host}}/appointment/delete?id=3",
 									"host": [
 										"{{host}}"
 									],
@@ -3601,7 +3670,7 @@
 									"query": [
 										{
 											"key": "id",
-											"value": "1"
+											"value": "3"
 										}
 									]
 								}

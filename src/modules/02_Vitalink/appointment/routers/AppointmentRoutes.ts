@@ -16,6 +16,7 @@ class AppointmentRoutes extends GenericRoutes {
             "reservation_type",
             "appointment_status",
             "supplier",
+            "supplier.legal_representative",
             "package",
             "package.product",
             "package.procedure",
@@ -35,6 +36,10 @@ class AppointmentRoutes extends GenericRoutes {
                                     .isValidateRole("APPOINTMENT")
                                     .isLogicalDelete()
                                     .setFilters(this.filters)
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["CUSTOMER", "customer.id"],
+                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().getById(requestHandler);
@@ -42,24 +47,17 @@ class AppointmentRoutes extends GenericRoutes {
         
         this.router.get(`${this.getRouterName()}/get_all`, async (req: Request, res: Response) => {
 
-            const customer_id: string | null = getUrlParam("customer_id", req) || null;
-            
-            if (customer_id != "") {
-                this.filters.where = { ...this.filters.where, customer:{ id: customer_id}  };
-            }
-
-            const allow_role_list: Array<string> = [
-                "CUSTOMER"
-            ];
-        
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new AppointmentDTO(req))
                                     .setMethod("getAppointments")
                                     .isValidateRole("APPOINTMENT")
                                     .isLogicalDelete()
-                                    //.setAllowRoleList(allow_role_list)
                                     .setFilters(this.filters)
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["CUSTOMER", "customer.id"],
+                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().getAll(requestHandler);
@@ -92,6 +90,10 @@ class AppointmentRoutes extends GenericRoutes {
                                     .setAdapter(new AppointmentDTO(req))
                                     .setMethod("updateAppointment")
                                     .isValidateRole("APPOINTMENT")
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["CUSTOMER", "customer.id"],
+                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().update(requestHandler);
@@ -104,6 +106,9 @@ class AppointmentRoutes extends GenericRoutes {
                                     .setMethod("deleteAppointment")
                                     .isValidateRole("APPOINTMENT")
                                     .isLogicalDelete()
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().delete(requestHandler);

@@ -225,18 +225,33 @@
       ]
     },
     {
-      "id": 2,
-      "code": "LEGAL_REPRESENTATIVE",
-      "name": "Representante Legal",
+      "id": 3,
+      "code": "CUSTOMER",
+      "name": "Cliente",
       "is_public": false,
-      "description": "Analyst role with access to analytical tools and reporting functionalities.",
+      "description": "Customer role with access to customer-specific functionalities.",
       "modules": [
         {
           "name": "DOCUMENT",
           "function_list": [
+            "GET_BY_ID",
+            "GET_ALL",
+            "DELETE",
+            "CREATE"
+          ]
+        },
+        {
+          "name": "SUPPLIER",
+          "function_list": [ 
+            "GET_BY_ID",
+            "GET_ALL"
+          ]
+        },
+        {
+          "name": "APPOINTMENT",
+          "function_list": [ 
             "CREATE",
             "UPDATE",
-            "DELETE",
             "GET_BY_ID",
             "GET_ALL"
           ]
@@ -250,19 +265,20 @@
       ]
     },
     {
-      "id": 3,
-      "code": "CUSTOMER",
-      "name": "Cliente",
+      "id": 2,
+      "code": "LEGAL_REPRESENTATIVE",
+      "name": "Representante Legal",
       "is_public": true,
-      "description": "Customer role with access to customer-specific functionalities.",
+      "description": "Analyst role with access to analytical tools and reporting functionalities.",
       "modules": [
         {
           "name": "DOCUMENT",
           "function_list": [
-            "GET_BY_ID",
-            "GET_ALL",
+            "CREATE",
+            "UPDATE",
             "DELETE",
-            "CREATE"
+            "GET_BY_ID",
+            "GET_ALL"
           ]
         },
         {

@@ -178,6 +178,9 @@ export default class SupplierController extends GenericController {
       supplier.date_availability = next?.date_availability ?? null;
       supplier.hour_availability = next?.hour_availability ?? null;
       supplier.location_number = locations.length;
+
+
+      supplier.services_names = services.map(s => s.medical_specialty.name);
   
       return true;
     }
@@ -189,7 +192,9 @@ export default class SupplierController extends GenericController {
       return specialties.filter(s => !specialty_code || s.medical_specialty.code === specialty_code).map(s => {
         const procedures = (proceduresBySpecialty.get(s.id) || []).filter(p => !procedure_code || p.procedure.code === procedure_code).map(p => {
           const packages = (packagesByProcedure.get(p.id) || []).filter(pkg => {
+
             const price = Number(pkg.product?.value1 || 0);
+            
             return price >= minPrice && price <= maxPrice;
           }).map(pkg => 
             (
@@ -401,7 +406,7 @@ export default class SupplierController extends GenericController {
                   id: proc.id,
                   procedure: proc.procedure,
                   packages: packages.map((pkg: { reference_price: any; discount: any; id: any; product: any; services_offer: any; description: any; is_king: any; }) => {
-                    const price = Number(pkg.reference_price);
+                    const price = Number(pkg.product?.value1);
                     const discount = Number(pkg.discount || 0);
                     return {
                       id: pkg.id,

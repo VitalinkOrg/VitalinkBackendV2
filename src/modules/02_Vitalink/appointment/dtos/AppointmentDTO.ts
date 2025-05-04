@@ -21,7 +21,7 @@ export default class AppointmentDTO implements IAdapterFromBody {
         entity.procedure = this.req.body.procedure_id;
         entity.package = this.req.body.package_id;
         entity.application_date = this.req.body.application_date;
-        entity.payment_status = this.req.body.payment_status_code;
+        entity.payment_status_code = this.req.body.payment_status_code;
         entity.payment_method = this.req.body.payment_method_code;
         entity.appointment_result = this.req.body.appointment_result_code;
         entity.user_description = this.req.body.user_description;
@@ -51,8 +51,6 @@ export default class AppointmentDTO implements IAdapterFromBody {
 
     // GET
     entityToResponse(entity: any): any {
-
-        console.log("entityToResponse", entity.package?.procedure);
 
         return {
             id: entity.id,

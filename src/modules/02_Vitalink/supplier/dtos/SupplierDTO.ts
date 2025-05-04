@@ -111,6 +111,7 @@ export default class SupplierDTO implements IAdapterFromBody {
             services: entity.services,
             availabilities: entity.availabilities,
             locations: entity.locations,
+            services_names: entity.services_names,
         };
     }
 
@@ -174,6 +175,7 @@ export default class SupplierDTO implements IAdapterFromBody {
             services: entity.services,
             availabilities: entity.availabilities,
             locations: entity.locations,
+            services_names: entity.services_names,
         };
     }
 
