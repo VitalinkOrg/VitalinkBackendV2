@@ -20,7 +20,6 @@ class AppointmentRoutes extends GenericRoutes {
             "package",
             "package.product",
             "package.procedure",
-            "package.procedure.procedure",
             "payment_status",
             "payment_method",
             "appointment_result"];

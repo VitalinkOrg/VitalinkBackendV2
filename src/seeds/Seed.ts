@@ -17,7 +17,6 @@ import { hashPassword } from '@TenshiJS/utils/encryptionUtils';
 import { UnitDynamicCentral } from '@TenshiJS/entity/UnitDynamicCentral';
 import { Supplier } from '@index/entity/Supplier';
 import { SpecialtyBySupplier } from '@index/entity/SpecialtyBySupplier';
-import { ProcedureBySpecialty } from '@index/entity/ProcedureBySpecialty';
 import { Package } from '@index/entity/Package';
 import { PreRegisterUser } from '@index/entity/PreRegisterUser';
 import { CertificationsExperience } from '@index/entity/CertificationsExperience';
@@ -67,7 +66,6 @@ async function runSeed() {
           UnitDynamicCentral,
           Supplier,
           SpecialtyBySupplier,
-          ProcedureBySpecialty,
           Package,
           PreRegisterUser,
           CertificationsExperience,
@@ -717,193 +715,206 @@ await specialtyRepository.upsert(specialties, ["id"]);
 
 
 
-const procedureRepository = dataSource.getRepository(ProcedureBySpecialty);
-
-// Asignamos procedimientos a cada especialidad
-const procedures = [
-    // Oftalmología
-    { id: 1, specialty: { id: 2 }, procedure: { code: "REFRACTIVE_SURGERY" } }, // Cirugía de Miopía
-    { id: 2, specialty: { id: 2 }, procedure: { code: "CATARACT_SURGERY" } }, // Cirugía de Cataratas
-
-    // Neurología
-    { id: 4, specialty: { id: 3 }, procedure: { code: "EPILEPSY_TREATMENT" } }, // Tratamiento de Epilepsia
-    { id: 5, specialty: { id: 3 }, procedure: { code: "PARKINSON_TREATMENT" } }, // Tratamiento de Parkinson
-
-    // Cardiología
-    { id: 6, specialty: { id: 1 }, procedure: { code: "CARDIO_INTERVENTION" } }, // Intervención Cardiovascular
-    { id: 7, specialty: { id: 1 }, procedure: { code: "PACEMAKER_IMPLANT" } }, // Marcapasos
-
-    // Gastroenterología
-    { id: 10, specialty: { id: 7 }, procedure: { code: "GASTRO_ENDOSCOPY" } }, // Endoscopía Digestiva
-    { id: 11, specialty: { id: 7 }, procedure: { code: "GASTRO_ULCER_TREATMENT" } }, // Tratamiento de Úlceras
-
-    // Ortopedia
-    { id: 12, specialty: { id: 9 }, procedure: { code: "ORTHO_KNEE_SURGERY" } }, // Cirugía de Rodilla
-    { id: 13, specialty: { id: 9 }, procedure: { code: "ORTHO_SHOULDER_SURGERY" } }, // Cirugía de Hombro*/
-
-     // Oftalmología
-     { id: 14, specialty: { id: 10 }, procedure: { code: "CATARACT_SURGERY" } }, // MONOFOCAL
-     { id: 15, specialty: { id: 10 }, procedure: { code: "REFRACTIVE_SURGERY" } }, //MULTIFOCAL
-];
-
-await procedureRepository.upsert(procedures, ["id"]);
-
-
-
-
 const packageRepository = dataSource.getRepository(Package);
 
 const packages = [
-    {
-        id: 1,
-        procedure: { id: 1 }, // Cirugía de Miopía
-        product: { code: "REFRACTIVE_PRK" },
-        discount: 10.00,
-        services_offer: { "ASSESSMENT_DETAILS": ["GENERAL_ANESTHESIA", "POSTOP_ULTRASOUND", "POSTOP_PHYSIOTHERAPY"] },
-    },
-    {
-        id: 2,
-        procedure: { id: 1 }, 
-        product: { code: "REFRACTIVE_LASIK" },
-        discount: 5.00,
-        services_offer: { "ASSESSMENT_DETAILS": ["GENERAL_ANESTHESIA", "POSTOP_CT", "POSTOP_PAIN_CONTROL"] },
-    },
-    {
-        id: 3,
-        procedure: { id: 1 }, 
-        product: { code: "REFRACTIVE_LASIK_GUIDED" },
-        discount: 8.00,
-        services_offer: { "ASSESSMENT_DETAILS": ["REGIONAL_ANESTHESIA", "POSTOP_XRAY", "POSTOP_SURGEON_FOLLOWUP"] },
-    },
-    {
-        id: 4,
-        procedure: { id: 6 }, // Intervención Cardiovascular
-        product: { code: "CARDIO_STENT" },
-        discount: 7.50,
-        services_offer: { "ASSESSMENT_DETAILS": ["GENERAL_ANESTHESIA", "SURGICAL_RISK_ASSESSMENT", "POSTOP_PHYSIOTHERAPY"] }
-    },
-    {
-        id: 5,
-        procedure: { id: 6 },
-        product: { code: "CARDIO_BYPASS" },
-        discount: 15.00,
-        services_offer: { "ASSESSMENT_DETAILS": ["GENERAL_ANESTHESIA", "POSTOP_CT", "POSTOP_PAIN_CONTROL"] },
-    },
-    {
-        id: 6,
-        procedure: { id: 10 }, // Endoscopía Digestiva
-        product: { code: "GASTRO_COLONOSCOPY" },
-        discount: 5.00,
-        services_offer: { "ASSESSMENT_DETAILS": ["PREOPERATIVE_ASSESSMENT", "POSTOP_ULTRASOUND"] },
-    },
-    {
-        id: 7,
-        procedure: { id: 10 },
-        product: { code: "GASTRO_GASTROSCOPY" },
-        discount: 4.00,
-        services_offer: { "ASSESSMENT_DETAILS": ["PREOPERATIVE_ASSESSMENT", "POSTOP_MEDICATIONS"] },
-    },
-    {
-        id: 8,
-        procedure: { id: 12 }, // Cirugía de Rodilla
-        product: { code: "ORTHO_KNEE_REPLACEMENT" },
-        discount: 12.00,
-        services_offer: { "ASSESSMENT_DETAILS": ["GENERAL_ANESTHESIA", "POSTOP_REHAB", "POSTOP_PHYSIOTHERAPY"] },
-    },
-    {
-        id: 9,
-        procedure: { id: 12 },
-        product: { code: "ORTHO_ACL_SURGERY" },
-        discount: 10.00,
-        services_offer: { "ASSESSMENT_DETAILS": ["PREOPERATIVE_ASSESSMENT", "POSTOP_REHAB"] },
-    },
-    {
-        id: 10,
-        procedure: { id: 13 }, // Cirugía de Hombro
-        product: { code: "ORTHO_ROTATOR_CUFF" },
-        discount: 8.00,
-        services_offer: { "ASSESSMENT_DETAILS": ["GENERAL_ANESTHESIA", "POSTOP_PHYSIOTHERAPY"] },
-    },
-    {
-        id: 11,
-        procedure: { id: 13 },
-        product: { code: "ORTHO_SHOULDER_DISLOCATION" },
-        discount: 9.00,
-        services_offer: { "ASSESSMENT_DETAILS": ["GENERAL_ANESTHESIA", "POSTOP_SURGEON_FOLLOWUP"] },
-    },
-    {
-        id: 12,
-        procedure: { id: 4 }, // Tratamiento de Epilepsia
-        product: { code: "VAGUS_NERVE_STIMULATION" },
-        discount: 10.00,
-        services_offer: { "ASSESSMENT_DETAILS": ["PREOPERATIVE_ASSESSMENT", "POSTOP_CT", "POSTOP_MEDICATIONS"] },
-    },
-    {
-        id: 13,
-        procedure: { id: 4 },
-        product: { code: "EPILEPSY_SURGERY" },
-        discount: 12.00,
-        services_offer: { "ASSESSMENT_DETAILS": ["GENERAL_ANESTHESIA", "POSTOP_REHAB", "POSTOP_MEDICATIONS"] },
-    },
-    {
-        id: 14,
-        procedure: { id: 5 }, // Tratamiento de Parkinson
-        product: { code: "DEEP_BRAIN_STIMULATION" },
-        discount: 15.00,
-        services_offer: { "ASSESSMENT_DETAILS": ["GENERAL_ANESTHESIA", "POSTOP_CT", "POSTOP_PHYSIOTHERAPY"] },
-    },
-    {
-        id: 15,
-        procedure: { id: 5 },
-        product: { code: "DOPAMINE_THERAPY" },
-        discount: 5.00,
-        services_offer: { "ASSESSMENT_DETAILS": ["PREOPERATIVE_ASSESSMENT", "POSTOP_MEDICATIONS"] },
-    },
-    {
-        id: 16,
-        procedure: { id: 14 },
-        product: { code: "LIO_MONOFOCAL" },
-        discount: 5,
-        services_offer: { "ASSESSMENT_DETAILS": ["MEDICAL_SPENDING", "POSTOP_APPOINTMENT", "POSTOP_MEDICAL"] },
-    },
-    {
-      id: 17,
-      procedure: { id: 14 },
-      product: { code: "LIO_MULTIFOCAL" },
-      discount: 0,
-      services_offer: { "ASSESSMENT_DETAILS": ["MEDICAL_SPENDING", "POSTOP_APPOINTMENT", "POSTOP_MEDICAL"] },
-    },
-    {
-      id: 18,
-      procedure: { id: 15 },
-      product: { code: "REFRACTIVE_PRK" },
-      discount: 0,
-      services_offer: { "ASSESSMENT_DETAILS": ["MEDICAL_SPENDING", "POSTOP_APPOINTMENT", "POSTOP_MEDICAL"] },
-    },
-    {
-      id: 19,
-      procedure: { id: 15 },
-      product: { code: "REFRACTIVE_LASIK" },
-      discount: 0,
-      services_offer: { "ASSESSMENT_DETAILS": ["MEDICAL_SPENDING", "POSTOP_APPOINTMENT", "POSTOP_MEDICAL"] },
-    },
-    {
-      id: 20,
-      procedure: { id: 15 },
-      product: { code: "REFRACTIVE_LASIK_GUIDED" },
-      discount: 0,
-      services_offer: { },
-    },
-    {
-      id: 21,
-      procedure: { id: 15 },
-      product: { code: "REFRACTIVE_FEMOTOLASIK" },
-      discount: 0,
-      services_offer: { "ASSESSMENT_DETAILS": [] },
-    },
-];
+  {
+    id: 1,
+    specialty: { id: 2 },
+    procedure: { code: "REFRACTIVE_SURGERY" },
+    product: { code: "REFRACTIVE_PRK" },
+    discount: 10,
+    postoperative_assessments: null,
+    services_offer: { ASSESSMENT_DETAILS: ["GENERAL_ANESTHESIA", "POSTOP_ULTRASOUND", "POSTOP_PHYSIOTHERAPY"] },
+    is_king: false,
+    observations: "",
+    is_deleted: false,
+  },
+  {
+    id: 2,
+    specialty: { id: 2 },
+    procedure: { code: "REFRACTIVE_SURGERY" },
+    product: { code: "REFRACTIVE_LASIK" },
+    discount: 5,
+    postoperative_assessments: null,
+    services_offer: { ASSESSMENT_DETAILS: ["GENERAL_ANESTHESIA", "POSTOP_CT", "POSTOP_PAIN_CONTROL"] },
+    is_king: false,
+    observations: "",
+    is_deleted: false,
+  },
+  {
+    id: 3,
+    specialty: { id: 2 },
+    procedure: { code: "REFRACTIVE_SURGERY" },
+    product: { code: "REFRACTIVE_LASIK_GUIDED" },
+    discount: 8,
+    postoperative_assessments: null,
+    services_offer: { ASSESSMENT_DETAILS: ["REGIONAL_ANESTHESIA", "POSTOP_XRAY", "POSTOP_SURGEON_FOLLOWUP"] },
+    is_king: false,
+    observations: "",
+    is_deleted: false,
+  },
+  {
+    id: 4,
+    specialty: { id: 1 },
+    procedure: { code: "CARDIO_INTERVENTION" },
+    product: { code: "CARDIO_STENT" },
+    discount: 7.5,
+    postoperative_assessments: null,
+    services_offer: { ASSESSMENT_DETAILS: ["GENERAL_ANESTHESIA", "SURGICAL_RISK_ASSESSMENT", "POSTOP_PHYSIOTHERAPY"] },
+    is_king: false,
+    observations: "",
+    is_deleted: false,
+  },
+  {
+    id: 5,
+    specialty: { id: 1 },
+    procedure: { code: "CARDIO_INTERVENTION" },
+    product: { code: "CARDIO_BYPASS" },
+    discount: 15,
+    postoperative_assessments: null,
+    services_offer: { ASSESSMENT_DETAILS: ["GENERAL_ANESTHESIA", "POSTOP_CT", "POSTOP_PAIN_CONTROL"] },
+    is_king: false,
+    observations: "",
+    is_deleted: false,
+  },
+  {
+    id: 6,
+    specialty: { id: 7 },
+    procedure: { code: "GASTRO_ENDOSCOPY" },
+    product: { code: "GASTRO_COLONOSCOPY" },
+    discount: 5,
+    postoperative_assessments: null,
+    services_offer: { ASSESSMENT_DETAILS: ["PREOPERATIVE_ASSESSMENT", "POSTOP_ULTRASOUND"] },
+    is_king: false,
+    observations: "",
+    is_deleted: false,
+  },
+  {
+    id: 7,
+    specialty: { id: 7 },
+    procedure: { code: "GASTRO_ENDOSCOPY" },
+    product: { code: "GASTRO_GASTROSCOPY" },
+    discount: 4,
+    postoperative_assessments: null,
+    services_offer: { ASSESSMENT_DETAILS: ["PREOPERATIVE_ASSESSMENT", "POSTOP_MEDICATIONS"] },
+    is_king: false,
+    observations: "",
+    is_deleted: false,
+  },
+  {
+    id: 8,
+    specialty: { id: 9 },
+    procedure: { code: "ORTHO_KNEE_SURGERY" },
+    product: { code: "ORTHO_KNEE_REPLACEMENT" },
+    discount: 12,
+    postoperative_assessments: null,
+    services_offer: { ASSESSMENT_DETAILS: ["GENERAL_ANESTHESIA", "POSTOP_REHAB", "POSTOP_PHYSIOTHERAPY"] },
+    is_king: false,
+    observations: "",
+    is_deleted: false,
+  },
+  {
+    id: 9,
+    specialty: { id: 9 },
+    procedure: { code: "ORTHO_KNEE_SURGERY" },
+    product: { code: "ORTHO_ACL_SURGERY" },
+    discount: 10,
+    postoperative_assessments: null,
+    services_offer: { ASSESSMENT_DETAILS: ["PREOPERATIVE_ASSESSMENT", "POSTOP_REHAB"] },
+    is_king: false,
+    observations: "",
+    is_deleted: false,
+  },
+  {
+    id: 10,
+    specialty: { id: 9 },
+    procedure: { code: "ORTHO_SHOULDER_SURGERY" },
+    product: { code: "ORTHO_ROTATOR_CUFF" },
+    discount: 8,
+    postoperative_assessments: null,
+    services_offer: { ASSESSMENT_DETAILS: ["GENERAL_ANESTHESIA", "POSTOP_PHYSIOTHERAPY"] },
+    is_king: false,
+    observations: "",
+    is_deleted: false,
+  },
+  {
+    id: 11,
+    specialty: { id: 9 },
+    procedure: { code: "ORTHO_SHOULDER_SURGERY" },
+    product: { code: "ORTHO_SHOULDER_DISLOCATION" },
+    discount: 9,
+    postoperative_assessments: null,
+    services_offer: { ASSESSMENT_DETAILS: ["GENERAL_ANESTHESIA", "POSTOP_SURGEON_FOLLOWUP"] },
+    is_king: false,
+    observations: "",
+    is_deleted: false,
+  },
+  {
+    id: 15,
+    specialty: { id: 10 },
+    procedure: { code: "CATARACT_SURGERY" },
+    product: { code: "LIO_MONOFOCAL" },
+    discount: 5,
+    postoperative_assessments: null,
+    services_offer: { ASSESSMENT_DETAILS: ["MEDICAL_SPENDING", "POSTOP_APPOINTMENT", "POSTOP_MEDICAL"] },
+    is_king: false,
+    observations: "",
+    is_deleted: false,
+  },
+  {
+    id: 16,
+    specialty: { id: 10 },
+    procedure: { code: "CATARACT_SURGERY" },
+    product: { code: "LIO_MULTIFOCAL" },
+    discount: 0,
+    postoperative_assessments: null,
+    services_offer: { ASSESSMENT_DETAILS: ["MEDICAL_SPENDING", "POSTOP_APPOINTMENT", "POSTOP_MEDICAL"] },
+    is_king: false,
+    observations: "",
+    is_deleted: false,
+  },
+  {
+    id: 17,
+    specialty: { id: 10 },
+    procedure: { code: "REFRACTIVE_SURGERY" },
+    product: { code: "REFRACTIVE_PRK" },
+    discount: 0,
+    postoperative_assessments: null,
+    services_offer: { ASSESSMENT_DETAILS: ["MEDICAL_SPENDING", "POSTOP_APPOINTMENT", "POSTOP_MEDICAL"] },
+    is_king: false,
+    observations: "",
+    is_deleted: false,
+  },
+  {
+    id: 18,
+    specialty: { id: 10 },
+    procedure: { code: "REFRACTIVE_SURGERY" },
+    product: { code: "REFRACTIVE_LASIK" },
+    discount: 0,
+    postoperative_assessments: null,
+    services_offer: { ASSESSMENT_DETAILS: ["MEDICAL_SPENDING", "POSTOP_APPOINTMENT", "POSTOP_MEDICAL"] },
+    is_king: false,
+    observations: "",
+    is_deleted: false,
+  },
+  {
+    id: 19,
+    specialty: { id: 10 },
+    procedure: { code: "REFRACTIVE_SURGERY" },
+    product: { code: "REFRACTIVE_LASIK_GUIDED" },
+    discount: 0,
+    postoperative_assessments: null,
+    services_offer: { ASSESSMENT_DETAILS: [] },
+    is_king: false,
+    observations: "",
+    is_deleted: false,
+  }
+];  
+
 
 await packageRepository.upsert(packages, ["id"]);
+
 
 
 

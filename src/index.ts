@@ -26,7 +26,6 @@ import { Availability } from '@entity/Availability';
 import { CertificationsExperience } from '@entity/CertificationsExperience';
 import { Package } from '@entity/Package';
 import { PreRegisterUser } from '@entity/PreRegisterUser';
-import { ProcedureBySpecialty } from '@entity/ProcedureBySpecialty';
 import { Review } from '@entity/Review';
 import { ReviewDetail } from '@entity/ReviewDetail';
 import { SpecialtyBySupplier } from '@entity/SpecialtyBySupplier';
@@ -59,7 +58,6 @@ import DocumentRoutes from '@index/modules/01_General/document/routers/DocumentR
 import LocationRoutes from '@modules/02_Vitalink/location/routers/LocationRoutes';
 import SupplierRoutes from '@modules/02_Vitalink/supplier/routers/SupplierRoutes';
 import SpecialtyBySupplierRoutes from '@modules/02_Vitalink/specialtybysupplier/routers/SpecialtyBySupplierRoutes';
-import ProcedureBySpecialtyRoutes from '@modules/02_Vitalink/procedurebyspecialty/routers/ProcedureBySpecialtyRoutes';
 import PackageRoutes from '@modules/02_Vitalink/package/routers/PackageRoutes';
 import AvailabilityRoutes from '@modules/02_Vitalink/availability/routers/AvailabilityRoutes';
 import CertificationsExperienceRoutes from '@modules/02_Vitalink/certificationsexperience/routers/CertificationsExperienceRoutes';
@@ -131,7 +129,6 @@ export const TenshiMain = async() => {
       CertificationsExperience,
       Package,
       PreRegisterUser,
-      ProcedureBySpecialty,
       Review,
       ReviewDetail,
       SpecialtyBySupplier,
@@ -183,7 +180,6 @@ export const TenshiMain = async() => {
     app.use(new LocationRoutes().getRouter());
     app.use(new SupplierRoutes().getRouter());
     app.use(new SpecialtyBySupplierRoutes().getRouter());
-    app.use(new ProcedureBySpecialtyRoutes().getRouter());
     app.use(new PackageRoutes().getRouter());
     app.use(new AvailabilityRoutes().getRouter());
     app.use(new CertificationsExperienceRoutes().getRouter());

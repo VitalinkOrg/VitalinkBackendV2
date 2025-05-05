@@ -1,9 +1,8 @@
 import { User } from "@TenshiJS/entity/User";
-import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Supplier } from "./Supplier";
 import { UnitDynamicCentral } from "@TenshiJS/entity/UnitDynamicCentral";
 import { Package } from "./Package";
-import { ProcedureBySpecialty } from "./ProcedureBySpecialty";
 
 
 /**
@@ -49,10 +48,6 @@ export class Appointment {
   @ManyToOne(() => Supplier, { eager: true })
   @JoinColumn({ name: "supplier", referencedColumnName: "id" })
   supplier: Supplier;
-
-  @ManyToOne(() => ProcedureBySpecialty)
-  @JoinColumn({ name: "procedure", referencedColumnName: "id" })
-  procedure: ProcedureBySpecialty | null;
 
   @ManyToOne(() => Package)
   @JoinColumn({ name: "package", referencedColumnName: "id" })

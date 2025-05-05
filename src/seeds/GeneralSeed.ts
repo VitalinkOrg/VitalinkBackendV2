@@ -542,7 +542,6 @@ async function runSeed() {
         { name: "Imágenes y Diagnóstico", code: "IMAGING_DIAGNOSIS", type: "ASSESSMENT" },
         { name: "Medicamentos Postoperatorios", code: "POSTOP_MEDICATIONS", type: "ASSESSMENT" },
         { name: "Tratamiento Médico Postoperatorio", code: "POSTOP_TREATMENT", type: "ASSESSMENT" },
-        { name: "Tratamiento Médico Postoperatorio", code: "POSTOP_TREATMENT", type: "ASSESSMENT" },
         { name: "General", code: "GENERAL", type: "ASSESSMENT" },
       
 

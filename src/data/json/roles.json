@@ -262,6 +262,20 @@
             "GET_BY_ID",
             "GET_ALL"
           ]
+        },
+        {
+          "name": "PACKAGE",
+          "function_list": [ 
+            "GET_BY_ID",
+            "GET_ALL"
+          ]
+        },
+        {
+          "name": "SPECIALTY_BY_SUPPLIER",
+          "function_list": [ 
+            "GET_BY_ID",
+            "GET_ALL"
+          ]
         }
       ],
       "screens": [
@@ -321,6 +335,16 @@
         {
           "name": "UNIT_DYNAMIC_CENTRAL",
           "function_list": [
+            "GET_BY_ID",
+            "GET_ALL"
+          ]
+        },
+        {
+          "name": "PACKAGE",
+          "function_list": [ 
+            "CREATE",
+            "UPDATE",
+            "DELETE",
             "GET_BY_ID",
             "GET_ALL"
           ]

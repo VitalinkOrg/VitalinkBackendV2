@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
-import { ProcedureBySpecialty } from "./ProcedureBySpecialty";
 import { UnitDynamicCentral } from "../../tenshi/entity/UnitDynamicCentral";
+import { SpecialtyBySupplier } from "./SpecialtyBySupplier";
 
 /*
   This is the list of products by procedure, or in other words this is the packages
@@ -17,14 +17,18 @@ export class Package {
   @PrimaryGeneratedColumn({ type: "int", unsigned: true })
   id: number;
 
-  @ManyToOne(() => ProcedureBySpecialty)
-  @JoinColumn({ name: "procedure", referencedColumnName: "id" })
-  procedure: ProcedureBySpecialty;
+  @ManyToOne(() => SpecialtyBySupplier)
+  @JoinColumn({ name: "specialty", referencedColumnName: "id" })
+  specialty: SpecialtyBySupplier;
+
+  @ManyToOne(() => UnitDynamicCentral)
+  @JoinColumn({ name: "procedure", referencedColumnName: "code" })
+  procedure: UnitDynamicCentral;
 
   //MEDICAL_PRODUCT
   @ManyToOne(() => UnitDynamicCentral)
   @JoinColumn({ name: "product", referencedColumnName: "code" })
-  product: UnitDynamicCentral | null;
+  product: UnitDynamicCentral;
 
   @Column({ type: "decimal", scale: 2, nullable: true, default: null })
   discount: number | null;
@@ -50,6 +54,10 @@ export class Package {
 
   @Column({ type: "tinyint", default: 0 })
   is_king: boolean;
+
+  @Column({ type: "varchar", length: 500, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
+  observations: string;
+
 
   @Column({ type: "tinyint", default: 0 })
   is_deleted: boolean;

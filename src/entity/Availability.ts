@@ -1,6 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 
-import { ProcedureBySpecialty } from "./ProcedureBySpecialty";
 import { Supplier } from "./Supplier";
 import { Location } from "./Location";
 

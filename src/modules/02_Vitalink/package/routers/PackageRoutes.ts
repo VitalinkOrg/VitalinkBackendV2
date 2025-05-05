@@ -10,7 +10,7 @@ class PackageRoutes extends GenericRoutes {
     private filters: FindManyOptions = {};
     constructor() {
         super(new GenericController(Package), "/package");
-        this.filters.relations = ["procedure","product","procedure.specialty", "procedure.procedure"];
+        this.filters.relations = ["procedure","product","specialty"];
     }
 
     protected initializeRoutes() {
@@ -45,8 +45,11 @@ class PackageRoutes extends GenericRoutes {
         this.router.post(`${this.getRouterName()}/add`, async (req: Request, res: Response) => {
 
             const requiredBodyList: Array<string> = [
-                req.body.procedure_by_specialty_id
+                req.body.specialty_id,
+                req.body.procedure_code,
+                req.body.product_code,
             ];
+
             
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
@@ -54,6 +57,7 @@ class PackageRoutes extends GenericRoutes {
                                     .setMethod("insertPackage")
                                     .setRequiredFiles(requiredBodyList)
                                     .isValidateRole("PACKAGE")
+                                    
                                     .build();
         
             this.getController().insert(requestHandler);
@@ -65,6 +69,9 @@ class PackageRoutes extends GenericRoutes {
                                     .setAdapter(new PackageDTO(req))
                                     .setMethod("updatePackage")
                                     .isValidateRole("PACKAGE")
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "specialty.supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().update(requestHandler);
@@ -77,6 +84,9 @@ class PackageRoutes extends GenericRoutes {
                                     .setMethod("deletePackage")
                                     .isValidateRole("PACKAGE")
                                     .isLogicalDelete()
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "specialty.supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().delete(requestHandler);

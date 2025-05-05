@@ -18,7 +18,6 @@ export default class AppointmentDTO implements IAdapterFromBody {
         entity.reservation_type = this.req.body.reservation_type_code;
         entity.appointment_status = this.req.body.appointment_status_code;
         entity.supplier = this.req.body.supplier_id;
-        entity.procedure = this.req.body.procedure_id;
         entity.package = this.req.body.package_id;
         entity.application_date = this.req.body.application_date;
         entity.payment_status_code = this.req.body.payment_status_code;
@@ -61,7 +60,6 @@ export default class AppointmentDTO implements IAdapterFromBody {
             reservation_type: entity.reservation_type,
             appointment_status: entity.appointment_status,
             supplier: entity.supplier,
-            procedure: entity.package?.procedure || null,
             package: entity.package,
             application_date: entity.application_date,
             payment_status: entity.payment_status,
