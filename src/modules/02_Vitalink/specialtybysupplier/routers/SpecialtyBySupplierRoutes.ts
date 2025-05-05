@@ -57,6 +57,20 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
         
             this.getController().insert(requestHandler);
         });
+
+
+
+
+        this.router.post(`${this.getRouterName()}/add_multiple`, async (req: Request, res: Response) => {
+
+            const requestHandler : RequestHandler = 
+                                    new RequestHandlerBuilder(res,req)
+                                    .setAdapter(new SpecialtyBySupplierDTO(req))
+                                    .setMethod("insertMultipleSpecialtyBySupplier")
+                                    .isValidateRole("SPECIALTY_BY_SUPPLIER")
+                                    .build();
+            this.getController().insertMultiple(requestHandler);
+        });
         
         this.router.put(`${this.getRouterName()}/edit`, async (req: Request, res: Response) => {
             const requestHandler: RequestHandler = 

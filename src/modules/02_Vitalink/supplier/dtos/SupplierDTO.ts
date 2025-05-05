@@ -8,6 +8,8 @@ export default class SupplierDTO implements IAdapterFromBody {
     constructor(req: Request) {
         this.req = req;
     }
+   
+   
 
     private getEntity(isCreating: boolean): Supplier {
         const entity = new Supplier();

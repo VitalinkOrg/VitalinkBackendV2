@@ -1,8 +1,7 @@
 import { Request, Response, 
          RequestHandler, RequestHandlerBuilder, 
-         GenericController, GenericRoutes,
+        GenericRoutes,
          FindManyOptions} from "@modules/index";
-import { Supplier } from "@index/entity/Supplier";
 import SupplierDTO from "@modules/02_Vitalink/supplier/dtos/SupplierDTO";
 import SupplierController from "../controllers/SupplierController";
 
@@ -25,6 +24,9 @@ class SupplierRoutes extends GenericRoutes {
                                     .isValidateRole("SUPPLIER")
                                     .isLogicalDelete()
                                     .setFilters(this.filters)
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().getById(requestHandler);
@@ -39,6 +41,9 @@ class SupplierRoutes extends GenericRoutes {
                                     .isValidateRole("SUPPLIER")
                                     .isLogicalDelete()
                                     .setFilters(this.filters)
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().getAll(requestHandler);
@@ -75,6 +80,9 @@ class SupplierRoutes extends GenericRoutes {
                                     .setMethod("insertSupplier")
                                     .setRequiredFiles(requiredBodyList)
                                     .isValidateRole("SUPPLIER")
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "legal_representative"]
+                                    ])
                                     .build();
         
             this.getController().insert(requestHandler);
@@ -86,6 +94,9 @@ class SupplierRoutes extends GenericRoutes {
                                     .setAdapter(new SupplierDTO(req))
                                     .setMethod("updateSupplier")
                                     .isValidateRole("SUPPLIER")
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().update(requestHandler);
@@ -98,10 +109,17 @@ class SupplierRoutes extends GenericRoutes {
                                     .setMethod("deleteSupplier")
                                     .isValidateRole("SUPPLIER")
                                     .isLogicalDelete()
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().delete(requestHandler);
         });
+
+
+
+      
     }
 }
 

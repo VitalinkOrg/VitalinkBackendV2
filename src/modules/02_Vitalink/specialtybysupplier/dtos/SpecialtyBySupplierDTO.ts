@@ -1,4 +1,3 @@
-
 import { SpecialtyBySupplier } from "@index/entity/SpecialtyBySupplier";
 import { Request, IAdapterFromBody } from "@modules/index";
 
@@ -9,26 +8,31 @@ export default class SpecialtyBySupplierDTO implements IAdapterFromBody {
         this.req = req;
     }
 
-    private getEntity(isCreating: boolean): SpecialtyBySupplier {
+    private buildEntity(source: any, isCreating: boolean): SpecialtyBySupplier {
         const entity = new SpecialtyBySupplier();
-        entity.supplier = this.req.body.supplier_id;
-        entity.medical_specialty = this.req.body.medical_specialty_code;
-     
+        entity.supplier = source.supplier_id;
+        entity.medical_specialty = source.medical_specialty_code;
+
         if (isCreating) {
             entity.created_date = new Date();
-        } 
+        }
 
         return entity;
     }
 
     // POST
     entityFromPostBody(): SpecialtyBySupplier {
-        return this.getEntity(true);
+        return this.buildEntity(this.req.body, true);
     }
 
     // PUT
     entityFromPutBody(): SpecialtyBySupplier {
-        return this.getEntity(false);
+        return this.buildEntity(this.req.body, false);
+    }
+
+    // POST / PUT desde array
+    entityFromObject(obj: any, isCreating: boolean = true): SpecialtyBySupplier {
+        return this.buildEntity(obj, isCreating);
     }
 
     // GET
@@ -41,13 +45,8 @@ export default class SpecialtyBySupplierDTO implements IAdapterFromBody {
         };
     }
 
-    entitiesToResponse(entities: SpecialtyBySupplier[] | null): any {
-        const response: any[] = [];
-        if (entities != null) {
-            for (const entity of entities) {
-                response.push(this.entityToResponse(entity));
-            }
-        }
-        return response;
+    entitiesToResponse(entities: SpecialtyBySupplier[] | null): any[] {
+        if (!entities) return [];
+        return entities.map(this.entityToResponse);
     }
 }

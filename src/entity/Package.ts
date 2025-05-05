@@ -29,6 +29,9 @@ export class Package {
   @Column({ type: "decimal", scale: 2, nullable: true, default: null })
   discount: number | null;
 
+  @Column({ type: "decimal", scale: 2, nullable: true, default: null })
+  postoperative_assessments: number | null;
+
   /*
   {
     "ASSESSMENT_DETAILS": [
