@@ -547,7 +547,7 @@
 											}
 										],
 										"url": {
-											"raw": "{{host}}/user/get?id=bc166f73-048f-4c28-9593-ffa774416f29",
+											"raw": "{{host}}/user/get?id=e29252b7-1d49-40bd-838f-b6e5f85bfccc",
 											"host": [
 												"{{host}}"
 											],
@@ -558,7 +558,7 @@
 											"query": [
 												{
 													"key": "id",
-													"value": "bc166f73-048f-4c28-9593-ffa774416f29"
+													"value": "e29252b7-1d49-40bd-838f-b6e5f85bfccc"
 												}
 											]
 										}
@@ -805,7 +805,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/udc/get_all?code=CARDIO_STENT",
+									"raw": "{{host}}/udc/get_all?code=CONFIRM_VALIDATION_APPOINTMENT",
 									"host": [
 										"{{host}}"
 									],
@@ -814,10 +814,6 @@
 										"get_all"
 									],
 									"query": [
-										{
-											"key": "code",
-											"value": "CARDIO_STENT"
-										},
 										{
 											"key": "id",
 											"value": "1",
@@ -837,6 +833,10 @@
 											"key": "father_code",
 											"value": "OPERATING_ROOM",
 											"disabled": true
+										},
+										{
+											"key": "code",
+											"value": "CONFIRM_VALIDATION_APPOINTMENT"
 										}
 									]
 								}
@@ -1001,7 +1001,7 @@
 					"name": "Documents",
 					"item": [
 						{
-							"name": "Insert Document",
+							"name": "Insert Document / Example public images general gallery",
 							"request": {
 								"method": "POST",
 								"header": [
@@ -1022,11 +1022,67 @@
 										{
 											"key": "file",
 											"type": "file",
-											"src": "/C:/Users/fabia/OneDrive/Escritorio/VitalinkV2/Documentation/NUevos Documentos/Carnet_Medico_DEMO.pdf"
+											"src": "/C:/Users/fabia/OneDrive/Escritorio/VitalinkV2/IMGS/img specific doctor happy path/oftal (4).jpg"
 										},
 										{
 											"key": "fields",
-											"value": "{\"title\":\"ExampleHappyPath\",\"type\": \"DOC\", \"description\": \"\", \"id_for_table\": 6, \"table\": \"\",  \"action_type\":  \"PERSONAL_DOCUMENT\", \"user_id\": \"95efde53-0fb4-42d5-98a3-026f334efdb8\", \"is_public\":0}",
+											"value": "{\"title\":\"ExampleHappyPath\",\"type\": \"IMG\", \"description\": \"\", \"id_for_table\": 6, \"table\": \"SUPPLIER\",  \"action_type\":  \"GENERAL_GALLERY\", \"user_id\": \"d0b47084-2888-4e7e-9347-0aa62fb6aa8f\", \"is_public\":1}",
+											"type": "text"
+										},
+										{
+											"key": "",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host}}/document/add",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"document",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Insert Document / Example contract and private document",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/fabia/OneDrive/Escritorio/VitalinkV2/Documentation/NUevos Documentos/Contrato_Simulacion_VitalinkCR.pdf"
+										},
+										{
+											"key": "fields",
+											"value": "{\"title\":\"ExampleHappyPath\",\"type\": \"DOC\", \"description\": \"\", \"id_for_table\": 6, \"table\": \"SUPPLIER\",  \"action_type\":  \"PRIVATE_CONTRACT\", \"user_id\": \"d0b47084-2888-4e7e-9347-0aa62fb6aa8f\", \"is_public\":1}",
 											"type": "text"
 										},
 										{
@@ -1719,7 +1775,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  //\"id_type\": \"PHYSICAL_DNI\",\n  //\"card_id\": \"12345678X\",\n  //\"email\": \"juan.perez@hospitalcentral.com\",\n  //\"medical_type_code\": \"GENERAL_MEDICAL\",\n  //\"legal_representative\": \"d0b47084-2888-4e7e-9347-0aa62fb6aa8f\",\n  //\"num_medical_enrollment\": \"MED-987654\",\n  \"name\": \"Dr. Juan Pérez\"\n  //\"phone_number\": \"+506 11 2345-6789\",\n  //\"country_iso_code\": \"CRC\",\n  //\"province\": \"San Jose\",\n  //\"city_name\": \"Guadalupe\",\n  //\"postal_code\": \"1301\",\n  //\"profile_picture_url\": \"https://hospitalcentral.com/profiles/juan_perez.jpg\",\n  //\"description\": \"Especialista en cirugía general con más de 10 años de experiencia en hospitales de alto nivel.\",\n  //\"address\": \"Av. 13 y Calle 50\",\n  //\"street_number\": \"123\",\n  //\"floor\": \"5\",\n  //\"door_number\": \"A\",\n  //\"latitude\": \"-34.9215\",\n  //\"longitude\": \"-57.9545\",\n  //\"experience_years\": \"15\",\n  //\"patients_number\": \"5000\",\n  //\"is_hospital\": false,\n  //\"our_history\": \"Fundada en 2005, nuestra clínica ha atendido a más de 50,000 pacientes.\",\n  //\"mission\": \"Brindar atención médica de calidad con un enfoque humanitario.\",\n  //\"vision\": \"Ser un referente en salud en Latinoamérica.\",\n  //\"code_card_id_file\": \"ID12345678X\",\n  //\"code_medical_license_file\": \"MED-987654\",\n  //\"gender\": \"M\"\n}\n",
+									"raw": "{\n  //\"id_type\": \"PHYSICAL_DNI\",\n  //\"card_id\": \"12345678X\",\n  //\"email\": \"juan.perez@hospitalcentral.com\",\n  //\"medical_type_code\": \"GENERAL_MEDICAL\",\n  //\"legal_representative\": \"d0b47084-2888-4e7e-9347-0aa62fb6aa8f\",\n  //\"num_medical_enrollment\": \"MED-987654\",\n  //\"name\": \"Dr. Juan Pérez\"\n  //\"phone_number\": \"+506 11 2345-6789\",\n  //\"country_iso_code\": \"CRC\",\n  //\"province\": \"San Jose\",\n  //\"city_name\": \"Guadalupe\",\n  //\"postal_code\": \"1301\",\n  //\"profile_picture_url\": \"https://hospitalcentral.com/profiles/juan_perez.jpg\",\n  //\"description\": \"Especialista en cirugía general con más de 10 años de experiencia en hospitales de alto nivel.\",\n  //\"address\": \"Av. 13 y Calle 50\",\n  //\"street_number\": \"123\",\n  //\"floor\": \"5\",\n  //\"door_number\": \"A\",\n  //\"latitude\": \"-34.9215\",\n  //\"longitude\": \"-57.9545\",\n  //\"experience_years\": \"15\",\n  //\"patients_number\": \"5000\",\n  //\"is_hospital\": false,\n  //\"our_history\": \"Fundada en 2005, nuestra clínica ha atendido a más de 50,000 pacientes.\",\n  //\"mission\": \"Brindar atención médica de calidad con un enfoque humanitario.\",\n  //\"vision\": \"Ser un referente en salud en Latinoamérica.\",\n  \"code_card_id_file\": \"PRIVATE_CONTRACT__SUPPLIER__6__DOC__652025154709\",\n  \"code_medical_license_file\": \"PRIVATE_CONTRACT__SUPPLIER__6__DOC__652025154709\"\n  //\"gender\": \"M\"\n}\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1727,7 +1783,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}/supplier/edit?id=7",
+									"raw": "{{host}}/supplier/edit?id=6",
 									"host": [
 										"{{host}}"
 									],
@@ -1738,7 +1794,7 @@
 									"query": [
 										{
 											"key": "id",
-											"value": "7"
+											"value": "6"
 										}
 									]
 								}
@@ -1762,7 +1818,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/supplier/get?id=5",
+									"raw": "{{host}}/supplier/get?id=6",
 									"host": [
 										"{{host}}"
 									],
@@ -1773,7 +1829,7 @@
 									"query": [
 										{
 											"key": "id",
-											"value": "5"
+											"value": "6"
 										}
 									]
 								}
@@ -2142,192 +2198,6 @@
 					]
 				},
 				{
-					"name": "ProcedureBySpecialty",
-					"item": [
-						{
-							"name": "Create ProcedureBySpecialty",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "authorization",
-										"value": "{{auth_jwt}}",
-										"type": "text"
-									},
-									{
-										"key": "x-api-key",
-										"value": "{{secret_api_key}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"specialty_id\": 10,\n  \"procedure_code\": \"CARDIO_INTERVENTION\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/procedurebyspecialty/add",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"procedurebyspecialty",
-										"add"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update ProcedureBySpecialty",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "authorization",
-										"value": "{{auth_jwt}}",
-										"type": "text"
-									},
-									{
-										"key": "x-api-key",
-										"value": "{{secret_api_key}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"specialty_id\": 10,\n  \"procedure_code\": \"ECOCARDIOGRAMA\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/procedurebyspecialty/edit?id=1",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"procedurebyspecialty",
-										"edit"
-									],
-									"query": [
-										{
-											"key": "id",
-											"value": "1"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Get ProcedureBySpecialty by ID",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "authorization",
-										"value": "{{auth_jwt}}",
-										"type": "text"
-									},
-									{
-										"key": "x-api-key",
-										"value": "{{secret_api_key}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{host}}/procedurebyspecialty/get?id=14",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"procedurebyspecialty",
-										"get"
-									],
-									"query": [
-										{
-											"key": "id",
-											"value": "14"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Get All ProcedureBySpecialty",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "authorization",
-										"value": "{{auth_jwt}}",
-										"type": "text"
-									},
-									{
-										"key": "x-api-key",
-										"value": "{{secret_api_key}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{host}}/procedurebyspecialty/get_all",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"procedurebyspecialty",
-										"get_all"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Delete ProcedureBySpecialty",
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "authorization",
-										"value": "{{auth_jwt}}",
-										"type": "text"
-									},
-									{
-										"key": "x-api-key",
-										"value": "{{secret_api_key}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{host}}/procedurebyspecialty/delete?id=1",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"procedurebyspecialty",
-										"delete"
-									],
-									"query": [
-										{
-											"key": "id",
-											"value": "1"
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
 					"name": "Package",
 					"item": [
 						{
@@ -2429,7 +2299,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/package/get?id=16",
+									"raw": "{{host}}/package/get?id=109",
 									"host": [
 										"{{host}}"
 									],
@@ -2440,7 +2310,7 @@
 									"query": [
 										{
 											"key": "id",
-											"value": "16"
+											"value": "109"
 										}
 									]
 								}
@@ -3633,6 +3503,321 @@
 					"name": "Appointment",
 					"item": [
 						{
+							"name": "Flow Appointment Happy Path",
+							"item": [
+								{
+									"name": "1. Patient Create Appointment",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "authorization",
+												"value": "{{auth_jwt}}",
+												"type": "text"
+											},
+											{
+												"key": "x-api-key",
+												"value": "{{secret_api_key}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"customer_id\": \"\",\n  \"appointment_date\": \"2025-07-13\",\n  \"appointment_hour\": \"10:30:00\",\n  \"supplier_id\": 1,\n  \"package_id\": 4\n}\n\n\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/appointment/add",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"appointment",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "2. Doctor Confirm Appointment",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "authorization",
+												"value": "{{auth_jwt}}",
+												"type": "text"
+											},
+											{
+												"key": "x-api-key",
+												"value": "{{secret_api_key}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{host}}/appointment/confirm_valoration_appointment?id=15",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"appointment",
+												"confirm_valoration_appointment"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "15"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "3. Patient Paid Valoration Appointment",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "authorization",
+												"value": "{{auth_jwt}}",
+												"type": "text"
+											},
+											{
+												"key": "x-api-key",
+												"value": "{{secret_api_key}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"payment_method_code\": \"ON_CONSULTATION\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/appointment/success_payment_valoration_appointment?id=15",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"appointment",
+												"success_payment_valoration_appointment"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "15"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "4. Doctor Upload Proforma Valoration Appointment",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "authorization",
+												"value": "{{auth_jwt}}",
+												"type": "text"
+											},
+											{
+												"key": "x-api-key",
+												"value": "{{secret_api_key}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"appointment_result_code\": \"FIT_FOR_PROCEDURE\", //if NOT_FIT_FOR_PROCEDURE proforma_file_code is not required\r\n  \"proforma_file_code\":\"PERSONAL_DOCUMENT____6__DOC__652025134811\" // you need to upload file on documents, and in the response get the code.\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/appointment/upload_proforma?id=15",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"appointment",
+												"upload_proforma"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "15"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "5. Patient Reserve Procedure",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "authorization",
+												"value": "{{auth_jwt}}",
+												"type": "text"
+											},
+											{
+												"key": "x-api-key",
+												"value": "{{secret_api_key}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{host}}/appointment/reserve_procedure?id=15",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"appointment",
+												"reserve_procedure"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "15"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "6. Doctor Confirm Procedure",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "authorization",
+												"value": "{{auth_jwt}}",
+												"type": "text"
+											},
+											{
+												"key": "x-api-key",
+												"value": "{{secret_api_key}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{host}}/appointment/confirm_procedure?id=15",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"appointment",
+												"confirm_procedure"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "15"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "7. Patient Paid Procedure",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "authorization",
+												"value": "{{auth_jwt}}",
+												"type": "text"
+											},
+											{
+												"key": "x-api-key",
+												"value": "{{secret_api_key}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"payment_method_code\": \"CREDIT_CARD\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/appointment/success_payment_procedure?id=15",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"appointment",
+												"success_payment_procedure"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "15"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "8. Doctor Set The Procedure Realized",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "authorization",
+												"value": "{{auth_jwt}}",
+												"type": "text"
+											},
+											{
+												"key": "x-api-key",
+												"value": "{{secret_api_key}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{host}}/appointment/set_procedure_realized?id=15",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"appointment",
+												"set_procedure_realized"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "15"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
 							"name": "Create Appointment",
 							"request": {
 								"method": "POST",
@@ -3650,45 +3835,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"customer_id\": \"f1635823-7d9a-4df9-bd1e-ad8bd985de0b\",\n  //\"proforma_file_code\": \"PROF-011\",\n  \"appointment_date\": \"2025-04-14\",\n  \"appointment_hour\": \"09:30:00\",\n  \"reservation_type_code\": \"RESERVATION\",\n  //\"appointment_status_code\": \"PENDING\",\n  \"supplier_id\": 1\n  //\"package_id\": 1,\n  //\"procedure_id\": 1\n  //\"application_date\": \"2025-04-12T08:00:00.000Z\",\n  //\"payment_status_code\": \"PENDING\",\n  //\"payment_method_code\": \"CREDIT_CARD\",\n  //\"appointment_result_code\": \"FIT_FOR_PROCEDURE\",\n  //\"user_description\": \"Consulta general preventiva.\",\n  //\"recommendation_post_appointment\": \"Mantener una dieta balanceada.\",\n  //\"diagnostic\": \"Salud estable.\"\n  //\"is_for_external_user\": false,\n  // \"phone_number_external_user\":\"+506 8346-1166\"\n}\n\n\n",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/appointment/add",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"appointment",
-										"add"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create Appointment Example",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "authorization",
-										"value": "{{auth_jwt}}",
-										"type": "text"
-									},
-									{
-										"key": "x-api-key",
-										"value": "{{secret_api_key}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"customer_id\": \"f1635823-7d9a-4df9-bd1e-ad8bd985de0b\",\n  //\"is_for_external_user\": false, //default false\n  //\"phone_number_external_user\":\"+506 8346-1166\"\n  \"user_description\": \"Consulta gOftalmologica\",\n  \"supplier_id\": 1,\n  \"appointment_date\": \"2025-04-14\",\n  \"appointment_hour\": \"09:30:00\",\n  //\"procedure_id\": 1,\n  \"package_id\": 1\n}",
+									"raw": "{\n  \"customer_id\": \"\",\n  \"appointment_date\": \"2025-07-13\",\n  \"appointment_hour\": \"10:30:00\",\n  \"supplier_id\": 1,\n  \"package_id\": 4\n  //\"proforma_file_code\": \"PROF-011\",\n\n  //\"reservation_type_code\": \"RESERVATION\"\n  //\"appointment_status_code\": \"PENDING\",\n  //\"application_date\": \"2025-04-12T08:00:00.000Z\",\n  //\"payment_status_code\": \"PAYMENT_STATUS_PENDING\",\n  //\"payment_method_code\": \"CREDIT_CARD\",\n  //\"appointment_result_code\": \"FIT_FOR_PROCEDURE\",\n  //\"user_description\": \"Consulta general preventiva.\",\n  //\"recommendation_post_appointment\": \"Mantener una dieta balanceada.\",\n  //\"diagnostic\": \"Salud estable.\"\n  //\"is_for_external_user\": false,\n  // \"phone_number_external_user\":\"+506 8346-1166\"\n  //\"price_procedure\": 0\n  //\"price_valoration_appointment\":18000\n}\n\n\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -3753,50 +3900,6 @@
 							"response": []
 						},
 						{
-							"name": "Update Appointment Example Cancel",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "authorization",
-										"value": "{{auth_jwt}}",
-										"type": "text"
-									},
-									{
-										"key": "x-api-key",
-										"value": "{{secret_api_key}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"appointment_status_code\": \"CANCEL\",\n  \"payment_status_code\": \"NOT_PAID\"\n}\n",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/appointment/edit?id=3",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"appointment",
-										"edit"
-									],
-									"query": [
-										{
-											"key": "id",
-											"value": "3"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "Get Appointment by ID",
 							"request": {
 								"method": "GET",
@@ -3813,7 +3916,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/appointment/get?id=1",
+									"raw": "{{host}}/appointment/get?id=15",
 									"host": [
 										"{{host}}"
 									],
@@ -3824,7 +3927,7 @@
 									"query": [
 										{
 											"key": "id",
-											"value": "1"
+											"value": "15"
 										}
 									]
 								}

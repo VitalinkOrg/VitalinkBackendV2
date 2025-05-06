@@ -30,6 +30,9 @@ export default class AppointmentDTO implements IAdapterFromBody {
         entity.payment_method = this.req.body.payment_method_code;
         entity.appointment_result = this.req.body.appointment_result_code;
         entity.appointment_type_code = this.req.body.appointment_type_code;
+
+        entity.price_procedure = this.req.body.price_procedure;
+        entity.price_valoration_appointment = this.req.body.price_valoration_appointment;
         
         if (isCreating) {
             entity.created_date = new Date();
@@ -77,6 +80,9 @@ export default class AppointmentDTO implements IAdapterFromBody {
             payment_method: entity.payment_method,
             appointment_result: entity.appointment_result,
             appointment_type: entity.appointment_type,
+
+            price_procedure: entity.price_procedure,
+            price_valoration_appointment: entity.price_valoration_appointment,
 
             created_date: entity.created_date,
             updated_date: entity.updated_date,

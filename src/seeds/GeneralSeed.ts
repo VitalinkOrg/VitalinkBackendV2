@@ -82,7 +82,7 @@ async function runSeed() {
     ];
     await udcRepository.upsert(reservationTypes, ["code"]);
 
-    // aPPOINTMENT STATUS
+    // Appointment Status
     const appointmentStatus = [
         //CITA DE VALORACION
         { name: "Pendiente Cita de valoracion", value1: "Pendiente", code: "PENDING_VALORATION_APPOINTMENT", type: "APPOINTMENT_STATUS"  as "APPOINTMENT_STATUS"  },
@@ -105,10 +105,10 @@ async function runSeed() {
  
     // Payment Status
     const paymentStatus = [
-        { name: "Pagado", value1: "Pagado Cita de Valoracion", code: "PAYMENT_STATUS_PAID_VALORATION_APPOINTMENT", type: "PAYMENT_STATUS" as "PAYMENT_STATUS" },
-        { name: "No Pagado", value1: "Pendiente de pago cita de valoracion", code: "PAYMENT_STATUS_NOT_PAID_VALORATION_APPOINTMENT", type: "PAYMENT_STATUS" as "PAYMENT_STATUS" },
-        { name: "Pagado", value1: "Pagado Procedimiento", code: "PAYMENT_STATUS_PAID_PROCEDURE", type: "PAYMENT_STATUS" as "PAYMENT_STATUS" },
-        { name: "No Pagado", value1: "Pendiente de pago Procedimiento", code: "PAYMENT_STATUS_NOT_PAID_PROCEDURE", type: "PAYMENT_STATUS" as "PAYMENT_STATUS" },
+        { name: "Pagado Cita de Valoracion", value1: "Pagado", code: "PAYMENT_STATUS_PAID_VALORATION_APPOINTMENT", type: "PAYMENT_STATUS" as "PAYMENT_STATUS" },
+        { name: "Pendiente de pago cita de valoracion", value1: "No Pagado", code: "PAYMENT_STATUS_NOT_PAID_VALORATION_APPOINTMENT", type: "PAYMENT_STATUS" as "PAYMENT_STATUS" },
+        { name: "Pagado Procedimiento", value1: "Pagado", code: "PAYMENT_STATUS_PAID_PROCEDURE", type: "PAYMENT_STATUS" as "PAYMENT_STATUS" },
+        { name: "Pendiente de pago Procedimiento", value1: "No Pagado", code: "PAYMENT_STATUS_NOT_PAID_PROCEDURE", type: "PAYMENT_STATUS" as "PAYMENT_STATUS" },
     ];
     await udcRepository.upsert(paymentStatus, ["code"]);
 
@@ -122,7 +122,7 @@ async function runSeed() {
     await udcRepository.upsert(paymentMethods, ["code"]);
 
 
-
+    //Appoiment Result
     const appointmentResults = [
         { 
             name: "Apto para Procedimiento Médico", 

@@ -12,6 +12,7 @@ import { SpecialtyBySupplier } from "@index/entity/SpecialtyBySupplier";
 import { Package } from "@index/entity/Package";
 import { ReviewDetail } from "@index/entity/ReviewDetail";
 import { UnitDynamicCentral } from "@TenshiJS/entity/UnitDynamicCentral";
+import { General } from "@index/consts/Const";
 
 
 export default class SupplierController extends GenericController {
@@ -181,7 +182,7 @@ export default class SupplierController extends GenericController {
         : "Cita de Valoración";
       supplier.search_reference_price = procedure_code && flatPrices.length
         ? `${Math.min(...flatPrices)}`
-        : "18000";
+        : General.minimumPriceAppointmentValorationReference.toString();
     
       supplier.stars_by_supplier = reviewSummary?.stars_average || null;
       supplier.review_quantity_by_supplier = reviewSummary?.quantity || null;

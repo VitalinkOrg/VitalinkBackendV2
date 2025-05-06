@@ -1,21 +1,21 @@
 import { ConstHTTPRequest, ConstMessagesJson, ConstStatusJson } from "@TenshiJS/consts/Const";
-import { RequestHandler } from "@TenshiJS/generics";
+import { FindManyOptions, RequestHandler } from "@TenshiJS/generics";
 import GenericController from "@TenshiJS/generics/Controller/GenericController";
 import GenericRepository from "@TenshiJS/generics/Repository/GenericRepository";
 import { Appointment } from "@index/entity/Appointment";
 import { AppointmentFlowLog } from "@index/entity/AppointmentFlowLog";
 import { AppointmentCredit } from "@index/entity/AppointmentCredit";
-import jwt from 'jsonwebtoken';
+import { Package } from "@index/entity/Package";
 
 
 export default class AppointmentController extends GenericController {
     private appointmentFlowLogRepository = new GenericRepository(AppointmentFlowLog);
     private appointmentCreditRepository = new GenericRepository(AppointmentCredit);
-  
+    private packageRepository = new GenericRepository(Package);
+
     constructor() {
       super(Appointment);
     }
-
 
      async StepByStepReservationAppointment(reqHandler: RequestHandler, step: number): Promise<any> {
           return this.getService().updateService(reqHandler, async (jwtData, httpExec, id) => {
@@ -54,7 +54,6 @@ export default class AppointmentController extends GenericController {
                 //Step 3 - Paciente Paga cita valoracion
                 else if(step == 3){
                      //Necesita metodo de pago
-                     console.log(body);
                      if(body.payment_method == null || body.payment_method == undefined){
                         return httpExec.validationError(ConstMessagesJson.REQUIRED_FIELDS);
                     }
@@ -69,7 +68,7 @@ export default class AppointmentController extends GenericController {
                 //Step 4 - Medico Subir proforma Medica + Realiza Valoracion
                 else if(step == 4){
 
-                    if(body.appointment_result_code == null || body.appointment_result_code == undefined){
+                    if(body.appointment_result == null || body.appointment_result == undefined){
                         return httpExec.validationError(ConstMessagesJson.REQUIRED_FIELDS);
                     }
 
@@ -127,7 +126,6 @@ export default class AppointmentController extends GenericController {
                     body.appointment_type_code = "PROCEDURE_APPOINTMENT";
                 }
 
-                console.log(body);
                 
                 // Execute the update action in the database
                 const updateEntity = await this.getRepository().update(id!!, body,
@@ -156,5 +154,45 @@ export default class AppointmentController extends GenericController {
         });
     }
   
+
+
+
+    async insert(reqHandler: RequestHandler): Promise<any> {
+
+        return this.getService().insertService(reqHandler, async (jwtData, httpExec, body) => {
+
+            // Set the user ID of the entity with the ID of the JWT
+            body = this.setUserId(body, jwtData!.id);
+
+            try{
+                const filters: FindManyOptions = {};
+                filters.relations = ["product"];
+
+                const packageEntity = await this.packageRepository.findById(body.package_id, true, filters);
+                const rawValue = packageEntity?.product?.value1;
+                body.price_procedure = isNaN(Number(rawValue)) || !rawValue?.toString().trim()
+                ? 0 : Number(rawValue);
+
+                // Insert the entity into the database
+                const createdEntity = await this.getRepository().add(body);
+
+                const codeResponse : string = 
+                reqHandler.getCodeMessageResponse() != null ? 
+                reqHandler.getCodeMessageResponse() as string :
+                ConstHTTPRequest.INSERT_SUCCESS;
+
+                // Return the success response
+                return httpExec.successAction(
+                    reqHandler.getAdapter().entityToResponse(createdEntity), 
+                    codeResponse);
+
+            }catch(error : any){
+                // Return the database error response
+                return await httpExec.databaseError(error, jwtData!.id.toString(), 
+                reqHandler.getMethod(), this.getControllerName());
+            }
+        });
+     }
+
 }
   

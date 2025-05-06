@@ -29,3 +29,7 @@ export class ConstEnums{
     public static readonly DOC_ACTION_TYPE_GENERAL_GALLERY: string = "GENERAL_GALLERY";
     public static readonly DOC_ACTION_TYPE_PERSONAL_DOCUMENT: string = "PERSONAL_DOCUMENT";
 }
+
+export class General{
+    public static readonly minimumPriceAppointmentValorationReference: number = 18000;
+}

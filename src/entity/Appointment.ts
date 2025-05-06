@@ -3,6 +3,7 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "t
 import { Supplier } from "./Supplier";
 import { UnitDynamicCentral } from "@TenshiJS/entity/UnitDynamicCentral";
 import { Package } from "./Package";
+import { General } from "@index/consts/Const";
 
 
 /**
@@ -54,7 +55,7 @@ export class Appointment {
 
   @ManyToOne(() => Package)
   @JoinColumn({ name: "package", referencedColumnName: "id" })
-  package: Package | null;
+  package: Package;
 
   @Column({ type: "timestamp", nullable: true, default: () => "CURRENT_TIMESTAMP" })
   application_date: Date | null;
@@ -74,7 +75,11 @@ export class Appointment {
   @Column({ type: "varchar", length: 250, nullable: true, default: null })
   phone_number_external_user: string | null;
 
+  @Column({ type: "decimal", precision: 10, scale: 2, default: 0})
+  price_procedure: number;
 
+  @Column({ type: "decimal", precision: 10, scale: 2,  default: General.minimumPriceAppointmentValorationReference})
+  price_valoration_appointment: number;
 
 
 

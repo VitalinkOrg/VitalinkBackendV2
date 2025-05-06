@@ -69,6 +69,7 @@ class AppointmentRoutes extends GenericRoutes {
                 req.body.appointment_date,
                 req.body.appointment_hour,
                 req.body.supplier_id,
+                req.body.package_id,
             ];
             
             const requestHandler: RequestHandler = 
@@ -126,7 +127,7 @@ class AppointmentRoutes extends GenericRoutes {
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new AppointmentDTO(req))
-                                    .setMethod("confirmValorationAppointment")
+                                    .setMethod("confirm_valoration_appointment")
                                     .isValidateRole("APPOINTMENT")
                                     .setDynamicRoleValidationByEntityField([
                                         ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
@@ -137,14 +138,12 @@ class AppointmentRoutes extends GenericRoutes {
         });
 
 
-
-
          //Step 3 - Paciente Paga cita valoracion
          this.router.put(`${this.getRouterName()}/success_payment_valoration_appointment`, async (req: Request, res: Response) => {
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new AppointmentDTO(req))
-                                    .setMethod("confirmValorationAppointment")
+                                    .setMethod("success_payment_valoration_appointment")
                                     .isValidateRole("APPOINTMENT")
                                     .setDynamicRoleValidationByEntityField([
                                         ["CUSTOMER", "customer.id"]
@@ -152,6 +151,92 @@ class AppointmentRoutes extends GenericRoutes {
                                     .build();
         
             (this.getController() as AppointmentController).StepByStepReservationAppointment(requestHandler,3);
+        });
+
+
+         //Step 4 - Medico Subir proforma Medica + Realiza Valoracion
+         this.router.put(`${this.getRouterName()}/upload_proforma`, async (req: Request, res: Response) => {
+            const requestHandler: RequestHandler = 
+                                    new RequestHandlerBuilder(res, req)
+                                    .setAdapter(new AppointmentDTO(req))
+                                    .setMethod("upload_proforma")
+                                    .isValidateRole("APPOINTMENT")
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
+                                        ])
+                                    .build();
+        
+            (this.getController() as AppointmentController).StepByStepReservationAppointment(requestHandler,4);
+        });
+
+
+
+
+
+        //************************************ */
+        /*              Procedimiento          */
+        //************************************ */
+        //Step 5 - Paciente pulsa Reservar Procedimiento
+        this.router.put(`${this.getRouterName()}/reserve_procedure`, async (req: Request, res: Response) => {
+            const requestHandler: RequestHandler = 
+                                    new RequestHandlerBuilder(res, req)
+                                    .setAdapter(new AppointmentDTO(req))
+                                    .setMethod("reserve_procedure")
+                                    .isValidateRole("APPOINTMENT")
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["CUSTOMER", "customer.id"]
+                                        ])
+                                    .build();
+        
+            (this.getController() as AppointmentController).StepByStepReservationAppointment(requestHandler,5);
+        });
+
+
+         //Step 6 - Medico confirma Reserva
+         this.router.put(`${this.getRouterName()}/confirm_procedure`, async (req: Request, res: Response) => {
+            const requestHandler: RequestHandler = 
+                                    new RequestHandlerBuilder(res, req)
+                                    .setAdapter(new AppointmentDTO(req))
+                                    .setMethod("confirm_procedure")
+                                    .isValidateRole("APPOINTMENT")
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
+                                        ])
+                                    .build();
+        
+            (this.getController() as AppointmentController).StepByStepReservationAppointment(requestHandler,6);
+        });
+
+
+          //Step 7 - Paciente realiza pago Procedimiento
+         this.router.put(`${this.getRouterName()}/success_payment_procedure`, async (req: Request, res: Response) => {
+            const requestHandler: RequestHandler = 
+                                    new RequestHandlerBuilder(res, req)
+                                    .setAdapter(new AppointmentDTO(req))
+                                    .setMethod("success_payment_procedure")
+                                    .isValidateRole("APPOINTMENT")
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["CUSTOMER", "customer.id"]
+                                        ])
+                                    .build();
+        
+            (this.getController() as AppointmentController).StepByStepReservationAppointment(requestHandler,7);
+        });
+
+
+          //Step 8 - Medico asigna procedimiento Realizado
+          this.router.put(`${this.getRouterName()}/set_procedure_realized`, async (req: Request, res: Response) => {
+            const requestHandler: RequestHandler = 
+                                    new RequestHandlerBuilder(res, req)
+                                    .setAdapter(new AppointmentDTO(req))
+                                    .setMethod("set_procedure_realized")
+                                    .isValidateRole("APPOINTMENT")
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
+                                        ])
+                                    .build();
+        
+            (this.getController() as AppointmentController).StepByStepReservationAppointment(requestHandler,8);
         });
     }
 }
