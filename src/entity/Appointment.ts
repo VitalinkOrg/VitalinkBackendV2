@@ -13,10 +13,26 @@ import { Package } from "./Package";
  * recommendations. 
  */
 
+function generateRandomCode(length: number = 7): string {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let result = '';
+  
+  for (let i = 0; i < length; i++) {
+    const randomIdx = Math.floor(Math.random() * chars.length);
+    result += chars[randomIdx];
+  }
+
+  return result;
+}
+
+
 @Entity("appointments")
 export class Appointment {
   @PrimaryGeneratedColumn({ type: "int", unsigned: true })
   id: number;
+
+  @Column({ type: "varchar", length: 100, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", default: generateRandomCode() })
+  appointment_qr_code: string;
 
   @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: "customer", referencedColumnName: "id" })
@@ -32,19 +48,6 @@ export class Appointment {
   @Column({ type: "time" })
   appointment_hour: string;
 
-  @Column({ name: "reservation_type", default: "PRE_RESERVATION" })
-  reservation_type_code: string;
-
-  //RESERVATION_TYPE
-  @ManyToOne(() => UnitDynamicCentral)
-  @JoinColumn({ name: "reservation_type", referencedColumnName: "code" })
-  reservation_type: UnitDynamicCentral;
-
-  //APPOINTMENT_STATUS
-  @ManyToOne(() => UnitDynamicCentral)
-  @JoinColumn({ name: "appointment_status", referencedColumnName: "code" })
-  appointment_status: UnitDynamicCentral | null;
-
   @ManyToOne(() => Supplier, { eager: true })
   @JoinColumn({ name: "supplier", referencedColumnName: "id" })
   supplier: Supplier;
@@ -55,27 +58,6 @@ export class Appointment {
 
   @Column({ type: "timestamp", nullable: true, default: () => "CURRENT_TIMESTAMP" })
   application_date: Date | null;
-
-  @Column({ name: "payment_status", default: "PENDING" })
-  payment_status_code: string;
-
-  //PAYMENT_STATUS
-  @ManyToOne(() => UnitDynamicCentral)
-  @JoinColumn({ name: "payment_status", referencedColumnName: "code" })
-  payment_status: UnitDynamicCentral;
-
-  //PAYMENT_METHOD
-  //This can be in different table for add information when the user pays with different payment methods
-  //and registry the traceability of payments
-  //But V1 is just this column
-  @ManyToOne(() => UnitDynamicCentral)
-  @JoinColumn({ name: "payment_method", referencedColumnName: "code" })
-  payment_method: UnitDynamicCentral | null;
-
-  //APPOINTMENT_RESULT
-  @ManyToOne(() => UnitDynamicCentral)
-  @JoinColumn({ name: "appointment_result", referencedColumnName: "code" })
-  appointment_result: UnitDynamicCentral | null;
 
   @Column({ type: "text", nullable: true, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   user_description: string | null;
@@ -92,6 +74,67 @@ export class Appointment {
   @Column({ type: "varchar", length: 250, nullable: true, default: null })
   phone_number_external_user: string | null;
 
+
+
+
+
+  //********************************** */
+  //            Foreign keys
+  //********************************** */
+
+  //APPOINTMENT_TYPE
+  @Column({ name: "appointment_type_code", default: "VALORATION_APPOINTMENT" })
+  appointment_type_code: string;
+
+  @ManyToOne(() => UnitDynamicCentral)
+  @JoinColumn({ name: "appointment_type_code", referencedColumnName: "code" })
+  appointment_type: UnitDynamicCentral;
+
+
+  //RESERVATION_TYPE
+  @Column({ name: "reservation_type_code", default: "PRE_RESERVATION_VALORATION_APPOINTMENT" })
+  reservation_type_code: string;
+
+  @ManyToOne(() => UnitDynamicCentral)
+  @JoinColumn({ name: "reservation_type_code", referencedColumnName: "code" })
+  reservation_type: UnitDynamicCentral;
+
+
+  //APPOINTMENT_STATUS
+  @Column({ name: "appointment_status_code",  default: "PENDING_VALORATION_APPOINTMENT" })
+  appointment_status_code: string;
+
+  @ManyToOne(() => UnitDynamicCentral)
+  @JoinColumn({ name: "appointment_status_code", referencedColumnName: "code" })
+  appointment_status: UnitDynamicCentral;
+
+ 
+  //PAYMENT_STATUS
+  @Column({ name: "payment_status_code", default: "PAYMENT_STATUS_NOT_PAID_VALORATION_APPOINTMENT" })
+  payment_status_code: string;
+
+  @ManyToOne(() => UnitDynamicCentral)
+  @JoinColumn({ name: "payment_status_code", referencedColumnName: "code" })
+  payment_status: UnitDynamicCentral;
+
+
+  //PAYMENT_METHOD
+  @ManyToOne(() => UnitDynamicCentral)
+  @JoinColumn({ name: "payment_method_code", referencedColumnName: "code" })
+  payment_method: UnitDynamicCentral | null;
+
+
+  //APPOINTMENT_RESULT
+  @ManyToOne(() => UnitDynamicCentral)
+  @JoinColumn({ name: "appointment_result_code", referencedColumnName: "code" })
+  appointment_result: UnitDynamicCentral | null;
+
+  
+
+
+   //********************************** */
+  //            BASIC FIELDS
+  //********************************** */
   @Column({ type: "tinyint", default: 0 })
   is_deleted: boolean;
 

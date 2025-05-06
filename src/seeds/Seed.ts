@@ -46,6 +46,18 @@ async function createDatabaseIfNotExists() {
   await tempDataSource.destroy(); // Close the temporary connection
 }
 
+function generateRandomCode(length: number = 7): string {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = '';
+    
+    for (let i = 0; i < length; i++) {
+      const randomIdx = Math.floor(Math.random() * chars.length);
+      result += chars[randomIdx];
+    }
+  
+    return result;
+  }
+
 
 async function runSeed() {
  
@@ -1317,178 +1329,197 @@ await availabilityRepository.upsert(availabilities, ["id"]);
 
 
 
-
 const appointmentRepository = dataSource.getRepository(Appointment);
 
 const appointments = [
   {
     id: 1,
+    appointment_qr_code: generateRandomCode(),
     customer: { id: "f1635823-7d9a-4df9-bd1e-ad8bd985de0b" }, // Luis Fernández
     proforma_file_code: "PROF-001",
     appointment_date: "2025-03-20",
     appointment_hour: "09:00:00",
-    reservation_type: { code: "RESERVATION" },
-    appointment_status: { code: "PENDING" },
+    reservation_type: { code: "PRE_RESERVATION_PROCEDURE" },
+    appointment_status: { code: "PENDING_VALORATION_APPOINTMENT" },
     supplier: { id: 1 }, // Alejandro Vargas
     application_date: "2025-03-18",
-    payment_status: { code: "PENDING" },
+    payment_status: { code: "PAYMENT_STATUS_NOT_PAID_VALORATION_APPOINTMENT" },
     payment_method: { code: "CREDIT_CARD" },
     appointment_result: null,
     user_description: "Consulta general para revisión de salud cardiovascular.",
     recommendation_post_appointment: null,
+    appointment_type:{ code: "VALORATION_APPOINTMENT" },
     diagnostic: null,
   },
   {
     id: 2,
+    appointment_qr_code: generateRandomCode(),
     customer: { id: "728237d9-c16d-4ca8-bbbe-240a697fb3c3" }, // María Jiménez
     proforma_file_code: "PROF-002",
     appointment_date: "2025-03-21",
     appointment_hour: "10:30:00",
-    reservation_type: { code: "EVALUATION" },
-    appointment_status: { code: "CONFIRM" },
+    reservation_type: { code: "PRE_RESERVATION_PROCEDURE" },
+    appointment_status: { code: "VALUATION_PENDING_VALORATION_APPOINTMENT" },
     supplier: { id: 2 }, // Sofía Araya
     application_date: "2025-03-19",
-    payment_status: { code: "PAID" },
+    payment_status: { code: "PAYMENT_STATUS_PAID_PROCEDURE" },
     payment_method: { code: "ON_CONSULTATION" },
     appointment_result: { code: "FIT_FOR_PROCEDURE" },
     user_description: "Consulta dermatológica para evaluación de manchas en la piel.",
     recommendation_post_appointment: "Aplicar crema hidratante y protector solar.",
+    appointment_type:{ code: "VALORATION_APPOINTMENT" },
     diagnostic: "Dermatitis leve.",
   },
   {
     id: 3,
+    appointment_qr_code: generateRandomCode(),
     customer: { id: "a1ea46aa-0dce-4c15-bea5-26ef6c83d27b" }, // Daniela Solano
     proforma_file_code: "PROF-003",
     appointment_date: "2025-03-22",
     appointment_hour: "08:00:00",
-    reservation_type: { code: "PROCEDURE" },
-    appointment_status: { code: "PENDING_RESERVATION" },
+    reservation_type: { code: "PRE_RESERVATION_VALORATION_APPOINTMENT" },
+    appointment_status: { code: "PENDING_VALORATION_APPOINTMENT" },
     supplier: { id: 3 }, // Fernando López
     application_date: "2025-03-20",
-    payment_status: { code: "PENDING" },
+    payment_status: { code: "PAYMENT_STATUS_NOT_PAID_VALORATION_APPOINTMENT" },
     payment_method: { code: "SPLIT_PAYMENT" },
     appointment_result: null,
     user_description: "Consulta para extracción de muela del juicio.",
     recommendation_post_appointment: null,
+    appointment_type:{ code: "VALORATION_APPOINTMENT" },
     diagnostic: null,
   },
   {
     id: 4,
+    appointment_qr_code: generateRandomCode(),
     customer: { id: "fd77bb90-9ac5-411e-9924-86cf4f529a5e" }, // José Marín
     proforma_file_code: "PROF-004",
     appointment_date: "2025-03-23",
     appointment_hour: "14:00:00",
-    reservation_type: { code: "RESERVATION" },
-    appointment_status: { code: "CANCEL" },
+    reservation_type: { code: "RESERVATION_VALORATION_APPOINTMENT" },
+    appointment_status: { code: "CANCEL_APPOINTMENT" },
     supplier: { id: 4 }, // Hospital Clínica Santa Fe
     application_date: "2025-03-21",
-    payment_status: { code: "NOT_PAID" },
+    payment_status: { code: "PAYMENT_STATUS_NOT_PAID_VALORATION_APPOINTMENT" },
     payment_method: { code: "CREDIT_PAYMENT" },
     appointment_result: null,
     user_description: "Consulta cancelada debido a cambios de planes del paciente.",
     recommendation_post_appointment: null,
+    appointment_type:{ code: "VALORATION_APPOINTMENT" },
     diagnostic: null,
   },
   {
     id: 5,
+    appointment_qr_code: generateRandomCode(),
     customer: { id: "f1635823-7d9a-4df9-bd1e-ad8bd985de0b" }, // Luis Fernández
     proforma_file_code: "PROF-005",
     appointment_date: "2025-03-25",
     appointment_hour: "11:30:00",
-    reservation_type: { code: "PROCEDURE" },
-    appointment_status: { code: "CONFIRM" },
+    reservation_type: { code: "PRE_RESERVATION_VALORATION_APPOINTMENT" },
+    appointment_status: { code: "CONCRETED_APPOINTMENT" },
     supplier: { id: 5 }, // Centro Médico del Pacífico
     application_date: "2025-03-23",
-    payment_status: { code: "PAID" },
+    payment_status: { code: "PAYMENT_STATUS_PAID_PROCEDURE" },
     payment_method: { code: "CREDIT_CARD" },
-    appointment_result: { code: "RECOMMENDED_FOLLOWUP" },
+    appointment_result: { code: "NOT_FIT_FOR_PROCEDURE" },
     user_description: "Consulta postquirúrgica tras intervención de rodilla.",
     recommendation_post_appointment: "Seguir con terapia de rehabilitación.",
+    appointment_type:{ code: "PROCEDURE_APPOINTMENT" },
     diagnostic: "Recuperación adecuada.",
   },
   {
     id: 6,
+    appointment_qr_code: generateRandomCode(),
     customer: { id: "728237d9-c16d-4ca8-bbbe-240a697fb3c3" }, // María Jiménez
     proforma_file_code: "PROF-006",
     appointment_date: "2025-03-26",
     appointment_hour: "13:00:00",
-    reservation_type: { code: "EVALUATION" },
-    appointment_status: { code: "CONFIRM" },
+    reservation_type: { code: "RESERVATION_VALORATION_APPOINTMENT" },
+    appointment_status: { code: "CONCRETED_APPOINTMENT" },
     supplier: { id: 1 },
     application_date: "2025-03-24",
-    payment_status: { code: "PAID" },
+    payment_status: { code: "PAYMENT_STATUS_NOT_PAID_VALORATION_APPOINTMENT" },
     payment_method: { code: "ON_CONSULTATION" },
-    appointment_result: { code: "NEEDS_ADDITIONAL_EVALUATION" },
+    appointment_result: { code: "NOT_FIT_FOR_PROCEDURE" },
     user_description: "Evaluación médica general.",
     recommendation_post_appointment: "Realizar exámenes adicionales de sangre.",
+    appointment_type:{ code: "PROCEDURE_APPOINTMENT" },
     diagnostic: null,
   },
   {
     id: 7,
+    appointment_qr_code: generateRandomCode(),
     customer: { id: "a1ea46aa-0dce-4c15-bea5-26ef6c83d27b" }, // Daniela Solano
     proforma_file_code: "PROF-007",
     appointment_date: "2025-03-27",
     appointment_hour: "16:00:00",
-    reservation_type: { code: "PROCEDURE" },
-    appointment_status: { code: "CONFIRM" },
+    reservation_type: { code: "PRE_RESERVATION_VALORATION_APPOINTMENT" },
+    appointment_status: { code: "CONCRETED_APPOINTMENT" },
     supplier: { id: 2 },
     application_date: "2025-03-25",
-    payment_status: { code: "PAID" },
+    payment_status: { code: "PAYMENT_STATUS_PAID_PROCEDURE" },
     payment_method: { code: "CREDIT_CARD" },
     appointment_result: { code: "FIT_FOR_PROCEDURE" },
     user_description: "Cirugía ocular LASIK programada.",
     recommendation_post_appointment: "Evitar exposición a pantallas por 24 horas.",
+    appointment_type:{ code: "PROCEDURE_APPOINTMENT" },
     diagnostic: null,
   },
   {
     id: 8,
+    appointment_qr_code: generateRandomCode(),
     customer: { id: "fd77bb90-9ac5-411e-9924-86cf4f529a5e" }, // José Marín
     proforma_file_code: "PROF-008",
     appointment_date: "2025-03-28",
     appointment_hour: "17:30:00",
-    reservation_type: { code: "PROCEDURE" },
-    appointment_status: { code: "PENDING" },
+    reservation_type: { code: "PRE_RESERVATION_VALORATION_APPOINTMENT" },
+    appointment_status: { code: "PENDING_PROCEDURE" },
     supplier: { id: 3 },
     application_date: "2025-03-26",
-    payment_status: { code: "PENDING" },
+    payment_status: { code: "PAYMENT_STATUS_NOT_PAID_VALORATION_APPOINTMENT" },
     payment_method: { code: "CREDIT_PAYMENT" },
     appointment_result: null,
     user_description: "Consulta para cirugía de cadera.",
     recommendation_post_appointment: null,
+    appointment_type:{ code: "PROCEDURE_APPOINTMENT" },
     diagnostic: null,
   },
   {
     id: 9,
+    appointment_qr_code: generateRandomCode(),
     customer: { id: "f1635823-7d9a-4df9-bd1e-ad8bd985de0b" }, // Luis Fernández
     proforma_file_code: "PROF-009",
     appointment_date: "2025-03-29",
     appointment_hour: "10:00:00",
-    reservation_type: { code: "RESERVATION" },
-    appointment_status: { code: "CONFIRM" },
+    reservation_type: { code: "PRE_RESERVATION_VALORATION_APPOINTMENT" },
+    appointment_status: { code: "PENDING_PROCEDURE" },
     supplier: { id: 4 },
     application_date: "2025-03-27",
-    payment_status: { code: "PAID" },
+    payment_status: { code: "PAYMENT_STATUS_PAID_PROCEDURE" },
     payment_method: { code: "SPLIT_PAYMENT" },
     appointment_result: null,
     user_description: "Consulta de seguimiento postoperatorio.",
     recommendation_post_appointment: "Revisar cicatrización en 15 días.",
+    appointment_type:{ code: "PROCEDURE_APPOINTMENT" },
     diagnostic: null,
   },
   {
     id: 10,
+    appointment_qr_code: generateRandomCode(),
     customer: { id: "728237d9-c16d-4ca8-bbbe-240a697fb3c3" }, // María Jiménez
     proforma_file_code: "PROF-010",
     appointment_date: "2025-03-30",
     appointment_hour: "14:30:00",
-    reservation_type: { code: "EVALUATION" },
-    appointment_status: { code: "CONFIRM" },
+    reservation_type: { code: "PRE_RESERVATION_PROCEDURE" },
+    appointment_status: { code: "CONFIRM_PROCEDURE" },
     supplier: { id: 5 },
     application_date: "2025-03-28",
-    payment_status: { code: "PAID" },
+    payment_status: { code: "PAYMENT_STATUS_PAID_PROCEDURE" },
     payment_method: { code: "CREDIT_CARD" },
     appointment_result: null,
     user_description: "Consulta médica preventiva anual.",
     recommendation_post_appointment: "Continuar con hábitos saludables.",
+    appointment_type:{ code: "VALORATION_APPOINTMENT" },
     diagnostic: "Salud estable.",
   }
 ];

@@ -104,7 +104,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n  \"email\": \"fabian7593+test1@gmail.com\",\r\n  \"password\": \"Cbiblica77@gmail.com\"\r\n}\r\n\r\n",
+											"raw": "{\r\n  \"email\": \"coopahorro@example.com\",\r\n  \"password\": \"Vitatest25*\"\r\n}\r\n\r\n",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -138,39 +138,6 @@
 										"body": {
 											"mode": "raw",
 											"raw": "{\r\n  \"email\": \"gulate@example.com\",\r\n  \"password\": \"Vitatest25*\"\r\n}\r\n\r\n",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{host}}/auth/login",
-											"host": [
-												"{{host}}"
-											],
-											"path": [
-												"auth",
-												"login"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "Login User - Happy path - Legal Representative",
-									"request": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "x-api-key",
-												"value": "{{secret_api_key}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\r\n  \"email\": \"fabian7593+test5@gmail.com\",\r\n  \"password\": \"Fabian7593+test4@gmail.com\"\r\n}\r\n\r\n",
 											"options": {
 												"raw": {
 													"language": "json"

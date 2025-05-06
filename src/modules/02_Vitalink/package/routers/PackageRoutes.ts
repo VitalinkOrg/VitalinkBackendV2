@@ -10,7 +10,7 @@ class PackageRoutes extends GenericRoutes {
     private filters: FindManyOptions = {};
     constructor() {
         super(new GenericController(Package), "/package");
-        this.filters.relations = ["procedure","product","specialty"];
+        this.filters.relations = ["procedure","product","specialty","specialty.supplier", "specialty.medical_specialty"];
     }
 
     protected initializeRoutes() {

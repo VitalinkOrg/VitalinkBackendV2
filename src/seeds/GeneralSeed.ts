@@ -31,6 +31,8 @@ async function createDatabaseIfNotExists() {
 }
 
 
+
+
 async function runSeed() {
  
     await createDatabaseIfNotExists();
@@ -63,40 +65,50 @@ async function runSeed() {
     */
     const udcRepository = await dataSource.getRepository(UnitDynamicCentral);
 
+
+    //Appointment Types
+    const appointmentTypes = [
+        { name: "Cita de Valoración", value1: "Valoración", code: "VALORATION_APPOINTMENT", type: "APPOINTMENT_TYPE"  as "APPOINTMENT_TYPE"  },
+        { name: "Procedimierto", value1: "Procedimiento",code: "PROCEDURE_APPOINTMENT", type: "APPOINTMENT_TYPE"  as "APPOINTMENT_TYPE"  },
+    ];
+    await udcRepository.upsert(appointmentTypes, ["code"]);
+
     //Reservation Types
     const reservationTypes = [
-        { name: "Reservación", code: "RESERVATION", type: "RESERVATION_TYPE"  as "RESERVATION_TYPE"  },
-        { name: "Pre-Reservación", code: "PRE_RESERVATION", type: "RESERVATION_TYPE"  as "RESERVATION_TYPE"  },
-        { name: "Valoración", code: "EVALUATION", type: "RESERVATION_TYPE"  as "RESERVATION_TYPE"  },
-        { name: "Procedimiento", code: "PROCEDURE", type: "RESERVATION_TYPE"  as "RESERVATION_TYPE"  }
+        { name: "Pre-Reservación Cita Valoración", value1: "Pre-Reserva",code: "PRE_RESERVATION_VALORATION_APPOINTMENT", type: "RESERVATION_TYPE"  as "RESERVATION_TYPE"  },
+        { name: "Reservación Cita Valoración", value1: "Reserva", code: "RESERVATION_VALORATION_APPOINTMENT", type: "RESERVATION_TYPE"  as "RESERVATION_TYPE"  },
+        { name: "Pre-Reservación Procedimiento", value1: "Pre-Reserva",code: "PRE_RESERVATION_PROCEDURE", type: "RESERVATION_TYPE"  as "RESERVATION_TYPE"  },
+        { name: "Reservación Procedimiento", value1: "Reserva", code: "RESERVATION_PROCEDURE", type: "RESERVATION_TYPE"  as "RESERVATION_TYPE"  },
     ];
     await udcRepository.upsert(reservationTypes, ["code"]);
 
     // aPPOINTMENT STATUS
     const appointmentStatus = [
-        { name: "Pendiente", code: "PENDING", type: "APPOINTMENT_STATUS"  as "APPOINTMENT_STATUS"  },
-        { name: "Reservacion Pendiente", code: "PENDING_RESERVATION", type: "APPOINTMENT_STATUS" as "APPOINTMENT_STATUS" },
-        { name: "Cancelada", code: "CANCEL", type: "APPOINTMENT_STATUS" as "APPOINTMENT_STATUS" },
-        { name: "Confirmada", code: "CONFIRM", type: "APPOINTMENT_STATUS"  as "APPOINTMENT_STATUS"},
-        { name: "Valorado", code: "VALUED", type: "APPOINTMENT_STATUS" as "APPOINTMENT_STATUS" }
+        //CITA DE VALORACION
+        { name: "Pendiente Cita de valoracion", value1: "Pendiente", code: "PENDING_VALORATION_APPOINTMENT", type: "APPOINTMENT_STATUS"  as "APPOINTMENT_STATUS"  },
+        { name: "Confirmada Cita de valoracion", value1: "Confirmada", code: "CONFIRM_VALIDATION_APPOINTMENT", type: "APPOINTMENT_STATUS"  as "APPOINTMENT_STATUS"},
+        { name: "Valoración Pendiente", value1: "Valoración Pendiente", code: "VALUATION_PENDING_VALORATION_APPOINTMENT", type: "APPOINTMENT_STATUS" },
+        { name: "Valorado", value1: "Valorado", code: "VALUED_VALORATION_APPOINTMENT", type: "APPOINTMENT_STATUS" as "APPOINTMENT_STATUS" },
+
+        //Procedimientos
+        { name: "Pendiente Procedimiento", value1: "Pendiente", code: "PENDING_PROCEDURE", type: "APPOINTMENT_STATUS"  as "APPOINTMENT_STATUS"  },
+        { name: "Confirmado Procedimiento", value1: "Confirmada", code: "CONFIRM_PROCEDURE", type: "APPOINTMENT_STATUS"  as "APPOINTMENT_STATUS"},
+        { name: "Pendiente Realizar Procedimiento", value1: "Pendiente Realizar", code: "WAITING_PROCEDURE", type: "APPOINTMENT_STATUS" },
+        
+        //GENERALES
+        { name: "Concretado", value1: "Concretado",code: "CONCRETED_APPOINTMENT", type: "APPOINTMENT_STATUS" },
+        { name: "Cancelada", value1: "Cancelado", code: "CANCEL_APPOINTMENT", type: "APPOINTMENT_STATUS" as "APPOINTMENT_STATUS" },
     ];
     await udcRepository.upsert(appointmentStatus, ["code"]);
 
-    // Reviews
-    const review = [
-        { name: "Calidad de atención", code: "ATTENTION_QUALITY", type: "REVIEW"  as "REVIEW"  },
-        { name: "Limpieza de instalaciones", code: "CLEANING_ROOMS", type: "REVIEW" as "REVIEW" },
-        { name: "Amabilidad del staff", code: "STAFF_KINDNESS", type: "REVIEW" as "REVIEW" },
-        { name: "Relación calidad/precio", code: "QUALITY_PRICE_RATIO", type: "REVIEW"  as "REVIEW"}
-    ];
-    await udcRepository.upsert(review, ["code"]);
+  
  
     // Payment Status
     const paymentStatus = [
-        { name: "Pagado", code: "PAID", type: "PAYMENT_STATUS" as "PAYMENT_STATUS" },
-        { name: "Pagado por credito", code: "PAID_BY_CREDIT", type: "PAYMENT_STATUS" as "PAYMENT_STATUS" },
-        { name: "Pendiente", code: "PENDING", type: "PAYMENT_STATUS" as "PAYMENT_STATUS" },
-        { name: "No Pagado", code: "NOT_PAID", type: "PAYMENT_STATUS" as "PAYMENT_STATUS" }
+        { name: "Pagado", value1: "Pagado Cita de Valoracion", code: "PAYMENT_STATUS_PAID_VALORATION_APPOINTMENT", type: "PAYMENT_STATUS" as "PAYMENT_STATUS" },
+        { name: "No Pagado", value1: "Pendiente de pago cita de valoracion", code: "PAYMENT_STATUS_NOT_PAID_VALORATION_APPOINTMENT", type: "PAYMENT_STATUS" as "PAYMENT_STATUS" },
+        { name: "Pagado", value1: "Pagado Procedimiento", code: "PAYMENT_STATUS_PAID_PROCEDURE", type: "PAYMENT_STATUS" as "PAYMENT_STATUS" },
+        { name: "No Pagado", value1: "Pendiente de pago Procedimiento", code: "PAYMENT_STATUS_NOT_PAID_PROCEDURE", type: "PAYMENT_STATUS" as "PAYMENT_STATUS" },
     ];
     await udcRepository.upsert(paymentStatus, ["code"]);
 
@@ -108,6 +120,31 @@ async function runSeed() {
         { name: "Pago dividido", code: "SPLIT_PAYMENT", type: "PAYMENT_METHOD" as "PAYMENT_METHOD" }
     ];
     await udcRepository.upsert(paymentMethods, ["code"]);
+
+
+
+    const appointmentResults = [
+        { 
+            name: "Apto para Procedimiento Médico", 
+            code: "FIT_FOR_PROCEDURE", 
+            type: "APPOINTMENT_RESULT" as "APPOINTMENT_RESULT",
+            description: "El paciente es apto para someterse al procedimiento médico solicitado."
+        },
+        { 
+            name: "No Apto para Procedimiento Médico", 
+            code: "NOT_FIT_FOR_PROCEDURE", 
+            type: "APPOINTMENT_RESULT" as "APPOINTMENT_RESULT",
+            description: "El paciente no es apto para proceder con el procedimiento médico solicitado debido a preocupaciones médicas o de seguridad."
+        },
+        { 
+            name: "No Requiere Procedimiento Médico", 
+            code: "NOT_REQUIRE_PROCEDURE", 
+            type: "APPOINTMENT_RESULT" as "APPOINTMENT_RESULT",
+            description: "El paciente no requiere procedimiento medico"
+        }
+    ];
+    await udcRepository.upsert(appointmentResults, ["code"]);
+   
 
     // Asking Credit Status
     const askingCreditStatus = [
@@ -172,6 +209,17 @@ async function runSeed() {
     
     
     await udcRepository.upsert(experienceType, ["code"]);
+
+
+
+       // Reviews
+       const review = [
+        { name: "Calidad de atención", code: "ATTENTION_QUALITY", type: "REVIEW"  as "REVIEW"  },
+        { name: "Limpieza de instalaciones", code: "CLEANING_ROOMS", type: "REVIEW" as "REVIEW" },
+        { name: "Amabilidad del staff", code: "STAFF_KINDNESS", type: "REVIEW" as "REVIEW" },
+        { name: "Relación calidad/precio", code: "QUALITY_PRICE_RATIO", type: "REVIEW"  as "REVIEW"}
+    ];
+    await udcRepository.upsert(review, ["code"]);
     
     //Id Type
     const IDType = [
@@ -593,39 +641,6 @@ async function runSeed() {
     await udcRepository.upsert(Assessments, ["code"]);
     
     
-
-
-    const appointmentResults = [
-        { 
-            name: "Apto para Procedimiento Médico", 
-            code: "FIT_FOR_PROCEDURE", 
-            type: "APPOINTMENT_RESULT" as "APPOINTMENT_RESULT",
-            description: "El paciente es apto para someterse al procedimiento médico solicitado."
-        },
-        { 
-            name: "No Apto para Procedimiento Médico", 
-            code: "NOT_FIT_FOR_PROCEDURE", 
-            type: "APPOINTMENT_RESULT" as "APPOINTMENT_RESULT",
-            description: "El paciente no es apto para proceder con el procedimiento médico solicitado debido a preocupaciones médicas o de seguridad."
-        },
-        { 
-            name: "Requiere Evaluación Adicional", 
-            code: "NEEDS_ADDITIONAL_EVALUATION", 
-            type: "APPOINTMENT_RESULT" as "APPOINTMENT_RESULT",
-            description: "El paciente requiere evaluaciones médicas adicionales antes de determinar su elegibilidad para el procedimiento."
-        },
-        { 
-            name: "Recomendado Seguimiento Médico", 
-            code: "RECOMMENDED_FOLLOWUP", 
-            type: "APPOINTMENT_RESULT" as "APPOINTMENT_RESULT",
-            description: "El paciente no requiere un procedimiento, pero debe someterse a seguimientos médicos periódicos."
-        }
-    ];
-
-    
-    await udcRepository.upsert(appointmentResults, ["code"]);
-    
-
 
     const languageProficiencyLevels = [
         { 

@@ -290,10 +290,16 @@ export default  class GenericService extends GenericValidation implements IGener
             if(jwtData != null){
                 // Validate the role of the user
                 if (await this.validateRole(reqHandler, jwtData.role, ConstFunctions.GET_ALL, httpExec) !== true) { return; }
-                //
+
                 const dynamicWhere = await this.validateDynamicRoleAccessGetByFiltering(reqHandler, jwtData);
-                reqHandler.getFilters()!!.where = {
-                  ...reqHandler.getFilters()!!.where,
+
+                let filters = reqHandler.getFilters();
+                if (filters === null || filters === undefined) {
+                  filters = {};
+                }
+
+                filters.where = {
+                  ...(filters.where ?? {}),
                   ...dynamicWhere
                 };
             }
@@ -311,6 +317,7 @@ export default  class GenericService extends GenericValidation implements IGener
              executeGetAllFunction(jwtData, httpExec, page, size);
            
         } catch (error: any) {
+          console.log("error", error);
             // Return the general error response
             return await httpExec.generalError(error, reqHandler.getMethod(), this.controllerName);
         }

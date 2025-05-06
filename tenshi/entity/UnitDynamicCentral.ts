@@ -34,7 +34,8 @@ export class UnitDynamicCentral {
                                 "ASSESSMENT",
                                 "ASSESSMENT_DETAIL",
                                 "APPOINTMENT_RESULT",
-                                "LANGUAGE_PROFICIENCY"], 
+                                "LANGUAGE_PROFICIENCY",
+                                "APPOINTMENT_TYPE"], 
                                 nullable: true })
   type: string | null;
 

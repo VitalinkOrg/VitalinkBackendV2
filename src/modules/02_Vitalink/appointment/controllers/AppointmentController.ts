@@ -1,0 +1,160 @@
+import { ConstHTTPRequest, ConstMessagesJson, ConstStatusJson } from "@TenshiJS/consts/Const";
+import { RequestHandler } from "@TenshiJS/generics";
+import GenericController from "@TenshiJS/generics/Controller/GenericController";
+import GenericRepository from "@TenshiJS/generics/Repository/GenericRepository";
+import { Appointment } from "@index/entity/Appointment";
+import { AppointmentFlowLog } from "@index/entity/AppointmentFlowLog";
+import { AppointmentCredit } from "@index/entity/AppointmentCredit";
+import jwt from 'jsonwebtoken';
+
+
+export default class AppointmentController extends GenericController {
+    private appointmentFlowLogRepository = new GenericRepository(AppointmentFlowLog);
+    private appointmentCreditRepository = new GenericRepository(AppointmentCredit);
+  
+    constructor() {
+      super(Appointment);
+    }
+
+
+     async StepByStepReservationAppointment(reqHandler: RequestHandler, step: number): Promise<any> {
+          return this.getService().updateService(reqHandler, async (jwtData, httpExec, id) => {
+
+            const body = reqHandler.getAdapter().entityFromPutBody();
+            
+            try {
+
+                //Step 2 - Medico Confirmar Cita
+                //Step 4 - Medico Subir proforma Medica + Realiza Valoracion
+                //Step 6 - Medico confirma Reserva
+                //Step 8 - Medico asigna procedimiento Realizado
+                if(step == 2 || step == 4 || step == 6 || step == 8){
+                    if(jwtData.role == "CUSTOMER"){
+                        return httpExec.unauthorizedError(ConstMessagesJson.ROLE_AUTH_ERROR);
+                    }
+                //Step 3 - Paciente Paga cita valoracion
+                //Step 5 - Paciente pulsa Reservar Procedimiento
+                //Step 7 - Paciente realiza pago Procedimiento
+                }else if(step == 3 || step == 5 || step == 7){
+                    if(jwtData.role == "LEGAL_REPRESENTATIVE"){
+                        return httpExec.unauthorizedError(ConstMessagesJson.ROLE_AUTH_ERROR);
+                    }
+                }
+
+                //************************************ */
+                /*         Cita de Valoracion          */
+                //************************************ */
+                //Step 2 - Medico Confirmar Cita
+                if(step == 2){
+                    body.reservation_type_code = "RESERVATION_VALORATION_APPOINTMENT";
+                    body.appointment_status_code = "CONFIRM_VALIDATION_APPOINTMENT";
+                    body.appointment_type_code = "VALORATION_APPOINTMENT";
+                }
+
+                //Step 3 - Paciente Paga cita valoracion
+                else if(step == 3){
+                     //Necesita metodo de pago
+                     console.log(body);
+                     if(body.payment_method == null || body.payment_method == undefined){
+                        return httpExec.validationError(ConstMessagesJson.REQUIRED_FIELDS);
+                    }
+
+                    body.payment_status_code = "PAYMENT_STATUS_PAID_VALORATION_APPOINTMENT";
+
+                    body.reservation_type_code = "RESERVATION_VALORATION_APPOINTMENT";
+                    body.appointment_status_code = "VALUATION_PENDING_VALORATION_APPOINTMENT";
+                    body.appointment_type_code = "VALORATION_APPOINTMENT";
+                }
+
+                //Step 4 - Medico Subir proforma Medica + Realiza Valoracion
+                else if(step == 4){
+
+                    if(body.appointment_result_code == null || body.appointment_result_code == undefined){
+                        return httpExec.validationError(ConstMessagesJson.REQUIRED_FIELDS);
+                    }
+
+                    //Si si es apto apra procedimiento, necesita subir proforma file
+                    if(body.appointment_result_code == "FIT_FOR_PROCEDURE"){
+                        //Necesita subir proforma medica
+                        if(body.proforma_file_code == null || body.proforma_file_code == undefined){
+                            return httpExec.validationError(ConstMessagesJson.REQUIRED_FIELDS);
+                        }
+                    }
+
+                    body.reservation_type_code = "RESERVATION_VALORATION_APPOINTMENT";
+                    body.appointment_status_code = "VALUED_VALORATION_APPOINTMENT";
+                    body.appointment_type_code = "VALORATION_APPOINTMENT";
+                }
+
+
+                //************************************ */
+                /*              Procedimiento          */
+                //************************************ */
+                //Step 5 - Paciente pulsa Reservar Procedimiento
+                else if(step == 5){
+                    body.reservation_type_code = "PRE_RESERVATION_PROCEDURE";
+                    body.appointment_status_code = "PENDING_PROCEDURE";
+                    body.appointment_type_code = "PROCEDURE_APPOINTMENT";
+
+                    body.payment_status_code = "PAYMENT_STATUS_NOT_PAID_PROCEDURE";
+                }
+
+                //Step 6 - Medico confirma Reserva
+                else if(step == 6){
+                    body.reservation_type_code = "RESERVATION_PROCEDURE";
+                    body.appointment_status_code = "CONFIRM_PROCEDURE";
+                    body.appointment_type_code = "PROCEDURE_APPOINTMENT";
+                }
+
+                //Step 7 - Paciente realiza pago Procedimiento
+                else if(step == 7){
+                    //Necesita metodo de pago
+                    if(body.payment_method == null || body.payment_method == undefined){
+                        return httpExec.validationError(ConstMessagesJson.REQUIRED_FIELDS);
+                    }
+
+                    body.reservation_type_code = "RESERVATION_PROCEDURE";
+                    body.appointment_status_code = "WAITING_PROCEDURE";
+                    body.appointment_type_code = "PROCEDURE_APPOINTMENT";
+
+                    body.payment_status_code = "PAYMENT_STATUS_PAID_PROCEDURE";
+                }
+
+                //Step 8 - Medico asigna procedimiento Realizado
+                else if(step == 8){
+                    body.reservation_type_code = "RESERVATION_PROCEDURE";
+                    body.appointment_status_code = "CONCRETED_APPOINTMENT";
+                    body.appointment_type_code = "PROCEDURE_APPOINTMENT";
+                }
+
+                console.log(body);
+                
+                // Execute the update action in the database
+                const updateEntity = await this.getRepository().update(id!!, body,
+                                                             reqHandler.getLogicalDelete());
+
+                if(updateEntity == null){
+                    return httpExec.dynamicError(ConstStatusJson.NOT_FOUND, ConstMessagesJson.DONT_EXISTS);
+                }
+
+                const codeResponse : string = 
+                reqHandler.getCodeMessageResponse() != null ? 
+                reqHandler.getCodeMessageResponse() as string :
+                ConstHTTPRequest.UPDATE_SUCCESS;
+
+                // Return the success response
+                return httpExec.successAction(
+                    reqHandler.getAdapter().entityToResponse(updateEntity), 
+                    codeResponse);
+
+            } catch (error: any) {
+                // Return the database error response
+                return await httpExec.databaseError(error, jwtData.id.toString(), 
+                reqHandler.getMethod(), this.getControllerName());
+            }
+        
+        });
+    }
+  
+}
+  
