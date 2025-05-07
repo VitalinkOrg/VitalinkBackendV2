@@ -141,6 +141,8 @@ export default class ${entityName}DTO implements IAdapterFromBody {
 
     private buildEntity(source: any, isCreating: boolean): ${entityName} {
         const entity = new ${entityName}();
+          ${fields.map(field => `        entity.${field.name} = this.req.body.${field.name};`).join('\n')}
+          
         if (isCreating) {
             entity.created_date = new Date();
         } else {

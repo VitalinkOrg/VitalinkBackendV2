@@ -1,7 +1,8 @@
 import { Request, Response, 
          RequestHandler, RequestHandlerBuilder, 
          GenericController, GenericRoutes,
-         FindManyOptions} from "@modules/index";
+         FindManyOptions,
+         getUrlParam} from "@modules/index";
 import { ReviewDetail } from "@index/entity/ReviewDetail";
 import ReviewDetailDTO from "@modules/02_Vitalink/reviewdetail/dtos/ReviewDetailDTO";
 
@@ -22,12 +23,21 @@ class ReviewDetailRoutes extends GenericRoutes {
                                     .setMethod("getReviewDetailById")
                                     .isValidateRole("REVIEW_DETAIL")
                                     .setFilters(this.filters)
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["CUSTOMER", "review.customer.id"],
+                                        ["LEGAL_REPRESENTATIVE", "review.appointment.supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().getById(requestHandler);
         });
         
         this.router.get(`${this.getRouterName()}/get_all`, async (req: Request, res: Response) => {
+
+             const review_id: string | null = getUrlParam("review_id", req) || null;
+            if (review_id != "") {
+                this.filters.where = { ...this.filters.where, review: { id: review_id} };
+            }
         
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
@@ -35,6 +45,10 @@ class ReviewDetailRoutes extends GenericRoutes {
                                     .setMethod("getReviewDetails")
                                     .isValidateRole("REVIEW_DETAIL")
                                     .setFilters(this.filters)
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["CUSTOMER", "review.customer.id"],
+                                        ["LEGAL_REPRESENTATIVE", "review.appointment.supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().getAll(requestHandler);
@@ -65,6 +79,10 @@ class ReviewDetailRoutes extends GenericRoutes {
                                     .setAdapter(new ReviewDetailDTO(req))
                                     .setMethod("updateReviewDetail")
                                     .isValidateRole("REVIEW_DETAIL")
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["CUSTOMER", "review.customer.id"],
+                                        ["LEGAL_REPRESENTATIVE", "review.appointment.supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().update(requestHandler);
@@ -76,11 +94,30 @@ class ReviewDetailRoutes extends GenericRoutes {
                                     .setAdapter(new ReviewDetailDTO(req))
                                     .setMethod("deleteReviewDetail")
                                     .isValidateRole("REVIEW_DETAIL")
-                                    
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["CUSTOMER", "review.customer.id"],
+                                        ["LEGAL_REPRESENTATIVE", "review.appointment.supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().delete(requestHandler);
         });
+
+
+
+          this.router.post(`${this.getRouterName()}/add_multiple`, async (req: Request, res: Response) => {
+        
+                const requestHandler : RequestHandler = 
+                                        new RequestHandlerBuilder(res,req)
+                                        .setAdapter(new ReviewDetailDTO(req))
+                                        .setMethod("insertMultipleReviewDetail")
+                                        .isValidateRole("REVIEW_DETAIL")
+                                        .build();
+            
+                this.getController().insertMultiple(requestHandler);
+            });
+        
+              
     }
 }
 

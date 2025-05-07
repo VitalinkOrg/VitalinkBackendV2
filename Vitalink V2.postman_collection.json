@@ -805,7 +805,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/udc/get_all?code=CONFIRM_VALIDATION_APPOINTMENT",
+									"raw": "{{host}}/udc/get_all?type=EXPERIENCE_TYPE",
 									"host": [
 										"{{host}}"
 									],
@@ -826,8 +826,7 @@
 										},
 										{
 											"key": "type",
-											"value": "ASSESSMENT_DETAIL",
-											"disabled": true
+											"value": "EXPERIENCE_TYPE"
 										},
 										{
 											"key": "father_code",
@@ -836,7 +835,8 @@
 										},
 										{
 											"key": "code",
-											"value": "CONFIRM_VALIDATION_APPOINTMENT"
+											"value": "CONFIRM_VALIDATION_APPOINTMENT",
+											"disabled": true
 										}
 									]
 								}
@@ -1078,11 +1078,11 @@
 										{
 											"key": "file",
 											"type": "file",
-											"src": "/C:/Users/fabia/OneDrive/Escritorio/VitalinkV2/Documentation/NUevos Documentos/Contrato_Simulacion_VitalinkCR.pdf"
+											"src": "/C:/Users/fabia/OneDrive/Escritorio/VitalinkV2/hAPPY PATH/Test documents BD/Contrato_Simulacion_VitalinkCR.pdf"
 										},
 										{
 											"key": "fields",
-											"value": "{\"title\":\"ExampleHappyPath\",\"type\": \"DOC\", \"description\": \"\", \"id_for_table\": 6, \"table\": \"SUPPLIER\",  \"action_type\":  \"PRIVATE_CONTRACT\", \"user_id\": \"d0b47084-2888-4e7e-9347-0aa62fb6aa8f\", \"is_public\":1}",
+											"value": "{\"title\":\"ExampleHappyPath\",\"type\": \"DOC\", \"description\": \"\", \"id_for_table\": 6, \"table\": \"SUPPLIER\",  \"action_type\":  \"PRIVATE_CONTRACT\", \"user_id\": \"d0b47084-2888-4e7e-9347-0aa62fb6aa8f\", \"is_public\":0}",
 											"type": "text"
 										},
 										{
@@ -1818,7 +1818,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/supplier/get?id=6",
+									"raw": "{{host}}/supplier/get?id=1",
 									"host": [
 										"{{host}}"
 									],
@@ -1829,7 +1829,7 @@
 									"query": [
 										{
 											"key": "id",
-											"value": "6"
+											"value": "1"
 										}
 									]
 								}
@@ -2155,6 +2155,19 @@
 									"path": [
 										"specialtybysupplier",
 										"get_all"
+									],
+									"query": [
+										{
+											"key": "medical_specialty",
+											"value": null,
+											"description": "CODE UDC",
+											"disabled": true
+										},
+										{
+											"key": "supplier_id",
+											"value": null,
+											"disabled": true
+										}
 									]
 								}
 							},
@@ -2341,6 +2354,13 @@
 									"path": [
 										"package",
 										"get_all"
+									],
+									"query": [
+										{
+											"key": "supplier_id",
+											"value": "5",
+											"disabled": true
+										}
 									]
 								}
 							},
@@ -2527,6 +2547,13 @@
 									"path": [
 										"availability",
 										"get_all"
+									],
+									"query": [
+										{
+											"key": "supplier_id",
+											"value": "5",
+											"disabled": true
+										}
 									]
 								}
 							},
@@ -2605,6 +2632,44 @@
 									"path": [
 										"certificationsexperience",
 										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bulk Insert Certification Experience",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n  {\r\n    \"supplier_id\": 5,\r\n    \"start_date\": \"2020-01-01\",\r\n    \"end_date\": \"2022-02-03\",\r\n    \"name\": \"Certificación en Medicina General\",\r\n    \"company_name\": \"Universidad de Costa Rica\",\r\n    \"experience_type_code\": \"CERTIFICATION\"\r\n  },\r\n  {\r\n    \"supplier_id\": 5,\r\n    \"start_date\": \"2020-01-01\",\r\n    \"end_date\": \"2022-02-03\",\r\n    \"name\": \"Certificación en Medicina General\",\r\n    \"company_name\": \"Universidad de Costa Rica\",\r\n    \"experience_type_code\": \"CERTIFICATION\"\r\n  }\r\n]\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/certificationsexperience/add_multiple",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"certificationsexperience",
+										"add_multiple"
 									]
 								}
 							},
@@ -2713,6 +2778,13 @@
 									"path": [
 										"certificationsexperience",
 										"get_all"
+									],
+									"query": [
+										{
+											"key": "supplier_id",
+											"value": "1",
+											"disabled": true
+										}
 									]
 								}
 							},
@@ -2899,6 +2971,13 @@
 									"path": [
 										"languagesupplier",
 										"get_all"
+									],
+									"query": [
+										{
+											"key": "supplier_id",
+											"value": "5",
+											"disabled": true
+										}
 									]
 								}
 							},
@@ -3085,6 +3164,18 @@
 									"path": [
 										"review",
 										"get_all"
+									],
+									"query": [
+										{
+											"key": "apointment_id",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "customer_id",
+											"value": null,
+											"disabled": true
+										}
 									]
 								}
 							},
@@ -3271,6 +3362,13 @@
 									"path": [
 										"reviewdetail",
 										"get_all"
+									],
+									"query": [
+										{
+											"key": "review_id",
+											"value": null,
+											"disabled": true
+										}
 									]
 								}
 							},
@@ -3310,6 +3408,44 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Bulk Insert ReviewDetail",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n    {\r\n        \"review_id\": 1,\r\n        \"stars_point\": 5,\r\n        \"review_code\": \"QUALITY_PRICE_RATIO\"\r\n    },\r\n    {\r\n        \"review_id\": 1,\r\n        \"stars_point\": 4,\r\n        \"review_code\": \"STAFF_KINDNESS\"\r\n    },\r\n    {\r\n        \"review_id\": 1,\r\n        \"stars_point\": 3,\r\n        \"review_code\": \"CLEANING_ROOMS\"\r\n    },\r\n    {\r\n        \"review_id\": 1,\r\n        \"stars_point\": 5,\r\n        \"review_code\": \"ATTENTION_QUALITY\"\r\n    }\r\n]\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/reviewdetail/add_multiple",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"reviewdetail",
+										"add_multiple"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -3334,7 +3470,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"card_id\": \"11777\",\n  \"id_type\": \"PHYSICAL_DNI\",\n  \"name\": \"Fabian Esq\",\n  //\"address\": \"Heredia Costa Rica\",\n  //\"birth_date\": \"1993-05-07\",\n  \"finance_entity\": \"8401b1be-7e1d-4357-a632-15172a647b8d\"\n}",
+									"raw": "{\n  \"card_id\": \"11777\",\n  \"id_type\": \"PHYSICAL_DNI\",\n  \"name\": \"Fabian Esq\",\n  \"email\":\"test@gmail.com\",\n  //\"address\": \"Heredia Costa Rica\",\n  //\"birth_date\": \"1993-05-07\",\n  \"finance_entity\": \"8401b1be-7e1d-4357-a632-15172a647b8d\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -3492,6 +3628,44 @@
 											"key": "id",
 											"value": "1"
 										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bulk Insert PreRegister User",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n    {\r\n        \"card_id\": \"11777\",\r\n        \"id_type\": \"PHYSICAL_DNI\",\r\n        \"name\": \"Fabian Esq\",\r\n        \"email\":\"test@gmail.com\",\r\n        //\"address\": \"Heredia Costa Rica\",\r\n        //\"birth_date\": \"1993-05-07\",\r\n        \"finance_entity\": \"8401b1be-7e1d-4357-a632-15172a647b8d\"\r\n    },\r\n    {\r\n        \"card_id\": \"11777\",\r\n        \"id_type\": \"PHYSICAL_DNI\",\r\n        \"name\": \"Fabian Esq\",\r\n        \"email\":\"test@gmail.com\",\r\n        //\"address\": \"Heredia Costa Rica\",\r\n        //\"birth_date\": \"1993-05-07\",\r\n        \"finance_entity\": \"8401b1be-7e1d-4357-a632-15172a647b8d\"\r\n    }\r\n]\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/preregisteruser/add_multiple",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"preregisteruser",
+										"add_multiple"
 									]
 								}
 							},
@@ -3916,7 +4090,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/appointment/get?id=15",
+									"raw": "{{host}}/appointment/get?id=6",
 									"host": [
 										"{{host}}"
 									],
@@ -3927,7 +4101,7 @@
 									"query": [
 										{
 											"key": "id",
-											"value": "15"
+											"value": "6"
 										}
 									]
 								}
@@ -4021,7 +4195,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"appointment\": 1,\n  \"credit_status\": \"REQUIRED\"\n  //\"requested_amount\": \"1500.00\",\n  //\"approved_amount\": \"1200.00\",\n  //\"credit_observations\": \"Solicitud en evaluación.\",\n  //\"pagare_file_code\": \"PAGARE-TEST-001\"\n}\n",
+									"raw": "{\n  \"appointment\": 1,\n  \"credit_status\": \"REQUIRED\",\n  \"requested_amount\": \"1500.00\"\n  //\"approved_amount\": \"1200.00\",\n  //\"credit_observations\": \"Solicitud en evaluación.\",\n  //\"pagare_file_code\": \"PAGARE-TEST-001\"\n}\n",
 									"options": {
 										"raw": {
 											"language": "json"

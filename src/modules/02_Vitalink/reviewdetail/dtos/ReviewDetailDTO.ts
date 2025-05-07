@@ -9,27 +9,35 @@ export default class ReviewDetailDTO implements IAdapterFromBody {
         this.req = req;
     }
 
-    private getEntity(isCreating: boolean): ReviewDetail {
-        const entity = new ReviewDetail();
-        entity.review = this.req.body.review_id;
-        entity.stars_point = this.req.body.stars_point;
-        entity.review_code = this.req.body.review_code;
-     
-        if (isCreating) {
-            entity.created_date = new Date();
-        } 
+     private buildEntity(source: any, isCreating: boolean): ReviewDetail {
+            const entity = new ReviewDetail();
 
-        return entity;
+            entity.review = source.review_id;
+            entity.stars_point = source.stars_point;
+            entity.review_code = source.review_code;
+
+            if (isCreating) {
+                entity.created_date = new Date();
+            }
+    
+            return entity;
     }
+    
+
 
     // POST
     entityFromPostBody(): ReviewDetail {
-        return this.getEntity(true);
+        return this.buildEntity(this.req.body, true);
     }
 
     // PUT
     entityFromPutBody(): ReviewDetail {
-        return this.getEntity(false);
+        return this.buildEntity(this.req.body, false);
+    }
+
+    // POST / PUT desde array
+    entityFromObject(obj: any, isCreating: boolean = true): ReviewDetail {
+        return this.buildEntity(obj, isCreating);
     }
 
     // GET

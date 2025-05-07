@@ -9,32 +9,39 @@ export default class PreRegisterUserDTO implements IAdapterFromBody {
         this.req = req;
     }
 
-    private getEntity(isCreating: boolean): PreRegisterUser {
-        const entity = new PreRegisterUser();
-        entity.card_id = this.req.body.card_id;
-        entity.id_type = this.req.body.id_type;
-        entity.name = this.req.body.name;
-        entity.address = this.req.body.address;
-        entity.birth_date = this.req.body.birth_date;
-        entity.finance_entity = this.req.body.finance_entity;
-     
-        if (isCreating) {
-            entity.created_date = new Date();
-        } else {
-            entity.updated_date = new Date();
-        }
+    private buildEntity(source: any, isCreating: boolean): PreRegisterUser {
 
-        return entity;
+            const entity = new PreRegisterUser();
+            entity.card_id = source.card_id;
+            entity.id_type = source.id_type;
+            entity.name = source.name;
+            entity.email = source.email;
+            entity.address = source.address;
+            entity.birth_date = source.birth_date;
+            entity.finance_entity = source.finance_entity;
+        
+            if (isCreating) {
+                entity.created_date = new Date();
+            } else {
+                entity.updated_date = new Date();
+            }
+
+            return entity;
     }
 
     // POST
     entityFromPostBody(): PreRegisterUser {
-        return this.getEntity(true);
+        return this.buildEntity(this.req.body, true);
     }
 
     // PUT
     entityFromPutBody(): PreRegisterUser {
-        return this.getEntity(false);
+        return this.buildEntity(this.req.body, false);
+    }
+
+    // POST / PUT desde array
+    entityFromObject(obj: any, isCreating: boolean = true): PreRegisterUser {
+        return this.buildEntity(obj, isCreating);
     }
 
     // GET
@@ -44,6 +51,7 @@ export default class PreRegisterUserDTO implements IAdapterFromBody {
             card_id: entity.card_id,
             id_type: entity.id_type,
             name: entity.name,
+            email: entity.email,
             address: entity.address,
             birth_date: entity.birth_date,
             finance_entity: entity.finance_entity,

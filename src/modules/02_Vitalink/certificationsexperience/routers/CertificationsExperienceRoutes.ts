@@ -1,7 +1,8 @@
 import { Request, Response, 
          RequestHandler, RequestHandlerBuilder, 
          GenericController, GenericRoutes,
-         FindManyOptions} from "@modules/index";
+         FindManyOptions,
+         getUrlParam} from "@modules/index";
 import { CertificationsExperience } from "@index/entity/CertificationsExperience";
 import CertificationsExperienceDTO from "@modules/02_Vitalink/certificationsexperience/dtos/CertificationsExperienceDTO";
 
@@ -23,6 +24,9 @@ class CertificationsExperienceRoutes extends GenericRoutes {
                                     .isValidateRole("CERTIFICATIONS_EXPERIENCE")
                                     .isLogicalDelete()
                                     .setFilters(this.filters)
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().getById(requestHandler);
@@ -30,6 +34,11 @@ class CertificationsExperienceRoutes extends GenericRoutes {
         
         this.router.get(`${this.getRouterName()}/get_all`, async (req: Request, res: Response) => {
         
+            const supplier_id: string | null = getUrlParam("supplier_id", req) || null;
+            if (supplier_id != "") {
+                this.filters.where = { ...this.filters.where, supplier: { id: supplier_id} };
+            }
+
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new CertificationsExperienceDTO(req))
@@ -37,6 +46,9 @@ class CertificationsExperienceRoutes extends GenericRoutes {
                                     .isValidateRole("CERTIFICATIONS_EXPERIENCE")
                                     .isLogicalDelete()
                                     .setFilters(this.filters)
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().getAll(requestHandler);
@@ -69,6 +81,9 @@ class CertificationsExperienceRoutes extends GenericRoutes {
                                     .setAdapter(new CertificationsExperienceDTO(req))
                                     .setMethod("updateCertificationsExperience")
                                     .isValidateRole("CERTIFICATIONS_EXPERIENCE")
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().update(requestHandler);
@@ -81,10 +96,38 @@ class CertificationsExperienceRoutes extends GenericRoutes {
                                     .setMethod("deleteCertificationsExperience")
                                     .isValidateRole("CERTIFICATIONS_EXPERIENCE")
                                     .isLogicalDelete()
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().delete(requestHandler);
         });
+
+
+
+
+        this.router.post(`${this.getRouterName()}/add_multiple`, async (req: Request, res: Response) => {
+
+            const requiredBodyList: Array<string> = [
+                req.body.supplier_id,
+                req.body.start_date,
+                req.body.name,
+                req.body.company_name,
+                req.body.experience_type_code
+            ];
+                
+            const requestHandler : RequestHandler = 
+                                    new RequestHandlerBuilder(res,req)
+                                    .setAdapter(new CertificationsExperienceDTO(req))
+                                    .setMethod("insertMultipleCertificationsExperience")
+                                    .isValidateRole("CERTIFICATIONS_EXPERIENCE")
+                                    .setRequiredFiles(requiredBodyList)
+                                    .build();
+        
+            this.getController().insertMultiple(requestHandler);
+        });
+                
     }
 }
 

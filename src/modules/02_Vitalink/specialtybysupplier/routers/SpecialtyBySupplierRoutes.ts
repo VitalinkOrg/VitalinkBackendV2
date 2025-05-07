@@ -1,7 +1,8 @@
 import { Request, Response, 
          RequestHandler, RequestHandlerBuilder, 
          GenericController, GenericRoutes,
-         FindManyOptions} from "@modules/index";
+         FindManyOptions,
+         getUrlParam} from "@modules/index";
 import { SpecialtyBySupplier } from "@index/entity/SpecialtyBySupplier";
 import SpecialtyBySupplierDTO from "@modules/02_Vitalink/specialtybysupplier/dtos/SpecialtyBySupplierDTO";
 
@@ -22,12 +23,25 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
                                     .setMethod("getSpecialtyBySupplierById")
                                     .isValidateRole("SPECIALTY_BY_SUPPLIER")
                                     .setFilters(this.filters)
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().getById(requestHandler);
         });
         
         this.router.get(`${this.getRouterName()}/get_all`, async (req: Request, res: Response) => {
+
+            const supplier_id: string | null = getUrlParam("supplier_id", req) || null;
+            if (supplier_id != "") {
+                this.filters.where = { ...this.filters.where, supplier: { id: supplier_id} };
+            }
+
+            const medical_specialty: string | null = getUrlParam("medical_specialty", req) || null;
+            if (medical_specialty != "") {
+                this.filters.where = { ...this.filters.where, medical_specialty: { code: medical_specialty} };
+            }
         
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
@@ -35,6 +49,9 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
                                     .setMethod("getSpecialtyBySuppliers")
                                     .isValidateRole("SPECIALTY_BY_SUPPLIER")
                                     .setFilters(this.filters)
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().getAll(requestHandler);
@@ -78,6 +95,9 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
                                     .setAdapter(new SpecialtyBySupplierDTO(req))
                                     .setMethod("updateSpecialtyBySupplier")
                                     .isValidateRole("SPECIALTY_BY_SUPPLIER")
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().update(requestHandler);
@@ -89,6 +109,9 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
                                     .setAdapter(new SpecialtyBySupplierDTO(req))
                                     .setMethod("deleteSpecialtyBySupplier")
                                     .isValidateRole("SPECIALTY_BY_SUPPLIER")
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().delete(requestHandler);

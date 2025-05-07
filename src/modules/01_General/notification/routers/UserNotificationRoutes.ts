@@ -15,7 +15,7 @@ class UserNotificationRoutes extends GenericRoutes {
                                     new RequestHandlerBuilder(res,req)
                                     .setAdapter(new UserNotificationDTO(req))
                                     .setMethod("getUserNotificationById")
-                                    .isValidateRole("NOTIFICATION")
+                                    .isValidateRole("USER_NOTIFICATION")
                                     .isLogicalDelete()
                                     .build();
         
@@ -30,7 +30,7 @@ class UserNotificationRoutes extends GenericRoutes {
                                     new RequestHandlerBuilder(res,req)
                                     .setAdapter(new UserNotificationDTO(req))
                                     .setMethod("getUserNotification")
-                                    .isValidateRole("NOTIFICATION")
+                                    .isValidateRole("USER_NOTIFICATION")
                                     .isLogicalDelete()
                                     .build();
         
@@ -45,7 +45,7 @@ class UserNotificationRoutes extends GenericRoutes {
                                     .setAdapter(new UserNotificationDTO(req))
                                     .setMethod("insertUserNotification")
                                     .setRequiredFiles(requiredBodyListUserNotifications(req))
-                                    .isValidateRole("NOTIFICATION")
+                                    .isValidateRole("USER_NOTIFICATION")
                                     .build();
         
             this.getController().insert(requestHandler);
@@ -57,7 +57,7 @@ class UserNotificationRoutes extends GenericRoutes {
                                     new RequestHandlerBuilder(res,req)
                                     .setAdapter(new UserNotificationDTO(req))
                                     .setMethod("updateUserNotification")
-                                    .isValidateRole("NOTIFICATION")
+                                    .isValidateRole("USER_NOTIFICATION")
                                     .isLogicalDelete()
                                     .build();
         
@@ -70,7 +70,7 @@ class UserNotificationRoutes extends GenericRoutes {
                                     new RequestHandlerBuilder(res,req)
                                     .setAdapter(new UserNotificationDTO(req))
                                     .setMethod("deleteUserNotification")
-                                    .isValidateRole("NOTIFICATION")
+                                    .isValidateRole("USER_NOTIFICATION")
                                     .isLogicalDelete()
                                     .build();
         

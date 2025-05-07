@@ -1,7 +1,8 @@
 import { Request, Response, 
          RequestHandler, RequestHandlerBuilder, 
          GenericController, GenericRoutes,
-         FindManyOptions} from "@modules/index";
+         FindManyOptions,
+         getUrlParam} from "@modules/index";
 import { Availability } from "@index/entity/Availability";
 import AvailabilityDTO from "@modules/02_Vitalink/availability/dtos/AvailabilityDTO";
 
@@ -22,12 +23,20 @@ class AvailabilityRoutes extends GenericRoutes {
                                     .setMethod("getAvailabilityById")
                                     .isValidateRole("AVAILABILITY")
                                     .setFilters(this.filters)
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().getById(requestHandler);
         });
         
         this.router.get(`${this.getRouterName()}/get_all`, async (req: Request, res: Response) => {
+
+            const supplier_id: string | null = getUrlParam("supplier_id", req) || null;
+            if (supplier_id != "") {
+                this.filters.where = { ...this.filters.where, supplier: { id: supplier_id} };
+            }
         
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
@@ -35,6 +44,9 @@ class AvailabilityRoutes extends GenericRoutes {
                                     .setMethod("getAvailabilitys")
                                     .isValidateRole("AVAILABILITY")
                                     .setFilters(this.filters)
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().getAll(requestHandler);
@@ -67,6 +79,9 @@ class AvailabilityRoutes extends GenericRoutes {
                                     .setAdapter(new AvailabilityDTO(req))
                                     .setMethod("updateAvailability")
                                     .isValidateRole("AVAILABILITY")
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().update(requestHandler);
@@ -78,6 +93,9 @@ class AvailabilityRoutes extends GenericRoutes {
                                     .setAdapter(new AvailabilityDTO(req))
                                     .setMethod("deleteAvailability")
                                     .isValidateRole("AVAILABILITY")
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().delete(requestHandler);

@@ -1,7 +1,8 @@
 import { Request, Response, 
          RequestHandler, RequestHandlerBuilder, 
          GenericController, GenericRoutes,
-         FindManyOptions} from "@modules/index";
+         FindManyOptions,
+         getUrlParam} from "@modules/index";
 import { AppointmentCredit } from "@index/entity/AppointmentCredit";
 import AppointmentCreditDTO from "@modules/02_Vitalink/appointmentcredit/dtos/AppointmentCreditDTO";
 
@@ -10,7 +11,13 @@ class AppointmentCreditRoutes extends GenericRoutes {
     private filters: FindManyOptions = {};
     constructor() {
         super(new GenericController(AppointmentCredit), "/appointmentcredit");
-        this.filters.relations = ["appointment","credit_status"];
+        this.filters.relations = [
+            "appointment",
+            "credit_status",
+            "appointment.package",
+            "appointment.package.specialty.medical_specialty",
+            "appointment.package.procedure",
+            "appointment.package.product",];
     }
 
     protected initializeRoutes() {
@@ -23,13 +30,24 @@ class AppointmentCreditRoutes extends GenericRoutes {
                                     .isValidateRole("APPOINTMENT_CREDIT")
                                     .isLogicalDelete()
                                     .setFilters(this.filters)
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["CUSTOMER", "appointment.customer.id"],
+                                        ["LEGAL_REPRESENTATIVE", "appointment.supplier.legal_representative.id"],
+                                        ["FINANCE_ENTITY", "appointment.customer.finance_entity.id"]
+                                      ])
                                     .build();
         
             this.getController().getById(requestHandler);
         });
         
         this.router.get(`${this.getRouterName()}/get_all`, async (req: Request, res: Response) => {
-        
+
+            const appointment_id: string | null = getUrlParam("appointment_id", req) || null;
+            const options: FindManyOptions = {};
+            if (appointment_id != "") {
+                options.where = { ...options.where, appointment: { id: appointment_id }  };
+            }
+
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new AppointmentCreditDTO(req))
@@ -37,6 +55,11 @@ class AppointmentCreditRoutes extends GenericRoutes {
                                     .isValidateRole("APPOINTMENT_CREDIT")
                                     .isLogicalDelete()
                                     .setFilters(this.filters)
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["CUSTOMER", "appointment.customer.id"],
+                                        ["LEGAL_REPRESENTATIVE", "appointment.supplier.legal_representative.id"],
+                                        ["FINANCE_ENTITY", "appointment.customer.finance_entity.id"]
+                                      ])
                                     .build();
         
             this.getController().getAll(requestHandler);

@@ -28,6 +28,9 @@ export class PreRegisterUser {
   @Column({ type: "varchar", length: 500, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   name: string;
 
+  @Column({ type: "varchar", length: 500, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
+  email: string;
+
   @Column({ type: "varchar", length: 250, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   address: string | null;
 

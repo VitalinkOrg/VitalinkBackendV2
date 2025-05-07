@@ -24,7 +24,7 @@ export class Document {
   @Column({ type: "enum", 
             enum: ["PROFILE_PICTURE", "GENERAL_GALLERY", 
                     "PERSONAL_DOCUMENT", "PRIVATE_CONTRACT", 
-                    "MEDICAL_PROCEDURE_ATTACHMENT", "OTHER"], 
+                    "MEDICAL_PROCEDURE_ATTACHMENT", "OTHER", "PROFORMA_INVOICE"], 
             default: "GENERAL_GALLERY" })
   action_type: string; 
 

@@ -108,9 +108,6 @@ class AppointmentRoutes extends GenericRoutes {
                                     .setMethod("deleteAppointment")
                                     .isValidateRole("APPOINTMENT")
                                     .isLogicalDelete()
-                                    .setDynamicRoleValidationByEntityField([
-                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
-                                      ])
                                     .build();
         
             this.getController().delete(requestHandler);

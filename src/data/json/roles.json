@@ -7,284 +7,29 @@
       "is_public": false,
       "description": "Administrator role with full access to all functionalities.",
       "modules": [
-        {
-          "name": "DOCUMENT",
-          "function_list": [
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "NOTIFICATION",
-          "function_list": [
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "USER",
-          "function_list": [
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "UNIT_DYNAMIC_CENTRAL",
-          "function_list": [
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "LOG",
-          "function_list": [
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "SEND_MAIL",
-          "function_list": [
-            "CREATE"
-          ]
-        },
-        {
-          "name": "ROLE",
-          "function_list": [
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "TEST",
-          "function_list": [ 
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "LOCATION",
-          "function_list": [ 
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "SUPPLIER",
-          "function_list": [ 
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "SPECIALTY_BY_SUPPLIER",
-          "function_list": [ 
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "PROCEDURE_BY_SPECIALTY",
-          "function_list": [ 
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "PACKAGE",
-          "function_list": [ 
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "AVAILABILITY",
-          "function_list": [ 
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "CERTIFICATIONS_EXPERIENCE",
-          "function_list": [ 
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "LANGUAGE_SUPPLIER",
-          "function_list": [ 
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "REVIEW",
-          "function_list": [ 
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "REVIEW_DETAIL",
-          "function_list": [ 
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "PRE_REGISTER_USER",
-          "function_list": [ 
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "APPOINTMENT",
-          "function_list": [ 
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "APPOINTMENT_CREDIT",
-          "function_list": [ 
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        }
+        { "name": "APPOINTMENT", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "APPOINTMENT_CREDIT", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "AVAILABILITY", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "CERTIFICATIONS_EXPERIENCE", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "DOCUMENT", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "LANGUAGE_SUPPLIER", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "LOCATION", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "LOG", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "NOTIFICATION", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "PACKAGE", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "PRE_REGISTER_USER", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "REVIEW", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "REVIEW_DETAIL", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "ROLE", "function_list": ["GET_ALL"] },
+        { "name": "SEND_MAIL", "function_list": ["CREATE"] },
+        { "name": "SPECIALTY_BY_SUPPLIER", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "SUPPLIER", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "UNIT_DYNAMIC_CENTRAL", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "USER", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "USER_NOTIFICATION", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] }
       ],
-      "screens": [
-        {
-          "name": "CREATE_NEW_PROJECT",
-          "function_list": [
-            "CREATE",
-            "READ"
-          ]
-        },
-        {
-          "name": "PRODUCTS",
-          "function_list": []
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "code": "CUSTOMER",
-      "name": "Cliente",
-      "is_public": false,
-      "description": "Customer role with access to customer-specific functionalities.",
-      "modules": [
-        {
-          "name": "DOCUMENT",
-          "function_list": [
-            "GET_BY_ID",
-            "GET_ALL",
-            "DELETE",
-            "CREATE"
-          ]
-        },
-        {
-          "name": "SUPPLIER",
-          "function_list": [ 
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "APPOINTMENT",
-          "function_list": [ 
-            "CREATE",
-            "UPDATE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "UNIT_DYNAMIC_CENTRAL",
-          "function_list": [
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "PACKAGE",
-          "function_list": [ 
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "SPECIALTY_BY_SUPPLIER",
-          "function_list": [ 
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        }
-      ],
-      "screens": [
-        {
-          "name": "PRODUCTS",
-          "function_list": []
-        }
-      ]
-    },
+      "screens": []
+    }, 
     {
       "id": 2,
       "code": "LEGAL_REPRESENTATIVE",
@@ -292,70 +37,58 @@
       "is_public": true,
       "description": "Analyst role with access to analytical tools and reporting functionalities.",
       "modules": [
-        {
-          "name": "DOCUMENT",
-          "function_list": [
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "APPOINTMENT",
-          "function_list": [ 
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "SUPPLIER",
-          "function_list": [ 
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "SPECIALTY_BY_SUPPLIER",
-          "function_list": [ 
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "UNIT_DYNAMIC_CENTRAL",
-          "function_list": [
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        },
-        {
-          "name": "PACKAGE",
-          "function_list": [ 
-            "CREATE",
-            "UPDATE",
-            "DELETE",
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        }
+        { "name": "APPOINTMENT", "function_list": ["UPDATE","GET_BY_ID","GET_ALL"] },
+        { "name": "APPOINTMENT_CREDIT", "function_list": ["UPDATE","GET_BY_ID","GET_ALL"] },
+        { "name": "AVAILABILITY", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "CERTIFICATIONS_EXPERIENCE", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "DOCUMENT", "function_list": ["CREATE","GET_BY_ID","GET_ALL"] },
+        { "name": "LANGUAGE_SUPPLIER", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "LOCATION", "function_list": ["GET_BY_ID","GET_ALL"] },
+        { "name": "LOG", "function_list": [] },
+        { "name": "NOTIFICATION", "function_list": ["GET_BY_ID","GET_ALL"] },
+        { "name": "PACKAGE", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "PRE_REGISTER_USER", "function_list": [] },
+        { "name": "REVIEW", "function_list": ["UPDATE","GET_BY_ID","GET_ALL"] },
+        { "name": "REVIEW_DETAIL", "function_list": ["GET_BY_ID","GET_ALL"] },
+        { "name": "ROLE", "function_list": [] },
+        { "name": "SEND_MAIL", "function_list": [] },
+        { "name": "SPECIALTY_BY_SUPPLIER", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "SUPPLIER", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "UNIT_DYNAMIC_CENTRAL", "function_list": ["GET_BY_ID","GET_ALL"] },
+        { "name": "USER", "function_list": ["UPDATE","GET_BY_ID"] },
+        { "name": "USER_NOTIFICATION", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] }
       ],
-      "screens": [
-        {
-          "name": "PRODUCTS",
-          "function_list": []
-        }
-      ]
+      "screens": []
+    },
+    {
+      "id": 3,
+      "code": "CUSTOMER",
+      "name": "Cliente",
+      "is_public": true,
+      "description": "Customer role with access to customer-specific functionalities.",
+      "modules": [
+        { "name": "APPOINTMENT", "function_list": ["CREATE","UPDATE","GET_BY_ID","GET_ALL"] },
+        { "name": "APPOINTMENT_CREDIT", "function_list": ["CREATE","GET_BY_ID","GET_ALL"] },
+        { "name": "AVAILABILITY", "function_list": ["GET_BY_ID","GET_ALL"] },
+        { "name": "CERTIFICATIONS_EXPERIENCE", "function_list": ["GET_BY_ID","GET_ALL"] },
+        { "name": "DOCUMENT", "function_list": ["CREATE","GET_BY_ID","GET_ALL"] },
+        { "name": "LANGUAGE_SUPPLIER", "function_list": ["GET_BY_ID","GET_ALL"] },
+        { "name": "LOCATION", "function_list": ["GET_BY_ID","GET_ALL"] },
+        { "name": "LOG", "function_list": [] },
+        { "name": "NOTIFICATION", "function_list": ["GET_BY_ID","GET_ALL"] },
+        { "name": "PACKAGE", "function_list": ["GET_BY_ID","GET_ALL"] },
+        { "name": "PRE_REGISTER_USER", "function_list": ["GET_BY_ID", "GET_ALL"] },
+        { "name": "REVIEW", "function_list": ["CREATE","UPDATE","GET_BY_ID","GET_ALL"] },
+        { "name": "REVIEW_DETAIL", "function_list": ["CREATE","UPDATE","GET_BY_ID","GET_ALL"] },
+        { "name": "ROLE", "function_list": [] },
+        { "name": "SEND_MAIL", "function_list": [] },
+        { "name": "SPECIALTY_BY_SUPPLIER", "function_list": ["GET_BY_ID","GET_ALL"] },
+        { "name": "SUPPLIER", "function_list": ["GET_BY_ID","GET_ALL"] },
+        { "name": "UNIT_DYNAMIC_CENTRAL", "function_list": ["GET_BY_ID","GET_ALL"] },
+        { "name": "USER", "function_list": ["UPDATE","GET_BY_ID"] },
+        { "name": "USER_NOTIFICATION", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] }
+      ],
+      "screens": []
     },
     {
       "id": 4,
@@ -363,21 +96,29 @@
       "name": "Entidad Financiera",
       "is_public": true,
       "description": "Customer role with access to customer-specific functionalities.",
-      "modules": [
-        {
-          "name": "DOCUMENT",
-          "function_list": [
-            "GET_BY_ID",
-            "GET_ALL"
-          ]
-        }
+     "modules": [
+      { "name": "APPOINTMENT", "function_list": [] },
+      { "name": "APPOINTMENT_CREDIT", "function_list": ["UPDATE","GET_BY_ID","GET_ALL"] },
+      { "name": "AVAILABILITY", "function_list": [] },
+      { "name": "CERTIFICATIONS_EXPERIENCE", "function_list": [] },
+      { "name": "DOCUMENT", "function_list": ["CREATE","GET_BY_ID"] },
+      { "name": "LANGUAGE_SUPPLIER", "function_list": [] },
+      { "name": "LOCATION", "function_list": [] },
+      { "name": "LOG", "function_list": [] },
+      { "name": "NOTIFICATION", "function_list": ["GET_BY_ID","GET_ALL"] },
+      { "name": "PACKAGE", "function_list": [] },
+      { "name": "PRE_REGISTER_USER", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+      { "name": "REVIEW", "function_list": [] },
+      { "name": "REVIEW_DETAIL", "function_list": [] },
+      { "name": "ROLE", "function_list": [] },
+      { "name": "SEND_MAIL", "function_list": [] },
+      { "name": "SPECIALTY_BY_SUPPLIER", "function_list": [] },
+      { "name": "SUPPLIER", "function_list": [] },
+      { "name": "UNIT_DYNAMIC_CENTRAL", "function_list": ["GET_BY_ID","GET_ALL"] },
+      { "name": "USER", "function_list": [] },
+      { "name": "USER_NOTIFICATION", "function_list": ["UPDATE","DELETE","GET_BY_ID","GET_ALL"] }
       ],
-      "screens": [
-        {
-          "name": "PRODUCTS",
-          "function_list": []
-        }
-      ]
+      "screens": []
     }
   ]
 }

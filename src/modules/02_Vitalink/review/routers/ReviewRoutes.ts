@@ -1,7 +1,8 @@
 import { Request, Response, 
          RequestHandler, RequestHandlerBuilder, 
          GenericController, GenericRoutes,
-         FindManyOptions} from "@modules/index";
+         FindManyOptions,
+         getUrlParam} from "@modules/index";
 import { Review } from "@index/entity/Review";
 import ReviewDTO from "@modules/02_Vitalink/review/dtos/ReviewDTO";
 
@@ -10,7 +11,7 @@ class ReviewRoutes extends GenericRoutes {
     private filters: FindManyOptions = {};
     constructor() {
         super(new GenericController(Review), "/review");
-        this.filters.relations = ["customer","appointment"];
+        this.filters.relations = ["customer","appointment" ];
     }
 
     protected initializeRoutes() {
@@ -23,12 +24,26 @@ class ReviewRoutes extends GenericRoutes {
                                     .isValidateRole("REVIEW")
                                     .isLogicalDelete()
                                     .setFilters(this.filters)
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["CUSTOMER", "customer.id"],
+                                        ["LEGAL_REPRESENTATIVE", "appointment.supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().getById(requestHandler);
         });
         
         this.router.get(`${this.getRouterName()}/get_all`, async (req: Request, res: Response) => {
+
+            const apointment_id: string | null = getUrlParam("apointment_id", req) || null;
+            if (apointment_id != "") {
+                this.filters.where = { ...this.filters.where, appointment: { id: apointment_id} };
+            }
+
+            const customer_id: string | null = getUrlParam("customer_id", req) || null;
+            if (customer_id != "") {
+                this.filters.where = { ...this.filters.where, customer: { id: customer_id} };
+            }
         
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
@@ -37,6 +52,10 @@ class ReviewRoutes extends GenericRoutes {
                                     .isValidateRole("REVIEW")
                                     .isLogicalDelete()
                                     .setFilters(this.filters)
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["CUSTOMER", "customer.id"],
+                                        ["LEGAL_REPRESENTATIVE", "appointment.supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().getAll(requestHandler);
@@ -65,6 +84,10 @@ class ReviewRoutes extends GenericRoutes {
                                     .setAdapter(new ReviewDTO(req))
                                     .setMethod("updateReview")
                                     .isValidateRole("REVIEW")
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["CUSTOMER", "customer.id"],
+                                        ["LEGAL_REPRESENTATIVE", "appointment.supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().update(requestHandler);
@@ -77,6 +100,10 @@ class ReviewRoutes extends GenericRoutes {
                                     .setMethod("deleteReview")
                                     .isValidateRole("REVIEW")
                                     .isLogicalDelete()
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["CUSTOMER", "customer.id"],
+                                        ["LEGAL_REPRESENTATIVE", "appointment.supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().delete(requestHandler);

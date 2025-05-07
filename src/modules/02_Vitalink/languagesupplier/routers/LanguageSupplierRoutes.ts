@@ -1,7 +1,8 @@
 import { Request, Response, 
          RequestHandler, RequestHandlerBuilder, 
          GenericController, GenericRoutes,
-         FindManyOptions} from "@modules/index";
+         FindManyOptions,
+         getUrlParam} from "@modules/index";
 import { LanguageSupplier } from "@index/entity/LanguageSupplier";
 import LanguageSupplierDTO from "@modules/02_Vitalink/languagesupplier/dtos/LanguageSupplierDTO";
 
@@ -22,12 +23,20 @@ class LanguageSupplierRoutes extends GenericRoutes {
                                     .setMethod("getLanguageSupplierById")
                                     .isValidateRole("LANGUAGE_SUPPLIER")
                                     .setFilters(this.filters)
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().getById(requestHandler);
         });
         
         this.router.get(`${this.getRouterName()}/get_all`, async (req: Request, res: Response) => {
+
+            const supplier_id: string | null = getUrlParam("supplier_id", req) || null;
+            if (supplier_id != "") {
+                this.filters.where = { ...this.filters.where, supplier: { id: supplier_id} };
+            }
         
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
@@ -35,6 +44,9 @@ class LanguageSupplierRoutes extends GenericRoutes {
                                     .setMethod("getLanguageSuppliers")
                                     .isValidateRole("LANGUAGE_SUPPLIER")
                                     .setFilters(this.filters)
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().getAll(requestHandler);
@@ -64,6 +76,9 @@ class LanguageSupplierRoutes extends GenericRoutes {
                                     .setAdapter(new LanguageSupplierDTO(req))
                                     .setMethod("updateLanguageSupplier")
                                     .isValidateRole("LANGUAGE_SUPPLIER")
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().update(requestHandler);
@@ -75,6 +90,9 @@ class LanguageSupplierRoutes extends GenericRoutes {
                                     .setAdapter(new LanguageSupplierDTO(req))
                                     .setMethod("deleteLanguageSupplier")
                                     .isValidateRole("LANGUAGE_SUPPLIER")
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
+                                      ])
                                     .build();
         
             this.getController().delete(requestHandler);
