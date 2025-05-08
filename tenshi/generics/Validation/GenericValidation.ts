@@ -240,6 +240,8 @@ export default  class GenericValidation{
             } 
         }
 
+        console.log(where);
+
         return where;
     }
 
