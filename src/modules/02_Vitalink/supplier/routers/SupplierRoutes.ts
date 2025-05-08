@@ -56,7 +56,6 @@ class SupplierRoutes extends GenericRoutes {
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new SupplierDTO(req))
                                     .setMethod("getSuppliers")
-                                    .isValidateRole("SUPPLIER")
                                     .isLogicalDelete()
                                     .setFilters(this.filters)
                                     .build();

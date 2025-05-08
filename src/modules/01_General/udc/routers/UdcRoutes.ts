@@ -16,7 +16,6 @@ class UdcRoutes extends GenericRoutes{
                                     new RequestHandlerBuilder(res,req)
                                     .setAdapter(new UdcDTO(req))
                                     .setMethod("getUdcById")
-                                    .isValidateRole("UNIT_DYNAMIC_CENTRAL")
                                     .isLogicalDelete()
                                     .build();
         
@@ -28,7 +27,6 @@ class UdcRoutes extends GenericRoutes{
                                     new RequestHandlerBuilder(res,req)
                                     .setAdapter(new UdcDTO(req))
                                     .setMethod("getUdcByCode")
-                                    .isValidateRole("UNIT_DYNAMIC_CENTRAL")
                                     .isLogicalDelete()
                                     .build();
         
@@ -62,7 +60,6 @@ class UdcRoutes extends GenericRoutes{
                                     new RequestHandlerBuilder(res,req)
                                     .setAdapter(new UdcDTO(req))
                                     .setMethod("getUdcs")
-                                    .isValidateRole("UNIT_DYNAMIC_CENTRAL")
                                     .isLogicalDelete()
                                     .setFilters(options)
                                     //.setCodeMessageResponse("TEST")
