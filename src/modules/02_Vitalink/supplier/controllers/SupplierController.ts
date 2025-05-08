@@ -184,8 +184,8 @@ export default class SupplierController extends GenericController {
         ? `${Math.min(...flatPrices)}`
         : General.minimumPriceAppointmentValorationReference.toString();
     
-      supplier.stars_by_supplier = reviewSummary?.stars_average || null;
-      supplier.review_quantity_by_supplier = reviewSummary?.quantity || null;
+      supplier.stars_by_supplier = reviewSummary?.stars_average || 0;
+      supplier.review_quantity_by_supplier = reviewSummary?.quantity || 0;
     
       const next = this.getNextAvailability(supAv);
       supplier.date_availability = next?.date_availability || null;
