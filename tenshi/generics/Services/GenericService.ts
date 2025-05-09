@@ -293,7 +293,17 @@ export default  class GenericService extends GenericValidation implements IGener
 
                 const dynamicWhere = await this.validateDynamicRoleAccessGetByFiltering(reqHandler, jwtData);
 
-                let filters = reqHandler.getFilters();
+
+                let baseFilters = reqHandler.getFilters();
+                let filters = baseFilters ? structuredClone(baseFilters) : {};
+
+                filters.where = {
+                  ...(filters.where ?? {}),
+                  ...dynamicWhere
+                };
+                
+                reqHandler.setFilters(filters);
+                /*let filters = reqHandler.getFilters();
                 if (filters === null || filters === undefined) {
                   filters = {};
                 }
@@ -301,7 +311,9 @@ export default  class GenericService extends GenericValidation implements IGener
                 filters.where = {
                   ...(filters.where ?? {}),
                   ...dynamicWhere
-                };
+                };*/
+
+                console.log(JSON.stringify(reqHandler.getFilters()?.where, null, 2));
             }
 
              // Get the page and size from the URL query parameters

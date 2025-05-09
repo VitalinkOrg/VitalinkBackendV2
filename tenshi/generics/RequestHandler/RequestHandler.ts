@@ -88,9 +88,14 @@ constructor(res: Response, req: Request,
     return this.requiredFieldsList;
     }
 
-    getFilters(): FindManyOptions | null {
-    return this.filters;
+    setFilters(filters: FindManyOptions): void {
+        this.filters = structuredClone(filters); 
     }
+
+    getFilters(): FindManyOptions | null {
+        return this.filters ? structuredClone(this.filters) : null;
+    }
+    
 
     getRequiredIdFromQuery(): boolean {
         return this.requireIdFromQueryParam;
