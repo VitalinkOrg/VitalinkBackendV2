@@ -7,23 +7,28 @@ import SupplierController from "../controllers/SupplierController";
 
 class SupplierRoutes extends GenericRoutes {
     
-    private filters: FindManyOptions = {};
+    private buildBaseFilters(): FindManyOptions {
+        return {
+            relations: ["id_type","medical_type","legal_representative"],
+            where: {} 
+        };
+    }
     constructor() {
         super(new SupplierController(), "/supplier");
-        this.filters.relations = ["id_type","medical_type","legal_representative"];
     }
 
 
     protected initializeRoutes() {
         this.router.get(`${this.getRouterName()}/get`, async (req: Request, res: Response) => {
 
+            const filters = this.buildBaseFilters();
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new SupplierDTO(req))
                                     .setMethod("getSupplierById")
                                     .isValidateRole("SUPPLIER")
                                     .isLogicalDelete()
-                                    .setFilters(this.filters)
+                                    .setFilters(filters)
                                     .setDynamicRoleValidationByEntityField([
                                         ["LEGAL_REPRESENTATIVE", "legal_representative.id"]
                                       ])
@@ -34,13 +39,14 @@ class SupplierRoutes extends GenericRoutes {
         
         this.router.get(`${this.getRouterName()}/get_all`, async (req: Request, res: Response) => {
         
+            const filters = this.buildBaseFilters();
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new SupplierDTO(req))
                                     .setMethod("getSuppliers")
                                     .isValidateRole("SUPPLIER")
                                     .isLogicalDelete()
-                                    .setFilters(this.filters)
+                                    .setFilters(filters)
                                     .setDynamicRoleValidationByEntityField([
                                         ["LEGAL_REPRESENTATIVE", "legal_representative.id"]
                                       ])
@@ -51,13 +57,14 @@ class SupplierRoutes extends GenericRoutes {
 
           
         this.router.get(`${this.getRouterName()}/get_all_main`, async (req: Request, res: Response) => {
-        
+            const filters = this.buildBaseFilters();
+
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new SupplierDTO(req))
                                     .setMethod("getSuppliers")
                                     .isLogicalDelete()
-                                    .setFilters(this.filters)
+                                    .setFilters(filters)
                                     .build();
         
             (this.getController() as SupplierController).getSuppliersMainDashboard(requestHandler);

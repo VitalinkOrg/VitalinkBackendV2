@@ -1,5 +1,5 @@
 import HttpAction from 'tenshi/helpers/HttpAction';
-import { RequestHandler } from 'tenshi/generics/index';
+import { FindManyOptions, RequestHandler } from 'tenshi/generics/index';
 import JWTObject from 'tenshi/objects/JWTObject';
 import Validations from 'tenshi/helpers/Validations';
 import GenericValidation from 'tenshi/generics/Validation/GenericValidation';
@@ -7,7 +7,6 @@ import ConfigManager from 'tenshi/config/ConfigManager';
 import { ConstFunctions, ConstHTTPRequest, ConstMessagesJson, ConstStatusJson } from 'tenshi/consts/Const';
 import IGenericService from './IGenericService';
 import IGenericRepository from '../Repository/IGenericRepository';
-import { getMessage } from '@TenshiJS/utils/jsonUtils';
 
 export default  class GenericService extends GenericValidation implements IGenericService {
    
@@ -293,27 +292,17 @@ export default  class GenericService extends GenericValidation implements IGener
 
                 const dynamicWhere = await this.validateDynamicRoleAccessGetByFiltering(reqHandler, jwtData);
 
+                const existingFilters = reqHandler.getFilters() ?? {};
 
-                let baseFilters = reqHandler.getFilters();
-                let filters = baseFilters ? structuredClone(baseFilters) : {};
-
-                filters.where = {
-                  ...(filters.where ?? {}),
-                  ...dynamicWhere
+                const combinedFilters: FindManyOptions = {
+                  ...existingFilters,
+                  where: {
+                    ...(existingFilters.where ?? {}),
+                    ...dynamicWhere,
+                  },
                 };
-                
-                reqHandler.setFilters(filters);
-                /*let filters = reqHandler.getFilters();
-                if (filters === null || filters === undefined) {
-                  filters = {};
-                }
 
-                filters.where = {
-                  ...(filters.where ?? {}),
-                  ...dynamicWhere
-                };*/
-
-                console.log(JSON.stringify(reqHandler.getFilters()?.where, null, 2));
+                reqHandler.setFilters(combinedFilters);
             }
 
              // Get the page and size from the URL query parameters
@@ -329,11 +318,13 @@ export default  class GenericService extends GenericValidation implements IGener
              executeGetAllFunction(jwtData, httpExec, page, size);
            
         } catch (error: any) {
-          console.log("error", error);
             // Return the general error response
             return await httpExec.generalError(error, reqHandler.getMethod(), this.controllerName);
         }
     }
+
+
+   
 
 
    /**************************************************** */

@@ -9,7 +9,7 @@ if (!entityName) {
 }
 
 const entityPath = path.join(__dirname, '../src', 'entity', `${entityName}.ts`);
-const modulePath = path.join(__dirname, '../src', 'modules', entityName.toLowerCase());
+const modulePath = path.join(__dirname, '../src', '02_Vitalink/modules', entityName.toLowerCase());
 const dtoPath = path.join(modulePath, 'dtos');
 const routerPath = path.join(modulePath, 'routers');
 
@@ -202,11 +202,17 @@ import ${entityName}DTO from "@modules/02_Vitalink/${entityName.toLowerCase()}/d
 
 class ${entityName}Routes extends GenericRoutes {
 
-private filters: FindManyOptions = {};
-constructor() {
-super(new GenericController(${entityName}), "/${entityName.toLowerCase()}");
-${relations.length > 0 ? `this.filters.relations = ${JSON.stringify(relations)};` : ''}
+private buildBaseFilters(): FindManyOptions {
+  return {
+    ${relations.length > 0 ? `relations: ${JSON.stringify(relations)},` : ""}
+    where: {}
+  };
 }
+
+constructor() {
+  super(new GenericController(${entityName}), "/${entityName.toLowerCase()}");
+}
+
 
 protected initializeRoutes() {
 // —————————————————————————————————————————————————————————————————————
@@ -219,7 +225,7 @@ this.router.get(\`\${this.getRouterName()}/get\`, async (req: Request, res: Resp
            .setMethod("get${entityName}ById")
            .isValidateRole("${entityName.toUpperCase()}")
            .isLogicalDelete()
-           .setFilters(this.filters)
+           .setFilters(this.buildBaseFilters())
            .build();
 
    this.getController().getById(requestHandler);
@@ -232,7 +238,7 @@ this.router.get(\`\${this.getRouterName()}/get_all\`, async (req: Request, res: 
            .setMethod("get${entityName}s")
            .isValidateRole("${entityName.toUpperCase()}")
            .isLogicalDelete()
-           .setFilters(this.filters)
+           .setFilters(this.buildBaseFilters())
            .build();
 
    this.getController().getAll(requestHandler);

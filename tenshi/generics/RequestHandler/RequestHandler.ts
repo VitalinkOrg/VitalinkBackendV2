@@ -89,13 +89,12 @@ constructor(res: Response, req: Request,
     }
 
     setFilters(filters: FindManyOptions): void {
-        this.filters = structuredClone(filters); 
+        this.filters = filters;
     }
 
     getFilters(): FindManyOptions | null {
-        return this.filters ? structuredClone(this.filters) : null;
+        return this.filters;
     }
-    
 
     getRequiredIdFromQuery(): boolean {
         return this.requireIdFromQueryParam;
@@ -104,7 +103,6 @@ constructor(res: Response, req: Request,
     getDynamicRoleList(): Array<[string, string]> | null {
         return this.dynamicRoleList;
     }
-
 }
    
 

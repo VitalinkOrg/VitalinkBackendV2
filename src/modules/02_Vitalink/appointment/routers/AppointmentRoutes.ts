@@ -7,26 +7,32 @@ import AppointmentController from "../controllers/AppointmentController";
 
 class AppointmentRoutes extends GenericRoutes {
     
-    private filters: FindManyOptions = {};
+    private buildBaseFilters(): FindManyOptions {
+        return {
+            relations: [
+                "customer",
+                "reservation_type",
+                "appointment_status",
+                "appointment_type",
+                "supplier",
+                "supplier.legal_representative",
+                "package",
+                "package.product",
+                "package.procedure",
+                "payment_status",
+                "payment_method",
+                "appointment_result"],
+            where: {} 
+        };
+    }
+
     constructor() {
         super(new AppointmentController(), "/appointment");
-        this.filters.relations = [
-            "customer",
-            "reservation_type",
-            "appointment_status",
-            "appointment_type",
-            "supplier",
-            "supplier.legal_representative",
-            "package",
-            "package.product",
-            "package.procedure",
-            "payment_status",
-            "payment_method",
-            "appointment_result"];
     }
 
     protected initializeRoutes() {
         this.router.get(`${this.getRouterName()}/get`, async (req: Request, res: Response) => {
+            const filters = this.buildBaseFilters();
 
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
@@ -34,7 +40,7 @@ class AppointmentRoutes extends GenericRoutes {
                                     .setMethod("getAppointmentById")
                                     .isValidateRole("APPOINTMENT")
                                     .isLogicalDelete()
-                                    .setFilters(this.filters)
+                                    .setFilters(filters)
                                     .setDynamicRoleValidationByEntityField([
                                         ["CUSTOMER", "customer.id"],
                                         ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
@@ -45,6 +51,7 @@ class AppointmentRoutes extends GenericRoutes {
         });
         
         this.router.get(`${this.getRouterName()}/get_all`, async (req: Request, res: Response) => {
+            const filters = this.buildBaseFilters();
 
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
@@ -52,7 +59,7 @@ class AppointmentRoutes extends GenericRoutes {
                                     .setMethod("getAppointments")
                                     .isValidateRole("APPOINTMENT")
                                     .isLogicalDelete()
-                                    .setFilters(this.filters)
+                                    .setFilters(filters)
                                     .setDynamicRoleValidationByEntityField([
                                         ["CUSTOMER", "customer.id"],
                                         ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]

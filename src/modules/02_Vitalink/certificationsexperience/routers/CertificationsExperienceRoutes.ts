@@ -8,22 +8,27 @@ import CertificationsExperienceDTO from "@modules/02_Vitalink/certificationsexpe
 
 class CertificationsExperienceRoutes extends GenericRoutes {
     
-    private filters: FindManyOptions = {};
+    private buildBaseFilters(): FindManyOptions {
+        return {
+            relations: ["supplier","experience_type"],
+            where: {} 
+        };
+    }
     constructor() {
         super(new GenericController(CertificationsExperience), "/certificationsexperience");
-        this.filters.relations = ["supplier","experience_type"];
     }
 
     protected initializeRoutes() {
         this.router.get(`${this.getRouterName()}/get`, async (req: Request, res: Response) => {
 
+            const filters = this.buildBaseFilters();
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new CertificationsExperienceDTO(req))
                                     .setMethod("getCertificationsExperienceById")
                                     .isValidateRole("CERTIFICATIONS_EXPERIENCE")
                                     .isLogicalDelete()
-                                    .setFilters(this.filters)
+                                    .setFilters(filters)
                                     .setDynamicRoleValidationByEntityField([
                                         ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
                                       ])
@@ -34,9 +39,11 @@ class CertificationsExperienceRoutes extends GenericRoutes {
         
         this.router.get(`${this.getRouterName()}/get_all`, async (req: Request, res: Response) => {
         
+            const filters = this.buildBaseFilters();
+
             const supplier_id: string | null = getUrlParam("supplier_id", req) || null;
             if (supplier_id != "") {
-                this.filters.where = { ...this.filters.where, supplier: { id: supplier_id} };
+                filters.where = { ...filters.where, supplier: { id: supplier_id} };
             }
 
             const requestHandler: RequestHandler = 
@@ -45,7 +52,7 @@ class CertificationsExperienceRoutes extends GenericRoutes {
                                     .setMethod("getCertificationsExperiences")
                                     .isValidateRole("CERTIFICATIONS_EXPERIENCE")
                                     .isLogicalDelete()
-                                    .setFilters(this.filters)
+                                    .setFilters(filters)
                                     .setDynamicRoleValidationByEntityField([
                                         ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
                                       ])

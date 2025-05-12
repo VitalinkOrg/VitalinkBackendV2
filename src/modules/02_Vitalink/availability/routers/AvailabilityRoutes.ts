@@ -8,21 +8,27 @@ import AvailabilityDTO from "@modules/02_Vitalink/availability/dtos/Availability
 
 class AvailabilityRoutes extends GenericRoutes {
     
-    private filters: FindManyOptions = {};
+    private buildBaseFilters(): FindManyOptions {
+        return {
+            relations: ["supplier","location"],
+            where: {} 
+        };
+    }
     constructor() {
         super(new GenericController(Availability), "/availability");
-        this.filters.relations = ["supplier","location"];
+        
     }
 
     protected initializeRoutes() {
         this.router.get(`${this.getRouterName()}/get`, async (req: Request, res: Response) => {
 
+            const filters = this.buildBaseFilters();
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new AvailabilityDTO(req))
                                     .setMethod("getAvailabilityById")
                                     .isValidateRole("AVAILABILITY")
-                                    .setFilters(this.filters)
+                                    .setFilters(filters)
                                     .setDynamicRoleValidationByEntityField([
                                         ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
                                       ])
@@ -33,9 +39,11 @@ class AvailabilityRoutes extends GenericRoutes {
         
         this.router.get(`${this.getRouterName()}/get_all`, async (req: Request, res: Response) => {
 
+            const filters = this.buildBaseFilters();
+
             const supplier_id: string | null = getUrlParam("supplier_id", req) || null;
             if (supplier_id != "") {
-                this.filters.where = { ...this.filters.where, supplier: { id: supplier_id} };
+                filters.where = { ...filters.where, supplier: { id: supplier_id} };
             }
         
             const requestHandler: RequestHandler = 
@@ -43,7 +51,7 @@ class AvailabilityRoutes extends GenericRoutes {
                                     .setAdapter(new AvailabilityDTO(req))
                                     .setMethod("getAvailabilitys")
                                     .isValidateRole("AVAILABILITY")
-                                    .setFilters(this.filters)
+                                    .setFilters(filters)
                                     .setDynamicRoleValidationByEntityField([
                                         ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
                                       ])
