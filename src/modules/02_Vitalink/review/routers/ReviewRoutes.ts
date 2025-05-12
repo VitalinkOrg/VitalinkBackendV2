@@ -8,22 +8,27 @@ import ReviewDTO from "@modules/02_Vitalink/review/dtos/ReviewDTO";
 
 class ReviewRoutes extends GenericRoutes {
     
-    private filters: FindManyOptions = {};
+    private buildBaseFilters(): FindManyOptions {
+        return {
+            relations: ["customer","appointment"],
+            where: {} 
+        };
+    }
     constructor() {
         super(new GenericController(Review), "/review");
-        this.filters.relations = ["customer","appointment" ];
     }
 
     protected initializeRoutes() {
         this.router.get(`${this.getRouterName()}/get`, async (req: Request, res: Response) => {
 
+            const filters = this.buildBaseFilters();
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new ReviewDTO(req))
                                     .setMethod("getReviewById")
                                     .isValidateRole("REVIEW")
                                     .isLogicalDelete()
-                                    .setFilters(this.filters)
+                                    .setFilters(filters)
                                     .setDynamicRoleValidationByEntityField([
                                         ["CUSTOMER", "customer.id"],
                                         ["LEGAL_REPRESENTATIVE", "appointment.supplier.legal_representative.id"]
@@ -34,15 +39,16 @@ class ReviewRoutes extends GenericRoutes {
         });
         
         this.router.get(`${this.getRouterName()}/get_all`, async (req: Request, res: Response) => {
+            const filters = this.buildBaseFilters();
 
             const apointment_id: string | null = getUrlParam("apointment_id", req) || null;
             if (apointment_id != "") {
-                this.filters.where = { ...this.filters.where, appointment: { id: apointment_id} };
+                filters.where = { ...filters.where, appointment: { id: apointment_id} };
             }
 
             const customer_id: string | null = getUrlParam("customer_id", req) || null;
             if (customer_id != "") {
-                this.filters.where = { ...this.filters.where, customer: { id: customer_id} };
+                filters.where = { ...filters.where, customer: { id: customer_id} };
             }
         
             const requestHandler: RequestHandler = 
@@ -51,7 +57,7 @@ class ReviewRoutes extends GenericRoutes {
                                     .setMethod("getReviews")
                                     .isValidateRole("REVIEW")
                                     .isLogicalDelete()
-                                    .setFilters(this.filters)
+                                    .setFilters(filters)
                                     .setDynamicRoleValidationByEntityField([
                                         ["CUSTOMER", "customer.id"],
                                         ["LEGAL_REPRESENTATIVE", "appointment.supplier.legal_representative.id"]

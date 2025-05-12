@@ -8,22 +8,27 @@ import PreRegisterUserDTO from "@modules/02_Vitalink/preregisteruser/dtos/PreReg
 
 class PreRegisterUserRoutes extends GenericRoutes {
     
-    private filters: FindManyOptions = {};
+    private buildBaseFilters(): FindManyOptions {
+        return {
+            relations: ["id_type","finance_entity"],
+            where: {} 
+        };
+    }
     constructor() {
         super(new GenericController(PreRegisterUser), "/preregisteruser");
-        this.filters.relations = ["id_type","finance_entity"];
     }
 
     protected initializeRoutes() {
         this.router.get(`${this.getRouterName()}/get`, async (req: Request, res: Response) => {
 
+            const filters = this.buildBaseFilters();
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new PreRegisterUserDTO(req))
                                     .setMethod("getPreRegisterUserById")
                                     .isValidateRole("PRE_REGISTER_USER")
                                     .isLogicalDelete()
-                                    .setFilters(this.filters)
+                                    .setFilters(filters)
                                     .setDynamicRoleValidationByEntityField([
                                         ["FINANCE_ENTITY", "finance_entity.id"]
                                       ])
@@ -34,9 +39,11 @@ class PreRegisterUserRoutes extends GenericRoutes {
         
         this.router.get(`${this.getRouterName()}/get_all`, async (req: Request, res: Response) => {
 
+            const filters = this.buildBaseFilters();
+
             const review_id: string | null = getUrlParam("review_id", req) || null;
             if (review_id != "") {
-                this.filters.where = { ...this.filters.where, review: { id: review_id} };
+                filters.where = { ...filters.where, review: { id: review_id} };
             }
         
             const requestHandler: RequestHandler = 
@@ -45,7 +52,7 @@ class PreRegisterUserRoutes extends GenericRoutes {
                                     .setMethod("getPreRegisterUsers")
                                     .isValidateRole("PRE_REGISTER_USER")
                                     .isLogicalDelete()
-                                    .setFilters(this.filters)
+                                    .setFilters(filters)
                                     .setDynamicRoleValidationByEntityField([
                                         ["FINANCE_ENTITY", "finance_entity.id"]
                                       ])

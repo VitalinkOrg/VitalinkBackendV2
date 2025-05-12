@@ -8,22 +8,32 @@ import PackageDTO from "@modules/02_Vitalink/package/dtos/PackageDTO";
 
 class PackageRoutes extends GenericRoutes {
     
-    private filters: FindManyOptions = {};
+    private buildBaseFilters(): FindManyOptions {
+        return {
+            relations: [
+                "procedure",
+                "product",
+                "specialty",
+                "specialty.supplier", 
+                "specialty.medical_specialty"],
+            where: {} 
+        };
+    }
     constructor() {
         super(new GenericController(Package), "/package");
-        this.filters.relations = ["procedure","product","specialty","specialty.supplier", "specialty.medical_specialty"];
     }
 
     protected initializeRoutes() {
         this.router.get(`${this.getRouterName()}/get`, async (req: Request, res: Response) => {
 
+            const filters = this.buildBaseFilters();
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new PackageDTO(req))
                                     .setMethod("getPackageById")
                                     .isValidateRole("PACKAGE")
                                     .isLogicalDelete()
-                                    .setFilters(this.filters)
+                                    .setFilters(filters)
                                     .setDynamicRoleValidationByEntityField([
                                         ["LEGAL_REPRESENTATIVE", "specialty.supplier.legal_representative.id"]
                                       ])
@@ -33,9 +43,12 @@ class PackageRoutes extends GenericRoutes {
         });
         
         this.router.get(`${this.getRouterName()}/get_all`, async (req: Request, res: Response) => {
+            
+            const filters = this.buildBaseFilters();
+            
             const supplier_id: string | null = getUrlParam("supplier_id", req) || null;
             if (supplier_id != "") {
-                this.filters.where = { ...this.filters.where, specialty: { supplier: { id: supplier_id} } };
+                filters.where = { ...filters.where, specialty: { supplier: { id: supplier_id} } };
             }
 
             const requestHandler: RequestHandler = 
@@ -44,7 +57,7 @@ class PackageRoutes extends GenericRoutes {
                                     .setMethod("getPackages")
                                     .isValidateRole("PACKAGE")
                                     .isLogicalDelete()
-                                    .setFilters(this.filters)
+                                    .setFilters(filters)
                                     .setDynamicRoleValidationByEntityField([
                                         ["LEGAL_REPRESENTATIVE", "specialty.supplier.legal_representative.id"]
                                       ])
@@ -61,7 +74,6 @@ class PackageRoutes extends GenericRoutes {
                 req.body.product_code,
             ];
 
-            
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new PackageDTO(req))

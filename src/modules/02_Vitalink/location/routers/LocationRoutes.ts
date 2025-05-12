@@ -7,22 +7,27 @@ import LocationDTO from "@modules/02_Vitalink/location/dtos/LocationDTO";
 
 class LocationRoutes extends GenericRoutes {
     
-    private filters: FindManyOptions = {};
+    private buildBaseFilters(): FindManyOptions {
+        return {
+            relations: ["legal_representative"],
+            where: {} 
+        };
+    }
     constructor() {
         super(new GenericController(Location), "/location");
-        this.filters.relations = ["legal_representative"];
     }
 
     protected initializeRoutes() {
         this.router.get(`${this.getRouterName()}/get`, async (req: Request, res: Response) => {
 
+            const filters = this.buildBaseFilters();
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new LocationDTO(req))
                                     .setMethod("getLocationById")
                                     .isValidateRole("LOCATION")
                                     .isLogicalDelete()
-                                    .setFilters(this.filters)
+                                    .setFilters(filters)
                                     .build();
         
             this.getController().getById(requestHandler);
@@ -30,13 +35,14 @@ class LocationRoutes extends GenericRoutes {
         
         this.router.get(`${this.getRouterName()}/get_all`, async (req: Request, res: Response) => {
         
+            const filters = this.buildBaseFilters();
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new LocationDTO(req))
                                     .setMethod("getLocations")
                                     .isValidateRole("LOCATION")
                                     .isLogicalDelete()
-                                    .setFilters(this.filters)
+                                    .setFilters(filters)
                                     .build();
         
             this.getController().getAll(requestHandler);

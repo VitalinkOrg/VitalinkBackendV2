@@ -8,21 +8,26 @@ import SpecialtyBySupplierDTO from "@modules/02_Vitalink/specialtybysupplier/dto
 
 class SpecialtyBySupplierRoutes extends GenericRoutes {
     
-    private filters: FindManyOptions = {};
+    private buildBaseFilters(): FindManyOptions {
+        return {
+            relations: ["supplier","medical_specialty"],
+            where: {} 
+        };
+    }
     constructor() {
         super(new GenericController(SpecialtyBySupplier), "/specialtybysupplier");
-        this.filters.relations = ["supplier","medical_specialty"];
     }
 
     protected initializeRoutes() {
         this.router.get(`${this.getRouterName()}/get`, async (req: Request, res: Response) => {
 
+            const filters = this.buildBaseFilters();
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new SpecialtyBySupplierDTO(req))
                                     .setMethod("getSpecialtyBySupplierById")
                                     .isValidateRole("SPECIALTY_BY_SUPPLIER")
-                                    .setFilters(this.filters)
+                                    .setFilters(filters)
                                     .setDynamicRoleValidationByEntityField([
                                         ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
                                       ])
@@ -33,14 +38,15 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
         
         this.router.get(`${this.getRouterName()}/get_all`, async (req: Request, res: Response) => {
 
+            const filters = this.buildBaseFilters();
             const supplier_id: string | null = getUrlParam("supplier_id", req) || null;
             if (supplier_id != "") {
-                this.filters.where = { ...this.filters.where, supplier: { id: supplier_id} };
+                filters.where = { ...filters.where, supplier: { id: supplier_id} };
             }
 
             const medical_specialty: string | null = getUrlParam("medical_specialty", req) || null;
             if (medical_specialty != "") {
-                this.filters.where = { ...this.filters.where, medical_specialty: { code: medical_specialty} };
+                filters.where = { ...filters.where, medical_specialty: { code: medical_specialty} };
             }
         
             const requestHandler: RequestHandler = 
@@ -48,7 +54,7 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
                                     .setAdapter(new SpecialtyBySupplierDTO(req))
                                     .setMethod("getSpecialtyBySuppliers")
                                     .isValidateRole("SPECIALTY_BY_SUPPLIER")
-                                    .setFilters(this.filters)
+                                    .setFilters(filters)
                                     .setDynamicRoleValidationByEntityField([
                                         ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
                                       ])

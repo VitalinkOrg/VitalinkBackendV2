@@ -8,21 +8,26 @@ import LanguageSupplierDTO from "@modules/02_Vitalink/languagesupplier/dtos/Lang
 
 class LanguageSupplierRoutes extends GenericRoutes {
     
-    private filters: FindManyOptions = {};
+    private buildBaseFilters(): FindManyOptions {
+        return {
+            relations: ["supplier","language_proficiency"],
+            where: {} 
+        };
+    }
     constructor() {
         super(new GenericController(LanguageSupplier), "/languagesupplier");
-        this.filters.relations = ["supplier","language_proficiency"];
     }
 
     protected initializeRoutes() {
         this.router.get(`${this.getRouterName()}/get`, async (req: Request, res: Response) => {
 
+            const filters = this.buildBaseFilters();
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new LanguageSupplierDTO(req))
                                     .setMethod("getLanguageSupplierById")
                                     .isValidateRole("LANGUAGE_SUPPLIER")
-                                    .setFilters(this.filters)
+                                    .setFilters(filters)
                                     .setDynamicRoleValidationByEntityField([
                                         ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
                                       ])
@@ -33,9 +38,11 @@ class LanguageSupplierRoutes extends GenericRoutes {
         
         this.router.get(`${this.getRouterName()}/get_all`, async (req: Request, res: Response) => {
 
+            const filters = this.buildBaseFilters();
+
             const supplier_id: string | null = getUrlParam("supplier_id", req) || null;
             if (supplier_id != "") {
-                this.filters.where = { ...this.filters.where, supplier: { id: supplier_id} };
+                filters.where = { ...filters.where, supplier: { id: supplier_id} };
             }
         
             const requestHandler: RequestHandler = 
@@ -43,7 +50,7 @@ class LanguageSupplierRoutes extends GenericRoutes {
                                     .setAdapter(new LanguageSupplierDTO(req))
                                     .setMethod("getLanguageSuppliers")
                                     .isValidateRole("LANGUAGE_SUPPLIER")
-                                    .setFilters(this.filters)
+                                    .setFilters(filters)
                                     .setDynamicRoleValidationByEntityField([
                                         ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
                                       ])
