@@ -219,26 +219,31 @@ protected initializeRoutes() {
 // SINGLE CRUD
 // —————————————————————————————————————————————————————————————————————
 this.router.get(\`\${this.getRouterName()}/get\`, async (req: Request, res: Response) => {
+
+    const filters = this.buildBaseFilters();
+
    const requestHandler: RequestHandler = 
        new RequestHandlerBuilder(res, req)
            .setAdapter(new ${entityName}DTO(req))
            .setMethod("get${entityName}ById")
            .isValidateRole("${entityName.toUpperCase()}")
            .isLogicalDelete()
-           .setFilters(this.buildBaseFilters())
+           .setFilters(filters)
            .build();
 
    this.getController().getById(requestHandler);
 });
 
 this.router.get(\`\${this.getRouterName()}/get_all\`, async (req: Request, res: Response) => {
+
+   const filters = this.buildBaseFilters();
    const requestHandler: RequestHandler = 
        new RequestHandlerBuilder(res, req)
            .setAdapter(new ${entityName}DTO(req))
            .setMethod("get${entityName}s")
            .isValidateRole("${entityName.toUpperCase()}")
            .isLogicalDelete()
-           .setFilters(this.buildBaseFilters())
+           .setFilters(filters)
            .build();
 
    this.getController().getAll(requestHandler);
