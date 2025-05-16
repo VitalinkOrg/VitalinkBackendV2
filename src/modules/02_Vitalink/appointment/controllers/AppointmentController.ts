@@ -21,6 +21,8 @@ export default class AppointmentController extends GenericController {
           return this.getService().updateService(reqHandler, async (jwtData, httpExec, id) => {
 
             const body = reqHandler.getAdapter().entityFromPutBody();
+            const appointment = await this.getRepository().findById(id!!, true, null);
+            const messageWithoutProcedure : string = "El paciente no es apto para procedimiento medico";
             
             try {
 
@@ -29,14 +31,15 @@ export default class AppointmentController extends GenericController {
                 //Step 6 - Medico confirma Reserva
                 //Step 8 - Medico asigna procedimiento Realizado
                 if(step == 2 || step == 4 || step == 6 || step == 8){
-                    if(jwtData.role == "CUSTOMER"){
+                    if(jwtData.role == "CUSTOMER" || jwtData.role == "FINANCE_ENTITY"){
                         return httpExec.unauthorizedError(ConstMessagesJson.ROLE_AUTH_ERROR);
                     }
                 //Step 3 - Paciente Paga cita valoracion
                 //Step 5 - Paciente pulsa Reservar Procedimiento
                 //Step 7 - Paciente realiza pago Procedimiento
-                }else if(step == 3 || step == 5 || step == 7){
-                    if(jwtData.role == "LEGAL_REPRESENTATIVE"){
+                //Se comenta el step 3 y 7 porque el medico puede marcar como pagado en consultorio tanto la vita de valoracion como el procedimiento
+                }else if(/*step == 3 || */step == 5 /*|| step == 7*/){
+                    if(jwtData.role == "LEGAL_REPRESENTATIVE" || jwtData.role == "FINANCE_ENTITY"){
                         return httpExec.unauthorizedError(ConstMessagesJson.ROLE_AUTH_ERROR);
                     }
                 }
@@ -68,7 +71,7 @@ export default class AppointmentController extends GenericController {
                 //Step 4 - Medico Subir proforma Medica + Realiza Valoracion
                 else if(step == 4){
 
-                    if(body.appointment_result == null || body.appointment_result == undefined){
+                    if(body.appointment_result_code == null || body.appointment_result_code == undefined){
                         return httpExec.validationError(ConstMessagesJson.REQUIRED_FIELDS);
                     }
 
@@ -89,41 +92,61 @@ export default class AppointmentController extends GenericController {
                 //************************************ */
                 /*              Procedimiento          */
                 //************************************ */
+                //si el paciente no es fit for procedure no puede reservar procedimiento ni realizar ninguna accion posterior.
+                //en este punto el paciente peude solicitar credito o reservar procedimiento para pagar despues? 
                 //Step 5 - Paciente pulsa Reservar Procedimiento
                 else if(step == 5){
-                    body.reservation_type_code = "PRE_RESERVATION_PROCEDURE";
-                    body.appointment_status_code = "PENDING_PROCEDURE";
-                    body.appointment_type_code = "PROCEDURE_APPOINTMENT";
 
-                    body.payment_status_code = "PAYMENT_STATUS_NOT_PAID_PROCEDURE";
+                    if(appointment.appointment_result_code == "FIT_FOR_PROCEDURE"){
+                        body.reservation_type_code = "PRE_RESERVATION_PROCEDURE";
+                        body.appointment_status_code = "PENDING_PROCEDURE";
+                        body.appointment_type_code = "PROCEDURE_APPOINTMENT";
+
+                        body.payment_status_code = "PAYMENT_STATUS_NOT_PAID_PROCEDURE";
+                    }else{
+                        return httpExec.dynamicErrorMessageDirectly(ConstStatusJson.VALIDATIONS,messageWithoutProcedure);
+                    }
                 }
 
                 //Step 6 - Medico confirma Reserva
                 else if(step == 6){
-                    body.reservation_type_code = "RESERVATION_PROCEDURE";
-                    body.appointment_status_code = "CONFIRM_PROCEDURE";
-                    body.appointment_type_code = "PROCEDURE_APPOINTMENT";
+                    if(appointment.appointment_result_code == "FIT_FOR_PROCEDURE"){
+                        body.reservation_type_code = "RESERVATION_PROCEDURE";
+                        body.appointment_status_code = "CONFIRM_PROCEDURE";
+                        body.appointment_type_code = "PROCEDURE_APPOINTMENT";
+                    }else{
+                        return httpExec.dynamicErrorMessageDirectly(ConstStatusJson.VALIDATIONS, messageWithoutProcedure);
+                    }
                 }
 
-                //Step 7 - Paciente realiza pago Procedimiento
+                //Step 7 - Paciente realiza pago Procedimiento o muestra codigo de pago
                 else if(step == 7){
-                    //Necesita metodo de pago
-                    if(body.payment_method == null || body.payment_method == undefined){
-                        return httpExec.validationError(ConstMessagesJson.REQUIRED_FIELDS);
+
+                    if(appointment.appointment_result_code == "FIT_FOR_PROCEDURE"){
+                        //Necesita metodo de pago
+                        if(body.payment_method == null || body.payment_method == undefined){
+                            return httpExec.validationError(ConstMessagesJson.REQUIRED_FIELDS);
+                        }
+
+                        body.reservation_type_code = "RESERVATION_PROCEDURE";
+                        body.appointment_status_code = "WAITING_PROCEDURE";
+                        body.appointment_type_code = "PROCEDURE_APPOINTMENT";
+
+                        body.payment_status_code = "PAYMENT_STATUS_PAID_PROCEDURE";
+                    }else{
+                        return httpExec.dynamicErrorMessageDirectly(ConstStatusJson.VALIDATIONS, messageWithoutProcedure);
                     }
-
-                    body.reservation_type_code = "RESERVATION_PROCEDURE";
-                    body.appointment_status_code = "WAITING_PROCEDURE";
-                    body.appointment_type_code = "PROCEDURE_APPOINTMENT";
-
-                    body.payment_status_code = "PAYMENT_STATUS_PAID_PROCEDURE";
                 }
 
                 //Step 8 - Medico asigna procedimiento Realizado
                 else if(step == 8){
-                    body.reservation_type_code = "RESERVATION_PROCEDURE";
-                    body.appointment_status_code = "CONCRETED_APPOINTMENT";
-                    body.appointment_type_code = "PROCEDURE_APPOINTMENT";
+                    if(appointment.appointment_result_code == "FIT_FOR_PROCEDURE"){
+                        body.reservation_type_code = "RESERVATION_PROCEDURE";
+                        body.appointment_status_code = "CONCRETED_APPOINTMENT";
+                        body.appointment_type_code = "PROCEDURE_APPOINTMENT";
+                    }else{
+                        return httpExec.dynamicErrorMessageDirectly(ConstStatusJson.VALIDATIONS, messageWithoutProcedure);
+                    }
                 }
 
                 
@@ -156,7 +179,7 @@ export default class AppointmentController extends GenericController {
   
 
 
-
+    //Step 1
     async insert(reqHandler: RequestHandler): Promise<any> {
 
         return this.getService().insertService(reqHandler, async (jwtData, httpExec, body) => {

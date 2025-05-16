@@ -12,11 +12,11 @@ class AppointmentCreditRoutes extends GenericRoutes {
         return {
             relations: [
                 "appointment",
-            "credit_status",
-            "appointment.package",
-            "appointment.package.specialty.medical_specialty",
-            "appointment.package.procedure",
-            "appointment.package.product",],
+                "credit_status",
+                "appointment.package",
+                "appointment.package.specialty.medical_specialty",
+                "appointment.package.procedure",
+                "appointment.package.product",],
             where: {} 
         };
     }
@@ -50,12 +50,15 @@ class AppointmentCreditRoutes extends GenericRoutes {
             const filters = this.buildBaseFilters();
 
             const appointment_id: string | null = getUrlParam("appointment_id", req) || null;
+            const appointment_qr_code: string | null = getUrlParam("appointment_qr_code", req) || null;
           
             if (appointment_id != "") {
                 filters.where = { ...filters.where, appointment: { id: appointment_id }  };
             }
 
-           
+            if (appointment_qr_code != "") {
+                filters.where = { ...filters.where, appointment: { appointment_qr_code: appointment_qr_code }  };
+            }
 
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
@@ -77,8 +80,7 @@ class AppointmentCreditRoutes extends GenericRoutes {
         this.router.post(`${this.getRouterName()}/add`, async (req: Request, res: Response) => {
 
             const requiredBodyList: Array<string> = [
-                req.body.appointment,
-                req.body.credit_status
+                req.body.appointment
             ];
             
             const requestHandler: RequestHandler = 
@@ -98,6 +100,10 @@ class AppointmentCreditRoutes extends GenericRoutes {
                                     .setAdapter(new AppointmentCreditDTO(req))
                                     .setMethod("updateAppointmentCredit")
                                     .isValidateRole("APPOINTMENT_CREDIT")
+                                     .setDynamicRoleValidationByEntityField([
+                                        ["CUSTOMER", "appointment.customer.id"],
+                                        ["FINANCE_ENTITY", "appointment.customer.finance_entity.id"]
+                                      ])
                                     .build();
         
             this.getController().update(requestHandler);
@@ -110,6 +116,10 @@ class AppointmentCreditRoutes extends GenericRoutes {
                                     .setMethod("deleteAppointmentCredit")
                                     .isValidateRole("APPOINTMENT_CREDIT")
                                     .isLogicalDelete()
+                                    .setDynamicRoleValidationByEntityField([
+                                        ["CUSTOMER", "appointment.customer.id"],
+                                        ["FINANCE_ENTITY", "appointment.customer.finance_entity.id"]
+                                      ])
                                     .build();
         
             this.getController().delete(requestHandler);

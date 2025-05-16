@@ -19,9 +19,13 @@ export class AppointmentCredit {
   appointment: Appointment;
 
   //ASKING_CREDIT_STATUS
+  @Column({ name: "credit_status_code", default: "REQUIRED" })
+  credit_status_code: string;
+
   @ManyToOne(() => UnitDynamicCentral)
-  @JoinColumn({ name: "credit_status", referencedColumnName: "code" })
+  @JoinColumn({ name: "credit_status_code", referencedColumnName: "code" })
   credit_status: UnitDynamicCentral;
+
 
   //request amount from user
   @Column({ type: "decimal", precision: 10, scale: 2, nullable: true })
@@ -37,6 +41,15 @@ export class AppointmentCredit {
   //the code of document for "PAGARE with payment conditions"
   @Column({ type: "varchar", length: 100, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   pagare_file_code: string | null;
+
+  //THE MAX DATE OF USE THE CREDIT  
+  @Column({ type: "timestamp", nullable: true, default: () => null })
+  max_date_active: Date | null;
+
+  //HAS IT ALREADY BEEN USED?
+   @Column({ type: "tinyint", default: 0 })
+  already_been_used: boolean;
+
 
   @Column({ type: "tinyint", default: 0 })
   is_deleted: boolean;
