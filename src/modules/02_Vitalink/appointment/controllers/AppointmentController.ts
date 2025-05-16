@@ -22,6 +22,24 @@ export default class AppointmentController extends GenericController {
 
             const body = reqHandler.getAdapter().entityFromPutBody();
             const appointment = await this.getRepository().findById(id!!, true, null);
+
+
+            const filters: FindManyOptions = {
+                relations: [
+                    "appointment",
+                    "credit_status",
+                    "appointment.package",
+                    "appointment.package.specialty.medical_specialty",
+                    "appointment.package.procedure",
+                    "appointment.package.product",
+                ],
+                where: {}
+            };
+    
+            filters.where = { ...filters.where, appointment: { id: id!! }  };
+            const appointmentCredit = await this.appointmentCreditRepository.findAll(true, filters);
+            console.log(appointmentCredit);
+
             const messageWithoutProcedure : string = "El paciente no es apto para procedimiento medico";
             
             try {
@@ -93,9 +111,13 @@ export default class AppointmentController extends GenericController {
                 /*              Procedimiento          */
                 //************************************ */
                 //si el paciente no es fit for procedure no puede reservar procedimiento ni realizar ninguna accion posterior.
-                //en este punto el paciente peude solicitar credito o reservar procedimiento para pagar despues? 
+                //en este punto el paciente peude solicitar credito o reservar procedimiento para pagar despues
                 //Step 5 - Paciente pulsa Reservar Procedimiento
                 else if(step == 5){
+
+                    //Si el paciente reserva el procedimiento sigue el flujo normal (eso quiere decir que es posible que no necesite credito)
+                    //Pero si el paciente si requiere credito, entonces debe preguntar aca si el credito es aprobado o no, y si se encuentra activo o no.
+
 
                     if(appointment.appointment_result_code == "FIT_FOR_PROCEDURE"){
                         body.reservation_type_code = "PRE_RESERVATION_PROCEDURE";

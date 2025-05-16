@@ -32,7 +32,7 @@ export class Appointment {
   @PrimaryGeneratedColumn({ type: "int", unsigned: true })
   id: number;
 
-  @Column({ type: "varchar", length: 100, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", default: generateRandomCode() })
+  @Column({ type: "varchar", length: 100, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", default: generateRandomCode(), unique: true  })
   appointment_qr_code: string;
 
   @ManyToOne(() => User, { eager: true })
