@@ -112,7 +112,7 @@ describe('GenericValidation', () => {
                     .isValidateRole(roleValidate)
                     .build();
 
-                    console.log(jwtData!.role);
+            console.log(jwtData!.role);
 
             const isValid = await genericValidation.validateRole(requestHandler, jwtData!.role, ConstFunctions.GET_ALL, httpExec);
             expect(isValid).toBe(true);

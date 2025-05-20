@@ -7,6 +7,8 @@ import ConfigManager from 'tenshi/config/ConfigManager';
 import { ConstFunctions, ConstHTTPRequest, ConstMessagesJson, ConstStatusJson } from 'tenshi/consts/Const';
 import IGenericService from './IGenericService';
 import IGenericRepository from '../Repository/IGenericRepository';
+import { FindOptionsWhere } from 'typeorm';
+import { merge } from 'lodash';
 
 export default  class GenericService extends GenericValidation implements IGenericService {
    
@@ -291,15 +293,11 @@ export default  class GenericService extends GenericValidation implements IGener
                 if (await this.validateRole(reqHandler, jwtData.role, ConstFunctions.GET_ALL, httpExec) !== true) { return; }
 
                 const dynamicWhere = await this.validateDynamicRoleAccessGetByFiltering(reqHandler, jwtData);
-
                 const existingFilters = reqHandler.getFilters() ?? {};
 
                 const combinedFilters: FindManyOptions = {
                   ...existingFilters,
-                  where: {
-                    ...(existingFilters.where ?? {}),
-                    ...dynamicWhere,
-                  },
+                  where: merge({}, existingFilters.where ?? {}, dynamicWhere),
                 };
 
                 reqHandler.setFilters(combinedFilters);
@@ -654,3 +652,5 @@ async updateMultipleByIdsService(
         }
     }
 }
+
+

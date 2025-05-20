@@ -94,11 +94,14 @@ class AppointmentRoutes extends GenericRoutes {
         });
         
         this.router.put(`${this.getRouterName()}/edit`, async (req: Request, res: Response) => {
+
+            const filters = this.buildBaseFilters();
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new AppointmentDTO(req))
                                     .setMethod("updateAppointment")
                                     .isValidateRole("APPOINTMENT")
+                                    .setFilters(filters)
                                     .setDynamicRoleValidationByEntityField([
                                         ["CUSTOMER", "customer.id"],
                                         ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]

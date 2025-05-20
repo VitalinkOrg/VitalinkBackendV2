@@ -21,6 +21,9 @@ export default class UserRepository extends GenericRepository{
                 //find by user and password
                 const options: 
                 FindOneOptions = { 
+                    relations: [   
+                        "finance_entity",
+                    ],
                     where: { 
                         email: email, 
                         "is_deleted" : 0, 
@@ -69,6 +72,9 @@ export default class UserRepository extends GenericRepository{
                 if(user_name != null && user_name != undefined){
                     const options: 
                     FindOneOptions = { 
+                        relations: [   
+                            "finance_entity",
+                        ],
                         where: { 
                             user_name: user_name, 
                             "is_deleted" : 0, 

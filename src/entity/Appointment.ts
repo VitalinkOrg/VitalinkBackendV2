@@ -123,13 +123,19 @@ export class Appointment {
   payment_status: UnitDynamicCentral;
 
 
-  //PAYMENT_METHOD
+   //PAYMENT_METHOD
+  @Column({ name: "payment_method_code", default: null })
+  payment_method_code: string | null;
+
   @ManyToOne(() => UnitDynamicCentral)
   @JoinColumn({ name: "payment_method_code", referencedColumnName: "code" })
   payment_method: UnitDynamicCentral | null;
 
 
   //APPOINTMENT_RESULT
+  @Column({ name: "appointment_result_code", default: null })
+  appointment_result_code: string | null;
+
   @ManyToOne(() => UnitDynamicCentral)
   @JoinColumn({ name: "appointment_result_code", referencedColumnName: "code" })
   appointment_result: UnitDynamicCentral | null;

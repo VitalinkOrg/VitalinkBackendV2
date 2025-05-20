@@ -5,6 +5,7 @@ import { Request, Response,
          getUrlParam} from "@modules/index";
 import { AppointmentCredit } from "@index/entity/AppointmentCredit";
 import AppointmentCreditDTO from "@modules/02_Vitalink/appointmentcredit/dtos/AppointmentCreditDTO";
+import AppointmentCreditController from "../controllers/AppointmentCreditController";
 
 class AppointmentCreditRoutes extends GenericRoutes {
     
@@ -16,12 +17,17 @@ class AppointmentCreditRoutes extends GenericRoutes {
                 "appointment.package",
                 "appointment.package.specialty.medical_specialty",
                 "appointment.package.procedure",
-                "appointment.package.product",],
+                "appointment.package.product",
+                "appointment.customer",
+                "appointment.customer.finance_entity",
+                "appointment.supplier",
+                "appointment.supplier.legal_representative",
+            ],
             where: {} 
         };
     }
     constructor() {
-        super(new GenericController(AppointmentCredit), "/appointmentcredit");
+        super(new AppointmentCreditController(), "/appointmentcredit");
     }
 
     protected initializeRoutes() {
@@ -95,13 +101,17 @@ class AppointmentCreditRoutes extends GenericRoutes {
         });
         
         this.router.put(`${this.getRouterName()}/edit`, async (req: Request, res: Response) => {
+
+            const filters = this.buildBaseFilters();
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new AppointmentCreditDTO(req))
                                     .setMethod("updateAppointmentCredit")
                                     .isValidateRole("APPOINTMENT_CREDIT")
+                                    .setFilters(filters)
                                      .setDynamicRoleValidationByEntityField([
                                         ["CUSTOMER", "appointment.customer.id"],
+                                        ["LEGAL_REPRESENTATIVE", "appointment.supplier.legal_representative.id"],
                                         ["FINANCE_ENTITY", "appointment.customer.finance_entity.id"]
                                       ])
                                     .build();
@@ -118,6 +128,7 @@ class AppointmentCreditRoutes extends GenericRoutes {
                                     .isLogicalDelete()
                                     .setDynamicRoleValidationByEntityField([
                                         ["CUSTOMER", "appointment.customer.id"],
+                                        ["LEGAL_REPRESENTATIVE", "appointment.supplier.legal_representative.id"],
                                         ["FINANCE_ENTITY", "appointment.customer.finance_entity.id"]
                                       ])
                                     .build();

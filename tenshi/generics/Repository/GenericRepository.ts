@@ -111,7 +111,6 @@ export default  class GenericRepository implements IGenericRepository{
             return updatedEntity; 
 
         } catch (error : any) {
-            console.log(error);
             // Throw the error if there was an issue updating the entity
             throw error;
         }

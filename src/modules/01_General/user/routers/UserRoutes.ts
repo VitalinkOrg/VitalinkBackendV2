@@ -21,10 +21,19 @@ class UserRoutes extends GenericRoutes {
 
     protected initializeRoutes() {
         this.router.get(`${this.getRouterName()}/get`, async (req: Request, res: Response) => {
+
+            const filter = {
+                relations: [   
+                    "finance_entity",
+                ],
+                where: {}
+            };
+
             const requestHandler: RequestHandler = 
             new RequestHandlerBuilder(res, req)
                 .setAdapter(new UserDTO(req))
                 .setMethod("getUserById")
+                .setFilters(filter)
                 .isLogicalDelete()
                 .isValidateRole("USER")
                 .build();
@@ -33,11 +42,20 @@ class UserRoutes extends GenericRoutes {
         });
 
         this.router.get(`${this.getRouterName()}/get_all`, async (req: Request, res: Response) => {
+
+            const filter = {
+                relations: [   
+                    "finance_entity",
+                ],
+                where: {}
+            };
+
             const requestHandler: RequestHandler = 
             new RequestHandlerBuilder(res, req)
                 .setAdapter(new UserDTO(req))
                 .setMethod("get_all")
                 .isLogicalDelete()
+                .setFilters(filter)
                 .isValidateRole("USER")
                 .build();
 

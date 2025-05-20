@@ -89,7 +89,7 @@ export class User {
   @Column({ type: "decimal", precision: 11, scale: 8, nullable: true, default: null })
   longitude: number | null;
 
-  @ManyToOne(() => User, { nullable: true, lazy: true })
+  @ManyToOne(() => User, { nullable: true /*, lazy: true*/ })
   @JoinColumn({ name: "finance_entity", referencedColumnName: "id" })
   finance_entity: User | null;
 

@@ -17,29 +17,57 @@ export default class AppointmentController extends GenericController {
       super(Appointment);
     }
 
+    private async validateActiveCredit(id: number | string, httpExec: any): Promise<any | null> {
+        const filters: FindManyOptions = {
+            relations: [
+                "appointment",
+                "credit_status",
+                "appointment.package",
+                "appointment.package.specialty.medical_specialty",
+                "appointment.package.procedure",
+                "appointment.package.product"
+            ],
+            where: { appointment: { id } }
+        };
+
+        const appointmentCredit = await this.appointmentCreditRepository.findAll(true, filters);
+
+        if (appointmentCredit != null && appointmentCredit.length > 0) {
+            const appointmentCreditEntity = appointmentCredit[0];
+
+            const { credit_status_code, already_been_used, max_date_active } = appointmentCreditEntity;
+
+            if (credit_status_code !== "APPROVED" && credit_status_code !== "APPROVED_PERCENTAGE") {
+                return httpExec.dynamicErrorMessageDirectly(
+                    ConstStatusJson.VALIDATIONS,
+                    "El crédito no ha sido aprobado"
+                );
+            }
+
+            if (already_been_used === true) {
+                return httpExec.dynamicErrorMessageDirectly(
+                    ConstStatusJson.VALIDATIONS,
+                    "El crédito ya fue utilizado"
+                );
+            }
+
+            if (max_date_active !== null && max_date_active <= new Date()) {
+                return httpExec.dynamicErrorMessageDirectly(
+                    ConstStatusJson.VALIDATIONS,
+                    "El crédito ha superado su fecha límite de uso"
+                );
+            }
+        }
+
+        return null; // válido o sin crédito, se permite continuar
+    }
+
+
      async StepByStepReservationAppointment(reqHandler: RequestHandler, step: number): Promise<any> {
           return this.getService().updateService(reqHandler, async (jwtData, httpExec, id) => {
 
             const body = reqHandler.getAdapter().entityFromPutBody();
             const appointment = await this.getRepository().findById(id!!, true, null);
-
-
-            const filters: FindManyOptions = {
-                relations: [
-                    "appointment",
-                    "credit_status",
-                    "appointment.package",
-                    "appointment.package.specialty.medical_specialty",
-                    "appointment.package.procedure",
-                    "appointment.package.product",
-                ],
-                where: {}
-            };
-    
-            filters.where = { ...filters.where, appointment: { id: id!! }  };
-            const appointmentCredit = await this.appointmentCreditRepository.findAll(true, filters);
-            console.log(appointmentCredit);
-
             const messageWithoutProcedure : string = "El paciente no es apto para procedimiento medico";
             
             try {
@@ -72,10 +100,11 @@ export default class AppointmentController extends GenericController {
                     body.appointment_type_code = "VALORATION_APPOINTMENT";
                 }
 
-                //Step 3 - Paciente Paga cita valoracion
+                //Step 3 - Paciente Paga cita valoracion desde web, o el medico cambia estado de pago si el cliente pago en consulta
                 else if(step == 3){
                      //Necesita metodo de pago
-                     if(body.payment_method == null || body.payment_method == undefined){
+                    
+                     if(body.payment_method_code == null || body.payment_method_code == undefined){
                         return httpExec.validationError(ConstMessagesJson.REQUIRED_FIELDS);
                     }
 
@@ -117,7 +146,8 @@ export default class AppointmentController extends GenericController {
 
                     //Si el paciente reserva el procedimiento sigue el flujo normal (eso quiere decir que es posible que no necesite credito)
                     //Pero si el paciente si requiere credito, entonces debe preguntar aca si el credito es aprobado o no, y si se encuentra activo o no.
-
+                    const creditValidationError = await this.validateActiveCredit(id!!, httpExec);
+                    if (creditValidationError != null) return;
 
                     if(appointment.appointment_result_code == "FIT_FOR_PROCEDURE"){
                         body.reservation_type_code = "PRE_RESERVATION_PROCEDURE";
@@ -126,12 +156,17 @@ export default class AppointmentController extends GenericController {
 
                         body.payment_status_code = "PAYMENT_STATUS_NOT_PAID_PROCEDURE";
                     }else{
-                        return httpExec.dynamicErrorMessageDirectly(ConstStatusJson.VALIDATIONS,messageWithoutProcedure);
+                        return httpExec.dynamicErrorMessageDirectly(ConstStatusJson.VALIDATIONS, messageWithoutProcedure);
                     }
                 }
 
                 //Step 6 - Medico confirma Reserva
                 else if(step == 6){
+                    
+                    //validate if credit is active
+                    const creditValidationError = await this.validateActiveCredit(id!!, httpExec);
+                    if (creditValidationError != null) return;
+
                     if(appointment.appointment_result_code == "FIT_FOR_PROCEDURE"){
                         body.reservation_type_code = "RESERVATION_PROCEDURE";
                         body.appointment_status_code = "CONFIRM_PROCEDURE";
@@ -141,12 +176,13 @@ export default class AppointmentController extends GenericController {
                     }
                 }
 
-                //Step 7 - Paciente realiza pago Procedimiento o muestra codigo de pago
+                //Step 7 - Paciente realiza pago Procedimiento desde la web, o medico cambia estado de pago cuadn o el cliente muestra codigo de pago
                 else if(step == 7){
+
 
                     if(appointment.appointment_result_code == "FIT_FOR_PROCEDURE"){
                         //Necesita metodo de pago
-                        if(body.payment_method == null || body.payment_method == undefined){
+                        if(body.payment_method_code == null || body.payment_method_code == undefined){
                             return httpExec.validationError(ConstMessagesJson.REQUIRED_FIELDS);
                         }
 

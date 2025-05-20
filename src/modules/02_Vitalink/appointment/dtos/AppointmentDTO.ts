@@ -27,8 +27,8 @@ export default class AppointmentDTO implements IAdapterFromBody {
         entity.reservation_type_code = this.req.body.reservation_type_code;
         entity.appointment_status_code = this.req.body.appointment_status_code;
         entity.payment_status_code = this.req.body.payment_status_code;
-        entity.payment_method = this.req.body.payment_method_code;
-        entity.appointment_result = this.req.body.appointment_result_code;
+        entity.payment_method_code = this.req.body.payment_method_code;
+        entity.appointment_result_code = this.req.body.appointment_result_code;
         entity.appointment_type_code = this.req.body.appointment_type_code;
 
         entity.price_procedure = this.req.body.price_procedure;
