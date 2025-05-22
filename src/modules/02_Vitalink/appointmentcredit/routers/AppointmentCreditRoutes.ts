@@ -1,9 +1,8 @@
 import { Request, Response, 
          RequestHandler, RequestHandlerBuilder, 
-         GenericController, GenericRoutes,
+         GenericRoutes,
          FindManyOptions,
          getUrlParam} from "@modules/index";
-import { AppointmentCredit } from "@index/entity/AppointmentCredit";
 import AppointmentCreditDTO from "@modules/02_Vitalink/appointmentcredit/dtos/AppointmentCreditDTO";
 import AppointmentCreditController from "../controllers/AppointmentCreditController";
 
@@ -22,7 +21,13 @@ class AppointmentCreditRoutes extends GenericRoutes {
                 "appointment.customer.finance_entity",
                 "appointment.supplier",
                 "appointment.supplier.legal_representative",
+                "appointment.payment_status",
+                "appointment.payment_method",
+                "appointment.appointment_result",
+                "appointment.reservation_type",
+                "appointment.appointment_status",
             ],
+
             where: {} 
         };
     }
