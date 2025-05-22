@@ -6,6 +6,9 @@ import { Appointment } from "@index/entity/Appointment";
 import { AppointmentFlowLog } from "@index/entity/AppointmentFlowLog";
 import { AppointmentCredit } from "@index/entity/AppointmentCredit";
 import { Package } from "@index/entity/Package";
+import JWTObject from "@TenshiJS/objects/JWTObject";
+import HttpAction from "@TenshiJS/helpers/HttpAction";
+import { In } from "typeorm";
 
 
 export default class AppointmentController extends GenericController {
@@ -290,7 +293,69 @@ export default class AppointmentController extends GenericController {
                 reqHandler.getMethod(), this.getControllerName());
             }
         });
-     }
+    }
+
+
+
+
+
+
+    async getAll(reqHandler: RequestHandler): Promise<any> {
+
+        return this.getService().getAllService(reqHandler, async (jwtData : JWTObject, httpExec: HttpAction, page: number, size: number) => {
+            try {
+
+                // Execute the get all action in the database
+
+                const entities = await this.getRepository().findAll(reqHandler.getLogicalDelete(), reqHandler.getFilters(), page, size);
+                const pagination = await this.getRepository().count(reqHandler.getLogicalDelete(), reqHandler.getFilters(), page, size);
+
+                if(entities != null && entities != undefined){
+
+                    const entitiesRaw = entities;
+                    const appointmentIds = entitiesRaw.map(e => e.id);
+
+                    const appointmentCredits = await this.appointmentCreditRepository.findAll(true, {
+                        relations: [
+                            "credit_status"
+                        ],
+                        where: {
+                            appointment: {
+                                id: In(appointmentIds) // Usa In de TypeORM
+                            }
+                        }
+                    });
+
+                    const creditMap = new Map(
+                        (appointmentCredits ?? []).map(ac => [ac.appointment.id, ac])
+                    );
+
+                    for (const appointment of entitiesRaw) {
+                        appointment.appointment_credit = creditMap.get(appointment.id) ?? null;
+                    }
+                    
+                    for (const appointment of entitiesRaw) {
+                        if (appointment.appointment_credit) {
+                            delete appointment.appointment_credit.appointment;
+                        }
+                    }
+
+                    // Return the success response
+                    return httpExec.successAction(
+                        reqHandler.getAdapter().entitiesToResponse( entitiesRaw), 
+                        ConstHTTPRequest.GET_ALL_SUCCESS,  pagination);
+
+                }else{
+                    return httpExec.dynamicError(ConstStatusJson.NOT_FOUND, ConstMessagesJson.DONT_EXISTS);
+                }
+
+            } catch (error: any) {
+                // Return the database error response
+                return await httpExec.databaseError(error, jwtData.id.toString(),
+                    reqHandler.getMethod(), this.getControllerName());
+            }
+        });
+    }
 
 }
   

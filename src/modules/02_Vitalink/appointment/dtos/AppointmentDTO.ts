@@ -86,6 +86,8 @@ export default class AppointmentDTO implements IAdapterFromBody {
             price_procedure: entity.price_procedure,
             price_valoration_appointment: entity.price_valoration_appointment,
 
+            appointment_credit: entity.appointment_credit ?? null,
+
             created_date: entity.created_date,
             updated_date: entity.updated_date,
         };
