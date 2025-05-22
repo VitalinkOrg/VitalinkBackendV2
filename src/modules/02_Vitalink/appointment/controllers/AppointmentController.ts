@@ -237,6 +237,19 @@ export default class AppointmentController extends GenericController {
   
 
 
+    
+    generateRandomCode(length: number = 7): string {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let result = '';
+      
+      for (let i = 0; i < length; i++) {
+        const randomIdx = Math.floor(Math.random() * chars.length);
+        result += chars[randomIdx];
+      }
+    
+      return result;
+    }
+
     //Step 1
     async insert(reqHandler: RequestHandler): Promise<any> {
 
@@ -254,6 +267,8 @@ export default class AppointmentController extends GenericController {
                 body.price_procedure = isNaN(Number(rawValue)) || !rawValue?.toString().trim()
                 ? 0 : Number(rawValue);
 
+                body.appointment_qr_code = this.generateRandomCode();
+
                 // Insert the entity into the database
                 const createdEntity = await this.getRepository().add(body);
 
@@ -269,6 +284,8 @@ export default class AppointmentController extends GenericController {
 
             }catch(error : any){
                 // Return the database error response
+
+                console.log(error);
                 return await httpExec.databaseError(error, jwtData!.id.toString(), 
                 reqHandler.getMethod(), this.getControllerName());
             }

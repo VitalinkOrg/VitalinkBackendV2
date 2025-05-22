@@ -14,17 +14,6 @@ import { General } from "@index/consts/Const";
  * recommendations. 
  */
 
-function generateRandomCode(length: number = 7): string {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let result = '';
-  
-  for (let i = 0; i < length; i++) {
-    const randomIdx = Math.floor(Math.random() * chars.length);
-    result += chars[randomIdx];
-  }
-
-  return result;
-}
 
 
 @Entity("appointments")
@@ -32,7 +21,7 @@ export class Appointment {
   @PrimaryGeneratedColumn({ type: "int", unsigned: true })
   id: number;
 
-  @Column({ type: "varchar", length: 100, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", default: generateRandomCode(), unique: true  })
+  @Column({ type: "varchar", length: 100, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", unique: true  })
   appointment_qr_code: string;
 
   @ManyToOne(() => User, { eager: true })

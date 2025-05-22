@@ -15,6 +15,8 @@ export default class AppointmentDTO implements IAdapterFromBody {
         entity.proforma_file_code = this.req.body.proforma_file_code;
         entity.appointment_date = this.req.body.appointment_date;
         entity.appointment_hour = this.req.body.appointment_hour;
+        entity.appointment_qr_code = this.req.body.appointment_qr_code;
+
         entity.supplier = this.req.body.supplier_id;
         entity.package = this.req.body.package_id;
         entity.application_date = this.req.body.application_date;
