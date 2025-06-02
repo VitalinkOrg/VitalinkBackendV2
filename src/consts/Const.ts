@@ -18,6 +18,7 @@ export class ConstTemplate{
     public static readonly FORGOT_PASSWORD_EMAIL: string = "forgotPasswordEmail";
     public static readonly GENERIC_TEMPLATE_EMAIL: string = "genericTemplateEmail";
     public static readonly ACTIVE_ACCOUNT_PAGE: string = "activeAccountPage";
+    public static readonly APPOINTMENT_STEP1_EMAIL: string = "appointmentStep1";
 }
 
 export class ConstEnums{

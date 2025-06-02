@@ -59,7 +59,9 @@ export default  class GenericService extends GenericValidation implements IGener
     async insertService(reqHandler: RequestHandler, executeInsertFunction: (jwtData : JWTObject | null, httpExec: HttpAction, body: any) => void): Promise<any> {
         // Execute the returns structure
         const httpExec : HttpAction = reqHandler.getResponse().locals.httpExec;
-        let body = reqHandler.getAdapter().entityFromPostBody();
+        let body =
+                  reqHandler.getAdapter?.()?.entityFromPostBody?.() ??
+                  reqHandler.getRequest?.().body;
 
         try{
             // Validate the role of the user

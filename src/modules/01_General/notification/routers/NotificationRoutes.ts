@@ -17,6 +17,7 @@ class NotificationRoutes extends GenericRoutes {
                                     .setAdapter(new NotificationDTO(req))
                                     .setMethod("getNotificationById")
                                     .isValidateRole("NOTIFICATION")
+                                    .isLogicalDelete()
                                     .build();
         
             this.getController().getById(requestHandler);
@@ -29,6 +30,7 @@ class NotificationRoutes extends GenericRoutes {
                                     .setAdapter(new NotificationDTO(req))
                                     .setMethod("getNotificationByCode")
                                     .isValidateRole("NOTIFICATION")
+                                    .isLogicalDelete()
                                     .build();
         
             this.getController().getByCode(requestHandler);
@@ -41,6 +43,7 @@ class NotificationRoutes extends GenericRoutes {
                                     .setAdapter(new NotificationDTO(req))
                                     .setMethod("getNotifications")
                                     .isValidateRole("NOTIFICATION")
+                                    .isLogicalDelete()
                                     .build();
         
             this.getController().getAll(requestHandler);
@@ -66,6 +69,7 @@ class NotificationRoutes extends GenericRoutes {
                                     .setAdapter(new NotificationDTO(req))
                                     .setMethod("updateNotification")
                                     .isValidateRole("NOTIFICATION")
+                                    .isLogicalDelete()
                                     .build();
         
             this.getController().update(requestHandler);
@@ -78,6 +82,7 @@ class NotificationRoutes extends GenericRoutes {
                                     .setAdapter(new NotificationDTO(req))
                                     .setMethod("deleteNotification")
                                     .isValidateRole("NOTIFICATION")
+                                    .isLogicalDelete()
                                     .build();
         
             this.getController().delete(requestHandler);

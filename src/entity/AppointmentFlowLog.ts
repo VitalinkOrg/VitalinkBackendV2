@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 import { Appointment } from "./Appointment";
 import { User } from "@TenshiJS/entity/User";
+import { UnitDynamicCentral } from "@TenshiJS/entity/UnitDynamicCentral";
 
 @Entity("appointment_flow_log")
 export class AppointmentFlowLog {
@@ -11,9 +12,9 @@ export class AppointmentFlowLog {
   @JoinColumn({ name: "appointment_id", referencedColumnName: "id" })
   appointment: Appointment;
 
-  // Texto clave o semántico del evento (ej: 'VALORATION_CONFIRMED', 'PROCEDURE_PAID')
-  @Column({ name: "flow_event_code", type: "varchar", length: 100 })
-  flow_event_code: string;
+  @ManyToOne(() => UnitDynamicCentral)
+  @JoinColumn({ name: "flow_event", referencedColumnName: "code" })
+  flow_event: UnitDynamicCentral | null;
 
   // Descripción amigable para el historial
   @Column({ type: "text", nullable: true, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })

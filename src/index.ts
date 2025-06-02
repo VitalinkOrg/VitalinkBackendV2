@@ -78,6 +78,7 @@ import RouteNotFoundMiddleware from '@TenshiJS/middlewares/RouteNotFoundMiddlewa
 import { CorsHandlerMiddleware } from '@TenshiJS/middlewares/CorsHandlerMiddleware';
 import LoggingHandlerMiddleware from '@TenshiJS/middlewares/LoggingHandlerMiddleware';
 import ValidJsonBodyMiddleware from '@TenshiJS/middlewares/ValidJsonBodyMiddleware';
+import { AppointmentFlowLog } from './entity/AppointmentFlowLog';
 
 
 
@@ -133,6 +134,7 @@ export const TenshiMain = async() => {
       ReviewDetail,
       SpecialtyBySupplier,
       LanguageSupplier,
+      AppointmentFlowLog
     ]);
 
     //Cors handler middle ware

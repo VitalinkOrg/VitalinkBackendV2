@@ -71,6 +71,8 @@ class AppointmentCreditRoutes extends GenericRoutes {
                 filters.where = { ...filters.where, appointment: { appointment_qr_code: appointment_qr_code }  };
             }
 
+            console.log(filters);
+
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new AppointmentCreditDTO(req))

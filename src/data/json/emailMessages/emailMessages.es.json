@@ -25,5 +25,86 @@
     "generalProblemContact":"Si encuentras algún problema o necesitas asistencia, no dudes en contactarnos.",
     "generalRegards":"Saludos cordiales,",
     "generalSupport":"Equipo de Soporte de {{ companyName }}",
-    "generalCopyright":"{{ year }} @Copyright - {{ companyName }}"
+    "generalCopyright":"{{ year }} @Copyright - {{ companyName }}",
+
+
+    "appointmentStep1Subject": "Reservación de Cita de Valoración", 
+    "appointmentStep1Title": "Reservación de Cita de Valoración",
+    "appointmentStep1EmailMessage": "El paciente {{ patientName }} ha solicitado una cita de valoración del procedimiento {{ procedureName }} para el dia {{ appointmentDate }} a la hora {{ appointmentHour }}.",
+    "appointmentStep1AnotherMessage": "El paciente {{ patientName }} ha solicitado una cita de valoración del procedimiento {{ procedureName }} del médico/centro médico {{ supplierName }} para el dia {{ appointmentDate }} a la hora {{ appointmentHour }}",
+    "appointmentStep1NotificationMessage": "Nueva cita de valoración solicitada.",
+
+    "appointmentStep2Subject": "Confirmación de Cita Valoración",
+    "appointmentStep2Title": "Confirmación de Cita Valoración",
+    "appointmentStep2EmailMessage": "El médico/centro médico {{ supplierName }} ha confirmado la cita de valoración del procedimiento {{ procedureName }} para el dia {{ appointmentDate }} a la hora {{ appointmentHour }}. Recuerda presentarse 20 minutos antes de la cita.",
+    "appointmentStep2AnotherMessage": "El médico/centro médico {{ supplierName }} ha confirmado la cita de valoración del procedimiento {{ procedureName }} del paciente {{ patientName }} para el dia {{ appointmentDate }} a la hora {{ appointmentHour }}",
+    "appointmentStep2NotificationMessage": "Cita de valoración confirmada.",
+
+    "appointmentStep3Subject": "Pago de Cita Valoración",
+    "appointmentStep3Title": "Pago de Cita Valoración",
+    "appointmentStep3EmailMessage": "Se realizó el pago de la cita de valoración del procedimiento {{ procedureName }} del paciente {{ patientName }} ",
+    "appointmentStep3AnotherMessage": "Se realizó el pago de la cita de valoración del procedimiento {{ procedureName }} del paciente {{ patientName }} por medio de {{ paymentMethod }}",
+    "appointmentStep3NotificationMessage": "Pago recibido para cita de valoración.",
+
+    "appointmentStep4FitSubject": "Apto para Procedimiento",
+    "appointmentStep4FitTitle": "Apto para Procedimiento",
+    "appointmentStep4FitEmailMessage": "El médico/centro médico {{ supplierName }} a confirmado que eres apto para el procedimiento {{ procedureName }}",
+    "appointmentStep4FitAnotherMessage": "El médico/centro médico {{ supplierName }} a confirmado que el paciente {{ patientName }} es apto el procedimiento {{ procedureName }}",
+    "appointmentStep4FitNotificationMessage": "Apto para procedimiento.",
+
+    "appointmentStep4FitNoSubject": "No Apto para Procedimiento",
+    "appointmentStep4FitNoTitle": "No Apto para Procedimiento",
+    "appointmentStep4FitNoEmailMessage": "De acuerdo a la valoración del médico/centro médico {{ supplierName }} a confirmado que NO eres apto para el procedimiento {{ procedureName }}",
+    "appointmentStep4FitNoAnotherMessage": "El médico/centro médico {{ supplierName }} a confirmado que el paciente {{ patientName }} NO es apto el procedimiento {{ procedureName }}",
+    "appointmentStep4FitNoNotificationMessage": "Paciente no apto para procedimiento.",
+
+    "appointmentStep5Subject": "Reservación de Procedimiento Médico", 
+    "appointmentStep5Title": "Reservación de Procedimiento Médico",
+    "appointmentStep5EmailMessage": "El paciente {{ patientName }} ha solicitado una reservación del procedimiento {{ procedureName }} del médico/centro médico {{ supplierName }} para el dia {{ appointmentDate }} a la hora {{ appointmentHour }}",
+    "appointmentStep5AnotherMessage": "El paciente {{ patientName }} ha solicitado una reservacion del procedimiento {{ procedureName }} del médico/centro médico {{ supplierName }} para el dia {{ appointmentDate }} a la hora {{ appointmentHour }}",
+    "appointmentStep5NotificationMessage": "Solicitud de procedimiento registrada.",
+
+    "appointmentStep6Subject": "Confirmación de Reservación de Procedimiento Médico",
+    "appointmentStep6Title": "Confirmación de Reservación de Procedimiento Médico",
+    "appointmentStep6EmailMessage": "El médico/centro médico {{ supplierName }} ha confirmado la reserva del procedimiento {{ procedureName }} para el dia {{ appointmentDate }} a la hora {{ appointmentHour }}. Recuerda presentarse 20 minutos antes de la cita.",
+    "appointmentStep6AnotherMessage": "El médico/centro médico {{ supplierName }} ha confirmado la reserva del procedimiento {{ procedureName }} del paciente {{ patientName }} para el dia {{ appointmentDate }} a la hora {{ appointmentHour }}",
+    "appointmentStep6NotificationMessage": "Reserva de procedimiento confirmada.",
+
+    "appointmentStep7Subject": "Pago de Procedimiento Médico",
+    "appointmentStep7Title": "Pago de Procedimiento Médico",
+    "appointmentStep7EmailMessage": "Se realizó el pago del procedimiento medico {{ procedureName }} del paciente {{ patientName }}",
+    "appointmentStep7AnotherMessage": "Se realizó el pago del procedimiento medico {{ procedureName }} del paciente {{ patientName }} por medio de {{ paymentMethod }}",
+    "appointmentStep7NotificationMessage": "Pago recibido para procedimiento.",
+
+    "appointmentStep8Subject": "Procedimiento Médico Realizado",
+    "appointmentStep8Title": "Procedimiento Médico Realizado",
+    "appointmentStep8EmailMessage": "El médico/centro médico {{ supplierName }} ha confirmado la realizacion del procedimiento medico {{ procedureName }}.",
+    "appointmentStep8AnotherMessage": "El médico/centro médico {{ supplierName }} ha confirmado la realizacion del procedimiento medico {{ procedureName }} del paciente {{ patientName }}.",
+    "appointmentStep8NotificationMessage": "Procedimiento médico realizado.",
+
+
+    "appointmentCreditStep1Subject": "Solicitud de credito",
+    "appointmentCreditStep1Title": "Solicitud de credito",
+    "appointmentCreditStep1EmailMessage": "El paciente {{ patientName }} ha solicitado un credito de {{ requestAmount }} para el procedimiento {{ procedureName }} del médico/centro médico {{ supplierName }}",
+    "appointmentCreditStep1AnotherMessage": "El paciente {{ patientName }} ha solicitado un credito de {{ requestAmount }} para el procedimiento {{ procedureName }} del médico/centro médico {{ supplierName }}",
+    "appointmentCreditStep1NotificationMessage": "Solicitud de crédito enviada.",
+
+    "appointmentCreditStep2Subject": "Credito Aprobado",
+    "appointmentCreditStep2Title": "Credito Aprobado",
+    "appointmentCreditStep2EmailMessage": "La Asociacion Solidarista {{ financeEntityName }} ha aprobado el credito por un monto de {{ Amount }} para el procedimiento {{ procedureName }}. Por favor revisa el documento de pagare.",
+    "appointmentCreditStep2AnotherMessage": "La Asociacion Solidarista {{ financeEntityName }} ha aprobado el credito por un monto de {{ Amount }} para el procedimiento {{ procedureName }}",
+    "appointmentCreditStep2NotificationMessage": "Crédito aprobado.",
+
+    "appointmentCreditStep2NoSubject": "Credito Rechazado",
+    "appointmentCreditStep2NoTitle": "Credito Rechazado",
+    "appointmentCreditStep2NoEmailMessage": "La Asociacion Solidarista {{ financeEntityName }} ha rechazado el credito para el procedimiento {{ procedureName }}",
+    "appointmentCreditStep2NoAnotherMessage": "La Asociacion Solidarista {{ financeEntityName }} ha rechazado el credito para el procedimiento {{ procedureName }}",
+    "appointmentCreditStep2NoNotificationMessage": "Crédito rechazado.",
+
+    "appointmentCreditStep4Subject": "Credito Utilizado",
+    "appointmentCreditStep4Title": "Credito Utilizado",
+    "appointmentCreditStep4EmailMessage": "El médico/centro médico {{ supplierName }} ha marcado como utilizado el credito del paciente {{ patientName }} para el procedimiento {{ procedureName }}. Por favor confirmar con Vitalink.",
+    "appointmentCreditStep4AnotherMessage": "El médico/centro médico {{ supplierName }} ha marcado como utilizado el credito del paciente {{ patientName }} para el procedimiento {{ procedureName }}.",
+    "appointmentCreditStep4NotificationMessage": "Crédito utilizado para procedimiento."
+
   }

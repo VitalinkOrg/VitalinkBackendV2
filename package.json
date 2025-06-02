@@ -10,6 +10,7 @@
         "delete": "ts-node -r tsconfig-paths/register src/seeds/DeleteDBSeed.ts",
         "generalseed": "ts-node -r tsconfig-paths/register src/seeds/GeneralSeed.ts",
         "seed": "ts-node -r tsconfig-paths/register src/seeds/Seed.ts",
+        "spseed": "ts-node -r tsconfig-paths/register src/seeds/SpsDBSeed.ts",
         "automation": "ts-node -r tsconfig-paths/register automation/Automation.ts",
         "autotest": "ts-node -r tsconfig-paths/register automation/AutomationTest.ts",
         "compile": "tsc",
@@ -65,6 +66,9 @@
         "typeorm": "^0.3.20",
         "typescript": "^5.5.4"
     },
+    "devDependencies": {
+       
+    },
      "_moduleAliases": {
         "tenshi": "build/tenshi",     
         "@TenshiJS": "build/tenshi",
@@ -74,8 +78,5 @@
         "@entity": "build/src/entity",
         "@data": "build/data/json",
         "@utils": "build/src/utils"
-    },
-    "devDependencies": {
-       
     }
 }

@@ -3,16 +3,16 @@ import { FindManyOptions, RequestHandler } from "@TenshiJS/generics";
 import GenericController from "@TenshiJS/generics/Controller/GenericController";
 import GenericRepository from "@TenshiJS/generics/Repository/GenericRepository";
 import { Appointment } from "@index/entity/Appointment";
-import { AppointmentFlowLog } from "@index/entity/AppointmentFlowLog";
 import { AppointmentCredit } from "@index/entity/AppointmentCredit";
 import { Package } from "@index/entity/Package";
 import JWTObject from "@TenshiJS/objects/JWTObject";
 import HttpAction from "@TenshiJS/helpers/HttpAction";
 import { In } from "typeorm";
+import { generateRandomCode } from "@TenshiJS/utils/generalUtils";
+import { handleFlowNotificationAndLog } from "../utils/AppointmentUtils";
 
 
 export default class AppointmentController extends GenericController {
-    private appointmentFlowLogRepository = new GenericRepository(AppointmentFlowLog);
     private appointmentCreditRepository = new GenericRepository(AppointmentCredit);
     private packageRepository = new GenericRepository(Package);
 
@@ -29,6 +29,7 @@ export default class AppointmentController extends GenericController {
                 "appointment.package.specialty.medical_specialty",
                 "appointment.package.procedure",
                 "appointment.package.product"
+               
             ],
             where: { appointment: { id } }
         };
@@ -69,8 +70,12 @@ export default class AppointmentController extends GenericController {
      async StepByStepReservationAppointment(reqHandler: RequestHandler, step: number): Promise<any> {
           return this.getService().updateService(reqHandler, async (jwtData, httpExec, id) => {
 
+            const filters: FindManyOptions = {
+                relations: ['customer', 'supplier', 'package', 'package.procedure', 'supplier.legal_representative',  "payment_method"]
+            };
+
             const body = reqHandler.getAdapter().entityFromPutBody();
-            const appointment = await this.getRepository().findById(id!!, true, null);
+            const appointment = await this.getRepository().findById(id!!, true, filters);
             const messageWithoutProcedure : string = "El paciente no es apto para procedimiento medico";
             
             try {
@@ -210,24 +215,117 @@ export default class AppointmentController extends GenericController {
                     }
                 }
 
-                
                 // Execute the update action in the database
-                const updateEntity = await this.getRepository().update(id!!, body,
+                const updateAppointmentEntity = await this.getRepository().update(id!!, body,
                                                              reqHandler.getLogicalDelete());
 
-                if(updateEntity == null){
+                if(updateAppointmentEntity == null){
                     return httpExec.dynamicError(ConstStatusJson.NOT_FOUND, ConstMessagesJson.DONT_EXISTS);
                 }
 
-                const codeResponse : string = 
-                reqHandler.getCodeMessageResponse() != null ? 
-                reqHandler.getCodeMessageResponse() as string :
-                ConstHTTPRequest.UPDATE_SUCCESS;
+
+                if(step == 2){
+                    
+                    await handleFlowNotificationAndLog({
+                        acronymous: "appointmentStep2",
+                        appointment: appointment,
+                        userId: jwtData.id,
+                        language: appointment.customer.language!,
+                        flowEventCode: "CONFIRM_VALIDATION_APPOINTMENT",
+                        userReceiveId: appointment.customer.id,
+                        variables: ["appointmentDate", "appointmentHour", "procedureName", "supplierName", "patientName"]
+                    });
+
+                }else if(step == 3){
+               
+                    await handleFlowNotificationAndLog({
+                        acronymous: "appointmentStep3",
+                        appointment: appointment,
+                        userId: jwtData.id,
+                        language: appointment.supplier.legal_representative.language!,
+                        flowEventCode: "VALUATION_PENDING_VALORATION_APPOINTMENT",
+                        userReceiveId: appointment.supplier.legal_representative.id,
+                        variables: ["procedureName", "patientName", "paymentMethod"]
+                    });
+
+                }else if(step == 4){
+
+                    if(body.appointment_result_code == "FIT_FOR_PROCEDURE"){
+
+                        await handleFlowNotificationAndLog({
+                            acronymous: "appointmentStep4Fit",
+                            appointment: appointment,
+                            userId: jwtData.id,
+                            language: appointment.customer.language!,
+                            flowEventCode: "VALUED_VALORATION_APPOINTMENT",
+                            userReceiveId: appointment.customer.id,
+                            variables: ["procedureName", "patientName", "supplierName"]
+                        });
+
+                    }else{
+
+                        await handleFlowNotificationAndLog({
+                            acronymous: "appointmentStep4FitNo",
+                            appointment: appointment,
+                            userId: jwtData.id,
+                            language: appointment.customer.language!,
+                            flowEventCode: "VALUED_VALORATION_APPOINTMENT",
+                            userReceiveId: appointment.customer.id,
+                            variables: ["procedureName", "patientName", "supplierName"]
+                        });
+                    }
+                }else if(step == 5){
+               
+                    await handleFlowNotificationAndLog({
+                        acronymous: "appointmentStep5",
+                        appointment: appointment,
+                        userId: jwtData.id,
+                        language: appointment.supplier.legal_representative.language!,
+                        flowEventCode: "PENDING_PROCEDURE",
+                        userReceiveId: appointment.supplier.legal_representative.id,
+                        variables: ["procedureName", "patientName", "supplierName", "appointmentDate", "appointmentHour"]
+                    });
+                    
+                }else if(step == 6){
+
+                    await handleFlowNotificationAndLog({
+                        acronymous: "appointmentStep6",
+                        appointment: appointment,
+                        userId: jwtData.id,
+                        language: appointment.customer.language!,
+                        flowEventCode: "CONFIRM_PROCEDURE",
+                        userReceiveId: appointment.customer.id,
+                        variables: ["appointmentDate", "appointmentHour", "procedureName", "patientName", "supplierName"]
+                    });
+
+                }else if(step == 7){
+
+                    await handleFlowNotificationAndLog({
+                        acronymous: "appointmentStep7",
+                        appointment: appointment,
+                        userId: jwtData.id,
+                        language: appointment.supplier.legal_representative.language!,
+                        flowEventCode: "WAITING_PROCEDURE",
+                        userReceiveId: appointment.supplier.legal_representative.id,
+                        variables: ["procedureName", "patientName", "paymentMethod"]
+                    });
+
+                }else if(step == 8){
+                      await handleFlowNotificationAndLog({
+                        acronymous: "appointmentStep8",
+                        appointment: appointment,
+                        userId: jwtData.id,
+                        language: appointment.customer.language!,
+                        flowEventCode: "CONCRETED_APPOINTMENT",
+                        userReceiveId: appointment.customer.id,
+                        variables: ["procedureName", "patientName", "supplierName"]
+                    });
+                }
 
                 // Return the success response
                 return httpExec.successAction(
-                    reqHandler.getAdapter().entityToResponse(updateEntity), 
-                    codeResponse);
+                    reqHandler.getAdapter().entityToResponse(updateAppointmentEntity), 
+                     ConstHTTPRequest.UPDATE_SUCCESS);
 
             } catch (error: any) {
                 // Return the database error response
@@ -239,19 +337,6 @@ export default class AppointmentController extends GenericController {
     }
   
 
-
-    
-    generateRandomCode(length: number = 7): string {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-      let result = '';
-      
-      for (let i = 0; i < length; i++) {
-        const randomIdx = Math.floor(Math.random() * chars.length);
-        result += chars[randomIdx];
-      }
-    
-      return result;
-    }
 
     //Step 1
     async insert(reqHandler: RequestHandler): Promise<any> {
@@ -270,33 +355,35 @@ export default class AppointmentController extends GenericController {
                 body.price_procedure = isNaN(Number(rawValue)) || !rawValue?.toString().trim()
                 ? 0 : Number(rawValue);
 
-                body.appointment_qr_code = this.generateRandomCode();
+                body.appointment_qr_code = generateRandomCode();
 
                 // Insert the entity into the database
                 const createdEntity = await this.getRepository().add(body);
+                const appointmentEntity = await this.getRepository().findById(createdEntity.id, true, 
+                {relations: ['customer', 'supplier', 'package', 'package.procedure', 'supplier.legal_representative']});
 
-                const codeResponse : string = 
-                reqHandler.getCodeMessageResponse() != null ? 
-                reqHandler.getCodeMessageResponse() as string :
-                ConstHTTPRequest.INSERT_SUCCESS;
+                await handleFlowNotificationAndLog({
+                    acronymous: "appointmentStep1",
+                    appointment: appointmentEntity,
+                    userId: jwtData!!.id,
+                    language: appointmentEntity.supplier.legal_representative.language!,
+                    flowEventCode: "PENDING_VALORATION_APPOINTMENT",
+                    userReceiveId: appointmentEntity.supplier.legal_representative.id,
+                    variables: ["appointmentDate", "appointmentHour", "procedureName", "supplierName", "patientName"]
+                });
 
                 // Return the success response
                 return httpExec.successAction(
                     reqHandler.getAdapter().entityToResponse(createdEntity), 
-                    codeResponse);
+                    ConstHTTPRequest.INSERT_SUCCESS);
 
             }catch(error : any){
                 // Return the database error response
-
-                console.log(error);
                 return await httpExec.databaseError(error, jwtData!.id.toString(), 
                 reqHandler.getMethod(), this.getControllerName());
             }
         });
     }
-
-
-
 
 
 
@@ -358,4 +445,3 @@ export default class AppointmentController extends GenericController {
     }
 
 }
-  

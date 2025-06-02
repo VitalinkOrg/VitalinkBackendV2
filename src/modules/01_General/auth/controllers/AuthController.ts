@@ -69,7 +69,7 @@ export default class AuthController extends GenericController{
                 return httpExec.dynamicError(ConstStatusJson.ERROR, ConstMessagesJson.ERROR_ROLE_CUSTOMER);
             }
 
-            const preRegisterUserrepository = new GenericRepository(PreRegisterUser);
+            const preRegisterUserrepository = await new GenericRepository(PreRegisterUser);
             const preRegisterUser = await preRegisterUserrepository.findByOptions(false, true, {where: {card_id: userBody.card_id}});
             
             if(preRegisterUser == null){
