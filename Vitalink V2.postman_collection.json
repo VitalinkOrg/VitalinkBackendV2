@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5a0de23a-ebd7-4cdd-aeae-6460601c1f38",
+		"_postman_id": "8779e0ed-d8b3-4e1b-b273-17ef5609bf89",
 		"name": "Vitalink V2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "619775"
@@ -4891,6 +4891,344 @@
 											"key": "id",
 											"value": "1"
 										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "AppointmentFlowLog",
+					"item": [
+						{
+							"name": "Create AppointmentFlowLog",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"appointment\": 1,\n  \"flow_event\": null,\n  \"description\": \"El paciente Juan Pérez ha solicitado la cita.\",\n  \"performed_by\": \"send_user_id\",\n  \"created_at\": \"2025-06-03T00:07:56.704Z\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/appointmentflowlog/add",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"appointmentflowlog",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update AppointmentFlowLog",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"appointment\": 1,\n  \"flow_event\": null,\n  \"description\": \"El paciente Juan Pérez ha solicitado la cita.\",\n  \"performed_by\": \"send_user_id\",\n  \"created_at\": \"2025-06-03T00:07:56.704Z\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/appointmentflowlog/edit?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"appointmentflowlog",
+										"edit"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get AppointmentFlowLog by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/appointmentflowlog/get?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"appointmentflowlog",
+										"get"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All AppointmentFlowLog",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/appointmentflowlog/get_all",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"appointmentflowlog",
+										"get_all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete AppointmentFlowLog",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/appointmentflowlog/delete?id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"appointmentflowlog",
+										"delete"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bulk Insert AppointmentFlowLog",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n  {\n    \"appointment\": \"APPOINTMENT-002\",\n    \"flow_event\": \"step_1_requested\",\n    \"description\": \"El paciente María López solicitó la cita.\",\n    \"performed_by\": \"María López\",\n    \"created_at\": \"2025-06-03T00:07:56.705Z\"\n  },\n  {\n    \"appointment\": \"APPOINTMENT-003\",\n    \"flow_event\": \"step_1_requested\",\n    \"description\": \"El paciente Carlos Ramírez solicitó la cita.\",\n    \"performed_by\": \"Carlos Ramírez\",\n    \"created_at\": \"2025-06-03T00:07:56.705Z\"\n  }\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/appointmentflowlog/add_multiple",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"appointmentflowlog",
+										"add_multiple"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bulk Update AppointmentFlowLog",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n  {\n    \"id\": 1,\n    \"appointment\": \"APPOINTMENT-002\",\n    \"flow_event\": \"step_2_confirmed\",\n    \"description\": \"Cita confirmada por el médico.\",\n    \"performed_by\": \"Dr. Ruiz\",\n    \"created_at\": \"2025-06-03T00:07:56.705Z\"\n  },\n  {\n    \"id\": 2,\n    \"appointment\": \"APPOINTMENT-003\",\n    \"flow_event\": \"step_2_confirmed\",\n    \"description\": \"Cita confirmada por la clínica.\",\n    \"performed_by\": \"Clínica Vital\",\n    \"created_at\": \"2025-06-03T00:07:56.705Z\"\n  }\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/appointmentflowlog/edit_multiple",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"appointmentflowlog",
+										"edit_multiple"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bulk Update by Ids AppointmentFlowLog",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"ids\": [1, 2],\n  \"appointment\": \"APPOINTMENT-004\",\n  \"flow_event\": \"step_3_paid\",\n  \"description\": \"Pago confirmado.\",\n  \"performed_by\": \"Sistema de Pagos\",\n  \"created_at\": \"2025-06-03T00:07:56.705Z\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/appointmentflowlog/edit_multiple_by_ids",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"appointmentflowlog",
+										"edit_multiple_by_ids"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bulk Delete AppointmentFlowLog",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "{{auth_jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{secret_api_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"ids\": [1, 2, 3]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/appointmentflowlog/delete_multiple",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"appointmentflowlog",
+										"delete_multiple"
 									]
 								}
 							},

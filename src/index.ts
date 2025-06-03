@@ -30,6 +30,7 @@ import { Review } from '@entity/Review';
 import { ReviewDetail } from '@entity/ReviewDetail';
 import { SpecialtyBySupplier } from '@entity/SpecialtyBySupplier';
 import { LanguageSupplier } from '@entity/LanguageSupplier';
+import { AppointmentFlowLog } from '@entity/AppointmentFlowLog';
 
 
 //*************************************** */
@@ -67,6 +68,7 @@ import ReviewDetailRoutes from '@modules/02_Vitalink/reviewdetail/routers/Review
 import PreRegisterUserRoutes from '@modules/02_Vitalink/preregisteruser/routers/PreRegisterUserRoutes';
 import AppointmentRoutes from '@modules/02_Vitalink/appointment/routers/AppointmentRoutes';
 import AppointmentCreditRoutes from '@modules/02_Vitalink/appointmentcredit/routers/AppointmentCreditRoutes';
+import AppointmentFlowLogRoutes from '@modules/02_Vitalink/appointmentflowlog/routers/AppointmentFlowLogRoutes';
 
 //Import internal classes and functions
 import StartMiddleware from '@TenshiJS/middlewares/StartMiddleware';
@@ -78,7 +80,8 @@ import RouteNotFoundMiddleware from '@TenshiJS/middlewares/RouteNotFoundMiddlewa
 import { CorsHandlerMiddleware } from '@TenshiJS/middlewares/CorsHandlerMiddleware';
 import LoggingHandlerMiddleware from '@TenshiJS/middlewares/LoggingHandlerMiddleware';
 import ValidJsonBodyMiddleware from '@TenshiJS/middlewares/ValidJsonBodyMiddleware';
-import { AppointmentFlowLog } from './entity/AppointmentFlowLog';
+
+
 
 
 
@@ -191,6 +194,7 @@ export const TenshiMain = async() => {
     app.use(new PreRegisterUserRoutes().getRouter());
     app.use(new AppointmentRoutes().getRouter());
     app.use(new AppointmentCreditRoutes().getRouter());
+    app.use(new AppointmentFlowLogRoutes().getRouter());
 
     //*************************************** */
     //       NOT FOUND ROUTE MIDDLEWARE
