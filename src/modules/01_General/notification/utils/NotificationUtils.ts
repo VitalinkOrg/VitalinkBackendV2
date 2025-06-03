@@ -58,7 +58,7 @@ export async function sendEmailAndUserNotification(userNotifications: any, varia
         const emailService = EmailService.getInstance();
         await emailService.sendEmail({
             //toMail: user.email,
-            toMail: "fabian7593@gmail.com",
+            toMail: "vitalinkcr2@gmail.com",
             subject,
             message: htmlBody,
             attachments: [],
