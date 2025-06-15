@@ -21,16 +21,16 @@ export class Notification {
   subject: string;
 
   //This is the message of the notification, you can write the specific message, or just the name from the emailMessages.json
-  @Column({ type: "varchar", length: 800, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
-  email_message: string;
+  @Column({ type: "varchar", length: 800, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", nullable: true, default: null })
+  email_message?: string | null;
 
   //This is another message, maybe for show into front end or something like that, this is not used in the email.
-  @Column({ type: "varchar", length: 800, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
-  another_message: string;
+  @Column({ type: "varchar", length: 800, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", nullable: true, default: null })
+  another_message?: string | null;
 
   //This is another message, maybe for show into front end or something like that, this is not used in the email.
-  @Column({ type: "varchar", length: 800, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
-  notification_message: string;
+  @Column({ type: "varchar", length: 800, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", nullable: true, default: null })
+  notification_message?: string | null;
 
   // This is a boolean to indicate if the notification requires to send an email.
   @Column({ type: "tinyint", default: 0 })
