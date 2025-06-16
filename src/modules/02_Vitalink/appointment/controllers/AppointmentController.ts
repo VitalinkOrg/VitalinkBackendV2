@@ -71,7 +71,7 @@ export default class AppointmentController extends GenericController {
           return this.getService().updateService(reqHandler, async (jwtData, httpExec, id) => {
 
             const filters: FindManyOptions = {
-                relations: ['customer', 'supplier', 'package', 'package.procedure', 'supplier.legal_representative',  "payment_method"]
+                relations: ['customer', 'supplier', 'package', 'package.procedure', 'package.product', 'supplier.legal_representative',  "payment_method"]
             };
 
             const body = reqHandler.getAdapter().entityFromPutBody();
@@ -360,7 +360,7 @@ export default class AppointmentController extends GenericController {
                 // Insert the entity into the database
                 const createdEntity = await this.getRepository().add(body);
                 const appointmentEntity = await this.getRepository().findById(createdEntity.id, true, 
-                {relations: ['customer', 'supplier', 'package', 'package.procedure', 'supplier.legal_representative']});
+                {relations: ['customer', 'supplier', 'package', 'package.procedure', 'package.product', 'supplier.legal_representative']});
 
                 await handleFlowNotificationAndLog({
                     acronymous: "appointmentStep1",

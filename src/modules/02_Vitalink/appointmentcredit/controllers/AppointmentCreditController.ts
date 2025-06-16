@@ -87,7 +87,8 @@ export default class AppointmentCreditController extends GenericController {
                             'appointment.supplier',
                             'appointment.supplier.legal_representative',
                             "appointment.package",
-                            "appointment.package.procedure"]
+                            "appointment.package.procedure",
+                            "appointment.package.product"]
                     });
 
                 if(appointmentCredit == null || appointmentCredit == undefined){
@@ -109,7 +110,7 @@ export default class AppointmentCreditController extends GenericController {
                                     language: appointmentCredit.appointment.customer.language!,
                                     flowEventCode: body.credit_status_code,
                                     userReceiveId: appointmentCredit.appointment.customer.id,
-                                    variables: ["Amount", "financeEntityName", "procedureName"]
+                                    variables: ["Amount", "financeEntityName", "procedureName", "productName"]
                             });
                     }else{
 
@@ -121,7 +122,7 @@ export default class AppointmentCreditController extends GenericController {
                                     language: appointmentCredit.appointment.customer.language!,
                                     flowEventCode: "REJECTED",
                                     userReceiveId: appointmentCredit.appointment.customer.id,
-                                    variables: ["Amount", "financeEntityName", "procedureName"]
+                                    variables: ["Amount", "financeEntityName", "procedureName", "productName"]
                             });
                     }
                 }
@@ -138,7 +139,7 @@ export default class AppointmentCreditController extends GenericController {
                             language: appointmentCredit.appointment.customer.language!,
                             flowEventCode: null,
                             userReceiveId: appointmentCredit.appointment.customer.id,
-                            variables: ["supplierName", "patientName", "procedureName"]
+                            variables: ["supplierName", "patientName", "procedureName", "productName"]
                     });
                 }
             }
@@ -183,7 +184,8 @@ export default class AppointmentCreditController extends GenericController {
                     { relations: [
                         "package",
                         "package.specialty.medical_specialty",
-                        "package.procedure"]
+                        "package.procedure",
+                        "package.product"]
                 });
                     
                 if(appointment == null || appointment == undefined){
@@ -203,7 +205,7 @@ export default class AppointmentCreditController extends GenericController {
                             language: appointment.customer.language!,
                             flowEventCode: "REQUIRED",
                             userReceiveId: appointment.customer.id,
-                            variables: ["supplierName", "patientName", "requestAmount", "procedureName"]
+                            variables: ["supplierName", "patientName", "requestAmount", "procedureName", "productName"]
                     });
 
                     // Return the success response
