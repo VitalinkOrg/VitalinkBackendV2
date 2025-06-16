@@ -41,11 +41,6 @@ class PreRegisterUserRoutes extends GenericRoutes {
 
             const filters = this.buildBaseFilters();
 
-            const review_id: string | null = getUrlParam("review_id", req) || null;
-            if (review_id != "") {
-                filters.where = { ...filters.where, review: { id: review_id} };
-            }
-        
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new PreRegisterUserDTO(req))

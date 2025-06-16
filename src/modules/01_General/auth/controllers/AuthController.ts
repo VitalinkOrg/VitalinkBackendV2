@@ -58,7 +58,7 @@ export default class AuthController extends GenericController{
         //if the role y customer and not have finance entity, return error
         //if the user not exist in the pre register user, return error
         if(role.code == "CUSTOMER"){
-            if(reqHandler.getRequest().body.finance_entity == null || reqHandler.getRequest().body.finance_entity == undefined){
+           /* if(reqHandler.getRequest().body.finance_entity == null || reqHandler.getRequest().body.finance_entity == undefined){
                 return httpExec.dynamicError(ConstStatusJson.ERROR, ConstMessagesJson.ERROR_ROLE_CUSTOMER);
             }
 
@@ -67,14 +67,21 @@ export default class AuthController extends GenericController{
 
             if(userFinanceEntity == null){
                 return httpExec.dynamicError(ConstStatusJson.ERROR, ConstMessagesJson.ERROR_ROLE_CUSTOMER);
-            }
+            }*/
 
             const preRegisterUserrepository = await new GenericRepository(PreRegisterUser);
-            const preRegisterUser = await preRegisterUserrepository.findByOptions(false, true, {where: {card_id: userBody.card_id}});
-            
-            if(preRegisterUser == null){
+            const preRegisterUsers = await preRegisterUserrepository.findByOptions(false, true, 
+                {
+                    where: { card_id: userBody.card_id, email: userBody.email }
+                });
+
+            const preRegisterUser = Array.isArray(preRegisterUsers) ? preRegisterUsers[0] : preRegisterUsers;
+
+            if (!preRegisterUser) {
                 return httpExec.dynamicError(ConstStatusJson.ERROR, ConstMessagesJson.ERROR_ROLE_CUSTOMER);
             }
+
+            userBody.finance_entity = preRegisterUser.finance_entity;
         }
         
         const jwtObj : JWTObject = {

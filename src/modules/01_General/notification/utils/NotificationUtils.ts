@@ -7,7 +7,7 @@ import EmailService from "@TenshiJS/services/EmailServices/EmailService";
 import { getEmailTemplate, getMessageEmail } from "@TenshiJS/utils/htmlTemplateUtils";
 
 // Sends an email and stores a user notification
-export async function sendEmailAndUserNotification(userNotifications: any, variables: any): Promise<UserNotification | null> {
+export async function sendEmailAndUserNotification(userNotifications: any, variables: any, needsAddUserNotification: boolean): Promise<UserNotification | null> {
     // Repositories to retrieve Notification, User, and create UserNotification
     const repositoryNotification = await new GenericRepository(Notification);
     const repositoryUser = await new GenericRepository(User);
@@ -48,6 +48,8 @@ export async function sendEmailAndUserNotification(userNotifications: any, varia
             userName: user.name,
             emailSubject: title,
             emailContent: bodyContent,
+            actionTitle: notification.action_text,
+            actionUrl: notification.action_url,
             ...variables,
         };
 
@@ -65,7 +67,12 @@ export async function sendEmailAndUserNotification(userNotifications: any, varia
         });
     }
 
-    // Create and store the user notification in the database
-    const userNotificationAdded: UserNotification = await repositoryUserNotification.add(userNotifications);
-    return userNotificationAdded;
+    if(needsAddUserNotification){
+        // Create and store the user notification in the database
+        const userNotificationAdded: UserNotification = await repositoryUserNotification.add(userNotifications);
+        return userNotificationAdded;
+    }else{
+        return null;
+    }
+    
 }

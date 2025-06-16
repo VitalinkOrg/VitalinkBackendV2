@@ -28,7 +28,8 @@ import { getMessageEmail, replaceVariables } from "@TenshiJS/utils/htmlTemplateU
         language,
         flowEventCode,
         userReceiveId,
-        variables
+        variables,
+        addUserNotification = true,
         }: {
         acronymous: string;
         appointment: Appointment;
@@ -38,6 +39,7 @@ import { getMessageEmail, replaceVariables } from "@TenshiJS/utils/htmlTemplateU
         flowEventCode: string | null;
         userReceiveId: number | string;
         variables: string[];
+        addUserNotification?: boolean;
     }) {
 
         const appointmentFlowLogRepository = await new GenericRepository(AppointmentFlowLog);
@@ -66,6 +68,10 @@ import { getMessageEmail, replaceVariables } from "@TenshiJS/utils/htmlTemplateU
 
             if (variable === "procedureName") {
                 jsonData[variable] = appointment.package?.procedure?.name;
+            }
+
+            if (variable === "productName") {
+                jsonData[variable] = appointment.package?.product?.name;
             }
 
             if (variable === "supplierName") {
@@ -119,7 +125,7 @@ import { getMessageEmail, replaceVariables } from "@TenshiJS/utils/htmlTemplateU
         };
 
         // Send the email and push notification to the recipient
-        await sendEmailAndUserNotification(userNotification, jsonData);
+        await sendEmailAndUserNotification(userNotification, jsonData, addUserNotification);
 
         // Store the flow event and description in the flow log
         if(flowEventCode != null) {

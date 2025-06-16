@@ -170,9 +170,10 @@ export default class SupplierController extends GenericController {
       }
     
       // Filtrar si no hay coincidencias de especialidad/procedimiento
-      if ((specialty_code || procedure_code) && services.length === 0) {
+      if (specialty_code && !specialties.some(s => s.medical_specialty.code === specialty_code)) {
         return false;
       }
+
     
       // Asignar datos al proveedor
       supplier.search_procedure_name = procedure_code
@@ -260,8 +261,11 @@ export default class SupplierController extends GenericController {
           return { id: s.id, medical_specialty: s.medical_specialty, procedures };
         })
         .filter(item => {
-          const has = item.procedures.length > 0;
-          return has;
+          // Always include specialties, even without procedures, if no filters are applied
+          const hasProcedures = item.procedures.length > 0;
+          return  procedure_code || minPrice > 0 || maxPrice < Number.MAX_SAFE_INTEGER
+            ? hasProcedures
+            : true;
         });
     }
     

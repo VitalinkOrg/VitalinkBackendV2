@@ -924,20 +924,20 @@ const preRegisterUserRepository = dataSource.getRepository(PreRegisterUser);
 const preRegisterUsers = [
     {
         id: 1,
-        card_id: "9-1234-5678",
+        card_id: "912345678",
         id_type: { code: "PHYSICAL_DNI" },
         name: "Juan Pérez",
-        email: "juan@example.com",
+        email: "vitalinkcr2+juanp@gmail.com",
         address: "Barrio Los Ángeles, Cartago",
         birth_date: new Date("1990-05-14"),
         finance_entity: { id: "8401b1be-7e1d-4357-a632-15172a647b8d" }
     },
     {
         id: 2,
-        card_id: "8-5678-1234",
+        card_id: "856781234",
         id_type: { code: "PHYSICAL_DNI" },
         name: "Mariana Rodríguez",
-        email: "mrodri@example.com",
+        email: "vitalinkcr2+mrodri@gmail.com",
         address: "Avenida Central, San José",
         birth_date: new Date("1985-08-22"),
         finance_entity: { id: "c0ecccb1-6c2f-407f-b39f-6f5c2af11640" }
@@ -947,7 +947,7 @@ const preRegisterUsers = [
         card_id: "7-3456-7890",
         id_type: { code: "PHYSICAL_DNI" },
         name: "Carlos Gómez",
-        email: "cgomez@example.com",
+        email: "vitalinkcr2+cgomez@gmail.com",
         address: "Residencial Monte Verde, Liberia",
         birth_date: new Date("1992-02-18"),
         finance_entity: { id: "8401b1be-7e1d-4357-a632-15172a647b8d" }
@@ -957,7 +957,7 @@ const preRegisterUsers = [
         card_id: "6-8765-4321",
         id_type: { code: "DIMEX" },
         name: "Sofía Castillo",
-        email: "scastilloan@example.com",
+        email: "vitalinkcr2+scastillo@gmail.com",
         address: "Centro de Puntarenas",
         birth_date: new Date("1995-11-30"),
         finance_entity: { id: "c0ecccb1-6c2f-407f-b39f-6f5c2af11640" }
@@ -1333,11 +1333,24 @@ const notifications = [
     another_message: "El paciente {{ patientName }} ha solicitado una cita de valoración del procedimiento {{ procedureName }} del médico/centro médico {{ supplierName }} para el dia {{ appointmentDate }} a la hora {{ appointmentHour }}",
     required_send_email: true,
     text_from_email_message_json: true,
+    email_template: "genericTemplateButtonEmail",
+    action_url: "https://vitalkink.netlify.app/medicos/citas",
+    action_text: "Ir a Vitalink",
+    language: "es",
+    
+  },
+  {
+    code: "appointmentStep1.2",
+    type: "APPOINTMENT",
+    subject: "Cita reservada - Espera Confirmación",
+    message: "El médico/centro médico {{ supplierName }} se pondrá en contacto contigo o confirmará cita de valoración del procedimiento {{ procedureName }} / producto {{ productName }} para el día {{ appointmentDate }} a la hora {{ appointmentHour }} en los próximos días.",
+    another_message: "El médico/centro médico {{ supplierName }} se pondrá en contacto contigo o confirmará cita de valoración del procedimiento {{ procedureName }} / producto {{ productName }} para el día {{ appointmentDate }} a la hora {{ appointmentHour }} en los próximos días.",
+    required_send_email: true,
+    text_from_email_message_json: true,
     email_template: "genericTemplateEmail",
     action_url: null,
     action_text: null,
-    language: "es",
-    
+    language: "es"
   },
   {
     code: "appointmentStep2",
@@ -1347,9 +1360,9 @@ const notifications = [
     another_message: "El médico/centro médico {{ supplierName }} ha confirmado la cita de valoración del procedimiento {{ procedureName }} del paciente {{ patientName }} para el dia {{ appointmentDate }} a la hora {{ appointmentHour }}",
     required_send_email: true,
     text_from_email_message_json: true,
-    email_template: "genericTemplateEmail",
-    action_url: null,
-    action_text: null,
+    email_template: "genericTemplateButtonEmail",
+    action_url: "https://vitalkink.netlify.app/pacientes/citas",
+    action_text: "Ir a Vitalink",
     language: "es",
     
   },
@@ -1361,9 +1374,9 @@ const notifications = [
     another_message: "Se realizó el pago de la cita de valoración del procedimiento {{ procedureName }} por medio de {{ paymentMethod }}",
     required_send_email: true,
     text_from_email_message_json: true,
-    email_template: "genericTemplateEmail",
-    action_url: null,
-    action_text: null,
+    email_template: "genericTemplateButtonEmail",
+    action_url: "https://vitalkink.netlify.app/medicos/citas",
+    action_text: "Ir a Vitalink",
     language: "es",
     
   },
@@ -1375,9 +1388,9 @@ const notifications = [
     another_message: "El médico/centro médico {{ supplierName }} a confirmado que el paciente {{ patientName }} es apto el procedimiento {{ procedureName }}",
     required_send_email: true,
     text_from_email_message_json: true,
-    email_template: "genericTemplateEmail",
-    action_url: null,
-    action_text: null,
+    email_template: "genericTemplateButtonEmail",
+    action_url: "https://vitalkink.netlify.app/pacientes/citas",
+    action_text: "Ir a Vitalink",
     language: "es",
     
   },
@@ -1390,8 +1403,8 @@ const notifications = [
     required_send_email: true,
     text_from_email_message_json: true,
     email_template: "genericTemplateEmail",
-    action_url: null,
-    action_text: null,
+    action_url: "https://vitalkink.netlify.app/pacientes/citas",
+    action_text: "Ir a Vitalink",
     language: "es",
     
   },
@@ -1403,9 +1416,9 @@ const notifications = [
     another_message: "El paciente {{ patientName }} ha solicitado una reservacion del procedimiento {{ procedureName }} del médico/centro médico {{ supplierName }}",
     required_send_email: true,
     text_from_email_message_json: true,
-    email_template: "genericTemplateEmail",
-    action_url: null,
-    action_text: null,
+    email_template: "genericTemplateButtonEmail",
+    action_url: "https://vitalkink.netlify.app/medicos/citas",
+    action_text: "Ir a Vitalink",
     language: "es",
     
   },
@@ -1417,9 +1430,9 @@ const notifications = [
     another_message: "El médico/centro médico {{ supplierName }} ha confirmado la reserva del procedimiento {{ procedureName }} del paciente {{ patientName }} para el dia {{ appointmentDate }} a la hora {{ appointmentHour }}",
     required_send_email: true,
     text_from_email_message_json: true,
-    email_template: "genericTemplateEmail",
-    action_url: null,
-    action_text: null,
+    email_template: "genericTemplateButtonEmail",
+    action_url: "https://vitalkink.netlify.app/pacientes/citas",
+    action_text: "Ir a Vitalink",
     language: "es",
     
   },
@@ -1431,9 +1444,9 @@ const notifications = [
     another_message: "Se realizó el pago del procedimiento medico {{ procedureName }} por medio de {{ paymentMethod }}",
     required_send_email: true,
     text_from_email_message_json: true,
-    email_template: "genericTemplateEmail",
-    action_url: null,
-    action_text: null,
+    email_template: "genericTemplateButtonEmail",
+    action_url: "https://vitalkink.netlify.app/medicos/citas",
+    action_text: "Ir a Vitalink",
     language: "es",
     
   },
@@ -1445,9 +1458,9 @@ const notifications = [
     another_message: "El médico/centro médico {{ supplierName }} ha confirmado la realizacion del procedimiento medico {{ procedureName }} del paciente {{ patientName }}.",
     required_send_email: true,
     text_from_email_message_json: true,
-    email_template: "genericTemplateEmail",
-    action_url: null,
-    action_text: null,
+    email_template: "genericTemplateButtonEmail",
+    action_url: "https://vitalkink.netlify.app/pacientes/citas",
+    action_text: "Ir a Vitalink",
     language: "es",
     
   },
@@ -1459,9 +1472,9 @@ const notifications = [
     another_message: "El paciente {{ patientName }} ha solicitado un credito de {{ Amount }} para el procedimiento {{ procedureName }} del médico/centro médico {{ supplierName }}",
     required_send_email: true,
     text_from_email_message_json: true,
-    email_template: "genericTemplateEmail",
+    email_template: "genericTemplateButtonEmail",
     action_url: null,
-    action_text: null,
+    action_text: "Ir a Vitalink",
     language: "es",
     
   },
@@ -1473,9 +1486,9 @@ const notifications = [
     another_message: "La Asociacion Solidarista {{ financeEntityName }} ha aprobado el credito por un monto de {{ Amount }} para el procedimiento {{ procedureName }}",
     required_send_email: true,
     text_from_email_message_json: true,
-    email_template: "genericTemplateEmail",
+    email_template: "genericTemplateButtonEmail",
     action_url: null,
-    action_text: null,
+    action_text: "Ir a Vitalink",
     language: "es",
     
   },
@@ -1487,9 +1500,9 @@ const notifications = [
     another_message: "La Asociacion Solidarista {{ financeEntityName }} ha rechazado el credito para el procedimiento {{ procedureName }}",
     required_send_email: true,
     text_from_email_message_json: true,
-    email_template: "genericTemplateEmail",
+    email_template: "genericTemplateButtonEmail",
     action_url: null,
-    action_text: null,
+    action_text: "Ir a Vitalink",
     language: "es"
   },
   {
@@ -1502,7 +1515,7 @@ const notifications = [
     text_from_email_message_json: true,
     email_template: "genericTemplateEmail",
     action_url: null,
-    action_text: null,
+    action_text: "Ir a Vitalink",
     language: "es"
   }
 ];

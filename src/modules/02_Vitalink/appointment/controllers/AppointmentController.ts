@@ -233,7 +233,7 @@ export default class AppointmentController extends GenericController {
                         language: appointment.customer.language!,
                         flowEventCode: "CONFIRM_VALIDATION_APPOINTMENT",
                         userReceiveId: appointment.customer.id,
-                        variables: ["appointmentDate", "appointmentHour", "procedureName", "supplierName", "patientName"]
+                        variables: ["appointmentDate", "appointmentHour", "procedureName", "productName", "supplierName", "patientName"]
                     });
 
                 }else if(step == 3){
@@ -245,7 +245,7 @@ export default class AppointmentController extends GenericController {
                         language: appointment.supplier.legal_representative.language!,
                         flowEventCode: "VALUATION_PENDING_VALORATION_APPOINTMENT",
                         userReceiveId: appointment.supplier.legal_representative.id,
-                        variables: ["procedureName", "patientName", "paymentMethod"]
+                        variables: ["procedureName", "productName", "patientName", "paymentMethod"]
                     });
 
                 }else if(step == 4){
@@ -259,7 +259,7 @@ export default class AppointmentController extends GenericController {
                             language: appointment.customer.language!,
                             flowEventCode: "VALUED_VALORATION_APPOINTMENT",
                             userReceiveId: appointment.customer.id,
-                            variables: ["procedureName", "patientName", "supplierName"]
+                            variables: ["procedureName", "productName", "patientName", "supplierName"]
                         });
 
                     }else{
@@ -271,7 +271,7 @@ export default class AppointmentController extends GenericController {
                             language: appointment.customer.language!,
                             flowEventCode: "VALUED_VALORATION_APPOINTMENT",
                             userReceiveId: appointment.customer.id,
-                            variables: ["procedureName", "patientName", "supplierName"]
+                            variables: ["procedureName", "productName", "patientName", "supplierName"]
                         });
                     }
                 }else if(step == 5){
@@ -283,7 +283,7 @@ export default class AppointmentController extends GenericController {
                         language: appointment.supplier.legal_representative.language!,
                         flowEventCode: "PENDING_PROCEDURE",
                         userReceiveId: appointment.supplier.legal_representative.id,
-                        variables: ["procedureName", "patientName", "supplierName", "appointmentDate", "appointmentHour"]
+                        variables: ["procedureName", "productName", "patientName", "supplierName", "appointmentDate", "appointmentHour"]
                     });
                     
                 }else if(step == 6){
@@ -295,7 +295,7 @@ export default class AppointmentController extends GenericController {
                         language: appointment.customer.language!,
                         flowEventCode: "CONFIRM_PROCEDURE",
                         userReceiveId: appointment.customer.id,
-                        variables: ["appointmentDate", "appointmentHour", "procedureName", "patientName", "supplierName"]
+                        variables: ["appointmentDate", "appointmentHour", "procedureName", "productName", "patientName", "supplierName"]
                     });
 
                 }else if(step == 7){
@@ -307,7 +307,7 @@ export default class AppointmentController extends GenericController {
                         language: appointment.supplier.legal_representative.language!,
                         flowEventCode: "WAITING_PROCEDURE",
                         userReceiveId: appointment.supplier.legal_representative.id,
-                        variables: ["procedureName", "patientName", "paymentMethod"]
+                        variables: ["procedureName", "productName", "patientName", "paymentMethod"]
                     });
 
                 }else if(step == 8){
@@ -318,7 +318,7 @@ export default class AppointmentController extends GenericController {
                         language: appointment.customer.language!,
                         flowEventCode: "CONCRETED_APPOINTMENT",
                         userReceiveId: appointment.customer.id,
-                        variables: ["procedureName", "patientName", "supplierName"]
+                        variables: ["procedureName", "productName", "patientName", "supplierName"]
                     });
                 }
 
@@ -369,7 +369,18 @@ export default class AppointmentController extends GenericController {
                     language: appointmentEntity.supplier.legal_representative.language!,
                     flowEventCode: "PENDING_VALORATION_APPOINTMENT",
                     userReceiveId: appointmentEntity.supplier.legal_representative.id,
-                    variables: ["appointmentDate", "appointmentHour", "procedureName", "supplierName", "patientName"]
+                    variables: ["appointmentDate", "appointmentHour", "procedureName", "productName", "supplierName", "patientName"]
+                });
+                
+                 await handleFlowNotificationAndLog({
+                    acronymous: "appointmentStep1.2",
+                    appointment: appointmentEntity,
+                    userId: jwtData!!.id,
+                    language: appointmentEntity.customer.language!,
+                    flowEventCode: "PENDING_VALORATION_APPOINTMENT",
+                    userReceiveId: appointmentEntity.customer.id,
+                    variables: ["appointmentDate", "appointmentHour", "procedureName", "productName", "supplierName"],
+                    addUserNotification: false 
                 });
 
                 // Return the success response
@@ -378,6 +389,8 @@ export default class AppointmentController extends GenericController {
                     ConstHTTPRequest.INSERT_SUCCESS);
 
             }catch(error : any){
+
+                console.error("Error inserting appointment:", error);
                 // Return the database error response
                 return await httpExec.databaseError(error, jwtData!.id.toString(), 
                 reqHandler.getMethod(), this.getControllerName());

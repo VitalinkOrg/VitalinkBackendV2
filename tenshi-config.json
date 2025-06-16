@@ -12,8 +12,8 @@
     },
     "SERVER" : {
         "PORT": 3000,
-        "SECRET_API_KEY": "8170fcb2-ef45-4173-9a1b-f682d38ddae9",
-        "VALIDATE_API_KEY" : false,
+        "SECRET_API_KEY": "2409efb0-48f1-4a0b-94e9-4aa3d858bb72",
+        "VALIDATE_API_KEY" : true,
         "MAX_REQUEST_PER_SECOND": 6,
         "IS_DEBUGGING": true,
         "FAIL_LOGIN_MAX_NUMBER": 3,
@@ -59,7 +59,7 @@
                          "/register", "/confirmation_register", 
                          "/forgot_password", "/verify_forgot_password",
                          "/reset_password", "/recover_user", "/active_user",
-                         "/udc/get_all","/supplier/get_all_main"],
+                         "/udc/get_all","/supplier/get_all_main", "/document/add"],
 
         "REQUEST_WITHOUT_API_KEY": ["/confirmation_register", "/verify_forgot_password", "/active_user"]
     },
