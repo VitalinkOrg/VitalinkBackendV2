@@ -13,7 +13,7 @@
     "SERVER" : {
         "PORT": 3000,
         "SECRET_API_KEY": "2409efb0-48f1-4a0b-94e9-4aa3d858bb72",
-        "VALIDATE_API_KEY" : true,
+        "VALIDATE_API_KEY" : false,
         "MAX_REQUEST_PER_SECOND": 6,
         "IS_DEBUGGING": true,
         "FAIL_LOGIN_MAX_NUMBER": 3,
