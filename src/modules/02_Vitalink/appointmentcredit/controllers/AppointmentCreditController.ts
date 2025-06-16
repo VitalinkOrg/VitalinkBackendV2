@@ -102,6 +102,7 @@ export default class AppointmentCreditController extends GenericController {
                     if(body.credit_status_code == "APPROVED" ||
                         body.credit_status_code == "APPROVED_PERCENTAGE"){
 
+                            appointmentCredit.approved_amount = body.approved_amount;
                             await handleFlowNotificationAndLog({
                                     acronymous: "appointmentCreditStep2",
                                     appointment: appointmentCredit.appointment,
@@ -122,7 +123,7 @@ export default class AppointmentCreditController extends GenericController {
                                     language: appointmentCredit.appointment.customer.language!,
                                     flowEventCode: "REJECTED",
                                     userReceiveId: appointmentCredit.appointment.customer.id,
-                                    variables: ["Amount", "financeEntityName", "procedureName", "productName"]
+                                    variables: [ "financeEntityName", "procedureName", "productName"]
                             });
                     }
                 }

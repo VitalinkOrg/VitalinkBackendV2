@@ -104,14 +104,14 @@
 
     "appointmentCreditStep2Subject": "Credito Aprobado",
     "appointmentCreditStep2Title": "Credito Aprobado",
-    "appointmentCreditStep2EmailMessage": "La Asociacion Solidarista {{ financeEntityName }} ha aprobado el credito por un monto de {{ Amount }} para el procedimiento {{ procedureName }} / producto {{ productName }}. Por favor revisa el documento de pagare.",
-    "appointmentCreditStep2AnotherMessage": "La Asociacion Solidarista {{ financeEntityName }} ha aprobado el credito por un monto de {{ Amount }} para el procedimiento {{ procedureName }} / producto {{ productName }}",
+    "appointmentCreditStep2EmailMessage": "La Asociación Solidarista {{ financeEntityName }} ha aprobado el credito por un monto de {{ Amount }} para el procedimiento {{ procedureName }} / producto {{ productName }}. Por favor revisa el documento de pagare.",
+    "appointmentCreditStep2AnotherMessage": "La Asociación Solidarista {{ financeEntityName }} ha aprobado el credito por un monto de {{ Amount }} para el procedimiento {{ procedureName }} / producto {{ productName }}",
     "appointmentCreditStep2NotificationMessage": "Crédito aprobado.",
 
     "appointmentCreditStep2NoSubject": "Credito Rechazado",
     "appointmentCreditStep2NoTitle": "Credito Rechazado",
-    "appointmentCreditStep2NoEmailMessage": "La Asociacion Solidarista {{ financeEntityName }} ha rechazado el credito para el procedimiento {{ procedureName }} / producto {{ productName }}",
-    "appointmentCreditStep2NoAnotherMessage": "La Asociacion Solidarista {{ financeEntityName }} ha rechazado el credito para el procedimiento {{ procedureName }} / producto {{ productName }}",
+    "appointmentCreditStep2NoEmailMessage": "La Asociación Solidarista {{ financeEntityName }} ha rechazado el credito para el procedimiento {{ procedureName }} / producto {{ productName }}",
+    "appointmentCreditStep2NoAnotherMessage": "La Asociación Solidarista {{ financeEntityName }} ha rechazado el credito para el procedimiento {{ procedureName }} / producto {{ productName }}",
     "appointmentCreditStep2NoNotificationMessage": "Crédito rechazado.",
 
     "appointmentCreditStep4Subject": "Credito Utilizado",

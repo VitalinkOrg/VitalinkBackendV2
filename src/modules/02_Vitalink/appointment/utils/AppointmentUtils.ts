@@ -88,6 +88,7 @@ import { getMessageEmail, replaceVariables } from "@TenshiJS/utils/htmlTemplateU
 
             // Only access credit-specific fields if a credit entity was provided
             if (appointmentCredit !== null) {
+              
                 if (variable === "requestAmount") {
                     jsonData[variable] = appointmentCredit.requested_amount;
                 }
