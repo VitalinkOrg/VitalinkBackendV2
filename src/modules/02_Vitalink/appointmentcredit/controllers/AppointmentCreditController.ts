@@ -136,9 +136,9 @@ export default class AppointmentCreditController extends GenericController {
                             appointment: appointmentCredit.appointment,
                             appointmentCredit: appointmentCredit,
                             userId: jwtData!.id,
-                            language: appointmentCredit.appointment.customer.language!,
+                            language: appointmentCredit.appointment.customer.finance_entity.language!,
                             flowEventCode: null,
-                            userReceiveId: appointmentCredit.appointment.customer.id,
+                            userReceiveId: appointmentCredit.appointment.customer.finance_entity.id,
                             variables: ["supplierName", "patientName", "procedureName", "productName"]
                     });
                 }
@@ -185,7 +185,9 @@ export default class AppointmentCreditController extends GenericController {
                         "package",
                         "package.specialty.medical_specialty",
                         "package.procedure",
-                        "package.product"]
+                        "package.product",
+                        "customer",
+                        "customer.finance_entity"]
                 });
                     
                 if(appointment == null || appointment == undefined){
@@ -202,9 +204,9 @@ export default class AppointmentCreditController extends GenericController {
                             appointment: appointment,
                             appointmentCredit: createdEntity,
                             userId: jwtData!.id,
-                            language: appointment.customer.language!,
+                            language: appointment.customer.finance_entity.language!,
                             flowEventCode: "REQUIRED",
-                            userReceiveId: appointment.customer.id,
+                            userReceiveId: appointment.customer.finance_entity.id,
                             variables: ["supplierName", "patientName", "requestAmount", "procedureName", "productName"]
                     });
 
