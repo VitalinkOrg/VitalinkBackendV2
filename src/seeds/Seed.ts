@@ -1473,7 +1473,7 @@ const notifications = [
     required_send_email: true,
     text_from_email_message_json: true,
     email_template: "genericTemplateButtonEmail",
-    action_url: null,
+    action_url: "https://vitalkink.netlify.app/socio-financiero/inicio",
     action_text: "Ir a Vitalink",
     language: "es",
     
@@ -1487,7 +1487,7 @@ const notifications = [
     required_send_email: true,
     text_from_email_message_json: true,
     email_template: "genericTemplateButtonEmail",
-    action_url: null,
+    action_url: "https://vitalkink.netlify.app/pacientes/citas",
     action_text: "Ir a Vitalink",
     language: "es",
     
@@ -1501,7 +1501,7 @@ const notifications = [
     required_send_email: true,
     text_from_email_message_json: true,
     email_template: "genericTemplateButtonEmail",
-    action_url: null,
+    action_url: "https://vitalkink.netlify.app/pacientes/citas",
     action_text: "Ir a Vitalink",
     language: "es"
   },
@@ -1514,7 +1514,7 @@ const notifications = [
     required_send_email: true,
     text_from_email_message_json: true,
     email_template: "genericTemplateEmail",
-    action_url: null,
+    action_url: "https://vitalkink.netlify.app/socio-financiero/inicio",
     action_text: "Ir a Vitalink",
     language: "es"
   }
