@@ -83,6 +83,12 @@ export default class AuthController extends GenericController{
 
             userBody.finance_entity = preRegisterUser.finance_entity;
         }
+
+
+        if(role.code == "LEGAL_REPRESENTATIVE"){
+            userBody.account_status = AccountStatusEnum.Active;
+            userBody.is_active_from_email = true;
+        }
         
         const jwtObj : JWTObject = {
             id: 0,
