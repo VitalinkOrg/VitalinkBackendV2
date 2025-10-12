@@ -27,7 +27,8 @@
         { "name": "UNIT_DYNAMIC_CENTRAL", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
         { "name": "USER", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
         { "name": "USER_NOTIFICATION", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
-        { "name": "APPOINTMENT_FLOW_LOG", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] }
+        { "name": "APPOINTMENT_FLOW_LOG", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
+        { "name": "PAYMENT", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] }
       ],
       "screens": []
     }, 
@@ -58,7 +59,8 @@
         { "name": "UNIT_DYNAMIC_CENTRAL", "function_list": ["GET_BY_ID","GET_ALL"] },
         { "name": "USER", "function_list": ["UPDATE","GET_BY_ID"] },
         { "name": "USER_NOTIFICATION", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
-        { "name": "APPOINTMENT_FLOW_LOG", "function_list": ["GET_ALL"] }
+        { "name": "APPOINTMENT_FLOW_LOG", "function_list": ["GET_ALL"] },
+        { "name": "PAYMENT", "function_list": [] }
       ],
       "screens": []
     },
@@ -89,7 +91,8 @@
         { "name": "UNIT_DYNAMIC_CENTRAL", "function_list": ["GET_BY_ID","GET_ALL"] },
         { "name": "USER", "function_list": ["UPDATE","GET_BY_ID"] },
         { "name": "USER_NOTIFICATION", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
-        { "name": "APPOINTMENT_FLOW_LOG", "function_list": ["GET_ALL"] }
+        { "name": "APPOINTMENT_FLOW_LOG", "function_list": ["GET_ALL"] },
+        { "name": "PAYMENT", "function_list": ["CREATE","UPDATE","DELETE","GET_BY_ID","GET_ALL"] }
       ],
       "screens": []
     },
@@ -120,7 +123,8 @@
       { "name": "UNIT_DYNAMIC_CENTRAL", "function_list": ["GET_BY_ID","GET_ALL"] },
       { "name": "USER", "function_list": [] },
       { "name": "USER_NOTIFICATION", "function_list": ["UPDATE","DELETE","GET_BY_ID","GET_ALL"] },
-      { "name": "APPOINTMENT_FLOW_LOG", "function_list": [] }
+      { "name": "APPOINTMENT_FLOW_LOG", "function_list": [] },
+      { "name": "PAYMENT", "function_list": [] }
       ],
       "screens": []
     }

@@ -2,7 +2,7 @@
     "COMPANY": {
         "NAME" : "Vitalink",
         "LOGO" : "https://vitalink-v2-s3.s3.us-east-2.amazonaws.com/PublicFiles/logo_demo_vitalink.jpg",
-        "BACKEND_HOST": "http://localhost:3000/",
+        "BACKEND_HOST": "http://localhost:3000",
         "FRONT_END_HOST": "http://localhost:3000/",
         "LOGIN_URL": "http://localhost:3000/",
         "RESET_PASSWORD_URL" : "password_reset/",
@@ -59,9 +59,10 @@
                          "/register", "/confirmation_register", 
                          "/forgot_password", "/verify_forgot_password",
                          "/reset_password", "/recover_user", "/active_user",
-                         "/udc/get_all","/supplier/get_all_main", "/document/add"],
+                         "/udc/get_all","/supplier/get_all_main", "/document/add",
+                         "/payment/notify", "/receipt", "/payment/test", "/payment/go"],
 
-        "REQUEST_WITHOUT_API_KEY": ["/confirmation_register", "/verify_forgot_password", "/active_user"]
+        "REQUEST_WITHOUT_API_KEY": ["/confirmation_register", "/verify_forgot_password", "/active_user","/payment/go", "/payment/notify", "/receipt", "/payment/test"]
     },
     "JWT": {
         "MAIN_TOKEN" :{
@@ -99,6 +100,25 @@
         "AUTH_USER": "tenshitest1@gmail.com",
         "AUTH_PASSWORD": "xnqitxldphiymoov",
         "EMAIL_FROM": "tenshitest1@gmail.com"
+    },
+    "CYBERSOURCE": {
+        "PAYMENT_URL_REDIRECT": "https://testsecureacceptance.cybersource.com/pay",
+        "PAYMENT_URL_EMBEDDED": "https://testsecureacceptance.cybersource.com/embedded/pay",
+        "ENV": "test", 
+        "PROFILE_ID": "EE694454-04BF-4940-BFC0-3AADFC5B4FE3",
+        "ACCESS_KEY": "30cb1d7d3eb83cdab62a6c9b7261dea0",
+        "SECRET_KEY": "f52e77d2cb8f466293186b0a9a1a42940ee19af3279a48cb87d612920f406bda08bdfb8c42014f98a4828bcadb1304c2c3af49b874da4d3597e6308bfe20c2a8ae89085a8b5a4d0cbe4d71f203bd70676a87ab334f5d4b58be54c24c87d7cb6659bce29deaaf4d6caf8e591a396deca1f25f0dd5060e45779f01a1804c8dcbbc",
+        "DEFAULT_CURRENCY": "CRC",
+        "DEFAULT_COUNTRY": "CR",
+        "DEFAULT_PROVINCE": "SJ",
+        "RECEIPT_URL_FRONTEND": "http://localhost:3001/receipt-spa",
+        "RECEIPT_BRIDGE_BACKEND": "http://localhost:3000/payment/receipt",
+        "MDD5_CHANNEL": "WEB",
+        "MERCHANT_NAME": "Vitalink",
+        "PAYMENT_METHOD":"card",
+        "TRANSACTION_TYPE":"sale,create_payment_token",
+        "LOCALE":"es-es",
+        "MODE":"embedded"
     },
     "TEST" : {
         "JWT_TEST": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNGI3MjY4LTkzODQtNDc0Yy1hYzI2LTU5Y2IwMmZhOGIyNiIsImVtYWlsIjoic2FtYmFzb2NjZXIyNEBnbWFpbC5jb20iLCJyb2xlIjoiOWIxZTZjNGEtNGNiNi00ZmYzLTlhNDQtMmRlOGQyNDUxMDRhIiwiaWF0IjoxNzMxMjY4ODQ0LCJleHAiOjE3MzEyOTg4NDR9.gBs2ryB1bYl2FHFn9xmvVQavIuZ6lFEKep4p5A89Fug",

@@ -110,6 +110,28 @@ interface TestConfig {
     ROLE_TEST: string;
 }
 
+interface CybersourceConfig {
+    ENV: string;
+    PROFILE_ID: string;
+    ACCESS_KEY: string;
+    SECRET_KEY: string;
+    DEFAULT_CURRENCY: string;
+    RECEIPT_URL_FRONTEND: string;
+    RECEIPT_BRIDGE_BACKEND: string;
+    MDD5_CHANNEL: string;
+    MERCHANT_NAME: string;
+    PAYMENT_URL_REDIRECT: string;
+    PAYMENT_URL_EMBEDDED: string;
+    DEFAULT_COUNTRY: string;
+    DEFAULT_PROVINCE: string;
+    PAYMENT_METHOD: string;
+    TRANSACTION_TYPE: string;
+    LOCALE: string;
+    MODE: string;
+}
+
+
+
 interface AppConfig {
     COMPANY: CompanyConfig;
     SERVER: ServerConfig;
@@ -122,6 +144,7 @@ interface AppConfig {
     URL_FILES: UrlFilesConfig;
     SUPER_ADMIN: SuperAdminConfig;
     TEST: TestConfig;
+    CYBERSOURCE: CybersourceConfig;
 }
 
 class ConfigManager {

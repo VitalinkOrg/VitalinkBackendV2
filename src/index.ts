@@ -31,6 +31,8 @@ import { ReviewDetail } from '@entity/ReviewDetail';
 import { SpecialtyBySupplier } from '@entity/SpecialtyBySupplier';
 import { LanguageSupplier } from '@entity/LanguageSupplier';
 import { AppointmentFlowLog } from '@entity/AppointmentFlowLog';
+import { PaymentAttempt } from '@entity/PaymentAttempt';
+
 
 
 //*************************************** */
@@ -69,6 +71,7 @@ import PreRegisterUserRoutes from '@modules/02_Vitalink/preregisteruser/routers/
 import AppointmentRoutes from '@modules/02_Vitalink/appointment/routers/AppointmentRoutes';
 import AppointmentCreditRoutes from '@modules/02_Vitalink/appointmentcredit/routers/AppointmentCreditRoutes';
 import AppointmentFlowLogRoutes from '@modules/02_Vitalink/appointmentflowlog/routers/AppointmentFlowLogRoutes';
+import PaymentRoutes from '@modules/02_Vitalink/payments/routers/PaymentRoutes';
 
 //Import internal classes and functions
 import StartMiddleware from '@TenshiJS/middlewares/StartMiddleware';
@@ -137,7 +140,8 @@ export const TenshiMain = async() => {
       ReviewDetail,
       SpecialtyBySupplier,
       LanguageSupplier,
-      AppointmentFlowLog
+      AppointmentFlowLog,
+      PaymentAttempt
     ]);
 
     //Cors handler middle ware
@@ -154,6 +158,8 @@ export const TenshiMain = async() => {
       res.setHeader(ConstGeneral.HEADER_TYPE, ConstGeneral.HEADER_JSON);
       next();
     });
+
+ 
 
     if(config.SERVER.IS_DEBUGGING === false) {
       //security helmet headers middleware
@@ -195,6 +201,7 @@ export const TenshiMain = async() => {
     app.use(new AppointmentRoutes().getRouter());
     app.use(new AppointmentCreditRoutes().getRouter());
     app.use(new AppointmentFlowLogRoutes().getRouter());
+    app.use(new PaymentRoutes().getRouter());
 
     //*************************************** */
     //       NOT FOUND ROUTE MIDDLEWARE
