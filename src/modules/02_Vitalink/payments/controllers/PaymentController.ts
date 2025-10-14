@@ -230,132 +230,151 @@ export default class PaymentController extends GenericController {
      * - Responder 200 "OK" si todo bien (Cybersource solo necesita el status code).
      * - NO cambiar la lógica final del front aquí (eso lo consulta vía /payment/status).
      */
-    async notify(reqHandler: RequestHandler): Promise<{status?: number; contentType?: string; body: any}> {
-      try {
-        const req = reqHandler.getRequest();
+   // Reemplaza todo tu método notify por este
+async notify(reqHandler: RequestHandler): Promise<{ status?: number; contentType?: string; body: any }> {
+  try {
+    const req: any = reqHandler.getRequest();
 
-        // 1) Aceptamos SOLO POST (Cybersource envía POST)
-        if (req.method !== "POST") {
-          return {
-            status: 405,
-            contentType: "application/json",
-            body: {
-              status: { id: 0, message: "Method Not Allowed", http_code: 405 },
-              data: null,
-              info: "Method Not Allowed"
-            }
-          };
+    // 1) Solo POST
+    if (req.method !== "POST") {
+      return {
+        status: 405,
+        contentType: "application/json",
+        body: {
+          status: { id: 0, message: "Method Not Allowed", http_code: 405 },
+          data: null,
+          info: "Method Not Allowed"
         }
+      };
+    }
 
-        const service = new CybersourceService();
+    // 2) Cargar payload de forma robusta (por si no está montado urlencoded)
+    const readRaw = (request: any) =>
+      new Promise<string>((resolve) => {
+        let raw = "";
+        request.on("data", (ch: Buffer) => (raw += ch.toString("utf8")));
+        request.on("end", () => resolve(raw));
+        request.on("error", () => resolve(raw));
+      });
 
-        // 2) Verificar firma (crítico)
-        const sig = service.verifyResponseSignature(req.body);
-        if (!sig.ok) {
-          console.warn("[CYBS][WEBHOOK] Firma inválida", {
-            signed_fields: sig.signedFields,
-            given: sig.given,
-            calc: sig.calc
-          });
-          // Puedes devolver 400; si prefieres ignorar reintentos y loguear, devuelve 200 "IGNORED"
-          return { status: 400, contentType: "text/plain", body: "Invalid signature" };
-        }
+    const contentType = String(req.headers["content-type"] || "");
+    let payload: any = (req.body && Object.keys(req.body).length > 0) ? req.body : undefined;
 
-        // 3) Extraer campos relevantes
-        const b: any = req.body;
-        const reference = String(b.req_reference_number || "");
-        if (!reference) {
-          return {
-            status: 400,
-            contentType: "application/json",
-            body: {
-              status: { id: 0, message: "Missing reference number", http_code: 400 },
-              data: null,
-              info: "Missing reference number"
-            }
-          };
-        }
-
-        const decision        = String(b.decision || "");                   // ACCEPT | REJECT | ERROR | REVIEW
-        const reasonCode      = String(b.reason_code || "");
-        const txId            = String(b.transaction_id || "");
-        const requestToken    = String(b.request_token || "");
-        const cardSchemeName  = String(b.card_type_name || "");             // Visa/Mastercard/Amex
-        const cardTypeCode    = String(b.req_card_type || "");              // 001/002/003
-        const maskedCard      = String(b.req_card_number || "");            // **** **** **** 1111
-        const deviceFp        = String(b.req_device_fingerprint_id || "");
-        const payerAuthTx     = String(b.payer_authentication_transaction_id || "");
-        const reqAmount       = String(b.req_amount || "");
-        const reqCurrency     = String(b.req_currency || "");
-
-        // Mapear a tu estado interno
-        const mappedStatus: PaymentAttempt["status"] =
-          decision === "ACCEPT" ? "accepted" :
-          decision === "REJECT" ? "declined" :
-          decision === "ERROR"  ? "error"    : "pending";
-
-        // 4) Idempotencia: buscar intento por referencia
-        const attempt = await this.paymentRepo.findByOptions(true, true, { where: { reference : reference }});
-
-        if (!attempt) {
-          // No abortamos: registramos y devolvemos 200 para evitar reintentos infinitos de CS.
-          //console.warn("[CYBS][WEBHOOK] Attempt no encontrado para ref:", reference);
-          return {
-            status: 200,
-            contentType: "application/json",
-            body: {
-              status: { id: 0, message: "Doesn't exist payment attempt", http_code: 200 },
-              data: null,
-              info: "Doesn't exist payment attempt"
-            }
-          };
-        }
-
-        // 5) Actualizar intento con datos del webhook
-        const now = new Date();
-        attempt.status                 = mappedStatus;
-        attempt.decision               = decision || attempt.decision;
-        attempt.reason_code            = reasonCode || attempt.reason_code;
-        attempt.transaction_id         = txId || attempt.transaction_id;
-        attempt.request_token          = requestToken || attempt.request_token;
-        attempt.card_scheme            = cardSchemeName || attempt.card_scheme;
-        attempt.card_type_code         = cardTypeCode || attempt.card_type_code;
-        attempt.card_last4             = (new CybersourceService()).extractLast4(maskedCard) || attempt.card_last4;
-        attempt.device_fingerprint_id  = deviceFp || attempt.device_fingerprint_id;
-        attempt.payer_auth_tx          = payerAuthTx || attempt.payer_auth_tx;
-
-        // Si no tenías amount/currency en BD por alguna razón, intenta consolidarlos
-        if (!attempt.amount && reqAmount)   attempt.amount   = Number(reqAmount);
-        if (!attempt.currency && reqCurrency) attempt.currency = reqCurrency;
-
-        attempt.signed_ok_notify   = true;
-        attempt.raw_notify         = b;
-        attempt.webhook_received_at= now;
-        attempt.updated_date       = now;
-
-        await this.paymentRepo.add(attempt);
-
-        // 6) Log mínimo
-        console.log("[CYBS][WEBHOOK] ref=%s status=%s decision=%s reason=%s tx=%s",
-          reference, mappedStatus, decision, reasonCode, txId);
-
-        // 7) Responder a Cybersource
-        return {
-          status: 200,
-          contentType: "application/json",
-          body: {
-            status: { id: 0, message: "Sucess", http_code: 200 },
-            data: null,
-            info: "Sucess update payment attempt"
-          }
-        };
-
-      } catch (err: any) {
-        console.error("[CYBS][WEBHOOK] Error:", err);
-        // 5xx hará que Cybersource reintente (útil si tu BD cayó).
-        return { status: 500, contentType: "text/plain", body: "Internal server error" };
+    if (!payload) {
+      const rawBody = await readRaw(req);
+      if (contentType.includes("application/x-www-form-urlencoded") || contentType.includes("text/")) {
+        payload = Object.fromEntries(new URLSearchParams(rawBody || ""));
+      } else if (contentType.includes("application/json")) {
+        try { payload = rawBody ? JSON.parse(rawBody) : {}; } catch { payload = {}; }
+      } else {
+        // Default a form-urlencoded
+        payload = Object.fromEntries(new URLSearchParams(rawBody || ""));
       }
     }
+
+    // 3) Verificar firma (Secure Acceptance por body: signed_field_names + signature)
+    const service = new CybersourceService();
+    const sig = service.verifyResponseSignature(payload);
+    if (!sig.ok) {
+      console.warn("[CYBS][SOP] Invalid body signature", {
+        signed_fields: sig.signedFields, given: sig.given, calc: sig.calc
+      });
+      return { status: 400, contentType: "text/plain", body: "Invalid signature" };
+    }
+
+    // 4) Extraer campos relevantes (mantiene tu mapeo; alias por compatibilidad)
+    const b: any = payload;
+
+    const reference = String(
+      b.req_reference_number || b.reference_number || ""
+    );
+    if (!reference) {
+      return {
+        status: 400,
+        contentType: "application/json",
+        body: {
+          status: { id: 0, message: "Missing reference number", http_code: 400 },
+          data: null,
+          info: "Missing reference number"
+        }
+      };
+    }
+
+    const decision        = String(b.decision || "");                   // ACCEPT | REJECT | ERROR | REVIEW
+    const reasonCode      = String(b.reason_code || "");
+    const txId            = String(b.transaction_id || "");
+    const requestToken    = String(b.request_token || "");
+    const cardSchemeName  = String(b.card_type_name || "");             // Visa/Mastercard/Amex
+    const cardTypeCode    = String(b.req_card_type || "");              // 001/002/003
+    const maskedCard      = String(b.req_card_number || "");            // **** **** **** 1111
+    const deviceFp        = String(b.req_device_fingerprint_id || "");
+    const payerAuthTx     = String(b.payer_authentication_transaction_id || "");
+    const reqAmount       = String(b.req_amount || "");
+    const reqCurrency     = String(b.req_currency || "");
+
+    const mappedStatus: PaymentAttempt["status"] =
+      decision === "ACCEPT" ? "accepted" :
+      decision === "REJECT" ? "declined" :
+      decision === "ERROR"  ? "error"    : "pending";
+
+    // 5) Idempotencia
+    const attempt = await this.paymentRepo.findByOptions(true, true, { where: { reference } });
+    if (!attempt) {
+      return {
+        status: 200,
+        contentType: "application/json",
+        body: {
+          status: { id: 0, message: "Doesn't exist payment attempt", http_code: 200 },
+          data: null,
+          info: "Doesn't exist payment attempt"
+        }
+      };
+    }
+
+    // 6) Actualizar intento
+    const now = new Date();
+    attempt.status                 = mappedStatus;
+    attempt.decision               = decision || attempt.decision;
+    attempt.reason_code            = reasonCode || attempt.reason_code;
+    attempt.transaction_id         = txId || attempt.transaction_id;
+    attempt.request_token          = requestToken || attempt.request_token;
+    attempt.card_scheme            = cardSchemeName || attempt.card_scheme;
+    attempt.card_type_code         = cardTypeCode || attempt.card_type_code;
+    attempt.card_last4             = (new CybersourceService()).extractLast4(maskedCard) || attempt.card_last4;
+    attempt.device_fingerprint_id  = deviceFp || attempt.device_fingerprint_id;
+    attempt.payer_auth_tx          = payerAuthTx || attempt.payer_auth_tx;
+
+    if (!attempt.amount && reqAmount)   attempt.amount   = Number(reqAmount);
+    if (!attempt.currency && reqCurrency) attempt.currency = reqCurrency;
+
+    attempt.signed_ok_notify   = true;           // firma validada por body
+    attempt.raw_notify         = b;
+    attempt.webhook_received_at= now;
+    attempt.updated_date       = now;
+
+    await this.paymentRepo.add(attempt);
+
+    // 7) Responder OK a Cybersource
+    console.log("[CYBS][WEBHOOK] ref=%s status=%s decision=%s reason=%s tx=%s",
+      reference, mappedStatus, decision, reasonCode, txId);
+
+    return {
+      status: 200,
+      contentType: "application/json",
+      body: {
+        status: { id: 0, message: "Sucess", http_code: 200 },
+        data: null,
+        info: "Sucess update payment attempt"
+      }
+    };
+
+  } catch (err: any) {
+    console.error("[CYBS][WEBHOOK] Error:", err);
+    // 5xx hará que Cybersource reintente
+    return { status: 500, contentType: "text/plain", body: "Internal server error" };
+  }
+}
+
 
 
     // routes: app.all("/payment/receipt-bridge", controller.receiptBridge)
