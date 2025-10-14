@@ -38,7 +38,6 @@ class PaymentRoutes extends GenericRoutes {
 
       const result = await (this.getController() as PaymentController).go(requestHandler);
 
-      //console.log(result);
       res.status(result.status ?? 200);
       if (result.contentType) res.type(result.contentType);
       return res.send(result.body);
@@ -73,15 +72,8 @@ class PaymentRoutes extends GenericRoutes {
           .setMethod("receipt")
           .build();
 
-      /*const result = await */(this.getController() as PaymentController).receiptBridge(requestHandler);
-     /* res.status(result.status ?? 200);
-      if (result.contentType) res.type(result.contentType);
-      return res.send(result.body);*/
+      (this.getController() as PaymentController).receiptBridge(requestHandler);
     });
-
-
-
-
    
     /**
      * GET /payment/status - Query payment status
@@ -95,12 +87,8 @@ class PaymentRoutes extends GenericRoutes {
           .isValidateRole("PAYMENT") // Users can check their payment status
           .build();
 
-      const result = await (this.getController() as PaymentController).status(requestHandler);
-      res.status(result.status ?? 200);
-      return res.json(result.body);
+      (this.getController() as PaymentController).status(requestHandler);
     });
-
-  
   }
 }
 
