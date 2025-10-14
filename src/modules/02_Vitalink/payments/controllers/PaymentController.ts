@@ -366,7 +366,6 @@ async notify(reqHandler: RequestHandler): Promise<{ status?: number; contentType
     // 5) Idempotency: locate attempt by reference
     console.log(`${TAG} [5] Looking up PaymentAttempt by reference=%s ...`, reference);
     const attempt = await this.paymentRepo.findByOptions(true, false, { where: { reference: reference } });
-    console.log(`${TAG}`, attempt);
      console.log(`${TAG}`, attempt.status);
       console.log(`${TAG}`, attempt.reference);
        console.log(`${TAG}`, attempt.id);
@@ -415,7 +414,12 @@ async notify(reqHandler: RequestHandler): Promise<{ status?: number; contentType
       attempt.currency || "(null)"
     );
 
+
+    console.log(`${TAG} ANTES DE ACTUALIZAR`, attempt);
     const updatedEntity = await this.paymentRepo.update(attempt.id, attempt, true);
+    console.log(`${TAG} DESPUES DE ACTUALIZAR`, updatedEntity);
+
+
     console.log(`${TAG} [6] Update result: %s`, updatedEntity ? "OK" : "NULL");
     if (updatedEntity) {
       console.log(`${TAG} [6] Persisted id=%s, status=%s, updated_date=%s`, updatedEntity.id, updatedEntity.status, updatedEntity.updated_date);
