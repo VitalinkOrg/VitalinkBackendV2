@@ -365,7 +365,12 @@ async notify(reqHandler: RequestHandler): Promise<{ status?: number; contentType
 
     // 5) Idempotency: locate attempt by reference
     console.log(`${TAG} [5] Looking up PaymentAttempt by reference=%s ...`, reference);
-    const attempt = await this.paymentRepo.findByOptions(true, true, { where: { reference: reference } });
+    const attempt = await this.paymentRepo.findByOptions(true, false, { where: { reference: reference } });
+    console.log(`${TAG}`, attempt);
+     console.log(`${TAG}`, attempt.status);
+      console.log(`${TAG}`, attempt.reference);
+       console.log(`${TAG}`, attempt.id);
+        console.log(`${TAG}`, attempt.amount);
     console.log(`${TAG} [5] Lookup result: %s`, attempt ? `FOUND id=${attempt.id}` : "NOT FOUND");
 
     if (!attempt) {
