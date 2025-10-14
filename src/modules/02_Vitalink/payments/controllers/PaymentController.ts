@@ -232,11 +232,24 @@ export default class PaymentController extends GenericController {
      */
    // Reemplaza todo tu método notify por este
 async notify(reqHandler: RequestHandler): Promise<{ status?: number; contentType?: string; body: any }> {
+  const TAG = "[CYBS][NOTIFY]";
+  const nowIso = () => new Date().toISOString();
+
+  // Small helpers for safe logging
+  const firstChars = (s: string, n = 160) => (s || "").slice(0, n);
+  const keysOf = (o: any) => (o && typeof o === "object") ? Object.keys(o) : [];
+  const num = (v: any) => (v === undefined || v === null || v === "") ? "(empty)" : String(v);
+
   try {
     const req: any = reqHandler.getRequest();
 
-    // 1) Solo POST
+    console.log(`${TAG} ── START ── ${nowIso()}`);
+    console.log(`${TAG} [1] Method=%s, URL=%s`, req.method, req.originalUrl || req.url);
+    console.log(`${TAG} [1] Headers: content-type=%s, content-length=%s`, req.headers["content-type"], req.headers["content-length"]);
+
+    // 1) Only POST
     if (req.method !== "POST") {
+      console.warn(`${TAG} [1] Invalid method (expected POST)`);
       return {
         status: 405,
         contentType: "application/json",
@@ -248,7 +261,7 @@ async notify(reqHandler: RequestHandler): Promise<{ status?: number; contentType
       };
     }
 
-    // 2) Cargar payload de forma robusta (por si no está montado urlencoded)
+    // 2) Robust payload load (in case urlencoded parser is not mounted)
     const readRaw = (request: any) =>
       new Promise<string>((resolve) => {
         let raw = "";
@@ -260,35 +273,58 @@ async notify(reqHandler: RequestHandler): Promise<{ status?: number; contentType
     const contentType = String(req.headers["content-type"] || "");
     let payload: any = (req.body && Object.keys(req.body).length > 0) ? req.body : undefined;
 
+    console.log(`${TAG} [2] Initial body keys: %d`, payload ? Object.keys(payload).length : 0);
+
     if (!payload) {
+      console.log(`${TAG} [2.1] Body empty -> reading raw request stream...`);
       const rawBody = await readRaw(req);
+      console.log(`${TAG} [2.1] Raw length=%d, sample="%s"`, rawBody.length, firstChars(rawBody));
+
       if (contentType.includes("application/x-www-form-urlencoded") || contentType.includes("text/")) {
+        console.log(`${TAG} [2.2] Parse strategy: urlencoded`);
         payload = Object.fromEntries(new URLSearchParams(rawBody || ""));
       } else if (contentType.includes("application/json")) {
+        console.log(`${TAG} [2.2] Parse strategy: json`);
         try { payload = rawBody ? JSON.parse(rawBody) : {}; } catch { payload = {}; }
       } else {
-        // Default a form-urlencoded
+        console.log(`${TAG} [2.2] Parse strategy: default -> urlencoded`);
         payload = Object.fromEntries(new URLSearchParams(rawBody || ""));
       }
+    } else {
+      console.log(`${TAG} [2.1] Body already present from middleware. keys=%d`, Object.keys(payload).length);
     }
 
-    // 3) Verificar firma (Secure Acceptance por body: signed_field_names + signature)
+    console.log(`${TAG} [2.3] Payload keys after parse: %d`, keysOf(payload).length);
+    console.log(`${TAG} [2.3] Has signed_field_names=%s, has signature=%s`,
+      ("signed_field_names" in payload) ? "yes" : "no",
+      ("signature" in payload) ? "yes" : "no"
+    );
+
+    // 3) Signature verification (Secure Acceptance: signed_field_names + signature)
+    console.log(`${TAG} [3] Verifying body signature (Secure Acceptance)...`);
     const service = new CybersourceService();
     const sig = service.verifyResponseSignature(payload);
+    console.log(`${TAG} [3] Signature result: ok=%s, signedFieldsLen=%d, givenLen=%d, calcLen=%d`,
+      String(sig.ok),
+      num(sig.signedFields).length,
+      num(sig.given).length,
+      num(sig.calc).length
+    );
+
     if (!sig.ok) {
-      console.warn("[CYBS][SOP] Invalid body signature", {
-        signed_fields: sig.signedFields, given: sig.given, calc: sig.calc
-      });
+      console.warn(`${TAG} [3] Invalid body signature. Returning 400.`);
       return { status: 400, contentType: "text/plain", body: "Invalid signature" };
     }
 
-    // 4) Extraer campos relevantes (mantiene tu mapeo; alias por compatibilidad)
+    // 4) Extract relevant fields (keep your mapping; aliases for compatibility)
+    console.log(`${TAG} [4] Extracting business fields...`);
     const b: any = payload;
 
-    const reference = String(
-      b.req_reference_number || b.reference_number || ""
-    );
+    const reference = String(b.req_reference_number || b.reference_number || "");
+    console.log(`${TAG} [4] reference=%s`, num(reference));
+
     if (!reference) {
+      console.warn(`${TAG} [4] Missing reference number. Returning 400.`);
       return {
         status: 400,
         contentType: "application/json",
@@ -300,26 +336,40 @@ async notify(reqHandler: RequestHandler): Promise<{ status?: number; contentType
       };
     }
 
-    const decision        = String(b.decision || "");                   // ACCEPT | REJECT | ERROR | REVIEW
+    const decision        = String(b.decision || "");
     const reasonCode      = String(b.reason_code || "");
     const txId            = String(b.transaction_id || "");
     const requestToken    = String(b.request_token || "");
-    const cardSchemeName  = String(b.card_type_name || "");             // Visa/Mastercard/Amex
-    const cardTypeCode    = String(b.req_card_type || "");              // 001/002/003
-    const maskedCard      = String(b.req_card_number || "");            // **** **** **** 1111
+    const cardSchemeName  = String(b.card_type_name || "");
+    const cardTypeCode    = String(b.req_card_type || "");
+    const maskedCard      = String(b.req_card_number || "");
     const deviceFp        = String(b.req_device_fingerprint_id || "");
     const payerAuthTx     = String(b.payer_authentication_transaction_id || "");
     const reqAmount       = String(b.req_amount || "");
     const reqCurrency     = String(b.req_currency || "");
+
+    console.log(`${TAG} [4] decision=%s, reason_code=%s, txId=%s`, num(decision), num(reasonCode), num(txId));
+    console.log(`${TAG} [4] req_amount=%s %s`, num(reqAmount), num(reqCurrency));
+    console.log(`${TAG} [4] card_type_name=%s, req_card_type=%s, req_card_number(last4)=%s`,
+      num(cardSchemeName),
+      num(cardTypeCode),
+      (new CybersourceService()).extractLast4(maskedCard) || "(none)"
+    );
 
     const mappedStatus: PaymentAttempt["status"] =
       decision === "ACCEPT" ? "accepted" :
       decision === "REJECT" ? "declined" :
       decision === "ERROR"  ? "error"    : "pending";
 
-    // 5) Idempotencia
-    const attempt = await this.paymentRepo.findByOptions(true, true, { where: { reference } });
+    console.log(`${TAG} [4] mappedStatus=%s`, mappedStatus);
+
+    // 5) Idempotency: locate attempt by reference
+    console.log(`${TAG} [5] Looking up PaymentAttempt by reference=%s ...`, reference);
+    const attempt = await this.paymentRepo.findByOptions(true, true, { where: { reference: reference } });
+    console.log(`${TAG} [5] Lookup result: %s`, attempt ? `FOUND id=${attempt.id}` : "NOT FOUND");
+
     if (!attempt) {
+      console.warn(`${TAG} [5] Attempt not found. Returning 200 to avoid endless retries from gateway.`);
       return {
         status: 200,
         contentType: "application/json",
@@ -331,8 +381,10 @@ async notify(reqHandler: RequestHandler): Promise<{ status?: number; contentType
       };
     }
 
-    // 6) Actualizar intento
+    // 6) Update attempt
+    console.log(`${TAG} [6] Updating attempt id=%s ...`, attempt.id);
     const now = new Date();
+
     attempt.status                 = mappedStatus;
     attempt.decision               = decision || attempt.decision;
     attempt.reason_code            = reasonCode || attempt.reason_code;
@@ -347,16 +399,28 @@ async notify(reqHandler: RequestHandler): Promise<{ status?: number; contentType
     if (!attempt.amount && reqAmount)   attempt.amount   = Number(reqAmount);
     if (!attempt.currency && reqCurrency) attempt.currency = reqCurrency;
 
-    attempt.signed_ok_notify   = true;           // firma validada por body
+    attempt.signed_ok_notify   = true;
     attempt.raw_notify         = b;
     attempt.webhook_received_at= now;
     attempt.updated_date       = now;
 
-    await this.paymentRepo.add(attempt);
+    console.log(`${TAG} [6] New values: status=%s, decision=%s, reason_code=%s, txId=%s, amount=%s, currency=%s`,
+      attempt.status, attempt.decision, attempt.reason_code, attempt.transaction_id,
+      (attempt.amount != null ? String(attempt.amount) : "(null)"),
+      attempt.currency || "(null)"
+    );
 
-    // 7) Responder OK a Cybersource
-    console.log("[CYBS][WEBHOOK] ref=%s status=%s decision=%s reason=%s tx=%s",
-      reference, mappedStatus, decision, reasonCode, txId);
+    const updatedEntity = await this.paymentRepo.update(attempt.id, attempt, true);
+    console.log(`${TAG} [6] Update result: %s`, updatedEntity ? "OK" : "NULL");
+    if (updatedEntity) {
+      console.log(`${TAG} [6] Persisted id=%s, status=%s, updated_date=%s`, updatedEntity.id, updatedEntity.status, updatedEntity.updated_date);
+    }
+
+    // 7) Response to gateway
+    console.log(`${TAG} [7] DONE ref=%s status=%s decision=%s reason=%s tx=%s`,
+      reference, mappedStatus, decision, reasonCode, txId
+    );
+    console.log(`${TAG} ── END ── ${nowIso()}`);
 
     return {
       status: 200,
@@ -369,11 +433,12 @@ async notify(reqHandler: RequestHandler): Promise<{ status?: number; contentType
     };
 
   } catch (err: any) {
-    console.error("[CYBS][WEBHOOK] Error:", err);
-    // 5xx hará que Cybersource reintente
+    console.error(`${TAG} [ERR]`, err);
+    console.log(`${TAG} ── END (ERROR) ── ${nowIso()}`);
     return { status: 500, contentType: "text/plain", body: "Internal server error" };
   }
 }
+
 
 
 
