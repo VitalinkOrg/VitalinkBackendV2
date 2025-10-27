@@ -502,6 +502,7 @@ async notify(reqHandler: RequestHandler): Promise<{ status?: number; contentType
       }).toString();
 
       const urlRedirect = `${config.CYBERSOURCE.RECEIPT_URL_FRONTEND}?${q}`;
+      console.log(urlRedirect);
       return reqHandler.getResponse().redirect(303, urlRedirect);
     }
 

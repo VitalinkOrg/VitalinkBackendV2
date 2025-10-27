@@ -111,7 +111,7 @@
         "DEFAULT_CURRENCY": "CRC",
         "DEFAULT_COUNTRY": "CR",
         "DEFAULT_PROVINCE": "SJ",
-        "RECEIPT_URL_FRONTEND": "http://localhost:3000/receipt-spa",
+        "RECEIPT_URL_FRONTEND": "http://localhost:5173/receipt-spa",
         "RECEIPT_BRIDGE_BACKEND": "https://vitalinkbackendv2.onrender.com/payment/receipt",
         "MDD5_CHANNEL": "WEB",
         "MERCHANT_NAME": "Vitalink",
