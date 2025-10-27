@@ -7,9 +7,6 @@ import { Appointment } from "@index/entity/Appointment";
 import PaymentAttemptDTO from "../dtos/PaymentAttemptDTO";
 import { CybersourceService } from "../services/CybersourceService";
 import { config } from "@index/index";
-import crypto from "node:crypto";
-import { buildStringToSign, hmacBase64, makeCurl, mask } from "@index/utils/GeneralUtils";
-import { UnitDynamicCentral } from "@TenshiJS/entity/UnitDynamicCentral";
 
 
 /**
@@ -64,22 +61,22 @@ export default class PaymentController extends GenericController {
       const cybersourceService = new CybersourceService();
 
       // Debug configuration loading
-      /*console.log("=== CYBERSOURCE CONFIG DEBUG ===");
-      console.log("ENV:", config.CYBERSOURCE.ENV);
-      console.log("Profile ID:", config.CYBERSOURCE.PROFILE_ID);
-      console.log("Access Key:", config.CYBERSOURCE.ACCESS_KEY);
-      console.log("Secret Key:", config.CYBERSOURCE.SECRET_KEY);
-      console.log("Redirect URL:", "https://testsecureacceptance.cybersource.com/pay");
-      console.log("Embedded URL:", "https://testsecureacceptance.cybersource.com/embedded/pay");
-      console.log("Default Currency:", config.CYBERSOURCE.DEFAULT_CURRENCY);
-      console.log("Default Country:", config.CYBERSOURCE.DEFAULT_COUNTRY);
-      console.log("Default Province:", config.CYBERSOURCE.DEFAULT_PROVINCE);
-      console.log("Receipt URL:", config.CYBERSOURCE.RECEIPT_URL);
-      console.log("MDD5 Channel:", config.CYBERSOURCE.MDD5_CHANNEL);
-      console.log("Merchant Name:", config.CYBERSOURCE.MERCHANT_NAME);
-      console.log("Payment Method:", config.CYBERSOURCE.PAYMENT_METHOD);
-      console.log("Transaction Type:", config.CYBERSOURCE.TRANSACTION_TYPE);
-      console.log("Locale:", config.CYBERSOURCE.LOCALE);*/
+      /*//console.log("=== CYBERSOURCE CONFIG DEBUG ===");
+      //console.log("ENV:", config.CYBERSOURCE.ENV);
+      //console.log("Profile ID:", config.CYBERSOURCE.PROFILE_ID);
+      //console.log("Access Key:", config.CYBERSOURCE.ACCESS_KEY);
+      //console.log("Secret Key:", config.CYBERSOURCE.SECRET_KEY);
+      //console.log("Redirect URL:", "https://testsecureacceptance.cybersource.com/pay");
+      //console.log("Embedded URL:", "https://testsecureacceptance.cybersource.com/embedded/pay");
+      //console.log("Default Currency:", config.CYBERSOURCE.DEFAULT_CURRENCY);
+      //console.log("Default Country:", config.CYBERSOURCE.DEFAULT_COUNTRY);
+      //console.log("Default Province:", config.CYBERSOURCE.DEFAULT_PROVINCE);
+      //console.log("Receipt URL:", config.CYBERSOURCE.RECEIPT_URL);
+      //console.log("MDD5 Channel:", config.CYBERSOURCE.MDD5_CHANNEL);
+      //console.log("Merchant Name:", config.CYBERSOURCE.MERCHANT_NAME);
+      //console.log("Payment Method:", config.CYBERSOURCE.PAYMENT_METHOD);
+      //console.log("Transaction Type:", config.CYBERSOURCE.TRANSACTION_TYPE);
+      //console.log("Locale:", config.CYBERSOURCE.LOCALE);*/
 
       const req: any = (reqHandler as any).getRequest ? (reqHandler as any).getRequest() : (reqHandler as any).req;
       
@@ -200,8 +197,8 @@ export default class PaymentController extends GenericController {
         fields: f
       };
       // Log outbound request for debugging (mask sensitive data)
-      console.log("=== CYBS OUTBOUND ===\n", JSON.stringify(lastOutbound, null, 2));
-      console.log("=== CYBS OUTBOUND cURL ===\n" + makeCurl(endpoint, f) + "\n");*/
+      //console.log("=== CYBS OUTBOUND ===\n", JSON.stringify(lastOutbound, null, 2));
+      //console.log("=== CYBS OUTBOUND cURL ===\n" + makeCurl(endpoint, f) + "\n");*/
 
 
 
@@ -243,9 +240,9 @@ async notify(reqHandler: RequestHandler): Promise<{ status?: number; contentType
   try {
     const req: any = reqHandler.getRequest();
 
-    console.log(`${TAG} ── START ── ${nowIso()}`);
-    console.log(`${TAG} [1] Method=%s, URL=%s`, req.method, req.originalUrl || req.url);
-    console.log(`${TAG} [1] Headers: content-type=%s, content-length=%s`, req.headers["content-type"], req.headers["content-length"]);
+    //console.log(`${TAG} ── START ── ${nowIso()}`);
+    //console.log(`${TAG} [1] Method=%s, URL=%s`, req.method, req.originalUrl || req.url);
+    //console.log(`${TAG} [1] Headers: content-type=%s, content-length=%s`, req.headers["content-type"], req.headers["content-length"]);
 
     // 1) Only POST
     if (req.method !== "POST") {
@@ -273,43 +270,43 @@ async notify(reqHandler: RequestHandler): Promise<{ status?: number; contentType
     const contentType = String(req.headers["content-type"] || "");
     let payload: any = (req.body && Object.keys(req.body).length > 0) ? req.body : undefined;
 
-    console.log(`${TAG} [2] Initial body keys: %d`, payload ? Object.keys(payload).length : 0);
+    //console.log(`${TAG} [2] Initial body keys: %d`, payload ? Object.keys(payload).length : 0);
 
     if (!payload) {
-      console.log(`${TAG} [2.1] Body empty -> reading raw request stream...`);
+      //console.log(`${TAG} [2.1] Body empty -> reading raw request stream...`);
       const rawBody = await readRaw(req);
-      console.log(`${TAG} [2.1] Raw length=%d, sample="%s"`, rawBody.length, firstChars(rawBody));
+      //console.log(`${TAG} [2.1] Raw length=%d, sample="%s"`, rawBody.length, firstChars(rawBody));
 
       if (contentType.includes("application/x-www-form-urlencoded") || contentType.includes("text/")) {
-        console.log(`${TAG} [2.2] Parse strategy: urlencoded`);
+        //console.log(`${TAG} [2.2] Parse strategy: urlencoded`);
         payload = Object.fromEntries(new URLSearchParams(rawBody || ""));
       } else if (contentType.includes("application/json")) {
-        console.log(`${TAG} [2.2] Parse strategy: json`);
+        //console.log(`${TAG} [2.2] Parse strategy: json`);
         try { payload = rawBody ? JSON.parse(rawBody) : {}; } catch { payload = {}; }
       } else {
-        console.log(`${TAG} [2.2] Parse strategy: default -> urlencoded`);
+        //console.log(`${TAG} [2.2] Parse strategy: default -> urlencoded`);
         payload = Object.fromEntries(new URLSearchParams(rawBody || ""));
       }
     } else {
-      console.log(`${TAG} [2.1] Body already present from middleware. keys=%d`, Object.keys(payload).length);
+      //console.log(`${TAG} [2.1] Body already present from middleware. keys=%d`, Object.keys(payload).length);
     }
 
-    console.log(`${TAG} [2.3] Payload keys after parse: %d`, keysOf(payload).length);
-    console.log(`${TAG} [2.3] Has signed_field_names=%s, has signature=%s`,
+    //console.log(`${TAG} [2.3] Payload keys after parse: %d`, keysOf(payload).length);
+    /*console.log(`${TAG} [2.3] Has signed_field_names=%s, has signature=%s`,
       ("signed_field_names" in payload) ? "yes" : "no",
       ("signature" in payload) ? "yes" : "no"
-    );
+    );*/
 
     // 3) Signature verification (Secure Acceptance: signed_field_names + signature)
-    console.log(`${TAG} [3] Verifying body signature (Secure Acceptance)...`);
+    //console.log(`${TAG} [3] Verifying body signature (Secure Acceptance)...`);
     const service = new CybersourceService();
     const sig = service.verifyResponseSignature(payload);
-    console.log(`${TAG} [3] Signature result: ok=%s, signedFieldsLen=%d, givenLen=%d, calcLen=%d`,
+    /*console.log(`${TAG} [3] Signature result: ok=%s, signedFieldsLen=%d, givenLen=%d, calcLen=%d`,
       String(sig.ok),
       num(sig.signedFields).length,
       num(sig.given).length,
       num(sig.calc).length
-    );
+    );*/
 
     if (!sig.ok) {
       console.warn(`${TAG} [3] Invalid body signature. Returning 400.`);
@@ -317,11 +314,11 @@ async notify(reqHandler: RequestHandler): Promise<{ status?: number; contentType
     }
 
     // 4) Extract relevant fields (keep your mapping; aliases for compatibility)
-    console.log(`${TAG} [4] Extracting business fields...`);
+    //console.log(`${TAG} [4] Extracting business fields...`);
     const b: any = payload;
 
     const reference = String(b.req_reference_number || b.reference_number || "");
-    console.log(`${TAG} [4] reference=%s`, num(reference));
+    //console.log(`${TAG} [4] reference=%s`, num(reference));
 
     if (!reference) {
       console.warn(`${TAG} [4] Missing reference number. Returning 400.`);
@@ -348,29 +345,29 @@ async notify(reqHandler: RequestHandler): Promise<{ status?: number; contentType
     const reqAmount       = String(b.req_amount || "");
     const reqCurrency     = String(b.req_currency || "");
 
-    console.log(`${TAG} [4] decision=%s, reason_code=%s, txId=%s`, num(decision), num(reasonCode), num(txId));
-    console.log(`${TAG} [4] req_amount=%s %s`, num(reqAmount), num(reqCurrency));
-    console.log(`${TAG} [4] card_type_name=%s, req_card_type=%s, req_card_number(last4)=%s`,
+    //console.log(`${TAG} [4] decision=%s, reason_code=%s, txId=%s`, num(decision), num(reasonCode), num(txId));
+    //console.log(`${TAG} [4] req_amount=%s %s`, num(reqAmount), num(reqCurrency));
+    /*console.log(`${TAG} [4] card_type_name=%s, req_card_type=%s, req_card_number(last4)=%s`,
       num(cardSchemeName),
       num(cardTypeCode),
       (new CybersourceService()).extractLast4(maskedCard) || "(none)"
-    );
+    );*/
 
     const mappedStatus: PaymentAttempt["status"] =
       decision === "ACCEPT" ? "accepted" :
       decision === "REJECT" ? "declined" :
       decision === "ERROR"  ? "error"    : "pending";
 
-    console.log(`${TAG} [4] mappedStatus=%s`, mappedStatus);
+    //console.log(`${TAG} [4] mappedStatus=%s`, mappedStatus);
 
     // 5) Idempotency: locate attempt by reference
-    console.log(`${TAG} [5] Looking up PaymentAttempt by reference=%s ...`, reference);
+    //console.log(`${TAG} [5] Looking up PaymentAttempt by reference=%s ...`, reference);
     const attempt = await this.paymentRepo.findByOptions(true, false, { where: { reference: reference } });
-     console.log(`${TAG}`, attempt.status);
-      console.log(`${TAG}`, attempt.reference);
-       console.log(`${TAG}`, attempt.id);
-        console.log(`${TAG}`, attempt.amount);
-    console.log(`${TAG} [5] Lookup result: %s`, attempt ? `FOUND id=${attempt.id}` : "NOT FOUND");
+     //console.log(`${TAG}`, attempt.status);
+      //console.log(`${TAG}`, attempt.reference);
+       //console.log(`${TAG}`, attempt.id);
+        //console.log(`${TAG}`, attempt.amount);
+    //console.log(`${TAG} [5] Lookup result: %s`, attempt ? `FOUND id=${attempt.id}` : "NOT FOUND");
 
     if (!attempt) {
       console.warn(`${TAG} [5] Attempt not found. Returning 200 to avoid endless retries from gateway.`);
@@ -386,7 +383,7 @@ async notify(reqHandler: RequestHandler): Promise<{ status?: number; contentType
     }
 
     // 6) Update attempt
-    console.log(`${TAG} [6] Updating attempt id=%s ...`, attempt.id);
+    //console.log(`${TAG} [6] Updating attempt id=%s ...`, attempt.id);
     const now = new Date();
 
     attempt.status                 = mappedStatus;
@@ -408,28 +405,28 @@ async notify(reqHandler: RequestHandler): Promise<{ status?: number; contentType
     attempt.webhook_received_at= now;
     attempt.updated_date       = now;
 
-    console.log(`${TAG} [6] New values: status=%s, decision=%s, reason_code=%s, txId=%s, amount=%s, currency=%s`,
+    /*console.log(`${TAG} [6] New values: status=%s, decision=%s, reason_code=%s, txId=%s, amount=%s, currency=%s`,
       attempt.status, attempt.decision, attempt.reason_code, attempt.transaction_id,
       (attempt.amount != null ? String(attempt.amount) : "(null)"),
       attempt.currency || "(null)"
-    );
+    );*/
 
 
-    console.log(`${TAG} ANTES DE ACTUALIZAR`, attempt);
+    //console.log(`${TAG} ANTES DE ACTUALIZAR`, attempt);
     const updatedEntity = await this.paymentRepo.update(attempt.id, attempt, true);
-    console.log(`${TAG} DESPUES DE ACTUALIZAR`, updatedEntity);
+    //console.log(`${TAG} DESPUES DE ACTUALIZAR`, updatedEntity);
 
 
-    console.log(`${TAG} [6] Update result: %s`, updatedEntity ? "OK" : "NULL");
+    //console.log(`${TAG} [6] Update result: %s`, updatedEntity ? "OK" : "NULL");
     if (updatedEntity) {
-      console.log(`${TAG} [6] Persisted id=%s, status=%s, updated_date=%s`, updatedEntity.id, updatedEntity.status, updatedEntity.updated_date);
+      //console.log(`${TAG} [6] Persisted id=%s, status=%s, updated_date=%s`, updatedEntity.id, updatedEntity.status, updatedEntity.updated_date);
     }
 
     // 7) Response to gateway
-    console.log(`${TAG} [7] DONE ref=%s status=%s decision=%s reason=%s tx=%s`,
-      reference, mappedStatus, decision, reasonCode, txId
-    );
-    console.log(`${TAG} ── END ── ${nowIso()}`);
+    //console.log(`${TAG} [7] DONE ref=%s status=%s decision=%s reason=%s tx=%s`,
+    //  reference, mappedStatus, decision, reasonCode, txId
+    //);
+    //console.log(`${TAG} ── END ── ${nowIso()}`);
 
     return {
       status: 200,
@@ -443,7 +440,7 @@ async notify(reqHandler: RequestHandler): Promise<{ status?: number; contentType
 
   } catch (err: any) {
     console.error(`${TAG} [ERR]`, err);
-    console.log(`${TAG} ── END (ERROR) ── ${nowIso()}`);
+    //console.log(`${TAG} ── END (ERROR) ── ${nowIso()}`);
     return { status: 500, contentType: "text/plain", body: "Internal server error" };
   }
 }
