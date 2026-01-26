@@ -29,7 +29,7 @@ export class Supplier {
   @Column({ type: "varchar", length: 500, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   name: string | null;
 
-  @Column({ type: "varchar", length: 20, nullable: true })
+  @Column({ type: "varchar", length: 100, nullable: true })
   phone_number: string | null;
 
   @Column({ type: "varchar", length: 250, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
