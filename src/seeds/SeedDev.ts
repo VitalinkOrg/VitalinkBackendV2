@@ -1014,6 +1014,24 @@ const packages = [
 { id: 152, specialty: { id: 11 }, procedure: { code: "CARDIO_PREOP_EVALUATION" }, product: { code: "CARDIO_PREOP_EVALUATION_PACKAGE" }, discount: 0, postoperative_assessments: null, services_offer: { ASSESSMENT_DETAILS: [] }, is_king: false, observations: "", is_deleted: false },
 { id: 153, specialty: { id: 11 }, procedure: { code: "CARDIO_VIDEO_CONSULT" }, product: { code: "CARDIO_VIDEO_CONSULT_VISIT" }, discount: 0, postoperative_assessments: null, services_offer: { ASSESSMENT_DETAILS: [] }, is_king: false, observations: "", is_deleted: false },
 
+
+
+
+
+{ id: 182, specialty: { id: 64 }, procedure: { code: "CARDIO_ECG_INTERPRETATION" }, product: { code: "CARDIO_ECG_INTERPRETATION_TEST" }, discount: 0, postoperative_assessments: null, services_offer: { ASSESSMENT_DETAILS: [] }, is_king: false, observations: "", is_deleted: false },
+{ id: 183, specialty: { id: 64 }, procedure: { code: "CARDIO_ECG_STRESS" }, product: { code: "CARDIO_ECG_STRESS_TEST" }, discount: 0, postoperative_assessments: null, services_offer: { ASSESSMENT_DETAILS: [] }, is_king: false, observations: "", is_deleted: false },
+{ id: 184, specialty: { id: 64 }, procedure: { code: "CARDIO_STRESS_TEST" }, product: { code: "CARDIO_STRESS_TEST_STD" }, discount: 0, postoperative_assessments: null, services_offer: { ASSESSMENT_DETAILS: [] }, is_king: false, observations: "", is_deleted: false },
+{ id: 185, specialty: { id: 64 }, procedure: { code: "CARDIO_ARRHYTHMIA_ABLATION" }, product: { code: "CARDIO_ARRHYTHMIA_ABLATION_PROC" }, discount: 0, postoperative_assessments: null, services_offer: { ASSESSMENT_DETAILS: [] }, is_king: false, observations: "", is_deleted: false },
+{ id: 186, specialty: { id: 64 }, procedure: { code: "CARDIO_HOLTER" }, product: { code: "CARDIO_HOLTER_24_48" }, discount: 0, postoperative_assessments: null, services_offer: { ASSESSMENT_DETAILS: [] }, is_king: false, observations: "", is_deleted: false },
+{ id: 187, specialty: { id: 64 }, procedure: { code: "CARDIO_EVENT_MONITOR" }, product: { code: "CARDIO_EVENT_MONITOR_STD" }, discount: 0, postoperative_assessments: null, services_offer: { ASSESSMENT_DETAILS: [] }, is_king: false, observations: "", is_deleted: false },
+{ id: 188, specialty: { id: 64 }, procedure: { code: "CARDIO_ABPM_MAPA" }, product: { code: "CARDIO_ABPM_MAPA_24" }, discount: 0, postoperative_assessments: null, services_offer: { ASSESSMENT_DETAILS: [] }, is_king: false, observations: "", is_deleted: false },
+{ id: 189, specialty: { id: 64 }, procedure: { code: "CARDIO_BP_MONITORING" }, product: { code: "CARDIO_BP_MONITORING_VISIT" }, discount: 0, postoperative_assessments: null, services_offer: { ASSESSMENT_DETAILS: [] }, is_king: false, observations: "", is_deleted: false },
+{ id: 190, specialty: { id: 64 }, procedure: { code: "CARDIO_CT_CORONARY_ANGIO" }, product: { code: "CARDIO_CT_CORONARY_ANGIO_TEST" }, discount: 0, postoperative_assessments: null, services_offer: { ASSESSMENT_DETAILS: [] }, is_king: false, observations: "", is_deleted: false },
+{ id: 191, specialty: { id: 64 }, procedure: { code: "CARDIO_PERICARDIOCENTESIS" }, product: { code: "CARDIO_PERICARDIOCENTESIS_PROC" }, discount: 0, postoperative_assessments: null, services_offer: { ASSESSMENT_DETAILS: [] }, is_king: false, observations: "", is_deleted: false },
+{ id: 192, specialty: { id: 64 }, procedure: { code: "CARDIO_SPIROMETRY" }, product: { code: "CARDIO_SPIROMETRY_TEST" }, discount: 0, postoperative_assessments: null, services_offer: { ASSESSMENT_DETAILS: [] }, is_king: false, observations: "", is_deleted: false },
+{ id: 193, specialty: { id: 64 }, procedure: { code: "CARDIO_PREOP_EVALUATION" }, product: { code: "CARDIO_PREOP_EVALUATION_PACKAGE" }, discount: 0, postoperative_assessments: null, services_offer: { ASSESSMENT_DETAILS: [] }, is_king: false, observations: "", is_deleted: false },
+{ id: 194, specialty: { id: 64 }, procedure: { code: "CARDIO_VIDEO_CONSULT" }, product: { code: "CARDIO_VIDEO_CONSULT_VISIT" }, discount: 0, postoperative_assessments: null, services_offer: { ASSESSMENT_DETAILS: [] }, is_king: false, observations: "", is_deleted: false },
+
 // -----------------------------
 // FIXED Packages (Ophthalmology) - using existing ProceduresAndProducts codes
 // -----------------------------
