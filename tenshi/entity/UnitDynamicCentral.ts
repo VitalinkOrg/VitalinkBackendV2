@@ -29,6 +29,7 @@ export class UnitDynamicCentral {
                                 "ID_TYPE",
                                 "MEDICAL_TYPE",
                                 "MEDICAL_SPECIALTY",
+                                "ODONTOLOGHY_MEDICAL",
                                 "MEDICAL_PROCEDURE",
                                 "MEDICAL_PRODUCT",
                                 "ASSESSMENT",
