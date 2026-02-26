@@ -55,11 +55,11 @@ import { getMessageEmail, replaceVariables } from "@TenshiJS/utils/htmlTemplateU
         for (const variable of variables) {
             // Fill jsonData with required values based on provided variable names
             if (variable === "appointmentDate") {
-                jsonData[variable] = formatNormalDate(appointment.appointment_date);
+                jsonData[variable] = appointment.appointment_date ? formatNormalDate(appointment.appointment_date) : null;
             }
 
             if (variable === "appointmentHour") {
-                jsonData[variable] = format12Hour(appointment.appointment_hour);
+                jsonData[variable] = appointment.appointment_hour ? format12Hour(appointment.appointment_hour) : null;
             }
 
             if (variable === "patientName") {

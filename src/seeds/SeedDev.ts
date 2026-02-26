@@ -14,7 +14,7 @@ import { Location } from '@index/entity/Location';
 import { User } from '@TenshiJS/entity/User';
 import { hashPassword } from '@TenshiJS/utils/encryptionUtils';
 import { UnitDynamicCentral } from '@TenshiJS/entity/UnitDynamicCentral';
-import { Supplier } from '@index/entity/Supplier';
+import { Supplier } from '@TenshiJS/entity/Supplier';
 import { SpecialtyBySupplier } from '@index/entity/SpecialtyBySupplier';
 import { Package } from '@index/entity/Package';
 import { PreRegisterUser } from '@index/entity/PreRegisterUser';

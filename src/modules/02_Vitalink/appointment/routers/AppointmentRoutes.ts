@@ -73,8 +73,6 @@ class AppointmentRoutes extends GenericRoutes {
 
             const requiredBodyList: Array<string> = [
                 req.body.customer_id,
-                req.body.appointment_date,
-                req.body.appointment_hour,
                 req.body.supplier_id,
                 req.body.package_id,
             ];

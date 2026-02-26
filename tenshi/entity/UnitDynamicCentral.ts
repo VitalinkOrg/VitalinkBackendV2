@@ -1,5 +1,6 @@
 // src/entity/UnitDynamicCentral.ts
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Supplier } from "@TenshiJS/entity/Supplier";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 
 /**
  * The UnitDynamicCentral table is a centralized reference system for storing 
@@ -13,7 +14,7 @@ export class UnitDynamicCentral {
   @PrimaryGeneratedColumn({ type: "int", unsigned: true })
   id: number;
 
-  @Column({ type: "varchar", length: 100, unique: true })
+  @Column({ type: "varchar", length: 200, unique: true })
   code: string;
 
   @Column({ type: "varchar", length: 100 })
@@ -29,7 +30,7 @@ export class UnitDynamicCentral {
                                 "ID_TYPE",
                                 "MEDICAL_TYPE",
                                 "MEDICAL_SPECIALTY",
-                                "ODONTOLOGHY_MEDICAL",
+                                "ODONTOLOGY_SPECIALTY",
                                 "MEDICAL_PROCEDURE",
                                 "MEDICAL_PRODUCT",
                                 "ASSESSMENT",
@@ -49,6 +50,17 @@ export class UnitDynamicCentral {
   //PRODUCT -> PRICE REFERENCE
   @Column({ type: "varchar", length: 300, nullable: true, default: null })
   value1: string;
+
+  //PRODUCT -> CITA VALORACION PRICE REFERENCE
+  @Column({ type: "varchar", length: 300, nullable: true, default: null })
+  value2: string;
+
+  @Column({ type: "int", unsigned: true, nullable: true, default: null })
+  supplier_id?: number | null;
+
+  @ManyToOne(() => Supplier, { nullable: true, onDelete: "SET NULL" })
+  @JoinColumn({ name: "supplier_id", referencedColumnName: "id" })
+  supplier?: Supplier | null;
 
   @Column({ type: "datetime", default: () => "CURRENT_TIMESTAMP" })
   created_date: Date;

@@ -1,5 +1,5 @@
 
-import { Supplier } from "@index/entity/Supplier";
+import { Supplier } from "@TenshiJS/entity/Supplier";
 import { Request, IAdapterFromBody } from "@modules/index";
 
 export default class SupplierDTO implements IAdapterFromBody {

@@ -19,7 +19,7 @@ import { UnitDynamicCentral } from '@TenshiJS/entity/UnitDynamicCentral';
 import { UserNotification } from '@entity/UserNotification';
 
 import { Location } from '@entity/Location';
-import { Supplier } from '@entity/Supplier';
+import { Supplier } from '@TenshiJS/entity/Supplier';
 import { Appointment } from '@entity/Appointment';
 import { AppointmentCredit } from '@entity/AppointmentCredit';
 import { Availability } from '@entity/Availability';
@@ -126,10 +126,10 @@ export const TenshiMain = async() => {
       User, 
       Document, 
       Notification, 
+      Supplier,
       UnitDynamicCentral, 
       UserNotification,
       Location,
-      Supplier,
       Appointment,
       AppointmentCredit,
       Availability,

@@ -1,6 +1,7 @@
 
 import { Location } from "@index/entity/Location";
 import { Request, IAdapterFromBody } from "@modules/index";
+import { Supplier } from "@TenshiJS/entity/Supplier";
 import { User } from "@TenshiJS/entity/User";
 
 export default class LocationDTO implements IAdapterFromBody {
@@ -21,6 +22,7 @@ export default class LocationDTO implements IAdapterFromBody {
         entity.latitude = this.req.body.latitude;
         entity.longitude = this.req.body.longitude;
         entity.legal_representative = this.req.body.legal_representative_id;
+        entity.supplier_id = this.req.body.supplier_id;
      
         if (isCreating) {
             entity.created_date = new Date();
@@ -56,6 +58,7 @@ export default class LocationDTO implements IAdapterFromBody {
             longitude: entity.longitude,
             legal_representative: entity.legal_representative,
             created_date: entity.created_date,
+            supplier_id: entity.supplier_id,
             updated_date: entity.updated_date,
         };
     }

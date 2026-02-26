@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 
-import { Supplier } from "./Supplier";
+import { Supplier } from "../../tenshi/entity/Supplier";
 import { Location } from "./Location";
 
 

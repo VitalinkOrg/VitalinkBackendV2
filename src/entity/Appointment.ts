@@ -1,6 +1,6 @@
 import { User } from "@TenshiJS/entity/User";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Supplier } from "./Supplier";
+import { Supplier } from "../../tenshi/entity/Supplier";
 import { UnitDynamicCentral } from "@TenshiJS/entity/UnitDynamicCentral";
 import { Package } from "./Package";
 import { General } from "@index/consts/Const";
@@ -32,11 +32,11 @@ export class Appointment {
   @Column({ type: "varchar", length: 100, nullable: true, default: null, charset: "utf8mb4", collation: "utf8mb4_unicode_ci" })
   proforma_file_code: string | null;
 
-  @Column({ type: "date" })
-  appointment_date: Date;
+  @Column({ type: "date", nullable: true, default: null })
+  appointment_date: Date | null;
 
-  @Column({ type: "time" })
-  appointment_hour: string;
+  @Column({ type: "time", nullable: true, default: null })
+  appointment_hour: string | null;
 
   @ManyToOne(() => Supplier, { eager: true })
   @JoinColumn({ name: "supplier", referencedColumnName: "id" })

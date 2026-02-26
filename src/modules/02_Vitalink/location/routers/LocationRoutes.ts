@@ -1,7 +1,8 @@
 import { Request, Response, 
          RequestHandler, RequestHandlerBuilder, 
          GenericController, GenericRoutes,
-         FindManyOptions} from "@modules/index";
+         FindManyOptions,
+         getUrlParam} from "@modules/index";
 import { Location } from "@index/entity/Location";
 import LocationDTO from "@modules/02_Vitalink/location/dtos/LocationDTO";
 
@@ -35,14 +36,18 @@ class LocationRoutes extends GenericRoutes {
         
         this.router.get(`${this.getRouterName()}/get_all`, async (req: Request, res: Response) => {
         
-            const filters = this.buildBaseFilters();
+            const supplier_id : string | null = getUrlParam("supplier_id", req) || null;
+            const options: FindManyOptions = {};
+            if(supplier_id != null){
+                options.where = { ...options.where, supplier_id: supplier_id};
+            }
             const requestHandler: RequestHandler = 
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new LocationDTO(req))
                                     .setMethod("getLocations")
                                     .isValidateRole("LOCATION")
                                     .isLogicalDelete()
-                                    .setFilters(filters)
+                                    .setFilters(options)
                                     .build();
         
             this.getController().getAll(requestHandler);

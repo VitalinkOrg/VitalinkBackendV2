@@ -1,3 +1,4 @@
+import { Supplier } from "@TenshiJS/entity/Supplier";
 import { User } from "@TenshiJS/entity/User";
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 
@@ -42,6 +43,13 @@ export class Location {
 
   @Column({ type: "tinyint", default: 0 })
   is_deleted: boolean;
+
+  @Column({ type: "int", unsigned: true, nullable: true, default: null })
+  supplier_id?: number | null;
+
+  @ManyToOne(() => Supplier, { nullable: true })
+  @JoinColumn({ name: "supplier_id", referencedColumnName: "id" })
+  supplier?: Supplier | null;
 
   @Column({ type: "timestamp", nullable: true, default: () => "CURRENT_TIMESTAMP" })
   created_date: Date | null;

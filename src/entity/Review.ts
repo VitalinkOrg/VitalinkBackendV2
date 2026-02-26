@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
-import { Supplier } from "./Supplier";
+import { Supplier } from "../../tenshi/entity/Supplier";
 import { User } from "@TenshiJS/entity/User";
 import { Package } from "./Package";
 import { Appointment } from "./Appointment";

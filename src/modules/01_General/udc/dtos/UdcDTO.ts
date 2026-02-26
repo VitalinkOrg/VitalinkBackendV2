@@ -8,14 +8,16 @@ export default  class UdcDTO implements IAdapterFromBody{
         this.req = req;
     }
 
-    //POST
+
     entityFromPostBody() : UnitDynamicCentral{
         const entity = new UnitDynamicCentral();
         entity.code = this.req.body.code;
         entity.name = this.req.body.name;
         entity.type = this.req.body.type;
         entity.value1 = this.req.body.value1;
+        entity.value2 = this.req.body.value2;
         entity.father_code = this.req.body.father_code;
+        entity.supplier_id = this.req.body.supplier_id;
         entity.created_date = new Date();
         return entity;
     }
@@ -28,7 +30,9 @@ export default  class UdcDTO implements IAdapterFromBody{
             name: entity.name,
             type: entity.type,
             value1: entity.value1,
+            value2: entity.value2,
             father_code: entity.father_code,
+            supplier_id: entity.supplier_id,
             created_date: entity.created_date,
             updated_date: entity.updated_date,
         };
@@ -52,6 +56,7 @@ export default  class UdcDTO implements IAdapterFromBody{
         entity.name = this.req.body.name;
         entity.type = this.req.body.type;
         entity.value1 = this.req.body.value1;
+        entity.value2 = this.req.body.value2;
         entity.father_code = this.req.body.father_code,
         entity.updated_date = new Date();
         return entity;

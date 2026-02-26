@@ -11,6 +11,8 @@ const config = configManager.getConfig();
 
 import { DataSource, ServerDescription } from 'typeorm';
 import { UnitDynamicCentral } from '@TenshiJS/entity/UnitDynamicCentral';
+import { Supplier } from '@TenshiJS/entity/Supplier';
+import { User } from '@TenshiJS/entity/User';
 
 
 async function createDatabaseIfNotExists() {
@@ -46,7 +48,7 @@ async function runSeed() {
         username: config.DB.USER, // Username for the database
         password: config.DB.PASSWORD, // Password for the database
         database: config.DB.NAME, // Name of the database
-        entities: [UnitDynamicCentral], // Array of entities to be used
+        entities: [User, Supplier, UnitDynamicCentral], // Array of entities to be used
         synchronize: true, // Synchronize the schema with the database
         charset: "utf8mb4",
         extra: {
@@ -239,10 +241,16 @@ async function runSeed() {
             description: "Profesional de la salud que brinda atención médica general sin una especialización específica."
         },
         { 
-            name: "Especialista", 
+            name: "Médico Especialista", 
             code: "SPECIALTY_MEDICAL", 
             type: "MEDICAL_TYPE" as "MEDICAL_TYPE",
             description: "Médico con formación especializada en un área específica de la medicina."
+        },
+        { 
+            name: "Odontología", 
+            code: "ODONTOLOGY_MEDICAL", 
+            type: "MEDICAL_TYPE" as "MEDICAL_TYPE",
+            description: "Profesional de la salud que brinda atención médica Odontológica."
         }
     ];
     await udcRepository.upsert(MedicalType, ["code"]);
@@ -250,6 +258,7 @@ async function runSeed() {
     
     //Medical Specialties
     const MedicalSpecialties = [
+        { name: "Odontología", code: "ODONTOLOGY", type: "ODONTOLOGY_SPECIALTY" },
         { name: "Acupuntura", code: "ACUPUNCTURE", type: "MEDICAL_SPECIALTY" },
         { name: "Administración de Servicios de Salud", code: "HEALTH_SERVICES_ADMINISTRATION", type: "MEDICAL_SPECIALTY" },
         { name: "Alergología", code: "ALLERGOLOGY", type: "MEDICAL_SPECIALTY" },
@@ -620,6 +629,105 @@ async function runSeed() {
             father_code: "ORTHO_SHOULDER_SURGERY",
             value1: "1611914",
             description: "Tratamiento innovador aprobado en medicina especializada"
+        },
+
+
+        /*********  ODONTOLOGY    ********* */
+        {
+            name: "Implantes dentales",
+            code: "ODONTO_DENTAL_IMPLANTS",
+            type: "MEDICAL_PROCEDURE",
+            father_code: "ODONTOLOGY"
+        },
+        {
+            name: "Prótesis fijas sobre implantes",
+            code: "ODONTO_IMPLANT_SUPPORTED_FIXED_PROSTHESIS",
+            type: "MEDICAL_PROCEDURE",
+            father_code: "ODONTOLOGY"
+        },
+        {
+            name: "Diseño de sonrisa",
+            code: "ODONTO_SMILE_DESIGN",
+            type: "MEDICAL_PROCEDURE",
+            father_code: "ODONTOLOGY"
+        },
+        {
+            name: "Carillas dentales",
+            code: "ODONTO_DENTAL_VENEERS",
+            type: "MEDICAL_PROCEDURE",
+            father_code: "ODONTOLOGY"
+        },
+        {
+            name: "Coronas estéticas",
+            code: "ODONTO_ESTHETIC_CROWNS",
+            type: "MEDICAL_PROCEDURE",
+            father_code: "ODONTOLOGY"
+        },
+        {
+            name: "Ortodoncia",
+            code: "ODONTO_ORTHODONTICS",
+            type: "MEDICAL_PROCEDURE",
+            father_code: "ODONTOLOGY"
+        },
+        {
+            name: "Alineadores Invisibles",
+            code: "ODONTO_INVISIBLE_ALIGNERS",
+            type: "MEDICAL_PROCEDURE",
+            father_code: "ODONTOLOGY"
+        },
+        {
+            name: "Extracción de cordales",
+            code: "ODONTO_WISDOM_TEETH_EXTRACTION",
+            type: "MEDICAL_PROCEDURE",
+            father_code: "ODONTOLOGY"
+        },
+        {
+            name: "Cirugía oral especializada",
+            code: "ODONTO_SPECIALIZED_ORAL_SURGERY",
+            type: "MEDICAL_PROCEDURE",
+            father_code: "ODONTOLOGY"
+        },
+        {
+            name: "Endodoncia",
+            code: "ODONTO_ENDODONTICS",
+            type: "MEDICAL_PROCEDURE",
+            father_code: "ODONTOLOGY"
+        },
+        {
+            name: "Reconstrucción dental",
+            code: "ODONTO_DENTAL_RECONSTRUCTION",
+            type: "MEDICAL_PROCEDURE",
+            father_code: "ODONTOLOGY"
+        },
+        {
+            name: "Periodoncia",
+            code: "ODONTO_PERIODONTICS",
+            type: "MEDICAL_PROCEDURE",
+            father_code: "ODONTOLOGY"
+        },
+        {
+            name: "Rehabilitación dental",
+            code: "ODONTO_DENTAL_REHABILITATION",
+            type: "MEDICAL_PROCEDURE",
+            father_code: "ODONTOLOGY"
+        },
+        {
+            name: "Odontología Integral",
+            code: "ODONTO_COMPREHENSIVE_DENTISTRY",
+            type: "MEDICAL_PROCEDURE",
+            father_code: "ODONTOLOGY"
+        },
+        {
+            name: "Limpieza y profilaxis",
+            code: "ODONTO_CLEANING_AND_PROPHYLAXIS",
+            type: "MEDICAL_PROCEDURE",
+            father_code: "ODONTOLOGY"
+        },
+        {
+            name: "Blanqueamiento dental",
+            code: "ODONTO_TEETH_WHITENING",
+            type: "MEDICAL_PROCEDURE",
+            father_code: "ODONTOLOGY"
         }
 
     ];

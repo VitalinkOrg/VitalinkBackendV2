@@ -3,6 +3,7 @@ import { Request, Response,
          GenericController, GenericRoutes,
          getUrlParam,
          FindManyOptions} from "@modules/index";
+         import { randomUUID } from "crypto";
 import { UnitDynamicCentral, UdcDTO } from '@modules/01_General/udc';
 
 class UdcRoutes extends GenericRoutes{
@@ -39,6 +40,8 @@ class UdcRoutes extends GenericRoutes{
             const code : string | null = getUrlParam("code", req) || null;
             const father_code : string | null = getUrlParam("father_code", req) || null;
             const id : string | null = getUrlParam("id", req) || null;
+            const supplier_id : string | null = getUrlParam("supplier_id", req) || null;
+
             const options: FindManyOptions = {};
             if(type != null){
                 options.where = { ...options.where, type: type};
@@ -56,6 +59,10 @@ class UdcRoutes extends GenericRoutes{
                 options.where = { ...options.where, father_code: father_code};
             }
 
+            if(supplier_id != null){
+                options.where = { ...options.where, supplier_id: supplier_id};
+            }
+
             const requestHandler : RequestHandler = 
                                     new RequestHandlerBuilder(res,req)
                                     .setAdapter(new UdcDTO(req))
@@ -71,9 +78,11 @@ class UdcRoutes extends GenericRoutes{
         this.router.post(`${this.getRouterName()}/add`, async (req: Request, res: Response) => {
 
             const requiredBodyList: Array<string> = [
-                req.body.code, 
                 req.body.name
             ];
+            if(req.body.code == undefined){
+               req.body.code = randomUUID();
+            }
 
             const requestHandler : RequestHandler = 
                                     new RequestHandlerBuilder(res,req)
@@ -168,3 +177,5 @@ class UdcRoutes extends GenericRoutes{
     }
 }
 export default UdcRoutes;
+
+

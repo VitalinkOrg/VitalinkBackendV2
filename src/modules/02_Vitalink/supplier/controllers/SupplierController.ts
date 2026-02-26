@@ -1,5 +1,5 @@
 import { Availability } from "@index/entity/Availability";
-import { Supplier } from "@index/entity/Supplier";
+import { Supplier } from "@TenshiJS/entity/Supplier";
 import { ConstHTTPRequest, ConstMessagesJson, ConstStatusJson } from "@TenshiJS/consts/Const";
 import { RequestHandler } from "@TenshiJS/generics";
 import GenericController from "@TenshiJS/generics/Controller/GenericController";
