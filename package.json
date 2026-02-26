@@ -68,9 +68,6 @@
         "typescript": "^5.5.4"
     },
     "devDependencies": {
-<<<<<<< HEAD
-       
-=======
     },
     "_moduleAliases": {
         "tenshi": "build/tenshi",
@@ -81,7 +78,6 @@
         "@entity": "build/src/entity",
         "@data": "build/data/json",
         "@utils": "build/src/utils"
->>>>>>> f569a956dc1df0f05bf0cfcbfcdf9bdfd15a5992
     }
 }
 
