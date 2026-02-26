@@ -31,10 +31,10 @@
     },
     "DB": {
         "TYPE": "mariadb",
-        "PORT": 3307,
-        "HOST":"vitalink.cpcqo6224pz7.us-east-2.rds.amazonaws.com",
-        "USER": "vitadmin",
-        "PASSWORD": "X2l#0j*omxwDpW",
+        "PORT": 3306,
+        "HOST":"localhost",
+        "USER": "tenshi_admin",
+        "PASSWORD": "TU_PASSWORD",
         "NAME": "vitalink",
         "CONNECTION_LIMIT": 150
     },

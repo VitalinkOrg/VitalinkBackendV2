@@ -68,16 +68,6 @@
         "typescript": "^5.5.4"
     },
     "devDependencies": {
-    },
-    "_moduleAliases": {
-        "tenshi": "build/tenshi",
-        "@TenshiJS": "build/tenshi",
-        "@index": "build/src",
-        "@modules": "build/src/modules",
-        "@templates": "build/templates",
-        "@entity": "build/src/entity",
-        "@data": "build/data/json",
-        "@utils": "build/src/utils"
     }
 }
 
