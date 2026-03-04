@@ -1838,8 +1838,17 @@ const notifications = [
 ];
 
 await notificationRepository.upsert(notifications, ["code"]);
+
+
+ if (dataSource.isInitialized) {
+      await dataSource.destroy();
+  }
+
 console.log("Seeds done!");
 
 }
 
-runSeed().catch((error) => console.error(error));
+runSeed().catch((error) => {
+    console.error(error);
+    process.exit(1);
+});
