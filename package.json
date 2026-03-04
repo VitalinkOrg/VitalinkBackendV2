@@ -21,7 +21,8 @@
         "copyjsontenshi": "copyfiles -u 1 tenshi/data/json/*.json build/tenshi",
         "copytemp": "copyfiles -u 1 src/templates/*.html build/src",
         "build": "npm run compile && npm run copyjsonsrc && npm run copyjsonsemailmessages && npm run copyjsontenshi && npm run copyjsonconfig && npm run copytemp",
-        "prod": "node -r module-alias/register build/src/index.js"
+        "prod": "node -r module-alias/register build/src/index.js",
+        "DevAWS": "npm run delete && npm run generalseed && npm run seedDev && npm run build && npm run prod"
     },
     "keywords": [],
     "author": "",
@@ -70,7 +71,7 @@
     "devDependencies": {
     },
      "_moduleAliases": {
-        "tenshi": "build/tenshi",     
+        "tenshi": "build/tenshi",
         "@TenshiJS": "build/tenshi",
         "@index": "build/src",
         "@modules": "build/src/modules",
