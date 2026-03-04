@@ -92,9 +92,9 @@ class PackageRoutes extends GenericRoutes {
                                     .setAdapter(new PackageDTO(req))
                                     .setMethod("updatePackage")
                                     .isValidateRole("PACKAGE")
-                                    .setDynamicRoleValidationByEntityField([
+                                    /*.setDynamicRoleValidationByEntityField([
                                         ["LEGAL_REPRESENTATIVE", "specialty.supplier.legal_representative.id"]
-                                      ])
+                                      ])*/
                                     .build();
         
             this.getController().update(requestHandler);
@@ -107,9 +107,9 @@ class PackageRoutes extends GenericRoutes {
                                     .setMethod("deletePackage")
                                     .isValidateRole("PACKAGE")
                                     .isLogicalDelete()
-                                    .setDynamicRoleValidationByEntityField([
+                                    /*.setDynamicRoleValidationByEntityField([
                                         ["LEGAL_REPRESENTATIVE", "specialty.supplier.legal_representative.id"]
-                                      ])
+                                      ])*/
                                     .build();
         
             this.getController().delete(requestHandler);
