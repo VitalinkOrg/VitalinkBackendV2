@@ -14,4 +14,7 @@ logs/
 tenshi-config.localhost.reallocal.json
 tenshi-config.localhost.2.json
 tenshi-config.json
+tenshi-config.stg.json
+tenshi-config.prod.json
+tenshi-config.localhost.json
 .kiro

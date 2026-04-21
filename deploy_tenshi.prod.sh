@@ -2,12 +2,15 @@
 
 set -e
 
+APP_NAME="vitalink-backend"
+APP_DIR="/home/deploy/vitalinkBackendPROD/VitalinkBackendV2"
+
 echo "🌿 Deploy VITALINK Backend"
 
-cd /home/ubuntu/Vitalink-Backend
+cd $APP_DIR
 
 echo "🔄 Pull latest"
-git pull origin main
+git pull origin prod
 
 echo "📦 Install deps"
 npm ci --omit=dev
@@ -15,10 +18,22 @@ npm ci --omit=dev
 echo "🏗 Build"
 npm run build
 
-echo "♻️ Reload PM2"
-pm2 reload ecosystem.config.prod.js || pm2 start ecosystem.config.prod.js
+echo "🧹 Clean old process"
+pm2 delete $APP_NAME || true
 
-echo "💾 Save"
+echo "🚀 Start app en CLUSTER"
+
+pm2 start npm \
+  --name "$APP_NAME" \
+  -- run STGAWS \
+  -i max \
+  --time \
+  --update-env
+
+echo "💾 Save PM2 state"
 pm2 save
 
-echo "✅ Backend deploy listo"
+echo "📊 Status"
+pm2 list
+
+echo "✅ Backend deploy listo!"
