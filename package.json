@@ -23,7 +23,8 @@
         "build": "npm run compile && npm run copyjsonsrc && npm run copyjsonsemailmessages && npm run copyjsontenshi && npm run copyjsonconfig && npm run copytemp",
         "prod": "node -r module-alias/register build/src/index.js",
         "DevAWS": "npm run delete && npm run generalseed && npm run seedDev && npm run build && npm run prod",
-        "STGAWS": "npm run generalseed && npm run seedSTG && npm run build && npm run prod"
+        "STGAWS": "npm run generalseed && npm run seedSTG && npm run build && npm run prod",
+        "PRODAWS": "npm run generalseed && npm run seedPROD && npm run build && npm run prod"
     },
     "keywords": [],
     "author": "",
