@@ -18,13 +18,19 @@ npm ci --omit=dev
 echo "🏗 Build"
 npm run build
 
-echo "🧹 Clean old process (si existe)"
+echo "🧹 Clean old process"
 pm2 delete $APP_NAME || true
 
-echo "🚀 Start con ecosystem"
-pm2 start ecosystem.config.dev.js --only $APP_NAME
+echo "🚀 Start app en CLUSTER"
 
-echo "💾 Save"
+pm2 start npm \
+  --name "$APP_NAME" \
+  -- run DevAWS \
+  -i max \
+  --time \
+  --update-env
+
+echo "💾 Save PM2 state"
 pm2 save
 
 echo "📊 Status"
