@@ -72,6 +72,7 @@ import AppointmentRoutes from '@modules/02_Vitalink/appointment/routers/Appointm
 import AppointmentCreditRoutes from '@modules/02_Vitalink/appointmentcredit/routers/AppointmentCreditRoutes';
 import AppointmentFlowLogRoutes from '@modules/02_Vitalink/appointmentflowlog/routers/AppointmentFlowLogRoutes';
 import PaymentRoutes from '@modules/02_Vitalink/payments/routers/PaymentRoutes';
+import FinanceEntityRoutes from '@modules/02_Vitalink/financeentity/routers/FinanceEntityRoutes';
 
 //Import internal classes and functions
 import StartMiddleware from '@TenshiJS/middlewares/StartMiddleware';
@@ -83,6 +84,7 @@ import RouteNotFoundMiddleware from '@TenshiJS/middlewares/RouteNotFoundMiddlewa
 import { CorsHandlerMiddleware } from '@TenshiJS/middlewares/CorsHandlerMiddleware';
 import LoggingHandlerMiddleware from '@TenshiJS/middlewares/LoggingHandlerMiddleware';
 import ValidJsonBodyMiddleware from '@TenshiJS/middlewares/ValidJsonBodyMiddleware';
+
 
 
 
@@ -180,6 +182,7 @@ export const TenshiMain = async() => {
     //Add Routers
     app.use(new AuthRoutes().getRouter());
     app.use(new UserRoutes().getRouter());
+    app.use(new FinanceEntityRoutes().getRouter());
     app.use(new RoleRoutes().getRouter());
     app.use(new UdcRoutes().getRouter());
     app.use(new NotificationRoutes().getRouter());
@@ -202,6 +205,8 @@ export const TenshiMain = async() => {
     app.use(new AppointmentCreditRoutes().getRouter());
     app.use(new AppointmentFlowLogRoutes().getRouter());
     app.use(new PaymentRoutes().getRouter());
+
+   
 
     //*************************************** */
     //       NOT FOUND ROUTE MIDDLEWARE

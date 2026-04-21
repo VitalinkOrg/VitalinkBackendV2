@@ -1,7 +1,7 @@
 {
     "COMPANY": {
         "NAME" : "Vitalink",
-        "LOGO" : "https://vitalink-v2-s3.s3.us-east-2.amazonaws.com/PublicFiles/logo_demo_vitalink.jpg",
+        "LOGO" : "https://vitalink-v2-s3.s3.us-east-2.amazonaws.com/PublicFiles/vitalinklogo.png",
         "BACKEND_HOST": "http://localhost:3000",
         "FRONT_END_HOST": "http://localhost:3000/",
         "LOGIN_URL": "http://localhost:3000/",
@@ -60,7 +60,7 @@
                          "/forgot_password", "/verify_forgot_password",
                          "/reset_password", "/recover_user", "/active_user",
                          "/udc/get_all","/supplier/get_all_main", "/document/add",
-                         "/payment/notify", "/receipt", "/payment/test", "/payment/go"],
+                         "/payment/notify", "/receipt", "/payment/test", "/payment/go", "/financeentity/get_all"],
 
         "REQUEST_WITHOUT_API_KEY": ["/confirmation_register", "/verify_forgot_password", "/active_user","/payment/go", "/payment/notify", "/receipt", "/payment/test"]
     },

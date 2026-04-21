@@ -7,7 +7,6 @@ import { User } from "@TenshiJS/entity/User";
 import { AccountStatusEnum } from "@TenshiJS/enums/AccountStatusEnum";
 import { RequestHandler } from "@TenshiJS/generics";
 import GenericController from "@TenshiJS/generics/Controller/GenericController";
-import GenericRepository from "@TenshiJS/generics/Repository/GenericRepository";
 import RoleRepository from "@TenshiJS/generics/Role/RoleRepository";
 import HttpAction from "@TenshiJS/helpers/HttpAction";
 import Validations from "@TenshiJS/helpers/Validations";
@@ -58,7 +57,8 @@ export default class AuthController extends GenericController{
         //if the role y customer and not have finance entity, return error
         //if the user not exist in the pre register user, return error
         if(role.code == "CUSTOMER"){
-           /* if(reqHandler.getRequest().body.finance_entity == null || reqHandler.getRequest().body.finance_entity == undefined){
+            //Normal register with searching of finance entitty
+            if(reqHandler.getRequest().body.finance_entity == null || reqHandler.getRequest().body.finance_entity == undefined){
                 return httpExec.dynamicError(ConstStatusJson.ERROR, ConstMessagesJson.ERROR_ROLE_CUSTOMER);
             }
 
@@ -67,9 +67,10 @@ export default class AuthController extends GenericController{
 
             if(userFinanceEntity == null){
                 return httpExec.dynamicError(ConstStatusJson.ERROR, ConstMessagesJson.ERROR_ROLE_CUSTOMER);
-            }*/
+            }
 
-            const preRegisterUserrepository = await new GenericRepository(PreRegisterUser);
+            //Register with pre register logic
+            /*const preRegisterUserrepository = await new GenericRepository(PreRegisterUser);
             const preRegisterUsers = await preRegisterUserrepository.findByOptions(false, true, 
                 {
                     where: { card_id: userBody.card_id, email: userBody.email }
@@ -81,7 +82,7 @@ export default class AuthController extends GenericController{
                 return httpExec.dynamicError(ConstStatusJson.ERROR, ConstMessagesJson.ERROR_ROLE_CUSTOMER);
             }
 
-            userBody.finance_entity = preRegisterUser.finance_entity;
+            userBody.finance_entity = preRegisterUser.finance_entity;*/
         }
 
 
@@ -110,8 +111,8 @@ export default class AuthController extends GenericController{
                 JSON.stringify(user), user.id, ConstLogs.LOGIN_TRACKING);
 
             const variables = {
-                userName: user.first_name + " " + user.last_name,
-                confirmationLink: config.COMPANY.BACKEND_HOST + ConstUrls.CONFIRMATION_REGISTER + registerToken
+                userName: user.name,
+                confirmationLink: config.COMPANY.FRONT_END_HOST + ConstUrls.CONFIRMATION_REGISTER + registerToken
             };
             const htmlBody = await getEmailTemplate(ConstTemplate.REGISTER_EMAIL, user.language, variables);
             

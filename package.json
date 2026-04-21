@@ -22,7 +22,8 @@
         "copytemp": "copyfiles -u 1 src/templates/*.html build/src",
         "build": "npm run compile && npm run copyjsonsrc && npm run copyjsonsemailmessages && npm run copyjsontenshi && npm run copyjsonconfig && npm run copytemp",
         "prod": "node -r module-alias/register build/src/index.js",
-        "DevAWS": "npm run delete && npm run generalseed && npm run seedDev && npm run build && npm run prod"
+        "DevAWS": "npm run delete && npm run generalseed && npm run seedDev && npm run build && npm run prod",
+        "STGAWS": "npm run generalseed && npm run seedSTG && npm run build && npm run prod"
     },
     "keywords": [],
     "author": "",
@@ -33,13 +34,13 @@
         "@types/express": "^4.17.21",
         "@types/jest": "^29.5.13",
         "@types/jsonwebtoken": "^9.0.6",
+        "@types/lodash": "^4.17.16",
         "@types/mssql": "^8.1.1",
         "@types/multer": "^1.4.11",
         "@types/nodemailer": "^6.4.15",
         "@types/pg": "^8.6.6",
         "@types/supertest": "^6.0.2",
         "@types/uuid": "^10.0.0",
-        "@types/lodash": "^4.17.16",
         "aws-sdk": "^2.1672.0",
         "bcrypt": "^5.1.1",
         "class-transformer": "^0.5.1",
@@ -60,6 +61,7 @@
         "nodemailer": "^6.9.14",
         "pg": "^8.12.0",
         "rate-limiter-flexible": "^5.0.3",
+        "resend": "^6.12.2",
         "supertest": "^7.0.0",
         "ts-jest": "^29.2.5",
         "ts-node": "^10.9.2",
@@ -67,18 +69,5 @@
         "tsconfig-paths": "^4.2.0",
         "typeorm": "^0.3.20",
         "typescript": "^5.5.4"
-    },
-    "devDependencies": {
-    },
-     "_moduleAliases": {
-        "tenshi": "build/tenshi",
-        "@TenshiJS": "build/tenshi",
-        "@index": "build/src",
-        "@modules": "build/src/modules",
-        "@templates": "build/templates",
-        "@entity": "build/src/entity",
-        "@data": "build/data/json",
-        "@utils": "build/src/utils"
     }
 }
-

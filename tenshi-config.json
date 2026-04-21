@@ -1,14 +1,14 @@
 {
     "COMPANY": {
         "NAME" : "Vitalink",
-        "LOGO" : "https://vitalink-v2-s3.s3.us-east-2.amazonaws.com/PublicFiles/logo_demo_vitalink.jpg",
+        "LOGO" : "https://vitalink-v2-s3.s3.us-east-2.amazonaws.com/PublicFiles/vitalinklogo.png",
         "BACKEND_HOST": "http://localhost:3000",
         "FRONT_END_HOST": "http://localhost:3000/",
         "LOGIN_URL": "http://localhost:3000/",
         "RESET_PASSWORD_URL" : "password_reset/",
         "MAIN_COLOR": "#3541b4",
         "BACKGROUND_COLOR": "#FFFFFF",
-        "LANDING_PAGE": "https://www.example.com"
+        "LANDING_PAGE": "https://www.vitalink.cr"
     },
     "SERVER" : {
         "PORT": 3000,
@@ -23,7 +23,7 @@
     },
     "SUPER_ADMIN":{
         "USER_EMAIL":"vitalinkcr2@gmail.com",
-        "PASSWORD":"Vitalin kCR2*",
+        "PASSWORD":"VitalinkCR2*",
         "FIRST_NAME":"Vitalink",
         "LAST_NAME":"",
         "USERNAME":"tenshitest1",
@@ -32,9 +32,9 @@
     "DB": {
         "TYPE": "mariadb",
         "PORT": 3307,
-        "HOST":"vitalink.cpcqo6224pz7.us-east-2.rds.amazonaws.com",
-        "USER": "vitadmin",
-        "PASSWORD": "X2l#0j*omxwDpW",
+        "HOST":"localhost",
+        "USER": "root",
+        "PASSWORD": "",
         "NAME": "vitalink",
         "CONNECTION_LIMIT": 150
     },
@@ -60,7 +60,7 @@
                          "/forgot_password", "/verify_forgot_password",
                          "/reset_password", "/recover_user", "/active_user",
                          "/udc/get_all","/supplier/get_all_main", "/document/add",
-                         "/payment/notify", "/receipt", "/payment/test", "/payment/go"],
+                         "/payment/notify", "/receipt", "/payment/test", "/payment/go", "/financeentity/get_all"],
 
         "REQUEST_WITHOUT_API_KEY": ["/confirmation_register", "/verify_forgot_password", "/active_user","/payment/go", "/payment/notify", "/receipt", "/payment/test"]
     },
@@ -98,8 +98,8 @@
     "EMAIL" : {
         "SERVICE" : "gmail",
         "AUTH_USER": "tenshitest1@gmail.com",
-        "AUTH_PASSWORD": "xnqitxldphiymoov",
-        "EMAIL_FROM": "tenshitest1@gmail.com"
+        "AUTH_PASSWORD": "re_SrzDz5Da_62vtVERWZ2QXoW8te2FeACBK",
+        "EMAIL_FROM": "transaction@vitalink.cr"
     },
     "CYBERSOURCE": {
         "PAYMENT_URL_REDIRECT": "https://testsecureacceptance.cybersource.com/pay",

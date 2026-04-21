@@ -8,11 +8,11 @@ export default class EmailService {
     private static instance: EmailService;
     private transporter: IEmailTransporter;
 
-    private constructor(transporterType: string | null = null) {
+    private constructor(transporterType: string | null = "resend") {
         this.transporter = EmailTransporterFactory.createEmailTransporter(transporterType);
     }
 
-    public static getInstance(transporterType: string | null = null): EmailService {
+    public static getInstance(transporterType: string | null = "resend"): EmailService {
         if (!EmailService.instance) {
             EmailService.instance = new EmailService(transporterType);
         }

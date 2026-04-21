@@ -265,7 +265,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\r\n  \"card_id\": \"117456623\",\r\n  \"id_type\":\"PHYSICAL_DNI\", // PHYSICAL_DNI, JURIDICAL_DNI, DIMEX, PASSPORT\r\n  \"name\": \"Emanuel Loaiza\",\r\n  \"email\": \"fabian7593+test5@gmail.com\",\r\n  \"password\": \"Fabian7593+test4@gmail.com\",\r\n  \"gender\": \"M\", // \"M,\"F\",\"O\"\r\n  \"role_code\" : \"CUSTOMER\",\r\n  \"phone_number\": \"87273307\",\r\n  //\"birth_date\": \"\",\r\n  \"country_iso_code\": \"CRC\",\r\n  \"province\": \"San Jose\",\r\n  //\"address\": \"\",\r\n  //\"city_name\": \"\",\r\n  //\"postal_code\": \"\",\r\n  //\"latitude\": \"10.12301023\",\r\n  //\"longitude\": \"-9.12341212\",\r\n  \"profile_picture_url\": \"https://vitalink-v2-s3.s3.us-east-2.amazonaws.com/PublicFiles/TestLegalRepresentaive.png\",\r\n  \"code_contract\":\"PRIVATE_CONTRACT____6__DOC__452025224523\"\r\n  \r\n}\r\n\r\n",
+                      "raw": "{\r\n  \"card_id\": \"1174566235\",\r\n  \"id_type\":\"PHYSICAL_DNI\", // PHYSICAL_DNI, JURIDICAL_DNI, DIMEX, PASSPORT\r\n  \"name\": \"Emanuel Loaiza\",\r\n  \"email\": \"fabian7593+test56@gmail.com\",\r\n  \"password\": \"Fabian7593+test56@gmail.com\",\r\n  \"finance_entity\" : \"7ce0ef43-3d86-417f-b7fe-298051689c78\",\r\n  \"gender\": \"M\", // \"M,\"F\",\"O\"\r\n  \"role_code\" : \"CUSTOMER\",\r\n  \"phone_number\": \"87273307\",\r\n  //\"birth_date\": \"\",\r\n  \"country_iso_code\": \"CRC\",\r\n  \"province\": \"San Jose\",\r\n  //\"address\": \"\",\r\n  //\"city_name\": \"\",\r\n  //\"postal_code\": \"\",\r\n  //\"latitude\": \"10.12301023\",\r\n  //\"longitude\": \"-9.12341212\",\r\n  \"profile_picture_url\": \"https://vitalink-v2-s3.s3.us-east-2.amazonaws.com/PublicFiles/TestLegalRepresentaive.png\",\r\n  \"code_contract\":\"PRIVATE_CONTRACT____6__DOC__452025224523\"\r\n  \r\n}\r\n\r\n",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -838,7 +838,7 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{host}}/udc/get_all?father_code=ODONTOLOGY",
+                  "raw": "{{host}}/udc/get_all?father_code=ODONTOLOGY_MEDICAL",
                   "host": [
                     "{{host}}"
                   ],
@@ -859,16 +859,22 @@
                     },
                     {
                       "key": "type",
-                      "value": "MEDICAL_PRODUCT",
+                      "value": "MEDICAL_TYPE",
                       "disabled": true
                     },
                     {
                       "key": "father_code",
-                      "value": "ODONTOLOGY"
+                      "value": "ODONTOLOGY_MEDICAL"
                     },
                     {
                       "key": "code",
                       "value": "CONFIRM_VALIDATION_APPOINTMENT",
+                      "disabled": true
+                    },
+                    {
+                      "key": "supplier_id",
+                      "value": "1",
+                      "type": "text",
                       "disabled": true
                     }
                   ]
@@ -2682,7 +2688,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"procedure_id\": 14,\n  \"product_code\": \"CARDIO_CATH\",\n  \"discount\": 0\n  /*\"services_offer\": \"  {\n    \"ASSESSMENT_DETAILS\": [\n        \"GENERAL_ANESTHESIA\",\n        \"REGIONAL_ANESTHESIA\",\n        \"POSTOP_PAIN_CONTROL\",\n        \"POSTOP_ULTRASOUND\",\n        \"POSTOP_CT\",\n        \"POSTOP_PHYSIOTHERAPY\"\n    ]\n  }\",*/\n}",
+                  "raw": "{\n  \"procedure_code\": \"CARDIO_INTERVENTION\",\n  \"product_code\": \"CARDIO_CATH\",\n  \"discount\": 0\n  /*\"services_offer\": \"  {\n    \"ASSESSMENT_DETAILS\": [\n        \"GENERAL_ANESTHESIA\",\n        \"REGIONAL_ANESTHESIA\",\n        \"POSTOP_PAIN_CONTROL\",\n        \"POSTOP_ULTRASOUND\",\n        \"POSTOP_CT\",\n        \"POSTOP_PHYSIOTHERAPY\"\n    ]\n  }\",*/\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2690,7 +2696,7 @@
                   }
                 },
                 "url": {
-                  "raw": "{{host}}/package/edit?id=1",
+                  "raw": "{{host}}/package/edit?id=195",
                   "host": [
                     "{{host}}"
                   ],
@@ -2701,7 +2707,7 @@
                   "query": [
                     {
                       "key": "id",
-                      "value": "1"
+                      "value": "195"
                     }
                   ]
                 }
@@ -2796,7 +2802,7 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{host}}/package/delete?id=1",
+                  "raw": "{{host}}/package/delete?id=195",
                   "host": [
                     "{{host}}"
                   ],
@@ -2807,7 +2813,7 @@
                   "query": [
                     {
                       "key": "id",
-                      "value": "1"
+                      "value": "195"
                     }
                   ]
                 }
@@ -5402,6 +5408,42 @@
                   "path": [
                     "udc",
                     "add"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "FinanceEntity",
+          "item": [
+            {
+              "name": "Get All Finance entity",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "authorization",
+                    "value": "{{auth_jwt}}",
+                    "type": "text",
+                    "disabled": true
+                  },
+                  {
+                    "key": "x-api-key",
+                    "value": "{{secret_api_key}}",
+                    "type": "text",
+                    "disabled": true
+                  }
+                ],
+                "url": {
+                  "raw": "{{host}}/financeentity/get_all",
+                  "host": [
+                    "{{host}}"
+                  ],
+                  "path": [
+                    "financeentity",
+                    "get_all"
                   ]
                 }
               },

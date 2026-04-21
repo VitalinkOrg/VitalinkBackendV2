@@ -9,7 +9,7 @@ const configPath = path.resolve(__dirname, '../../tenshi-config.json');
 const configManager = ConfigManager.getInstance(configPath);
 const config = configManager.getConfig();
 
-import { DataSource, ServerDescription } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { UnitDynamicCentral } from '@TenshiJS/entity/UnitDynamicCentral';
 import { Supplier } from '@TenshiJS/entity/Supplier';
 import { User } from '@TenshiJS/entity/User';
