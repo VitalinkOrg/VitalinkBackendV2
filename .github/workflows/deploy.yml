@@ -30,7 +30,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            bash /home/ubuntu/deploy_tenshi.sh
+            bash /home/deploy/vitalinkBackendSTG/VitalinkBackendV2/deploy_tenshi.stg.sh
 
       - name: Deploy PROD
         if: github.ref == 'refs/heads/main'
@@ -40,4 +40,4 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            bash /home/ubuntu/deploy_tenshi.sh
+            bash /home/deploy/vitalinkBackendPROD/VitalinkBackendV2/deploy_tenshi.prod.sh
