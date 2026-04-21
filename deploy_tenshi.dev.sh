@@ -30,4 +30,4 @@ pm2 save
 echo "📊 Status"
 pm2 list
 
-echo "✅ Backend deploy listo"
+echo "✅ Backend deploy listo!"
