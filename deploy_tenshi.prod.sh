@@ -25,7 +25,7 @@ echo "🚀 Start app en CLUSTER"
 
 pm2 start npm \
   --name "$APP_NAME" \
-  -- run STGAWS \
+  -- run PRODAWS \
   -i max \
   --time \
   --update-env
