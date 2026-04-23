@@ -47,7 +47,7 @@ export default  class EmailController extends GenericController{
                     // Send the email to the user
                     const emailService = EmailService.getInstance();
                     await emailService.sendEmail({
-                        toMail: user.email,
+                        toMail: [user.email],
                         subject: emailStructure.subject,
                         message: htmlBody,
                         attachments: [] 
@@ -114,7 +114,7 @@ export default  class EmailController extends GenericController{
                         const htmlBody = await getEmailTemplate(ConstTemplate.GENERIC_TEMPLATE_EMAIL, user.language, variables);
                         const emailService = EmailService.getInstance();
                         await emailService.sendEmail({
-                            toMail: user.email,
+                            toMail: [user.email],
                             subject: emailStructure.subject,
                             message: htmlBody,
                             attachments: [] 
