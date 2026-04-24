@@ -102,10 +102,6 @@ export default class AppointmentController extends GenericController {
             const body = reqHandler.getAdapter().entityFromPutBody();
             const appointment = await this.getRepository().findById(id!!, true, filters);
 
-            console.log("APPOINTMENT: ", appointment);
-            
-            console.log("APPOINTMENT CREDIT: ", appointmentCredit);
-
             const messageWithoutProcedure : string = "El paciente no es apto para procedimiento medico";
             
             try {
@@ -245,8 +241,6 @@ export default class AppointmentController extends GenericController {
                     }
                 }
 
-                console.log("BODY: ", body);
-
                 // Execute the update action in the database
                 const updateAppointmentEntity = await this.getRepository().update(id!!, body,
                                                              reqHandler.getLogicalDelete());
@@ -256,8 +250,7 @@ export default class AppointmentController extends GenericController {
                 }
 
                 const appointmentUpdated = await this.getRepository().findById(id!!, true, filters);
-                    console.log("UPDATED APPOINTMENT: ", appointmentUpdated);
-
+           
                 const emailVariables = ["patientName",
                                                 "supplierName",
                                                 "procedureName",
