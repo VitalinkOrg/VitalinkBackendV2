@@ -271,7 +271,7 @@ export default class AppointmentController extends GenericController {
                                                 "discountProcedure",
                                                 "totalProcedure",
                                                 "requestAmount",
-                                                "Amount",
+                                                "approvedAmountCredit",
                                                 "creditCode"];
 
                 if(step == 2){

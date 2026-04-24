@@ -97,7 +97,7 @@ import { getMessageEmail, replaceVariables } from "@TenshiJS/utils/htmlTemplateU
                 }
 
 
-                if (variable === "Amount") {
+                if (variable === "approvedAmountCredit") {
                     jsonData[variable] = appointmentCredit.approved_amount;
                 }
             }else{
@@ -105,7 +105,7 @@ import { getMessageEmail, replaceVariables } from "@TenshiJS/utils/htmlTemplateU
                     jsonData[variable] = 0;
                 }
 
-                if (variable === "Amount") {
+                if (variable === "approvedAmountCredit") {
                     jsonData[variable] = 0;
                 }
             }

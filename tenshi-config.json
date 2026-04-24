@@ -8,7 +8,7 @@
         "RESET_PASSWORD_URL" : "password_reset/",
         "MAIN_COLOR": "#3541b4",
         "BACKGROUND_COLOR": "#FFFFFF",
-        "LANDING_PAGE": "https://www.example.com"
+        "LANDING_PAGE": "https://vitalink.cr"
     },
     "SERVER" : {
         "PORT": 3000,

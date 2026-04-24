@@ -34,9 +34,9 @@
     "appointmentStep1NotificationMessage": "Nueva cita de valoración solicitada.",
 
     "appointmentStep1.2Subject": "Cita reservada - Espera Confirmación", 
-    "appointmentStep1.2Title": "Espera Confirmación de Cita",
+    "appointmentStep1.2Title": "Espera Confirmación de Cita de Valoración",
     "appointmentStep1.2EmailMessage": "La reserva de tu cita de valoración para el procedimiento {{ procedureName }} / producto {{ productName }} ha sido enviada al médico/centro médico {{ supplierName }}. Pronto su médico le contactará.",
-    "appointmentStep1.2AnotherMessage": "El médico/centro médico {{ supplierName }} se pondrá en contacto con usted o confirmará cita de valoración del procedimiento {{ procedureName }} / producto {{ productName }} para el dia {{ appointmentDate }} a la hora {{ appointmentHour }} en los proximos días.",
+    "appointmentStep1.2AnotherMessage": "El médico/centro médico {{ supplierName }} se pondrá en contacto con usted o confirmará cita de valoración del procedimiento {{ procedureName }} / producto {{ productName }}.",
     "appointmentStep1.2NotificationMessage": "Cita reservada - Espera Confirmación",
 
     "appointmentStep2Subject": "Confirmación de Cita Valoración",
@@ -83,7 +83,7 @@
 
     "appointmentStep8Subject": "Procedimiento Médico Realizado",
     "appointmentStep8Title": "Procedimiento Médico Realizado",
-    "appointmentStep8EmailMessage": "El médico/centro médico {{ supplierName }} ha confirmado la realizacion del procedimiento medico {{ procedureName }} / producto {{ productName }}.\n\nA continuación te presentamos el detalle de tu pago:\n- Costo del procedimiento: {{ priceProcedure }}\n- Cubierto por crédito: {{ Amount }}\n- Descuento del procedimiento: {{ discountProcedure }}\n- Total del procedimiento: {{ totalProcedure }}",
+    "appointmentStep8EmailMessage": "El médico/centro médico {{ supplierName }} ha confirmado la realizacion del procedimiento medico {{ procedureName }} / producto {{ productName }}.\n\nA continuación te presentamos el detalle de tu pago:\n- Costo del procedimiento: {{ priceProcedure }}\n- Cubierto por crédito: {{ approvedAmountCredit }}\n- Descuento del procedimiento: {{ discountProcedure }}\n- Total del procedimiento: {{ totalProcedure }}",
     "appointmentStep8AnotherMessage": "El médico/centro médico {{ supplierName }} ha confirmado la realizacion del procedimiento medico {{ procedureName }} / producto {{ productName }} del paciente {{ patientName }}.",
     "appointmentStep8NotificationMessage": "Procedimiento médico realizado.",
 
@@ -95,8 +95,8 @@
 
     "appointmentCreditStep2Subject": "Crédito Aprobado",
     "appointmentCreditStep2Title": "Crédito Aprobado",
-    "appointmentCreditStep2EmailMessage": "La Asociación Solidarista {{ financeEntityName }} ha aprobado el crédito por un monto de {{ Amount }} para el procedimiento {{ procedureName }} / producto {{ productName }}. Por favor revisá el documento de pagaré.\n\nPara pagar tu procedimiento con tu crédito, presentá el código {{ creditCode }} en el consultorio médico antes de la realización del procedimiento.\n\nEste código es válido por un monto de {{ Amount }} y será utilizado como medio de pago una vez validado. Una vez validado tu código, el saldo a pagar a tu médico será de {{ totalProcedure }}.\n\nImportante: no compartás este código con nadie. Debés presentarlo únicamente en la caja del consultorio para su validación.",
-    "appointmentCreditStep2AnotherMessage": "La Asociación Solidarista {{ financeEntityName }} ha aprobado el crédito por un monto de {{ Amount }} para el procedimiento {{ procedureName }} / producto {{ productName }}",
+    "appointmentCreditStep2EmailMessage": "La Asociación Solidarista {{ financeEntityName }} ha aprobado el crédito por un monto de {{ approvedAmountCredit }} para el procedimiento {{ procedureName }} / producto {{ productName }}. Por favor revisá el documento de pagaré.\n\nPara pagar tu procedimiento con tu crédito, presentá el código {{ creditCode }} en el consultorio médico antes de la realización del procedimiento.\n\nEste código es válido por un monto de {{ approvedAmountCredit }} y será utilizado como medio de pago una vez validado. Una vez validado tu código, el saldo a pagar a tu médico será de {{ totalProcedure }}.\n\nImportante: no compartás este código con nadie. Debés presentarlo únicamente en la caja del consultorio para su validación.",
+    "appointmentCreditStep2AnotherMessage": "La Asociación Solidarista {{ financeEntityName }} ha aprobado el crédito por un monto de {{ approvedAmountCredit }} para el procedimiento {{ procedureName }} / producto {{ productName }}",
     "appointmentCreditStep2NotificationMessage": "Crédito aprobado.",
 
     "appointmentCreditStep2NoSubject": "Credito Rechazado",
@@ -107,7 +107,7 @@
 
     "appointmentCreditStep4Subject": "Crédito Utilizado",
     "appointmentCreditStep4Title": "Crédito Utilizado",
-    "appointmentCreditStep4EmailMessage": "El médico/centro médico {{ supplierName }} ha marcado como utilizado el crédito del paciente {{ patientName }} para el procedimiento {{ procedureName }} / producto {{ productName }}. Por favor confirmá con Vitalink.\n\nA continuación te presentamos el detalle de tu pago:\n- Costo del procedimiento: {{ priceProcedure }}\n- Cubierto por crédito: {{ Amount }}\n- Descuento del procedimiento: {{ discountProcedure }}\n- Total a pagar: {{ totalProcedure }}",
+    "appointmentCreditStep4EmailMessage": "El médico/centro médico {{ supplierName }} ha marcado como utilizado el crédito del paciente {{ patientName }} para el procedimiento {{ procedureName }} / producto {{ productName }}. Por favor confirmá con Vitalink.\n\nA continuación te presentamos el detalle de tu pago:\n- Costo del procedimiento: {{ priceProcedure }}\n- Cubierto por crédito: {{ approvedAmountCredit }}\n- Descuento del procedimiento: {{ discountProcedure }}\n- Total a pagar: {{ totalProcedure }}",
     "appointmentCreditStep4AnotherMessage": "El médico/centro médico {{ supplierName }} ha marcado como utilizado el crédito del paciente {{ patientName }} para el procedimiento {{ procedureName }} / producto {{ productName }}.",
     "appointmentCreditStep4NotificationMessage": "Crédito utilizado para procedimiento."
 }
