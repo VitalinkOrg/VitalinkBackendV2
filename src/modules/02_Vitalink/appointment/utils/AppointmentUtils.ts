@@ -1,10 +1,13 @@
 import { Appointment } from "@index/entity/Appointment";
 import { AppointmentCredit } from "@index/entity/AppointmentCredit";
 import { AppointmentFlowLog } from "@index/entity/AppointmentFlowLog";
-import { sendEmailAndUserNotification } from "@index/modules/01_General/notification/utils/NotificationUtils";
+import { Notification } from "@index/entity/Notification";
+import { UserNotification } from "@index/entity/UserNotification";
+import { buildNotificationContext, sendEmailAndUserNotification } from "@index/modules/01_General/notification/utils/NotificationUtils";
 import { UnitDynamicCentral } from "@TenshiJS/entity/UnitDynamicCentral";
 import { User } from "@TenshiJS/entity/User";
 import GenericRepository from "@TenshiJS/generics/Repository/GenericRepository";
+import EmailService from "@TenshiJS/services/EmailServices/EmailService";
 import { format12Hour, formatNormalDate } from "@TenshiJS/utils/formatDateUtils";
 import { getMessageEmail, replaceVariables } from "@TenshiJS/utils/htmlTemplateUtils";
 
@@ -55,11 +58,11 @@ import { getMessageEmail, replaceVariables } from "@TenshiJS/utils/htmlTemplateU
         for (const variable of variables) {
             // Fill jsonData with required values based on provided variable names
             if (variable === "appointmentDate") {
-                jsonData[variable] = appointment.appointment_date ? formatNormalDate(appointment.appointment_date) : null;
+                jsonData[variable] = appointment.appointment_date ? formatNormalDate(appointment.appointment_date) : "a definir";
             }
 
             if (variable === "appointmentHour") {
-                jsonData[variable] = appointment.appointment_hour ? format12Hour(appointment.appointment_hour) : null;
+                jsonData[variable] = appointment.appointment_hour ? format12Hour(appointment.appointment_hour) : "a definir";
             }
 
             if (variable === "patientName") {
@@ -79,7 +82,7 @@ import { getMessageEmail, replaceVariables } from "@TenshiJS/utils/htmlTemplateU
             }
 
             if (variable === "paymentMethod") {
-                jsonData[variable] = appointment.payment_method?.name || "Not specified";
+                jsonData[variable] = appointment.payment_method?.name || "No especificado";
             }
 
             if (variable === "financeEntityName") {
@@ -94,9 +97,47 @@ import { getMessageEmail, replaceVariables } from "@TenshiJS/utils/htmlTemplateU
                 }
 
 
-                if (variable === "Amount") {
+                if (variable === "approvedAmountCredit") {
                     jsonData[variable] = appointmentCredit.approved_amount;
                 }
+            }else{
+                if (variable === "requestAmount") {
+                    jsonData[variable] = 0;
+                }
+
+                if (variable === "approvedAmountCredit") {
+                    jsonData[variable] = 0;
+                }
+            }
+
+            if (variable === "priceValorationAppointment") {
+                jsonData[variable] = appointment.price_valoration_appointment;
+            }
+
+            if (variable === "priceProcedure") {
+                jsonData[variable] = appointment.price_procedure;
+            }
+
+            //Actualmente el discount es unicamente para procedimiento no para el precio de valoracion
+            if (variable === "discountProcedure") {
+                jsonData[variable] = appointment.package?.discount ? appointment.package.discount : 0;
+            }
+
+            if (variable === "totalProcedure") {
+                const price = appointment.price_procedure || 0;
+                const discount = appointment.package?.discount || 0;
+                let creditDiscount = 0;
+                
+                if (appointmentCredit !== null) {
+                    creditDiscount = appointmentCredit.approved_amount || 0;
+                }
+
+                jsonData[variable] = price - discount - creditDiscount;
+            }
+
+
+            if (variable === "creditCode") {
+                jsonData[variable] = appointment.appointment_qr_code ? appointment.appointment_qr_code : "";
             }
         }
 
@@ -137,3 +178,9 @@ import { getMessageEmail, replaceVariables } from "@TenshiJS/utils/htmlTemplateU
         // Save the log entry to the database
         await appointmentFlowLogRepository.add(appointmentFlowLog);
     }
+
+
+
+
+
+   

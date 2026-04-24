@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Verificar Pago Cita de Valoración</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style type="text/css">
+        body, table, td, a { -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: normal; }
+        table, td { mso-table-rspace: 0pt; mso-table-lspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; height: auto; line-height: 100%; text-decoration: none; border: 0; outline: none; }
+        body { width: 100% !important; height: 100% !important; padding: 0 !important; margin: 0 !important; }
+        table { border-collapse: collapse; }
+    </style>
+</head>
+<body style="background-color: #f4f7fb; font-family: 'Poppins', sans-serif; margin: 0; padding: 0;">
+
+    <div style="display: none; max-width: 0; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; color: #f4f7fb; opacity: 0;">
+        Verificar Pago Cita de Valoración
+    </div>
+
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td align="center" style="padding: 32px 16px; background-color: #f4f7fb;">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.07); overflow: hidden;">
+
+                    <!-- Logo -->
+                    <tr>
+                        <td align="center" style="padding: 28px 24px 20px; background-color: #ffffff;">
+                            <a href="{{ companyDomain }}">
+                                <img src="https://vitalink-v2-s3.s3.us-east-2.amazonaws.com/PublicFiles/vitalinklogo.png" alt="Logo Vitalink" border="0" width="200" style="display: block; width: 200px; max-width: 200px;">
+                            </a>
+                        </td>
+                    </tr>
+
+                    <!-- Title -->
+                    <tr>
+                        <td align="center" style="padding: 0 24px 20px; background-color: #ffffff; border-bottom: 2px solid #eef2f7;">
+                            <h1 style="font-size: 15px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: mainColor; margin: 0; line-height: 1.4; font-family: 'Poppins', sans-serif;">
+                                Verificar Pago Cita de Valoración
+                            </h1>
+                        </td>
+                    </tr>
+
+                    <!-- Body -->
+                    <tr>
+                        <td style="padding: 28px 32px 8px; background-color: #ffffff;">
+
+                            <!-- Greeting -->
+                            <p style="font-size: 15px; font-weight: 500; color: #1a1a2e; margin: 0 0 16px; font-family: 'Poppins', sans-serif;">
+                                {{ generalHello }}
+                            </p>
+
+                            <!-- Main message -->
+                            <p style="font-size: 14px; color: #444; line-height: 1.7; margin: 0 0 24px; font-family: 'Poppins', sans-serif;">
+                                Se ha concretado la cita de valoración del paciente <strong>{{ patientName }}</strong>. Por favor verificá que el pago fue efectuado correctamente.
+                            </p>
+
+                            <!-- Detail card -->
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background: linear-gradient(135deg, #f8faff 0%, #eef4ff 100%); border: 1px solid #dce8ff; border-radius: 10px; margin-bottom: 20px;">
+                                <tr>
+                                    <td style="padding: 20px 24px;">
+                                        <p style="font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: mainColor; margin: 0 0 14px; padding-bottom: 10px; border-bottom: 1px solid #dce8ff; font-family: 'Poppins', sans-serif;">
+                                            Detalle de la cita
+                                        </p>
+                                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                            <tr>
+                                                <td style="padding: 7px 0; font-size: 13px; color: #555; font-family: 'Poppins', sans-serif; border-bottom: 1px solid #edf2ff;">Procedimiento</td>
+                                                <td align="right" style="padding: 7px 0; font-size: 13px; font-weight: 500; color: #1a1a2e; font-family: 'Poppins', sans-serif; border-bottom: 1px solid #edf2ff;">{{ procedureName }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 7px 0; font-size: 13px; color: #555; font-family: 'Poppins', sans-serif;">Producto</td>
+                                                <td align="right" style="padding: 7px 0; font-size: 13px; font-weight: 500; color: #1a1a2e; font-family: 'Poppins', sans-serif;">{{ productName }}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Action reminder card -->
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; margin-bottom: 24px;">
+                                <tr>
+                                    <td style="padding: 16px 20px;">
+                                        <p style="font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #b45309; margin: 0 0 8px; font-family: 'Poppins', sans-serif;">
+                                            ⚠️ Acción requerida
+                                        </p>
+                                        <p style="font-size: 13px; color: #78350f; line-height: 1.7; margin: 0; font-family: 'Poppins', sans-serif;">
+                                            Favor verificar que se efectuó el pago de la cita de valoración en el sistema.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Contact -->
+                            <p style="font-size: 13px; color: #777; line-height: 1.6; margin: 0 0 24px; font-family: 'Poppins', sans-serif;">
+                                {{ generalQuestionContact }}
+                            </p>
+
+                        </td>
+                    </tr>
+
+                    <!-- Button -->
+                    <tr>
+                        <td align="center" style="padding: 4px 32px 28px; background-color: #ffffff;">
+                            <a href="{{ actionUrl }}" target="_blank" rel="noopener noreferrer"
+                               style="display: inline-block; padding: 14px 48px; background-color: mainColor; color: #ffffff; font-size: 14px; font-weight: 600; text-decoration: none; border-radius: 8px; letter-spacing: 0.5px; font-family: 'Poppins', sans-serif;">
+                                {{ actionTitle }}
+                            </a>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="padding: 20px 32px; background-color: #ffffff; border-top: 4px solid mainColor;">
+                            <p style="margin: 0; font-size: 13px; color: #555; line-height: 1.6; font-family: 'Poppins', sans-serif;">{{ generalRegards }}</p>
+                            <p style="margin: 0; font-size: 13px; color: #555; font-family: 'Poppins', sans-serif;">{{ generalSupport }}</p>
+                        </td>
+                    </tr>
+
+                </table>
+
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                    <tr>
+                        <td align="center" style="padding: 16px 24px;">
+                            <p style="margin: 0; font-size: 12px; color: #aaa; font-family: 'Poppins', sans-serif;">{{ generalCopyright }}</p>
+                        </td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

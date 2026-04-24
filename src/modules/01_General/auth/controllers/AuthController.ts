@@ -119,7 +119,7 @@ export default class AuthController extends GenericController{
             const subject = getMessageEmail(ConstTemplate.REGISTER_EMAIL, user.language);
             const emailService = EmailService.getInstance();
             await emailService.sendEmail({
-                toMail: user.email,
+                toMail: [user.email],
                 subject: subject,
                 message: htmlBody,
                 attachments: [] 
@@ -297,8 +297,9 @@ async activeRegisterUser(reqHandler: RequestHandler){
                     userName: user.name,
                     loginUrl: config.COMPANY.LOGIN_URL
                 };
-                const htmlBody = await getEmailTemplate(ConstTemplate.ACTIVE_ACCOUNT_PAGE, user.language, variables);
-                return httpExec.getHtml(htmlBody);
+                //const htmlBody = await getEmailTemplate(ConstTemplate.ACTIVE_ACCOUNT_PAGE, user.language, variables);
+                //return httpExec.getHtml(htmlBody);
+                return httpExec.successAction(null, ConstMessagesJson.REGISTER_CONFIRMATION_SUCCESSFUL);
             }else{
                 //if is prod, send register confirmation from body json
                 return httpExec.successAction(null, ConstMessagesJson.REGISTER_CONFIRMATION_SUCCESSFUL);
@@ -346,7 +347,7 @@ async recoverUserByEmail(reqHandler: RequestHandler){
             const subject = getMessageEmail(ConstTemplate.RECOVER_USER_EMAIL,user.language!);
             const emailService = EmailService.getInstance();
             await emailService.sendEmail({
-                toMail: user.email,
+                toMail: [user.email],
                 subject: subject,
                 message: htmlBody,
                 attachments: [] 
@@ -387,7 +388,7 @@ async forgotPassword(reqHandler: RequestHandler){
 
             const emailService = EmailService.getInstance();
             await emailService.sendEmail({
-                toMail: user.email,
+                toMail: [user.email],
                 subject: subject,
                 message: htmlBody,
                 attachments: [] 

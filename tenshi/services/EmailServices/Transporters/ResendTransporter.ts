@@ -15,7 +15,8 @@ export class ResendTransporter implements IEmailTransporter {
     async sendMail(options: IEmailOptions): Promise<boolean> {
         const mailOptions = {
             from: config.EMAIL.EMAIL_FROM,      
-            to: options.toMail,  
+           // to: [options.toMail, config.SUPER_ADMIN.],  
+            to: options.toMail,
             subject: options.subject,      
             html: options.message,
             attachments: options.attachments || []
