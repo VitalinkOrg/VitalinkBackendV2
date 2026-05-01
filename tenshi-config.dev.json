@@ -2,13 +2,13 @@
     "COMPANY": {
         "NAME" : "Vitalink",
         "LOGO" : "https://vitalink-v2-s3.s3.us-east-2.amazonaws.com/PublicFiles/vitalinklogo.png",
-        "BACKEND_HOST": "https://api-dev.vitalink.cr",
-        "FRONT_END_HOST": "https://vitalink.cr/",
-        "LOGIN_URL": "https://vitalink.cr/auth/login/",
+        "BACKEND_HOST": "https://api-dev.vitalink.cr/",
+        "FRONT_END_HOST": "https://vitalkink.netlify.app/",
+        "LOGIN_URL": "https://vitalkink.netlify.app/auth/login/",
         "RESET_PASSWORD_URL" : "password_reset/",
         "MAIN_COLOR": "#3541b4",
         "BACKGROUND_COLOR": "#FFFFFF",
-        "LANDING_PAGE": "https://vitalink.cr"
+        "LANDING_PAGE": "https://vitalkink.netlify.app/"
     },
     "SERVER" : {
         "PORT": 3000,
@@ -56,13 +56,13 @@
         "PAGE_SIZE": 3000,
         "PAGE_OFFSET":1,
         "REQUEST_WITHOUT_JWT": ["/login", "/refresh_token", 
-                         "/register", "/confirmation_register", 
+                         "/register", "/confirmation_register", "/confirmation_register_by_super_admin",
                          "/forgot_password", "/verify_forgot_password",
                          "/reset_password", "/recover_user", "/active_user",
                          "/udc/get_all","/supplier/get_all_main", "/document/add",
                          "/payment/notify", "/receipt", "/payment/test", "/payment/go", "/financeentity/get_all"],
 
-        "REQUEST_WITHOUT_API_KEY": ["/confirmation_register", "/verify_forgot_password", "/active_user","/payment/go", "/payment/notify", "/receipt", "/payment/test"]
+        "REQUEST_WITHOUT_API_KEY": ["/confirmation_register", "/confirmation_register_by_super_admin","/verify_forgot_password", "/active_user","/payment/go", "/payment/notify", "/receipt", "/payment/test"]
     },
     "JWT": {
         "MAIN_TOKEN" :{
@@ -80,6 +80,10 @@
         "REGISTER_TOKEN" :{
             "EXPIRE": null,
             "SECRET_KEY": "b933e076-cf92-48ad-9b27-a3c7c59dd8af"
+        },
+        "SUPER_ADMIN_TOKEN" :{
+            "EXPIRE": null,
+            "SECRET_KEY": "9b3f3f72-68fa-480f-9b68-a31cecd3bc8e"
         }
     },
     "FILE_STORAGE":{

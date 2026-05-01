@@ -41,6 +41,11 @@ class JWTService {
         return this.generateTokenWithConfig(JWTObject, config.JWT.REGISTER_TOKEN.SECRET_KEY);
     }
 
+    public generateRegisterSuperAdminToken(JWTObject: JWTObject): string {
+        const config = ConfigManager.getInstance().getConfig();
+        return this.generateTokenWithConfig(JWTObject, config.JWT.SUPER_ADMIN_TOKEN.SECRET_KEY);
+    }
+
     public verifyRefreshToken(token: string): JWTObject | null {
         try {
             const config = ConfigManager.getInstance().getConfig();

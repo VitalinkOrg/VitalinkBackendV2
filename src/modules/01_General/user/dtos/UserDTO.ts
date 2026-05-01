@@ -34,6 +34,7 @@ export default  class UserDTO implements IAdapterFromBody{
         entity.language = this.req.body.language || config.SERVER.DEFAULT_LANGUAGE;
         entity.profile_picture_url = this.req.body.profile_picture_url;
         entity.is_active_from_email = this.req.body.is_active_from_email;
+        entity.is_active_from_super_admin = this.req.body.is_active_from_super_admin;
         entity.account_status = this.req.body.account_status || "pending";
     
         return entity;
@@ -99,6 +100,7 @@ export default  class UserDTO implements IAdapterFromBody{
         entity.code_contract = this.req.body.code_contract;
         entity.profile_picture_url = this.req.body.profile_picture_url;
         entity.is_active_from_email = this.req.body.is_active_from_email;
+        entity.is_active_from_super_admin = this.req.body.is_active_from_super_admin;
         entity.account_status = this.req.body.account_status;
         return entity;
     }

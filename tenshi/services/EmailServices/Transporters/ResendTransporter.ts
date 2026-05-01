@@ -24,7 +24,6 @@ export class ResendTransporter implements IEmailTransporter {
     
         try {
             const { error } = await resend.emails.send(mailOptions);
-
             if (error) {
                  await logger(ConstLogs.LOG_ERROR, `ResendTransporter.sendMail: ` + error);
                 return false;
@@ -32,6 +31,7 @@ export class ResendTransporter implements IEmailTransporter {
 
             return true;
         } catch (error) {
+            console.log(error);
             await logger(ConstLogs.LOG_ERROR, `ResendTransporter.sendMail: ` + error);
             return false;
         }

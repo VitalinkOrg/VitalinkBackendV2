@@ -61,10 +61,9 @@ export async function sendEmailAndUserNotification(userNotifications: any, varia
         const emailService = EmailService.getInstance();
         await emailService.sendEmail({
             //localhost
-            toMail: [user.email],
+            //toMail: [user.email],
             //prod
-            //toMail: [user.email, config.SUPER_ADMIN.USER_EMAIL],
-            //toMail: "vitalinkcr2@gmail.com",
+            toMail: [user.email, config.SUPER_ADMIN.USER_EMAIL],
             subject,
             message: htmlBody,
             attachments: [],

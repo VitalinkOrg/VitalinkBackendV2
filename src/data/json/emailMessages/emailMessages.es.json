@@ -20,6 +20,11 @@
     "registerEmailLink": "Por favor, haga clic en el siguiente enlace para confirmar su registro:",
     "registerEmailConfirmation": "Confirmar Registro",
 
+    "superadminValidationSubject": "Validación de Super Admin",
+    "superadminValidationMessage": "El usuario {{ userName }} de role {{ userRole }} ha solicitado registrarse en la aplicacion.",
+    "superadminValidationLink": "Por favor, haga clic en el siguiente enlace para confirmar su registro:",
+    "superadminValidationConfirmation": "Confirmar Registro",
+
     "generalHello":"Hola {{ userName }},",
     "generalQuestionContact":"Si tenés consultas, podés contactarnos por WhatsApp al +506 7010 7796.",
     "generalProblemContact":"Si encuentra algún problema o necesita asistencia, no dude en contactarnos.",

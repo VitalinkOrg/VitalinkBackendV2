@@ -28,6 +28,7 @@ export default class UserRepository extends GenericRepository{
                         email: email, 
                         "is_deleted" : 0, 
                         "is_active_from_email": 1, 
+                        "is_active_from_super_admin": 1,
                         "account_status" : AccountStatusEnum.Active
                     },
                     select: [
@@ -46,6 +47,7 @@ export default class UserRepository extends GenericRepository{
                         "postal_code",
                         "role_code",
                         "is_deleted",
+                        "is_active_from_super_admin",
                         "is_active_from_email",
                         "account_status",
                         "fail_login_number",
@@ -98,6 +100,7 @@ export default class UserRepository extends GenericRepository{
                             "role_code",
                             "is_deleted",
                             "is_active_from_email",
+                            "is_active_from_super_admin",
                             "account_status",
                             "fail_login_number",
                             "forgot_password_token",

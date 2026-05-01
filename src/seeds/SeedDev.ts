@@ -326,6 +326,7 @@ async function runSeed() {
             postal_code: "10102",
             role_code: "FINANCE_ENTITY",
              is_active_from_email: true,
+             is_active_from_super_admin: true,
             account_status: "active" as "active",
           },
           {
@@ -344,6 +345,7 @@ async function runSeed() {
             postal_code: "30102",
             role_code: "FINANCE_ENTITY",
              is_active_from_email: true,
+             is_active_from_super_admin: true,
             account_status: "active" as "active",
           }
         ];
@@ -368,6 +370,7 @@ async function runSeed() {
             postal_code: "20101",
             role_code: "LEGAL_REPRESENTATIVE",
              is_active_from_email: true,
+             is_active_from_super_admin: true,
             account_status: "active" as "active",
           },
           {
@@ -386,6 +389,7 @@ async function runSeed() {
             postal_code: "40101",
             role_code: "LEGAL_REPRESENTATIVE",
              is_active_from_email: true,
+             is_active_from_super_admin: true,
             account_status: "active" as "active",
           },
           {
@@ -404,6 +408,7 @@ async function runSeed() {
             postal_code: "10104",
             role_code: "LEGAL_REPRESENTATIVE",
              is_active_from_email: true,
+             is_active_from_super_admin: true,
             account_status: "active" as "active",
           },
           {
@@ -422,6 +427,7 @@ async function runSeed() {
             postal_code: "60101",
             role_code: "LEGAL_REPRESENTATIVE",
              is_active_from_email: true,
+             is_active_from_super_admin: true,
             account_status: "active" as "active",
           },
           {
@@ -440,6 +446,7 @@ async function runSeed() {
             postal_code: "60101",
             role_code: "LEGAL_REPRESENTATIVE",
              is_active_from_email: true,
+             is_active_from_super_admin: true,
             account_status: "active" as "active",
           }
         ];
@@ -465,6 +472,7 @@ async function runSeed() {
             role_code: "CUSTOMER",
             finance_entity: { id: financeEntities[0].id },
              is_active_from_email: true,
+             is_active_from_super_admin: true,
             account_status: "active" as "active",
           },
           {
@@ -484,6 +492,7 @@ async function runSeed() {
             role_code: "CUSTOMER",
             finance_entity: { id: financeEntities[1].id },
              is_active_from_email: true,
+             is_active_from_super_admin: true,
             account_status: "active" as "active",
           },
           {
@@ -503,6 +512,7 @@ async function runSeed() {
             role_code: "CUSTOMER",
             finance_entity: { id: financeEntities[0].id },
              is_active_from_email: true,
+             is_active_from_super_admin: true,
             account_status: "active" as "active",
           },
           {
@@ -522,6 +532,7 @@ async function runSeed() {
             role_code: "CUSTOMER",
             finance_entity: { id: financeEntities[1].id },
             is_active_from_email: true,
+            is_active_from_super_admin: true,
             account_status: "active" as "active",
           }
         ];

@@ -115,6 +115,7 @@ async function runSeed() {
             postal_code: "10102",
             role_code: "FINANCE_ENTITY",
              is_active_from_email: true,
+             is_active_from_super_admin: true,
             account_status: "active" as "active",
           }
         ];
