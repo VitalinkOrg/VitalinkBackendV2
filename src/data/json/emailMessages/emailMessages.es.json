@@ -14,11 +14,17 @@
     "recoverUserByEmailMessage": "Recibimos una solicitud para recuperar su usuario para {{ companyName }}. Si no realizó esta solicitud, puede ignorar este correo.",
     "recoverUserByEmailLink": "Para recuperar su usuario, por favor haga clic en el siguiente enlace:",
     
-    "registerEmailSubject": "Verificacion de cuenta",
+    "registerEmailSubject": "Verificación de cuenta",
     "registerEmailTitle": "Bienvenido a {{ companyName }}",
     "registerEmailMessage": "Gracias por registrarse en {{ companyName }}. Estamos emocionados de tenerle con nosotros.",
     "registerEmailLink": "Por favor, haga clic en el siguiente enlace para confirmar su registro:",
     "registerEmailConfirmation": "Confirmar Registro",
+
+    "superAdminReviewUserSubject": "Verificación de Vitalink",
+    "superAdminReviewUserTitle": "Bienvenido a {{ companyName }}",
+    "superAdminReviewUserMessage": "{{ companyName }} ha verificado su cuenta. Ahora puedes ingresar a nuestros servicios y disfrutar de todas las funcionalidades que ofrecemos.",
+    "superAdminReviewUserLink": "Haga clic en el siguiente para ir a {{ companyName }}:",
+    "superAdminReviewUserConfirmation": "Ir a {{ companyName }}",
 
     "superadminValidationSubject": "Validación de Super Admin",
     "superadminValidationMessage": "El usuario {{ userName }} de role {{ userRole }} ha solicitado registrarse en la aplicacion.",

@@ -283,7 +283,22 @@ async activeRegisterUserBySuperAdmin(reqHandler: RequestHandler){
 
             await (this.getRepository() as UserRepository).update(user.id, user, reqHandler.getLogicalDelete());
 
-          //  return "Activacion Completa";
+            const variables = {
+                userName: user.name,
+                confirmationLink: config.COMPANY.LOGIN_URL
+            };
+            const htmlBody = await getEmailTemplate(ConstTemplate.SUPER_ADMIN_REVIEW_USER, user.language, variables);
+            
+            const subject = getMessageEmail(ConstTemplate.SUPER_ADMIN_REVIEW_USER, user.language != null ? user.language : "es");
+            const emailService = EmailService.getInstance();
+            await emailService.sendEmail({
+                toMail: [user.email],
+                subject: subject,
+                message: htmlBody,
+                attachments: [] 
+            });
+         
+
 
              return httpExec.successAction(null, ConstMessagesJson.SUPER_ADMIN_ACTIVATION);
             
