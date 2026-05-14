@@ -132,7 +132,7 @@ import { getMessageEmail, replaceVariables } from "@TenshiJS/utils/htmlTemplateU
                     creditDiscount = appointmentCredit.approved_amount || 0;
                 }
 
-                jsonData[variable] = price - discount - creditDiscount;
+                jsonData[variable] = price - creditDiscount;
             }
 
 
