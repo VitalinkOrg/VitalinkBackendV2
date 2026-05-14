@@ -10,6 +10,7 @@ import HttpAction from "@TenshiJS/helpers/HttpAction";
 import { In } from "typeorm";
 import { generateRandomCode } from "@TenshiJS/utils/generalUtils";
 import { handleFlowNotificationAndLog } from "../utils/AppointmentUtils";
+import { General } from "@index/consts/Const";
 
 
 export default class AppointmentController extends GenericController {
@@ -394,14 +395,19 @@ export default class AppointmentController extends GenericController {
                 const filters: FindManyOptions = {};
                 filters.relations = ["product"];
 
-                const packageEntity = await this.packageRepository.findById(body.package_id, true, filters);
+                const packageEntity = await this.packageRepository.findById(body.package, true, filters);
                 const rawValue = packageEntity?.product?.value1;
                 body.price_procedure = isNaN(Number(rawValue)) || !rawValue?.toString().trim()
                 ? 0 : Number(rawValue);
 
-                const rawValue2 = packageEntity?.product?.value2;
-                body.price_valoration_appointment = isNaN(Number(rawValue2)) || !rawValue2?.toString().trim()
-                ? 0 : Number(rawValue2);
+                const vitalinkPrice = packageEntity?.discount;
+                if (vitalinkPrice != null && !isNaN(Number(vitalinkPrice))) {
+                    body.price_valoration_appointment = Number(vitalinkPrice);
+                } else {
+                    const rawValue2 = packageEntity?.product?.value2;
+                    body.price_valoration_appointment = isNaN(Number(rawValue2)) || !rawValue2?.toString().trim()
+                    ? General.minimumPriceAppointmentValorationReference : Number(rawValue2);
+                }
 
                 body.appointment_qr_code = generateRandomCode();
 
