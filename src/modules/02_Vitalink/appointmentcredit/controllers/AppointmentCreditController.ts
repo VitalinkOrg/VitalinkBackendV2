@@ -111,6 +111,7 @@ export default class AppointmentCreditController extends GenericController {
                                         "totalProcedure",
                                         "requestAmount",
                                         "Amount",
+                                        "approvedAmountCredit",
                                         "creditCode"];
 
 
