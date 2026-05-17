@@ -9,6 +9,7 @@ import { Appointment } from "@index/entity/Appointment";
 
 export default class AppointmentCreditController extends GenericController {
 
+    
     constructor() {
       super(AppointmentCredit);
     }
@@ -95,6 +96,25 @@ export default class AppointmentCreditController extends GenericController {
                     return httpExec.dynamicErrorMessageDirectly(ConstStatusJson.NOT_FOUND, "The Appointment Credit doesnt exists");
                 }
 
+
+                const emailVariables = ["patientName",
+                                        "supplierName",
+                                        "procedureName",
+                                        "productName",
+                                        "appointmentDate",
+                                        "appointmentHour",
+                                        "financeEntityName",
+                                        "priceValorationAppointment",
+                                        "paymentMethod",
+                                        "priceProcedure",
+                                        "discountProcedure",
+                                        "totalProcedure",
+                                        "requestAmount",
+                                        "Amount",
+                                        "approvedAmountCredit",
+                                        "creditCode"];
+
+
                 //STEP 2 CREDIT REQUEST APPROVED OR REJECTED
                 //if the credit is approved or approved percentage, send notification and log
                 //if the credit is rejected, send notification and log
@@ -111,7 +131,7 @@ export default class AppointmentCreditController extends GenericController {
                                     language: appointmentCredit.appointment.customer.language!,
                                     flowEventCode: body.credit_status_code,
                                     userReceiveId: appointmentCredit.appointment.customer.id,
-                                    variables: ["Amount", "financeEntityName", "procedureName", "productName"]
+                                    variables: emailVariables
                             });
                     }else{
 
@@ -123,7 +143,7 @@ export default class AppointmentCreditController extends GenericController {
                                     language: appointmentCredit.appointment.customer.language!,
                                     flowEventCode: "REJECTED",
                                     userReceiveId: appointmentCredit.appointment.customer.id,
-                                    variables: [ "financeEntityName", "procedureName", "productName"]
+                                    variables: emailVariables
                             });
                     }
                 }
@@ -140,7 +160,7 @@ export default class AppointmentCreditController extends GenericController {
                             language: appointmentCredit.appointment.customer.finance_entity.language!,
                             flowEventCode: null,
                             userReceiveId: appointmentCredit.appointment.customer.finance_entity.id,
-                            variables: ["supplierName", "patientName", "procedureName", "productName"]
+                            variables: emailVariables
                     });
                 }
             }
@@ -208,7 +228,12 @@ export default class AppointmentCreditController extends GenericController {
                             language: appointment.customer.finance_entity.language!,
                             flowEventCode: "REQUIRED",
                             userReceiveId: appointment.customer.finance_entity.id,
-                            variables: ["supplierName", "patientName", "requestAmount", "procedureName", "productName"]
+                            variables: [
+                                "supplierName", 
+                                "patientName", 
+                                "requestAmount", 
+                                "procedureName", 
+                                "productName"]
                     });
 
                     // Return the success response

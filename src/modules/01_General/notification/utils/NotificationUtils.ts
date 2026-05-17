@@ -5,6 +5,7 @@ import { User } from "@TenshiJS/entity/User";
 import GenericRepository from "@TenshiJS/generics/Repository/GenericRepository";
 import EmailService from "@TenshiJS/services/EmailServices/EmailService";
 import { getEmailTemplate, getMessageEmail } from "@TenshiJS/utils/htmlTemplateUtils";
+import { config } from "@index/index";
 
 // Sends an email and stores a user notification
 export async function sendEmailAndUserNotification(userNotifications: any, variables: any, needsAddUserNotification: boolean): Promise<UserNotification | null> {
@@ -59,8 +60,10 @@ export async function sendEmailAndUserNotification(userNotifications: any, varia
         // Send the email
         const emailService = EmailService.getInstance();
         await emailService.sendEmail({
-            toMail: user.email,
-            //toMail: "vitalinkcr2@gmail.com",
+            //localhost
+            //toMail: [user.email],
+            //prod
+            toMail: [user.email, config.SUPER_ADMIN.USER_EMAIL],
             subject,
             message: htmlBody,
             attachments: [],
@@ -76,3 +79,153 @@ export async function sendEmailAndUserNotification(userNotifications: any, varia
     }
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export interface NotificationContext {
+    subject: string;
+    title: string;
+    bodyContent: string;
+    htmlBody: string;
+    variables: Record<string, any>;
+    template: string;
+    user: User;
+}
+
+export async function buildNotificationContext(
+    userNotifications: any,
+    variables: any
+): Promise<NotificationContext | null> {
+    const repositoryNotification = new GenericRepository(Notification);
+    const repositoryUser = new GenericRepository(User);
+
+    const notification: Notification = await repositoryNotification.findByCode(
+        userNotifications.notification, true
+    );
+
+    if (!notification) return null;
+
+    const user: User = await repositoryUser.findById(
+        userNotifications.user_receive, true
+    );
+
+    const useJsonTemplate = notification.text_from_email_message_json;
+    const template = userNotifications.override_template    // <-- permite override desde el controller
+        ?? notification.email_template
+        ?? ConstTemplate.GENERIC_TEMPLATE_EMAIL;
+
+    const subject = useJsonTemplate && userNotifications.acronymous
+        ? getMessageEmail(userNotifications.acronymous, user.language!, "Subject")
+        : notification.subject;
+
+    const bodyContent = useJsonTemplate && userNotifications.acronymous
+        ? getMessageEmail(userNotifications.acronymous, user.language!, "EmailMessage")
+        : notification.email_message;
+
+    const title = useJsonTemplate && userNotifications.acronymous
+        ? getMessageEmail(userNotifications.acronymous, user.language!, "Title")
+        : notification.subject;
+
+    const mergedVariables = {
+        userName: user.name,
+        emailSubject: title,
+        emailContent: bodyContent,
+        actionTitle: notification.action_text,
+        actionUrl: notification.action_url,
+        ...variables,
+    };
+
+    const htmlBody = await getEmailTemplate(template, user.language, mergedVariables);
+
+    return {
+        subject,
+        title,
+        bodyContent: bodyContent ? bodyContent : '',
+        htmlBody,
+        variables: mergedVariables,
+        template,
+        user,
+    };
+}
+
+
+
+ export async function sendEmailNotification(
+    userNotifications: any,
+    variables: any,
+    needsAddUserNotification: boolean
+): Promise<UserNotification | null> {
+    const repositoryNotification = new GenericRepository(Notification);
+    const repositoryUserNotification = new GenericRepository(UserNotification);
+
+    const notification: Notification = await repositoryNotification.findByCode(
+        userNotifications.notification, true
+    );
+
+    if (notification?.required_send_email) {
+        const ctx = await buildNotificationContext(userNotifications, variables);
+
+        if (ctx) {
+            const emailService = EmailService.getInstance();
+            await emailService.sendEmail({
+                toMail: [ctx.user.email, config.SUPER_ADMIN.USER_EMAIL],
+                subject: ctx.subject,
+                message: ctx.htmlBody,
+                attachments: [],
+            });
+        }
+    }
+
+    if (needsAddUserNotification) {
+        return await repositoryUserNotification.add(userNotifications);
+    }
+
+    return null;
+}
+
+
+
+/*
+
+// Ejemplo desde el controller — enviar con template personalizado
+const ctx = await buildNotificationContext(
+    {
+        user_receive: appointment.customer.id,
+        notification: "appointmentStep8",
+        acronymous: "appointmentStep8",
+        override_template: "credit_summary_template", // <-- tu template custom
+    },
+    {
+        patientName: appointment.customer.name,
+        procedureName: appointment.package?.procedure?.name,
+        totalProcedure: 1500,
+    }
+);
+
+if (ctx) {
+    const emailService = EmailService.getInstance();
+    await emailService.sendEmail({
+        toMail: [ctx.user.email],
+        subject: ctx.subject,
+        message: ctx.htmlBody,
+        attachments: [],
+    });
+}
+
+*/

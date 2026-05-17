@@ -58,6 +58,7 @@ export class ConstMessagesJson {
     public static readonly REGISTER_CONFIRMATION_SUCCESSFUL: string = "REGISTER_CONFIRMATION_SUCCESSFUL";
     public static readonly INVALID_BODY_REQUEST: string = "INVALID_BODY_REQUEST";
     public static readonly EXPECTED_OBJECT_ARRAY: string = "EXPECTED_OBJECT_ARRAY";
+    public static readonly SUPER_ADMIN_ACTIVATION: string = "SUPER_ADMIN_ACTIVATION";
 }
 
 export class ConstMessages {
