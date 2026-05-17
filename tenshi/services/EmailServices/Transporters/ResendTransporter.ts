@@ -15,7 +15,8 @@ export class ResendTransporter implements IEmailTransporter {
     async sendMail(options: IEmailOptions): Promise<boolean> {
         const mailOptions = {
             from: config.EMAIL.EMAIL_FROM,      
-            to: options.toMail,  
+           // to: [options.toMail, config.SUPER_ADMIN.],  
+            to: options.toMail,
             subject: options.subject,      
             html: options.message,
             attachments: options.attachments || []
@@ -23,7 +24,6 @@ export class ResendTransporter implements IEmailTransporter {
     
         try {
             const { error } = await resend.emails.send(mailOptions);
-
             if (error) {
                  await logger(ConstLogs.LOG_ERROR, `ResendTransporter.sendMail: ` + error);
                 return false;
@@ -31,6 +31,7 @@ export class ResendTransporter implements IEmailTransporter {
 
             return true;
         } catch (error) {
+            console.log(error);
             await logger(ConstLogs.LOG_ERROR, `ResendTransporter.sendMail: ` + error);
             return false;
         }

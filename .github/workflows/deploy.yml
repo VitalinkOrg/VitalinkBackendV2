@@ -20,6 +20,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            echo '${{ secrets.TENSHI_CONFIG_DEV }}' > /home/vita-backend-dev/VitalinkBackendV2/tenshi-config.json
             bash /home/vita-backend-dev/VitalinkBackendV2/deploy_tenshi.dev.sh
 
       - name: Deploy STG
@@ -30,6 +31,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            echo '${{ secrets.TENSHI_CONFIG_STG }}' > /home/deploy/vitalinkBackendSTG/VitalinkBackendV2/tenshi-config.json
             bash /home/deploy/vitalinkBackendSTG/VitalinkBackendV2/deploy_tenshi.stg.sh
 
       - name: Deploy PROD
@@ -40,4 +42,5 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            echo '${{ secrets.TENSHI_CONFIG_PROD }}' > /home/deploy/vitalinkBackendPROD/VitalinkBackendV2/tenshi-config.json
             bash /home/deploy/vitalinkBackendPROD/VitalinkBackendV2/deploy_tenshi.prod.sh

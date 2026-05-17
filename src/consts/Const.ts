@@ -9,11 +9,14 @@ export class ConstRegex {
 export class ConstUrls{
     public static readonly ACTIVE_USER: string = "active_user/";
     public static readonly CONFIRMATION_REGISTER: string = "confirmation_register/";
+    public static readonly CONFIRMATION_REGISTER_BY_SUPER_ADMIN: string = "confirmation_register_by_super_admin/";
     public static readonly FORGOT_PASSWORD_VERIFICATION: string = "verify_forgot_password/";
 }
 
 export class ConstTemplate{
+    public static readonly SUPERADMIN_VALIDATION: string = "superadminValidation";
     public static readonly REGISTER_EMAIL: string = "registerEmail";
+    public static readonly SUPER_ADMIN_REVIEW_USER: string = "superAdminReviewUser";
     public static readonly RECOVER_USER_EMAIL: string = "recoverUserByEmail";
     public static readonly FORGOT_PASSWORD_EMAIL: string = "forgotPasswordEmail";
     public static readonly GENERIC_TEMPLATE_EMAIL: string = "genericTemplateEmail";

@@ -1,5 +1,5 @@
 export interface IEmailOptions {
-    toMail: string;
+    toMail: string[];
     subject: string;
     message: string;
     attachments?: Array<{

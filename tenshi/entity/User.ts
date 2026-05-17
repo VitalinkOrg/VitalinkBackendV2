@@ -83,6 +83,17 @@ export class User {
   @Column({ type: "varchar", length: 400, nullable: true, default: null })
   active_register_token: string | null;
 
+
+
+  // This is for the super admin, if the super admin need to active the user (legal representaitve & finance entity) after register.
+  @Column({ type: "tinyint", default: 0 })
+  is_active_from_super_admin: boolean;
+
+  @Column({ type: "varchar", length: 400, nullable: true, default: null })
+  active_register_from_super_admin_token: string | null;
+
+
+
   @Column({ type: "decimal", precision: 11, scale: 8, nullable: true, default: null })
   latitude: number | null;
 

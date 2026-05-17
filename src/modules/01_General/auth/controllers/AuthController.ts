@@ -68,28 +68,9 @@ export default class AuthController extends GenericController{
             if(userFinanceEntity == null){
                 return httpExec.dynamicError(ConstStatusJson.ERROR, ConstMessagesJson.ERROR_ROLE_CUSTOMER);
             }
-
-            //Register with pre register logic
-            /*const preRegisterUserrepository = await new GenericRepository(PreRegisterUser);
-            const preRegisterUsers = await preRegisterUserrepository.findByOptions(false, true, 
-                {
-                    where: { card_id: userBody.card_id, email: userBody.email }
-                });
-
-            const preRegisterUser = Array.isArray(preRegisterUsers) ? preRegisterUsers[0] : preRegisterUsers;
-
-            if (!preRegisterUser) {
-                return httpExec.dynamicError(ConstStatusJson.ERROR, ConstMessagesJson.ERROR_ROLE_CUSTOMER);
-            }
-
-            userBody.finance_entity = preRegisterUser.finance_entity;*/
         }
 
 
-        if(role.code == "LEGAL_REPRESENTATIVE"){
-            userBody.account_status = AccountStatusEnum.Active;
-            userBody.is_active_from_email = true;
-        }
         
         const jwtObj : JWTObject = {
             id: 0,
@@ -98,7 +79,10 @@ export default class AuthController extends GenericController{
         }
         
         const registerToken = JWTService.generateRegisterToken(jwtObj); 
+        const registerFromSuperAdminToken = JWTService.generateRegisterSuperAdminToken(jwtObj); 
+      
         userBody.active_register_token = registerToken;
+        userBody.active_register_from_super_admin_token = registerFromSuperAdminToken;
 
         //set the language
         userBody.language = userBody.language == null ? config.SERVER.DEFAULT_LANGUAGE :  userBody.language;
@@ -119,7 +103,7 @@ export default class AuthController extends GenericController{
             const subject = getMessageEmail(ConstTemplate.REGISTER_EMAIL, user.language);
             const emailService = EmailService.getInstance();
             await emailService.sendEmail({
-                toMail: user.email,
+                toMail: [user.email],
                 subject: subject,
                 message: htmlBody,
                 attachments: [] 
@@ -148,10 +132,11 @@ async loginUser(reqHandler: RequestHandler){
             user = await (this.getRepository() as UserRepository).getUserByEmail(userBody);
             let isSuccess = false;
 
+
             if(user != null){
 
                 //fail login validation, suspendend account and send unathorized message
-                if(config.SERVER.FAIL_LOGIN_MAX_NUMBER <= user.fail_login_number || user.is_active_from_email == false){
+                if(config.SERVER.FAIL_LOGIN_MAX_NUMBER <= user.fail_login_number || user.is_active_from_email == false || user.is_active_from_super_admin == false){
                     user.account_status = AccountStatusEnum.Suspended;
                     user = await this.getRepository().update(user.id, user, reqHandler.getLogicalDelete());
 
@@ -193,6 +178,7 @@ async loginUser(reqHandler: RequestHandler){
 
                 user.fail_login_number = 0;
                 user.is_active_from_email = true;
+                user.is_active_from_super_admin = true;
                 user.account_status = AccountStatusEnum.Active;
                 user.last_login_at = new Date();
                 user.login_ip_address = getIpAddress(reqHandler.getRequest());
@@ -266,6 +252,68 @@ async refreshToken(reqHandler: RequestHandler){
     }
 }
 
+
+
+
+
+//Logic active register user
+async activeRegisterUserBySuperAdmin(reqHandler: RequestHandler){
+    const httpExec : HttpAction = reqHandler.getResponse().locals.httpExec;
+
+    try{
+        
+        const superAdminRegisterToken = reqHandler.getRequest().params.superAdminRegisterToken;
+  
+        let verify = null;
+        try {
+            verify =  jwt.verify(superAdminRegisterToken, config.JWT.SUPER_ADMIN_TOKEN.SECRET_KEY);
+        } catch (error) {
+            return httpExec.unauthorizedError(ConstMessagesJson.INVALID_TOKEN);
+        }
+
+        const user = await (this.getRepository() as UserRepository).getUserByEmailParam(verify!.email);
+
+        if(user != undefined && user != null){
+
+            user.is_active_from_email = true;
+            user.is_active_from_super_admin = true;
+            user.account_status = AccountStatusEnum.Active;
+            user.fail_login_number = 0;
+            user.verified_at = new Date();
+
+            await (this.getRepository() as UserRepository).update(user.id, user, reqHandler.getLogicalDelete());
+
+            const variables = {
+                userName: user.name,
+                confirmationLink: config.COMPANY.LOGIN_URL
+            };
+            const htmlBody = await getEmailTemplate(ConstTemplate.SUPER_ADMIN_REVIEW_USER, user.language, variables);
+            
+            const subject = getMessageEmail(ConstTemplate.SUPER_ADMIN_REVIEW_USER, user.language != null ? user.language : "es");
+            const emailService = EmailService.getInstance();
+            await emailService.sendEmail({
+                toMail: [user.email],
+                subject: subject,
+                message: htmlBody,
+                attachments: [] 
+            });
+         
+
+
+             return httpExec.successAction(null, ConstMessagesJson.SUPER_ADMIN_ACTIVATION);
+            
+        }else{
+            return httpExec.dynamicError(ConstStatusJson.NOT_FOUND, ConstMessagesJson.EMAIL_NOT_EXISTS_ERROR);
+        }
+        
+        
+    } catch(error : any){
+        return await httpExec.generalError(error, reqHandler.getMethod(), this.getControllerName());
+    }
+}
+
+
+
 //Logic active register user
 async activeRegisterUser(reqHandler: RequestHandler){
     const httpExec : HttpAction = reqHandler.getResponse().locals.httpExec;
@@ -284,26 +332,43 @@ async activeRegisterUser(reqHandler: RequestHandler){
 
         if(user != undefined && user != null){
 
+            
             user.is_active_from_email = true;
             user.account_status = AccountStatusEnum.Active;
             user.fail_login_number = 0;
             user.verified_at = new Date();
-            await (this.getRepository() as UserRepository).update(user.id, user, reqHandler.getLogicalDelete());
 
-
-             //IS DEBUGGING send the confiramtion to mail from backend
-             if(config.SERVER.IS_DEBUGGING){
-                const variables = {
-                    userName: user.name,
-                    loginUrl: config.COMPANY.LOGIN_URL
-                };
-                const htmlBody = await getEmailTemplate(ConstTemplate.ACTIVE_ACCOUNT_PAGE, user.language, variables);
-                return httpExec.getHtml(htmlBody);
-            }else{
-                //if is prod, send register confirmation from body json
-                return httpExec.successAction(null, ConstMessagesJson.REGISTER_CONFIRMATION_SUCCESSFUL);
+            //if the user is customer, dont need the activation of super admin
+            if(user.role_code == "CUSTOMER"){
+                user.is_active_from_super_admin = true;
+                user.active_register_from_super_admin_token = null;
             }
 
+            await (this.getRepository() as UserRepository).update(user.id, user, reqHandler.getLogicalDelete());
+
+            //if the user is not customer, send email to super admin for validation of register
+            if(user.role_code != "CUSTOMER"){
+
+                const variables = {
+                    userName: user.name,
+                    userRole: user.role_code,
+                    confirmationLink: config.COMPANY.BACKEND_HOST + ConstUrls.CONFIRMATION_REGISTER_BY_SUPER_ADMIN + user.active_register_from_super_admin_token
+                };
+                const htmlBody = await getEmailTemplate(ConstTemplate.SUPERADMIN_VALIDATION, user.language, variables);
+
+                const subject = getMessageEmail(ConstTemplate.SUPERADMIN_VALIDATION, "es");
+                const emailService = EmailService.getInstance();
+                await emailService.sendEmail({
+                    toMail: [config.SUPER_ADMIN.USER_EMAIL],
+                    subject: subject,
+                    message: htmlBody,
+                    attachments: [] 
+                });
+            }
+         
+            //if is prod, send register confirmation from body json
+            return httpExec.successAction(null, ConstMessagesJson.REGISTER_CONFIRMATION_SUCCESSFUL);
+            
         }else{
             return httpExec.dynamicError(ConstStatusJson.NOT_FOUND, ConstMessagesJson.EMAIL_NOT_EXISTS_ERROR);
         }
@@ -346,7 +411,7 @@ async recoverUserByEmail(reqHandler: RequestHandler){
             const subject = getMessageEmail(ConstTemplate.RECOVER_USER_EMAIL,user.language!);
             const emailService = EmailService.getInstance();
             await emailService.sendEmail({
-                toMail: user.email,
+                toMail: [user.email],
                 subject: subject,
                 message: htmlBody,
                 attachments: [] 
@@ -387,7 +452,7 @@ async forgotPassword(reqHandler: RequestHandler){
 
             const emailService = EmailService.getInstance();
             await emailService.sendEmail({
-                toMail: user.email,
+                toMail: [user.email],
                 subject: subject,
                 message: htmlBody,
                 attachments: [] 

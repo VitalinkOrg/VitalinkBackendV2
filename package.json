@@ -9,7 +9,6 @@
         "test": "jest",
         "delete": "ts-node -r tsconfig-paths/register src/seeds/DeleteDBSeed.ts",
         "generalseed": "ts-node -r tsconfig-paths/register src/seeds/GeneralSeed.ts",
-        "seed": "ts-node -r tsconfig-paths/register src/seeds/Seed.ts",
         "seedDev": "ts-node -r tsconfig-paths/register src/seeds/SeedDev.ts",
         "seedSTG": "ts-node -r tsconfig-paths/register src/seeds/SeedSTG.ts",
         "seedPROD": "ts-node -r tsconfig-paths/register src/seeds/SeedSTG.ts",
@@ -72,8 +71,7 @@
         "tsconfig-paths": "^4.2.0",
         "typeorm": "^0.3.20",
         "typescript": "^5.5.4"
-    },
-     "_moduleAliases": {
+    }, "_moduleAliases": {
         "tenshi": "build/tenshi",     
         "@TenshiJS": "build/tenshi",
         "@index": "build/src",

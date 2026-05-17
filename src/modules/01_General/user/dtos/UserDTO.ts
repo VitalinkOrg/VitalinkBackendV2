@@ -20,6 +20,7 @@ export default  class UserDTO implements IAdapterFromBody{
         entity.user_name = this.req.body.user_name;
         entity.email = this.req.body.email;
         entity.phone_number = this.req.body.phone_number;
+        entity.address = this.req.body.address;
         entity.password = this.req.body.password;
         entity.gender = this.req.body.gender;
         entity.birth_date = this.req.body.birth_date;
@@ -34,6 +35,7 @@ export default  class UserDTO implements IAdapterFromBody{
         entity.language = this.req.body.language || config.SERVER.DEFAULT_LANGUAGE;
         entity.profile_picture_url = this.req.body.profile_picture_url;
         entity.is_active_from_email = this.req.body.is_active_from_email;
+        entity.is_active_from_super_admin = this.req.body.is_active_from_super_admin;
         entity.account_status = this.req.body.account_status || "pending";
     
         return entity;
@@ -58,6 +60,7 @@ export default  class UserDTO implements IAdapterFromBody{
             birth_date: user.birth_date,
             role: user.role_code,
             finance_entity: user.finance_entity,
+            address: user.address,
             code_contract: user.code_contract,
             language: user.language,
             profile_picture_url: user.profile_picture_url,
@@ -99,7 +102,9 @@ export default  class UserDTO implements IAdapterFromBody{
         entity.code_contract = this.req.body.code_contract;
         entity.profile_picture_url = this.req.body.profile_picture_url;
         entity.is_active_from_email = this.req.body.is_active_from_email;
+        entity.is_active_from_super_admin = this.req.body.is_active_from_super_admin;
         entity.account_status = this.req.body.account_status;
+        entity.address = this.req.body.address;
         return entity;
     }
 
