@@ -16,6 +16,7 @@ export default class EmailService {
         if (!EmailService.instance) {
             EmailService.instance = new EmailService(transporterType);
         }
+
         return EmailService.instance;
     }
 

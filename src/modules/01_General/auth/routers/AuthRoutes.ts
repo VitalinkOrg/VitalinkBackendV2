@@ -109,6 +109,17 @@ protected initializeRoutes() {
        (this.getController() as AuthController).activeRegisterUser(requestHandler);
    });
 
+
+   this.router.get(`/confirmation_register_by_super_admin/:superAdminRegisterToken`, async (req: Request, res: Response) => {
+       const requestHandler: RequestHandler = 
+       new RequestHandlerBuilder(res, req)
+           .setAdapter(new UserDTO(req))
+           .setMethod("confirmationRegisterBySuperAdmin")
+           .build();
+
+       (this.getController() as AuthController).activeRegisterUserBySuperAdmin(requestHandler);
+   });
+
    /*
        Forgot Password Logic
    */

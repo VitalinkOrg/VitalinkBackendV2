@@ -30,10 +30,11 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            echo '${{ secrets.TENSHI_CONFIG_STG }}' > /home/deploy/vitalinkBackendSTG/VitalinkBackendV2/tenshi-config.json
             bash /home/deploy/vitalinkBackendSTG/VitalinkBackendV2/deploy_tenshi.stg.sh
 
       - name: Deploy PROD
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/prod'
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST_PROD }}
