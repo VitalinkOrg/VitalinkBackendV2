@@ -1,4 +1,4 @@
-//*************************************** */
+﻿//*************************************** */
 //              Configuration
 //*************************************** */
 import path from 'path';
@@ -13,6 +13,7 @@ import { DataSource } from 'typeorm';
 import { UnitDynamicCentral } from '@TenshiJS/entity/UnitDynamicCentral';
 import { Supplier } from '@TenshiJS/entity/Supplier';
 import { User } from '@TenshiJS/entity/User';
+import { Notification } from '@index/entity/Notification';
 
 
 async function createDatabaseIfNotExists() {
@@ -48,7 +49,7 @@ async function runSeed() {
         username: config.DB.USER, // Username for the database
         password: config.DB.PASSWORD, // Password for the database
         database: config.DB.NAME, // Name of the database
-        entities: [User, Supplier, UnitDynamicCentral], // Array of entities to be used
+        entities: [User, Supplier, UnitDynamicCentral, Notification], // Array of entities to be used
         synchronize: true, // Synchronize the schema with the database
         charset: "utf8mb4",
         extra: {
@@ -310,68 +311,68 @@ async function runSeed() {
     // OFTALMOLOGÍA
     // OFTALMOLOGÍA (procedimientos = "father", productos = "child")
     { name: "Cirugía Refractiva (miopía, hipermetropía y astigmatismo)", code: "REFRACTIVE_SURGERY", type: "MEDICAL_PROCEDURE", father_code: "OPHTHALMOLOGY" }, // 1 (PROCEDURE - Refractiva)
-    { name: "PRK", code: "REFRACTIVE_PRK", type: "MEDICAL_PRODUCT", father_code: "REFRACTIVE_SURGERY", value1: "1080000", description: "Incisión refractiva en la córnea, se usa para describir remodelación de la córnea con láser excímer sin colgajo" }, // 2 (PRODUCT - Refractiva)
-    { name: "LASIK", code: "REFRACTIVE_LASIK", type: "MEDICAL_PRODUCT", father_code: "REFRACTIVE_SURGERY", value1: "1311428", description: "Keratomileusis, incluye técnicas en las que se levanta un colgajo corneal y se remodela con láser" }, // 3 (PRODUCT - Refractiva) ✅ Cirugía LASIK (NO duplicar)
-    { name: "LASIK Guiada", code: "REFRACTIVE_LASIK_GUIDED", type: "MEDICAL_PRODUCT", father_code: "REFRACTIVE_SURGERY", value1: "1500000", description: "Keratomileusis, incluye técnicas en las que se levanta un colgajo corneal y se remodela con láser" }, // 4 (PRODUCT - Refractiva)
-    { name: "Femotolasik", code: "REFRACTIVE_FEMOTOLASIK", type: "MEDICAL_PRODUCT", father_code: "REFRACTIVE_SURGERY", value1: "1697142", description: "Keratomileusis, incluye técnicas en las que se levanta un colgajo corneal y se remodela con láser, sin cuchillas" }, // 5 (PRODUCT - Refractiva)
+    { name: "PRK", code: "REFRACTIVE_PRK", type: "MEDICAL_PRODUCT", father_code: "REFRACTIVE_SURGERY", value1: "1080000", value2: "28000", description: "Incisión refractiva en la córnea, se usa para describir remodelación de la córnea con láser excímer sin colgajo" }, // 2 (PRODUCT - Refractiva)
+    { name: "LASIK", code: "REFRACTIVE_LASIK", type: "MEDICAL_PRODUCT", father_code: "REFRACTIVE_SURGERY", value1: "1311428", value2: "32000", description: "Keratomileusis, incluye técnicas en las que se levanta un colgajo corneal y se remodela con láser" }, // 3 (PRODUCT - Refractiva) ✅ Cirugía LASIK (NO duplicar)
+    { name: "LASIK Guiada", code: "REFRACTIVE_LASIK_GUIDED", type: "MEDICAL_PRODUCT", father_code: "REFRACTIVE_SURGERY", value1: "1500000", value2: "35000", description: "Keratomileusis, incluye técnicas en las que se levanta un colgajo corneal y se remodela con láser" }, // 4 (PRODUCT - Refractiva)
+    { name: "Femotolasik", code: "REFRACTIVE_FEMOTOLASIK", type: "MEDICAL_PRODUCT", father_code: "REFRACTIVE_SURGERY", value1: "1697142", value2: "40000", description: "Keratomileusis, incluye técnicas en las que se levanta un colgajo corneal y se remodela con láser, sin cuchillas" }, // 5 (PRODUCT - Refractiva)
 
     { name: "Cirugía de Cataratas", code: "CATARACT_SURGERY", type: "MEDICAL_PROCEDURE", father_code: "OPHTHALMOLOGY" }, // 6 (PROCEDURE - Cataratas)
-    { name: "Cirugía de catarata monofocal", code: "CATARACT_MONOFOCAL_SURGERY", type: "MEDICAL_PRODUCT", father_code: "CATARACT_SURGERY", value1: "1490000", description: "Procedimiento de facoemulsificación con implante de lente monofocal según evaluación clínica." }, // 7 (PRODUCT - Cataratas)
-    { name: "Cirugía de catarata multifocal", code: "CATARACT_MULTIFOCAL_SURGERY", type: "MEDICAL_PRODUCT", father_code: "CATARACT_SURGERY", value1: "2150000", description: "Procedimiento de facoemulsificación con implante de lente multifocal según indicación médica." }, // 8 (PRODUCT - Cataratas)
-    { name: "LIO Monofocal", code: "LIO_MONOFOCAL", type: "MEDICAL_PRODUCT", father_code: "CATARACT_SURGERY", value1: "845902", description: "Elemento quirúrgico con alta eficacia en recuperación funcional" }, // 9 (PRODUCT - Cataratas) ✅ code intacto
-    { name: "LIO Multifocal", code: "LIO_MULTIFOCAL", type: "MEDICAL_PRODUCT", father_code: "CATARACT_SURGERY", value1: "1352284", description: "Producto médico especializado utilizado en procedimientos avanzados" }, // 10 (PRODUCT - Cataratas) ✅ code intacto
+    { name: "Cirugía de catarata monofocal", code: "CATARACT_MONOFOCAL_SURGERY", type: "MEDICAL_PRODUCT", father_code: "CATARACT_SURGERY", value1: "1490000", value2: "45000", description: "Procedimiento de facoemulsificación con implante de lente monofocal según evaluación clínica." }, // 7 (PRODUCT - Cataratas)
+    { name: "Cirugía de catarata multifocal", code: "CATARACT_MULTIFOCAL_SURGERY", type: "MEDICAL_PRODUCT", father_code: "CATARACT_SURGERY", value1: "2150000", value2: "30000", description: "Procedimiento de facoemulsificación con implante de lente multifocal según indicación médica." }, // 8 (PRODUCT - Cataratas)
+    { name: "LIO Monofocal", code: "LIO_MONOFOCAL", type: "MEDICAL_PRODUCT", father_code: "CATARACT_SURGERY", value1: "845902", value2: "38000", description: "Elemento quirúrgico con alta eficacia en recuperación funcional" }, // 9 (PRODUCT - Cataratas) ✅ code intacto
+    { name: "LIO Multifocal", code: "LIO_MULTIFOCAL", type: "MEDICAL_PRODUCT", father_code: "CATARACT_SURGERY", value1: "1352284", value2: "50000", description: "Producto médico especializado utilizado en procedimientos avanzados" }, // 10 (PRODUCT - Cataratas) ✅ code intacto
 
     { name: "Consulta", code: "OPHTH_CONSULTATION", type: "MEDICAL_PROCEDURE", father_code: "OPHTHALMOLOGY" }, // 11 (PROCEDURE - Consulta)
-    { name: "Consulta oftalmológica", code: "OPHTH_CONSULTATION_GENERAL", type: "MEDICAL_PRODUCT", father_code: "OPHTH_CONSULTATION", value1: "45000", description: "Consulta médica oftalmológica con evaluación clínica y plan de manejo." }, // 12 (PRODUCT - Consulta)
+    { name: "Consulta oftalmológica", code: "OPHTH_CONSULTATION_GENERAL", type: "MEDICAL_PRODUCT", father_code: "OPHTH_CONSULTATION", value1: "45000", value2: "25000", description: "Consulta médica oftalmológica con evaluación clínica y plan de manejo." }, // 12 (PRODUCT - Consulta)
 
     { name: "Blefaroplastía", code: "OPHTH_BLEPHAROPLASTY", type: "MEDICAL_PROCEDURE", father_code: "OPHTHALMOLOGY" }, // 13 (PROCEDURE - Blefaroplastía)
-    { name: "Blefaroplastía (procedimiento)", code: "OPHTH_BLEPHAROPLASTY_STD", type: "MEDICAL_PRODUCT", father_code: "OPHTH_BLEPHAROPLASTY", value1: "950000", description: "Cirugía de párpados (superior/inferior según valoración) con fines funcionales o estéticos." }, // 14 (PRODUCT - Blefaroplastía)
+    { name: "Blefaroplastía (procedimiento)", code: "OPHTH_BLEPHAROPLASTY_STD", type: "MEDICAL_PRODUCT", father_code: "OPHTH_BLEPHAROPLASTY", value1: "950000", value2: "42000", description: "Cirugía de párpados (superior/inferior según valoración) con fines funcionales o estéticos." }, // 14 (PRODUCT - Blefaroplastía)
 
     { name: "Cirugía de pterigión", code: "OPHTH_PTERYGIUM_SURGERY", type: "MEDICAL_PROCEDURE", father_code: "OPHTHALMOLOGY" }, // 15 (PROCEDURE - Pterigión)
-    { name: "Cirugía de pterigión (procedimiento)", code: "OPHTH_PTERYGIUM_STD", type: "MEDICAL_PRODUCT", father_code: "OPHTH_PTERYGIUM_SURGERY", value1: "620000", description: "Resección de pterigión con técnica según criterio médico (puede incluir injerto/conjuntival)." }, // 16 (PRODUCT - Pterigión)
+    { name: "Cirugía de pterigión (procedimiento)", code: "OPHTH_PTERYGIUM_STD", type: "MEDICAL_PRODUCT", father_code: "OPHTH_PTERYGIUM_SURGERY", value1: "620000", value2: "48000", description: "Resección de pterigión con técnica según criterio médico (puede incluir injerto/conjuntival)." }, // 16 (PRODUCT - Pterigión)
 
     { name: "Cirugía de queratocono", code: "OPHTH_KERATOCONUS_SURGERY", type: "MEDICAL_PROCEDURE", father_code: "OPHTHALMOLOGY" }, // 17 (PROCEDURE - Queratocono)
-    { name: "Crosslinking corneal", code: "OPHTH_CXL", type: "MEDICAL_PRODUCT", father_code: "OPHTH_KERATOCONUS_SURGERY", value1: "980000", description: "Fortalecimiento corneal con riboflavina y luz UV para estabilización del queratocono." }, // 18 (PRODUCT - Queratocono) ✅ Crosslinking
+    { name: "Crosslinking corneal", code: "OPHTH_CXL", type: "MEDICAL_PRODUCT", father_code: "OPHTH_KERATOCONUS_SURGERY", value1: "980000", value2: "36000", description: "Fortalecimiento corneal con riboflavina y luz UV para estabilización del queratocono." }, // 18 (PRODUCT - Queratocono) ✅ Crosslinking
 
     { name: "Cirugía de glaucoma", code: "OPHTH_GLAUCOMA_SURGERY", type: "MEDICAL_PROCEDURE", father_code: "OPHTHALMOLOGY" }, // 19 (PROCEDURE - Glaucoma)
-    { name: "Estudio de ángulo ocular", code: "OPHTH_ANGLE_STUDY", type: "MEDICAL_PRODUCT", father_code: "OPHTH_GLAUCOMA_SURGERY", value1: "95000", description: "Evaluación del ángulo camerular (gonioscopía/estudio de ángulo) según indicación." }, // 20 (PRODUCT - Glaucoma)
-    { name: "Iridotomía", code: "OPHTH_IRIDOTOMY", type: "MEDICAL_PRODUCT", father_code: "OPHTH_GLAUCOMA_SURGERY", value1: "280000", description: "Procedimiento para crear una abertura en el iris según indicación clínica." }, // 21 (PRODUCT - Glaucoma)
-    { name: "Iridotomía láser", code: "OPHTH_LASER_IRIDOTOMY", type: "MEDICAL_PRODUCT", father_code: "OPHTH_GLAUCOMA_SURGERY", value1: "210000", description: "Iridotomía realizada con láser para manejo de glaucoma de ángulo estrecho u otras indicaciones." }, // 22 (PRODUCT - Glaucoma)
-    { name: "Trabeculectomía", code: "OPHTH_TRABECULECTOMY", type: "MEDICAL_PRODUCT", father_code: "OPHTH_GLAUCOMA_SURGERY", value1: "1250000", description: "Cirugía filtrante para disminuir la presión intraocular en glaucoma." }, // 23 (PRODUCT - Glaucoma)
-    { name: "Facotrabeculectomía", code: "OPHTH_PHACOTRABECULECTOMY", type: "MEDICAL_PRODUCT", father_code: "OPHTH_GLAUCOMA_SURGERY", value1: "1850000", description: "Cirugía combinada de catarata + técnica filtrante para control de presión intraocular." }, // 24 (PRODUCT - Glaucoma)
-    { name: "Trabeculoplastía láser selectiva", code: "OPHTH_SLTP", type: "MEDICAL_PRODUCT", father_code: "OPHTH_GLAUCOMA_SURGERY", value1: "420000", description: "Tratamiento láser selectivo sobre malla trabecular para control de presión intraocular." }, // 25 (PRODUCT - Glaucoma)
-    { name: "Colocación de Válvula de Ahmed", code: "OPHTH_AHMED_VALVE", type: "MEDICAL_PRODUCT", father_code: "OPHTH_GLAUCOMA_SURGERY", value1: "2450000", description: "Implante valvular para control de presión intraocular en glaucoma refractario o casos seleccionados." }, // 26 (PRODUCT - Glaucoma)
-    { name: "Faco+colocación de Válvula de Ahmed", code: "OPHTH_PHACO_AHMED", type: "MEDICAL_PRODUCT", father_code: "OPHTH_GLAUCOMA_SURGERY", value1: "3150000", description: "Cirugía combinada de facoemulsificación + implante de válvula de Ahmed según indicación." }, // 27 (PRODUCT - Glaucoma)
+    { name: "Estudio de ángulo ocular", code: "OPHTH_ANGLE_STUDY", type: "MEDICAL_PRODUCT", father_code: "OPHTH_GLAUCOMA_SURGERY", value1: "95000", value2: "33000", description: "Evaluación del ángulo camerular (gonioscopía/estudio de ángulo) según indicación." }, // 20 (PRODUCT - Glaucoma)
+    { name: "Iridotomía", code: "OPHTH_IRIDOTOMY", type: "MEDICAL_PRODUCT", father_code: "OPHTH_GLAUCOMA_SURGERY", value1: "280000", value2: "27000", description: "Procedimiento para crear una abertura en el iris según indicación clínica." }, // 21 (PRODUCT - Glaucoma)
+    { name: "Iridotomía láser", code: "OPHTH_LASER_IRIDOTOMY", type: "MEDICAL_PRODUCT", father_code: "OPHTH_GLAUCOMA_SURGERY", value1: "210000", value2: "44000", description: "Iridotomía realizada con láser para manejo de glaucoma de ángulo estrecho u otras indicaciones." }, // 22 (PRODUCT - Glaucoma)
+    { name: "Trabeculectomía", code: "OPHTH_TRABECULECTOMY", type: "MEDICAL_PRODUCT", father_code: "OPHTH_GLAUCOMA_SURGERY", value1: "1250000", value2: "28000", description: "Cirugía filtrante para disminuir la presión intraocular en glaucoma." }, // 23 (PRODUCT - Glaucoma)
+    { name: "Facotrabeculectomía", code: "OPHTH_PHACOTRABECULECTOMY", type: "MEDICAL_PRODUCT", father_code: "OPHTH_GLAUCOMA_SURGERY", value1: "1850000", value2: "32000", description: "Cirugía combinada de catarata + técnica filtrante para control de presión intraocular." }, // 24 (PRODUCT - Glaucoma)
+    { name: "Trabeculoplastía láser selectiva", code: "OPHTH_SLTP", type: "MEDICAL_PRODUCT", father_code: "OPHTH_GLAUCOMA_SURGERY", value1: "420000", value2: "35000", description: "Tratamiento láser selectivo sobre malla trabecular para control de presión intraocular." }, // 25 (PRODUCT - Glaucoma)
+    { name: "Colocación de Válvula de Ahmed", code: "OPHTH_AHMED_VALVE", type: "MEDICAL_PRODUCT", father_code: "OPHTH_GLAUCOMA_SURGERY", value1: "2450000", value2: "40000", description: "Implante valvular para control de presión intraocular en glaucoma refractario o casos seleccionados." }, // 26 (PRODUCT - Glaucoma)
+    { name: "Faco+colocación de Válvula de Ahmed", code: "OPHTH_PHACO_AHMED", type: "MEDICAL_PRODUCT", father_code: "OPHTH_GLAUCOMA_SURGERY", value1: "3150000", value2: "45000", description: "Cirugía combinada de facoemulsificación + implante de válvula de Ahmed según indicación." }, // 27 (PRODUCT - Glaucoma)
 
     { name: "Cirugía de vía lagrimal", code: "OPHTH_LACRIMAL_SURGERY", type: "MEDICAL_PROCEDURE", father_code: "OPHTHALMOLOGY" }, // 28 (PROCEDURE - Vía lagrimal)
-    { name: "Cirugía para obstrucción lagrimal", code: "OPHTH_LACRIMAL_OBSTRUCTION_SURGERY", type: "MEDICAL_PRODUCT", father_code: "OPHTH_LACRIMAL_SURGERY", value1: "980000", description: "Procedimiento para resolver obstrucción de la vía lagrimal (técnica según evaluación)." }, // 29 (PRODUCT - Vía lagrimal)
-    { name: "Intubación de vía lacrimal", code: "OPHTH_LACRIMAL_INTUBATION", type: "MEDICAL_PRODUCT", father_code: "OPHTH_LACRIMAL_SURGERY", value1: "420000", description: "Colocación de tubo/stent lagrimal para permeabilización según protocolo." }, // 30 (PRODUCT - Vía lagrimal)
-    { name: "Plastía de puntos lacrimales", code: "OPHTH_PUNCTAL_PLASTY", type: "MEDICAL_PRODUCT", father_code: "OPHTH_LACRIMAL_SURGERY", value1: "280000", description: "Plastía de puntos lagrimales para corrección funcional del drenaje." }, // 31 (PRODUCT - Vía lagrimal)
+    { name: "Cirugía para obstrucción lagrimal", code: "OPHTH_LACRIMAL_OBSTRUCTION_SURGERY", type: "MEDICAL_PRODUCT", father_code: "OPHTH_LACRIMAL_SURGERY", value1: "980000", value2: "30000", description: "Procedimiento para resolver obstrucción de la vía lagrimal (técnica según evaluación)." }, // 29 (PRODUCT - Vía lagrimal)
+    { name: "Intubación de vía lacrimal", code: "OPHTH_LACRIMAL_INTUBATION", type: "MEDICAL_PRODUCT", father_code: "OPHTH_LACRIMAL_SURGERY", value1: "420000", value2: "38000", description: "Colocación de tubo/stent lagrimal para permeabilización según protocolo." }, // 30 (PRODUCT - Vía lagrimal)
+    { name: "Plastía de puntos lacrimales", code: "OPHTH_PUNCTAL_PLASTY", type: "MEDICAL_PRODUCT", father_code: "OPHTH_LACRIMAL_SURGERY", value1: "280000", value2: "50000", description: "Plastía de puntos lagrimales para corrección funcional del drenaje." }, // 31 (PRODUCT - Vía lagrimal)
 
     { name: "Curetaje de chalazión", code: "OPHTH_CHALAZION_CURETTAGE", type: "MEDICAL_PROCEDURE", father_code: "OPHTHALMOLOGY" }, // 32 (PROCEDURE - Chalazión)
-    { name: "Curetaje de chalazión (procedimiento)", code: "OPHTH_CHALAZION_CURETTAGE_STD", type: "MEDICAL_PRODUCT", father_code: "OPHTH_CHALAZION_CURETTAGE", value1: "120000", description: "Drenaje/curetaje de chalazión mediante procedimiento ambulatorio según indicación." }, // 33 (PRODUCT - Chalazión)
+    { name: "Curetaje de chalazión (procedimiento)", code: "OPHTH_CHALAZION_CURETTAGE_STD", type: "MEDICAL_PRODUCT", father_code: "OPHTH_CHALAZION_CURETTAGE", value1: "120000", value2: "25000", description: "Drenaje/curetaje de chalazión mediante procedimiento ambulatorio según indicación." }, // 33 (PRODUCT - Chalazión)
 
     { name: "Diatermia de retina (desgarros, tumores)", code: "OPHTH_RETINAL_DIATHERMY", type: "MEDICAL_PROCEDURE", father_code: "OPHTHALMOLOGY" }, // 34 (PROCEDURE - Retina)
-    { name: "Diatermia de retina (procedimiento)", code: "OPHTH_RETINAL_DIATHERMY_STD", type: "MEDICAL_PRODUCT", father_code: "OPHTH_RETINAL_DIATHERMY", value1: "780000", description: "Tratamiento con diatermia para lesiones retinianas (desgarros u otras) según criterio médico." }, // 35 (PRODUCT - Retina)
+    { name: "Diatermia de retina (procedimiento)", code: "OPHTH_RETINAL_DIATHERMY_STD", type: "MEDICAL_PRODUCT", father_code: "OPHTH_RETINAL_DIATHERMY", value1: "780000", value2: "42000", description: "Tratamiento con diatermia para lesiones retinianas (desgarros u otras) según criterio médico." }, // 35 (PRODUCT - Retina)
 
     { name: "Inyección intraocular", code: "OPHTH_INTRAOCULAR_INJECTION", type: "MEDICAL_PROCEDURE", father_code: "OPHTHALMOLOGY" }, // 36 (PROCEDURE - Inyección)
-    { name: "Inyección intraocular (aplicación)", code: "OPHTH_INTRAOCULAR_INJECTION_STD", type: "MEDICAL_PRODUCT", father_code: "OPHTH_INTRAOCULAR_INJECTION", value1: "320000", description: "Aplicación intraocular de medicamento (anti-VEGF/esteroide según indicación y disponibilidad)." }, // 37 (PRODUCT - Inyección)
+    { name: "Inyección intraocular (aplicación)", code: "OPHTH_INTRAOCULAR_INJECTION_STD", type: "MEDICAL_PRODUCT", father_code: "OPHTH_INTRAOCULAR_INJECTION", value1: "320000", value2: "48000", description: "Aplicación intraocular de medicamento (anti-VEGF/esteroide según indicación y disponibilidad)." }, // 37 (PRODUCT - Inyección)
 
     { name: "Capsulotomía", code: "OPHTH_CAPSULOTOMY", type: "MEDICAL_PROCEDURE", father_code: "OPHTHALMOLOGY" }, // 38 (PROCEDURE - Capsulotomía)
-    { name: "Capsulotomía (YAG láser)", code: "OPHTH_CAPSULOTOMY_YAG", type: "MEDICAL_PRODUCT", father_code: "OPHTH_CAPSULOTOMY", value1: "180000", description: "Capsulotomía posterior con láser YAG para opacificación capsular posterior." }, // 39 (PRODUCT - Capsulotomía)
+    { name: "Capsulotomía (YAG láser)", code: "OPHTH_CAPSULOTOMY_YAG", type: "MEDICAL_PRODUCT", father_code: "OPHTH_CAPSULOTOMY", value1: "180000", value2: "36000", description: "Capsulotomía posterior con láser YAG para opacificación capsular posterior." }, // 39 (PRODUCT - Capsulotomía)
 
     { name: "Implante de lente", code: "OPHTH_LENS_PROCEDURE", type: "MEDICAL_PROCEDURE", father_code: "OPHTHALMOLOGY" }, // 40 (PROCEDURE - Lente)
-    { name: "Implante de lente (procedimiento)", code: "OPHTH_LENS_IMPLANT", type: "MEDICAL_PRODUCT", father_code: "OPHTH_LENS_PROCEDURE", value1: "950000", description: "Implante de lente intraocular según indicación (no incluye refractiva/catarata salvo paquete definido)." }, // 41 (PRODUCT - Lente)
-    { name: "Retiro de lente intraocular", code: "OPHTH_IOL_REMOVAL", type: "MEDICAL_PRODUCT", father_code: "OPHTH_LENS_PROCEDURE", value1: "780000", description: "Retiro o recambio de lente intraocular por indicación médica." }, // 42 (PRODUCT - Lente)
+    { name: "Implante de lente (procedimiento)", code: "OPHTH_LENS_IMPLANT", type: "MEDICAL_PRODUCT", father_code: "OPHTH_LENS_PROCEDURE", value1: "950000", value2: "33000", description: "Implante de lente intraocular según indicación (no incluye refractiva/catarata salvo paquete definido)." }, // 41 (PRODUCT - Lente)
+    { name: "Retiro de lente intraocular", code: "OPHTH_IOL_REMOVAL", type: "MEDICAL_PRODUCT", father_code: "OPHTH_LENS_PROCEDURE", value1: "780000", value2: "27000", description: "Retiro o recambio de lente intraocular por indicación médica." }, // 42 (PRODUCT - Lente)
 
     { name: "Raspado corneal", code: "OPHTH_CORNEAL_SCRAPING", type: "MEDICAL_PROCEDURE", father_code: "OPHTHALMOLOGY" }, // 43 (PROCEDURE - Córnea)
-    { name: "Raspado corneal (procedimiento)", code: "OPHTH_CORNEAL_SCRAPING_STD", type: "MEDICAL_PRODUCT", father_code: "OPHTH_CORNEAL_SCRAPING", value1: "190000", description: "Raspado corneal diagnóstico/terapéutico según indicación clínica." }, // 44 (PRODUCT - Córnea)
+    { name: "Raspado corneal (procedimiento)", code: "OPHTH_CORNEAL_SCRAPING_STD", type: "MEDICAL_PRODUCT", father_code: "OPHTH_CORNEAL_SCRAPING", value1: "190000", value2: "44000", description: "Raspado corneal diagnóstico/terapéutico según indicación clínica." }, // 44 (PRODUCT - Córnea)
 
     { name: "Trasplante de córnea", code: "OPHTH_CORNEAL_TRANSPLANT", type: "MEDICAL_PROCEDURE", father_code: "OPHTHALMOLOGY" }, // 45 (PROCEDURE - Trasplante)
-    { name: "Trasplante de córnea (procedimiento)", code: "OPHTH_CORNEAL_TRANSPLANT_STD", type: "MEDICAL_PRODUCT", father_code: "OPHTH_CORNEAL_TRANSPLANT", value1: "2200000", description: "Trasplante corneal (técnica según indicación: penetrante o lamelar) y protocolo institucional." }, // 46 (PRODUCT - Trasplante)
+    { name: "Trasplante de córnea (procedimiento)", code: "OPHTH_CORNEAL_TRANSPLANT_STD", type: "MEDICAL_PRODUCT", father_code: "OPHTH_CORNEAL_TRANSPLANT", value1: "2200000", value2: "28000", description: "Trasplante corneal (técnica según indicación: penetrante o lamelar) y protocolo institucional." }, // 46 (PRODUCT - Trasplante)
 
     { name: "Ultrasonido de ojo", code: "OPHTH_OCULAR_ULTRASOUND", type: "MEDICAL_PROCEDURE", father_code: "OPHTHALMOLOGY" }, // 47 (PROCEDURE - Ultrasonido)
-    { name: "Ultrasonido ocular (B-scan)", code: "OPHTH_OCULAR_ULTRASOUND_BSCAN", type: "MEDICAL_PRODUCT", father_code: "OPHTH_OCULAR_ULTRASOUND", value1: "85000", description: "Ultrasonido ocular para evaluación de segmento posterior/medios opacos según indicación." }, // 48 (PRODUCT - Ultrasonido)
+    { name: "Ultrasonido ocular (B-scan)", code: "OPHTH_OCULAR_ULTRASOUND_BSCAN", type: "MEDICAL_PRODUCT", father_code: "OPHTH_OCULAR_ULTRASOUND", value1: "85000", value2: "32000", description: "Ultrasonido ocular para evaluación de segmento posterior/medios opacos según indicación." }, // 48 (PRODUCT - Ultrasonido)
 
 
 
@@ -386,6 +387,7 @@ async function runSeed() {
             type: "MEDICAL_PRODUCT",
             father_code: "EPILEPSY_TREATMENT",
             value1: "1822880",
+            value2: "35000",
             description: "Tratamiento innovador aprobado en medicina especializada"
         },
         {
@@ -394,6 +396,7 @@ async function runSeed() {
             type: "MEDICAL_PRODUCT",
             father_code: "EPILEPSY_TREATMENT",
             value1: "536259",
+            value2: "40000",
             description: "Dispositivo o tratamiento con fines terapéuticos específicos"
         },
         { name: "Tratamiento de Parkinson", code: "PARKINSON_TREATMENT", type: "MEDICAL_PROCEDURE", father_code: "NEUROLOGY" },
@@ -403,6 +406,7 @@ async function runSeed() {
             type: "MEDICAL_PRODUCT",
             father_code: "PARKINSON_TREATMENT",
             value1: "1065387",
+            value2: "45000",
             description: "Elemento quirúrgico con alta eficacia en recuperación funcional"
         },
         {
@@ -411,6 +415,7 @@ async function runSeed() {
             type: "MEDICAL_PRODUCT",
             father_code: "PARKINSON_TREATMENT",
             value1: "1812375",
+            value2: "30000",
             description: "Producto médico especializado utilizado en procedimientos avanzados"
         },
 
@@ -422,6 +427,7 @@ async function runSeed() {
             type: "MEDICAL_PRODUCT",
             father_code: "ENDOMETRIOSIS_SURGERY",
             value1: "1189115",
+            value2: "38000",
             description: "Elemento quirúrgico con alta eficacia en recuperación funcional"
         },
         {
@@ -430,6 +436,7 @@ async function runSeed() {
             type: "MEDICAL_PRODUCT",
             father_code: "ENDOMETRIOSIS_SURGERY",
             value1: "1248224",
+            value2: "50000",
             description: "Dispositivo o tratamiento con fines terapéuticos específicos"
         },
         { name: "Tratamiento de Infertilidad", code: "INFERTILITY_TREATMENT", type: "MEDICAL_PROCEDURE", father_code: "GYNECOLOGY_AND_OBSTETRICS" },
@@ -439,6 +446,7 @@ async function runSeed() {
             type: "MEDICAL_PRODUCT",
             father_code: "INFERTILITY_TREATMENT",
             value1: "647302",
+            value2: "25000",
             description: "Producto médico especializado utilizado en procedimientos avanzados"
         },
         {
@@ -447,6 +455,7 @@ async function runSeed() {
             type: "MEDICAL_PRODUCT",
             father_code: "INFERTILITY_TREATMENT",
             value1: "481888",
+            value2: "42000",
             description: "Tratamiento innovador aprobado en medicina especializada"
         },
 
@@ -458,6 +467,7 @@ async function runSeed() {
             type: "MEDICAL_PRODUCT",
             father_code: "BREAST_CANCER_TREATMENT",
             value1: "1693703",
+            value2: "48000",
             description: "Producto médico especializado utilizado en procedimientos avanzados"
         },
         {
@@ -466,6 +476,7 @@ async function runSeed() {
             type: "MEDICAL_PRODUCT",
             father_code: "BREAST_CANCER_TREATMENT",
             value1: "1343277",
+            value2: "36000",
             description: "Elemento quirúrgico con alta eficacia en recuperación funcional"
         },
         { name: "Tratamiento del Cáncer de Pulmón", code: "LUNG_CANCER_TREATMENT", type: "MEDICAL_PROCEDURE", father_code: "MEDICAL_ONCOLOGY" },
@@ -475,6 +486,7 @@ async function runSeed() {
             type: "MEDICAL_PRODUCT",
             father_code: "LUNG_CANCER_TREATMENT",
             value1: "1308304",
+            value2: "33000",
             description: "Tratamiento innovador aprobado en medicina especializada"
         },
         {
@@ -483,6 +495,7 @@ async function runSeed() {
             type: "MEDICAL_PRODUCT",
             father_code: "LUNG_CANCER_TREATMENT",
             value1: "914399",
+            value2: "27000",
             description: "Intervención tecnológica aplicada en cirugía de precisión"
         },
 
@@ -490,72 +503,72 @@ async function runSeed() {
      // CARDIOLOGÍA (PROCEDURE = título sin value1, PRODUCT = item con value1)
 
 { name: "Intervención Cardiovascular", code: "CARDIO_INTERVENTION", type: "MEDICAL_PROCEDURE", father_code: "CARDIOLOGY" }, // 1 (PROCEDURE - Intervención Cardiovascular)
-{ name: "Colocación de Stent Coronario", code: "CARDIO_STENT", type: "MEDICAL_PRODUCT", father_code: "CARDIO_INTERVENTION", value1: "1585397", description: "Dispositivo o tratamiento con fines terapéuticos específicos" }, // 2 (PRODUCT - Intervención Cardiovascular) ✅ code intacto
-{ name: "Revascularización Miocárdica", code: "CARDIO_BYPASS", type: "MEDICAL_PRODUCT", father_code: "CARDIO_INTERVENTION", value1: "1004410", description: "Intervención tecnológica aplicada en cirugía de precisión" }, // 3 (PRODUCT - Intervención Cardiovascular) ✅ code intacto
-{ name: "Cateterismo Diagnóstico", code: "CARDIO_CATH", type: "MEDICAL_PRODUCT", father_code: "CARDIO_INTERVENTION", value1: "1041185", description: "Producto médico especializado utilizado en procedimientos avanzados" }, // 4 (PRODUCT - Intervención Cardiovascular) ✅ code intacto
-{ name: "Angioplastía coronaria", code: "CARDIO_ANGIOPLASTY", type: "MEDICAL_PRODUCT", father_code: "CARDIO_INTERVENTION", value1: "1725000", description: "Procedimiento percutáneo para dilatar arterias coronarias (puede incluir balón y material según caso)." }, // 5 (PRODUCT - Intervención Cardiovascular)
-{ name: "Colocación de válvulas percutáneas", code: "CARDIO_PERCUTANEOUS_VALVES", type: "MEDICAL_PRODUCT", father_code: "CARDIO_INTERVENTION", value1: "3950000", description: "Implante percutáneo de válvulas cardíacas según indicación, con soporte hemodinámico y control angiográfico." }, // 6 (PRODUCT - Intervención Cardiovascular)
-{ name: "Cateterismo cardiaco, angiocardiografía y coronariografía", code: "CARDIO_CATH_COMPREHENSIVE", type: "MEDICAL_PRODUCT", father_code: "CARDIO_INTERVENTION", value1: "1320000", description: "Estudio invasivo con cateterismo y evaluación de cavidades/arterias coronarias mediante contraste." }, // 7 (PRODUCT - Intervención Cardiovascular)
+{ name: "Colocación de Stent Coronario", code: "CARDIO_STENT", type: "MEDICAL_PRODUCT", father_code: "CARDIO_INTERVENTION", value1: "1585397", value2: "44000", description: "Dispositivo o tratamiento con fines terapéuticos específicos" }, // 2 (PRODUCT - Intervención Cardiovascular) ✅ code intacto
+{ name: "Revascularización Miocárdica", code: "CARDIO_BYPASS", type: "MEDICAL_PRODUCT", father_code: "CARDIO_INTERVENTION", value1: "1004410", value2: "28000", description: "Intervención tecnológica aplicada en cirugía de precisión" }, // 3 (PRODUCT - Intervención Cardiovascular) ✅ code intacto
+{ name: "Cateterismo Diagnóstico", code: "CARDIO_CATH", type: "MEDICAL_PRODUCT", father_code: "CARDIO_INTERVENTION", value1: "1041185", value2: "32000", description: "Producto médico especializado utilizado en procedimientos avanzados" }, // 4 (PRODUCT - Intervención Cardiovascular) ✅ code intacto
+{ name: "Angioplastía coronaria", code: "CARDIO_ANGIOPLASTY", type: "MEDICAL_PRODUCT", father_code: "CARDIO_INTERVENTION", value1: "1725000", value2: "35000", description: "Procedimiento percutáneo para dilatar arterias coronarias (puede incluir balón y material según caso)." }, // 5 (PRODUCT - Intervención Cardiovascular)
+{ name: "Colocación de válvulas percutáneas", code: "CARDIO_PERCUTANEOUS_VALVES", type: "MEDICAL_PRODUCT", father_code: "CARDIO_INTERVENTION", value1: "3950000", value2: "40000", description: "Implante percutáneo de válvulas cardíacas según indicación, con soporte hemodinámico y control angiográfico." }, // 6 (PRODUCT - Intervención Cardiovascular)
+{ name: "Cateterismo cardiaco, angiocardiografía y coronariografía", code: "CARDIO_CATH_COMPREHENSIVE", type: "MEDICAL_PRODUCT", father_code: "CARDIO_INTERVENTION", value1: "1320000", value2: "45000", description: "Estudio invasivo con cateterismo y evaluación de cavidades/arterias coronarias mediante contraste." }, // 7 (PRODUCT - Intervención Cardiovascular)
 
 { name: "Marcapasos", code: "PACEMAKER_IMPLANT", type: "MEDICAL_PROCEDURE", father_code: "CARDIOLOGY" }, // 8 (PROCEDURE - Marcapasos)
-{ name: "Implantación de Marcapasos Unicameral", code: "PACEMAKER_SINGLE", type: "MEDICAL_PRODUCT", father_code: "PACEMAKER_IMPLANT", value1: "1678870", description: "Elemento quirúrgico con alta eficacia en recuperación funcional" }, // 9 (PRODUCT - Marcapasos) ✅ code intacto
-{ name: "Implantación de Marcapasos Bicameral", code: "PACEMAKER_DUAL", type: "MEDICAL_PRODUCT", father_code: "PACEMAKER_IMPLANT", value1: "1834566", description: "Tratamiento innovador aprobado en medicina especializada" }, // 10 (PRODUCT - Marcapasos) ✅ code intacto
-{ name: "Implante y control de marcapasos", code: "CARDIO_PACEMAKER_IMPLANT_CONTROL", type: "MEDICAL_PRODUCT", father_code: "PACEMAKER_IMPLANT", value1: "265000", description: "Revisión, interrogación y programación/ajuste de marcapasos (seguimiento y control clínico)." }, // 11 (PRODUCT - Marcapasos)
-{ name: "Cambio de generador del marcapasos", code: "CARDIO_PACEMAKER_GENERATOR_CHANGE", type: "MEDICAL_PRODUCT", father_code: "PACEMAKER_IMPLANT", value1: "1450000", description: "Recambio del generador por fin de vida útil o indicación técnica, con pruebas y programación." }, // 12 (PRODUCT - Marcapasos)
-{ name: "Extracción cable del marcapasos", code: "CARDIO_PACEMAKER_LEAD_EXTRACTION", type: "MEDICAL_PRODUCT", father_code: "PACEMAKER_IMPLANT", value1: "2100000", description: "Extracción de electrodo/cable por indicación (infección, falla, recambio), bajo protocolo especializado." }, // 13 (PRODUCT - Marcapasos)
-{ name: "Implante de desfibrilador", code: "CARDIO_ICD_IMPLANT", type: "MEDICAL_PRODUCT", father_code: "PACEMAKER_IMPLANT", value1: "2850000", description: "Implante de desfibrilador automático (ICD) para prevención/tratamiento de arritmias malignas." }, // 14 (PRODUCT - Dispositivos)
-{ name: "Implante de resincronizador", code: "CARDIO_CRT_IMPLANT", type: "MEDICAL_PRODUCT", father_code: "PACEMAKER_IMPLANT", value1: "3150000", description: "Implante de terapia de resincronización cardíaca (CRT) en pacientes seleccionados." }, // 15 (PRODUCT - Dispositivos)
+{ name: "Implantación de Marcapasos Unicameral", code: "PACEMAKER_SINGLE", type: "MEDICAL_PRODUCT", father_code: "PACEMAKER_IMPLANT", value1: "1678870", value2: "30000", description: "Elemento quirúrgico con alta eficacia en recuperación funcional" }, // 9 (PRODUCT - Marcapasos) ✅ code intacto
+{ name: "Implantación de Marcapasos Bicameral", code: "PACEMAKER_DUAL", type: "MEDICAL_PRODUCT", father_code: "PACEMAKER_IMPLANT", value1: "1834566", value2: "38000", description: "Tratamiento innovador aprobado en medicina especializada" }, // 10 (PRODUCT - Marcapasos) ✅ code intacto
+{ name: "Implante y control de marcapasos", code: "CARDIO_PACEMAKER_IMPLANT_CONTROL", type: "MEDICAL_PRODUCT", father_code: "PACEMAKER_IMPLANT", value1: "265000", value2: "50000", description: "Revisión, interrogación y programación/ajuste de marcapasos (seguimiento y control clínico)." }, // 11 (PRODUCT - Marcapasos)
+{ name: "Cambio de generador del marcapasos", code: "CARDIO_PACEMAKER_GENERATOR_CHANGE", type: "MEDICAL_PRODUCT", father_code: "PACEMAKER_IMPLANT", value1: "1450000", value2: "25000", description: "Recambio del generador por fin de vida útil o indicación técnica, con pruebas y programación." }, // 12 (PRODUCT - Marcapasos)
+{ name: "Extracción cable del marcapasos", code: "CARDIO_PACEMAKER_LEAD_EXTRACTION", type: "MEDICAL_PRODUCT", father_code: "PACEMAKER_IMPLANT", value1: "2100000", value2: "42000", description: "Extracción de electrodo/cable por indicación (infección, falla, recambio), bajo protocolo especializado." }, // 13 (PRODUCT - Marcapasos)
+{ name: "Implante de desfibrilador", code: "CARDIO_ICD_IMPLANT", type: "MEDICAL_PRODUCT", father_code: "PACEMAKER_IMPLANT", value1: "2850000", value2: "48000", description: "Implante de desfibrilador automático (ICD) para prevención/tratamiento de arritmias malignas." }, // 14 (PRODUCT - Dispositivos)
+{ name: "Implante de resincronizador", code: "CARDIO_CRT_IMPLANT", type: "MEDICAL_PRODUCT", father_code: "PACEMAKER_IMPLANT", value1: "3150000", value2: "36000", description: "Implante de terapia de resincronización cardíaca (CRT) en pacientes seleccionados." }, // 15 (PRODUCT - Dispositivos)
 
 { name: "Ecocardiograma transtorácico (ETT) de reposo", code: "CARDIO_ECHO_TTE_REST", type: "MEDICAL_PROCEDURE", father_code: "CARDIOLOGY" }, // 16 (PROCEDURE - Ecocardiograma TTE)
-{ name: "Ecocardiograma transtorácico (ETT) de reposo", code: "CARDIO_ECHO_TTE_REST_TEST", type: "MEDICAL_PRODUCT", father_code: "CARDIO_ECHO_TTE_REST", value1: "135000", description: "Ecocardiograma de reposo para evaluación de función ventricular, válvulas y estructuras cardíacas." }, // 17 (PRODUCT - Ecocardiograma TTE)
+{ name: "Ecocardiograma transtorácico (ETT) de reposo", code: "CARDIO_ECHO_TTE_REST_TEST", type: "MEDICAL_PRODUCT", father_code: "CARDIO_ECHO_TTE_REST", value1: "135000", value2: "33000", description: "Ecocardiograma de reposo para evaluación de función ventricular, válvulas y estructuras cardíacas." }, // 17 (PRODUCT - Ecocardiograma TTE)
 
 { name: "Ecocardiograma transesofágico", code: "CARDIO_ECHO_TEE", type: "MEDICAL_PROCEDURE", father_code: "CARDIOLOGY" }, // 18 (PROCEDURE - Ecocardiograma TEE)
-{ name: "Ecocardiograma transesofágico", code: "CARDIO_ECHO_TEE_TEST", type: "MEDICAL_PRODUCT", father_code: "CARDIO_ECHO_TEE", value1: "285000", description: "Ecocardiograma con sonda esofágica para evaluación detallada de estructuras y válvulas (según protocolo)." }, // 19 (PRODUCT - Ecocardiograma TEE)
+{ name: "Ecocardiograma transesofágico", code: "CARDIO_ECHO_TEE_TEST", type: "MEDICAL_PRODUCT", father_code: "CARDIO_ECHO_TEE", value1: "285000", value2: "27000", description: "Ecocardiograma con sonda esofágica para evaluación detallada de estructuras y válvulas (según protocolo)." }, // 19 (PRODUCT - Ecocardiograma TEE)
 
 { name: "Ecocardiograma estrés con ejercicio", code: "CARDIO_ECHO_STRESS_EXERCISE", type: "MEDICAL_PROCEDURE", father_code: "CARDIOLOGY" }, // 20 (PROCEDURE - Eco Estrés Ejercicio)
-{ name: "Ecocardiograma estrés con ejercicio", code: "CARDIO_ECHO_STRESS_EXERCISE_TEST", type: "MEDICAL_PRODUCT", father_code: "CARDIO_ECHO_STRESS_EXERCISE", value1: "255000", description: "Ecocardiograma bajo esfuerzo para evaluación de isquemia y respuesta funcional al ejercicio." }, // 21 (PRODUCT - Eco Estrés Ejercicio)
+{ name: "Ecocardiograma estrés con ejercicio", code: "CARDIO_ECHO_STRESS_EXERCISE_TEST", type: "MEDICAL_PRODUCT", father_code: "CARDIO_ECHO_STRESS_EXERCISE", value1: "255000", value2: "44000", description: "Ecocardiograma bajo esfuerzo para evaluación de isquemia y respuesta funcional al ejercicio." }, // 21 (PRODUCT - Eco Estrés Ejercicio)
 
 { name: "Ecocardiograma estrés farmacológico con dobutamina", code: "CARDIO_ECHO_STRESS_DOBUTAMINE", type: "MEDICAL_PROCEDURE", father_code: "CARDIOLOGY" }, // 22 (PROCEDURE - Eco Estrés Dobutamina)
-{ name: "Ecocardiograma estrés farmacológico con dobutamina", code: "CARDIO_ECHO_STRESS_DOBUTAMINE_TEST", type: "MEDICAL_PRODUCT", father_code: "CARDIO_ECHO_STRESS_DOBUTAMINE", value1: "295000", description: "Ecocardiograma con estrés farmacológico para evaluación de isquemia/viabilidad cuando no se realiza ejercicio." }, // 23 (PRODUCT - Eco Estrés Dobutamina)
+{ name: "Ecocardiograma estrés farmacológico con dobutamina", code: "CARDIO_ECHO_STRESS_DOBUTAMINE_TEST", type: "MEDICAL_PRODUCT", father_code: "CARDIO_ECHO_STRESS_DOBUTAMINE", value1: "295000", value2: "28000", description: "Ecocardiograma con estrés farmacológico para evaluación de isquemia/viabilidad cuando no se realiza ejercicio." }, // 23 (PRODUCT - Eco Estrés Dobutamina)
 
 { name: "Electrocardiograma (ECG) con interpretación", code: "CARDIO_ECG_INTERPRETATION", type: "MEDICAL_PROCEDURE", father_code: "CARDIOLOGY" }, // 24 (PROCEDURE - ECG Interpretación)
-{ name: "Electrocardiograma (ECG) con interpretación", code: "CARDIO_ECG_INTERPRETATION_TEST", type: "MEDICAL_PRODUCT", father_code: "CARDIO_ECG_INTERPRETATION", value1: "45000", description: "Registro de ECG en reposo e interpretación médica con reporte." }, // 25 (PRODUCT - ECG Interpretación)
+{ name: "Electrocardiograma (ECG) con interpretación", code: "CARDIO_ECG_INTERPRETATION_TEST", type: "MEDICAL_PRODUCT", father_code: "CARDIO_ECG_INTERPRETATION", value1: "45000", value2: "32000", description: "Registro de ECG en reposo e interpretación médica con reporte." }, // 25 (PRODUCT - ECG Interpretación)
 
 { name: "Electrocardiograma (ECG) con esfuerzo", code: "CARDIO_ECG_STRESS", type: "MEDICAL_PROCEDURE", father_code: "CARDIOLOGY" }, // 26 (PROCEDURE - ECG Esfuerzo)
-{ name: "Electrocardiograma (ECG) con esfuerzo", code: "CARDIO_ECG_STRESS_TEST", type: "MEDICAL_PRODUCT", father_code: "CARDIO_ECG_STRESS", value1: "95000", description: "ECG durante esfuerzo para evaluación de respuesta eléctrica y signos inducibles por ejercicio." }, // 27 (PRODUCT - ECG Esfuerzo)
+{ name: "Electrocardiograma (ECG) con esfuerzo", code: "CARDIO_ECG_STRESS_TEST", type: "MEDICAL_PRODUCT", father_code: "CARDIO_ECG_STRESS", value1: "95000", value2: "35000", description: "ECG durante esfuerzo para evaluación de respuesta eléctrica y signos inducibles por ejercicio." }, // 27 (PRODUCT - ECG Esfuerzo)
 
 { name: "Prueba de esfuerzo", code: "CARDIO_STRESS_TEST", type: "MEDICAL_PROCEDURE", father_code: "CARDIOLOGY" }, // 28 (PROCEDURE - Prueba de esfuerzo)
-{ name: "Prueba de esfuerzo", code: "CARDIO_STRESS_TEST_STD", type: "MEDICAL_PRODUCT", father_code: "CARDIO_STRESS_TEST", value1: "125000", description: "Prueba de esfuerzo en banda/cicloergómetro con monitoreo y reporte según protocolo." }, // 29 (PRODUCT - Prueba de esfuerzo)
+{ name: "Prueba de esfuerzo", code: "CARDIO_STRESS_TEST_STD", type: "MEDICAL_PRODUCT", father_code: "CARDIO_STRESS_TEST", value1: "125000", value2: "40000", description: "Prueba de esfuerzo en banda/cicloergómetro con monitoreo y reporte según protocolo." }, // 29 (PRODUCT - Prueba de esfuerzo)
 
 { name: "Ablación para arritmias cardíacas", code: "CARDIO_ARRHYTHMIA_ABLATION", type: "MEDICAL_PROCEDURE", father_code: "CARDIOLOGY" }, // 30 (PROCEDURE - Ablación)
-{ name: "Ablación para arritmias cardíacas", code: "CARDIO_ARRHYTHMIA_ABLATION_PROC", type: "MEDICAL_PRODUCT", father_code: "CARDIO_ARRHYTHMIA_ABLATION", value1: "2850000", description: "Procedimiento de electrofisiología con ablación (radiofrecuencia/crio según caso) para control de arritmias." }, // 31 (PRODUCT - Ablación)
+{ name: "Ablación para arritmias cardíacas", code: "CARDIO_ARRHYTHMIA_ABLATION_PROC", type: "MEDICAL_PRODUCT", father_code: "CARDIO_ARRHYTHMIA_ABLATION", value1: "2850000", value2: "45000", description: "Procedimiento de electrofisiología con ablación (radiofrecuencia/crio según caso) para control de arritmias." }, // 31 (PRODUCT - Ablación)
 
 { name: "Holter", code: "CARDIO_HOLTER", type: "MEDICAL_PROCEDURE", father_code: "CARDIOLOGY" }, // 32 (PROCEDURE - Holter)
-{ name: "Holter 24-48 horas", code: "CARDIO_HOLTER_24_48", type: "MEDICAL_PRODUCT", father_code: "CARDIO_HOLTER", value1: "85000", description: "Monitoreo continuo de ritmo cardíaco 24-48h con análisis e informe." }, // 33 (PRODUCT - Holter)
+{ name: "Holter 24-48 horas", code: "CARDIO_HOLTER_24_48", type: "MEDICAL_PRODUCT", father_code: "CARDIO_HOLTER", value1: "85000", value2: "30000", description: "Monitoreo continuo de ritmo cardíaco 24-48h con análisis e informe." }, // 33 (PRODUCT - Holter)
 
 { name: "Monitor de eventos cardiacos", code: "CARDIO_EVENT_MONITOR", type: "MEDICAL_PROCEDURE", father_code: "CARDIOLOGY" }, // 34 (PROCEDURE - Monitor de eventos)
-{ name: "Monitor de eventos cardiacos", code: "CARDIO_EVENT_MONITOR_STD", type: "MEDICAL_PRODUCT", father_code: "CARDIO_EVENT_MONITOR", value1: "110000", description: "Monitoreo de eventos por periodos extendidos con registro por síntomas/episodios y reporte." }, // 35 (PRODUCT - Monitor de eventos)
+{ name: "Monitor de eventos cardiacos", code: "CARDIO_EVENT_MONITOR_STD", type: "MEDICAL_PRODUCT", father_code: "CARDIO_EVENT_MONITOR", value1: "110000", value2: "38000", description: "Monitoreo de eventos por periodos extendidos con registro por síntomas/episodios y reporte." }, // 35 (PRODUCT - Monitor de eventos)
 
 { name: "Monitoreo ambulatorio de presión arterial (MAPA)", code: "CARDIO_ABPM_MAPA", type: "MEDICAL_PROCEDURE", father_code: "CARDIOLOGY" }, // 36 (PROCEDURE - MAPA)
-{ name: "MAPA 24 horas", code: "CARDIO_ABPM_MAPA_24", type: "MEDICAL_PRODUCT", father_code: "CARDIO_ABPM_MAPA", value1: "90000", description: "Monitoreo ambulatorio de presión arterial 24h con informe y promedios diurnos/nocturnos." }, // 37 (PRODUCT - MAPA)
+{ name: "MAPA 24 horas", code: "CARDIO_ABPM_MAPA_24", type: "MEDICAL_PRODUCT", father_code: "CARDIO_ABPM_MAPA", value1: "90000", value2: "50000", description: "Monitoreo ambulatorio de presión arterial 24h con informe y promedios diurnos/nocturnos." }, // 37 (PRODUCT - MAPA)
 
 { name: "Monitoreo de presión arterial", code: "CARDIO_BP_MONITORING", type: "MEDICAL_PROCEDURE", father_code: "CARDIOLOGY" }, // 38 (PROCEDURE - PA)
-{ name: "Monitoreo de presión arterial (consulta/control)", code: "CARDIO_BP_MONITORING_VISIT", type: "MEDICAL_PRODUCT", father_code: "CARDIO_BP_MONITORING", value1: "25000", description: "Toma y control de presión arterial con registro y recomendación básica según protocolo." }, // 39 (PRODUCT - PA)
+{ name: "Monitoreo de presión arterial (consulta/control)", code: "CARDIO_BP_MONITORING_VISIT", type: "MEDICAL_PRODUCT", father_code: "CARDIO_BP_MONITORING", value1: "25000", value2: "25000", description: "Toma y control de presión arterial con registro y recomendación básica según protocolo." }, // 39 (PRODUCT - PA)
 
 { name: "Angiografía coronaria por tomografía", code: "CARDIO_CT_CORONARY_ANGIO", type: "MEDICAL_PROCEDURE", father_code: "CARDIOLOGY" }, // 40 (PROCEDURE - AngioTAC)
-{ name: "Angiografía coronaria por tomografía", code: "CARDIO_CT_CORONARY_ANGIO_TEST", type: "MEDICAL_PRODUCT", father_code: "CARDIO_CT_CORONARY_ANGIO", value1: "450000", description: "AngioTAC coronaria para evaluación no invasiva de arterias coronarias (según indicación)." }, // 41 (PRODUCT - AngioTAC)
+{ name: "Angiografía coronaria por tomografía", code: "CARDIO_CT_CORONARY_ANGIO_TEST", type: "MEDICAL_PRODUCT", father_code: "CARDIO_CT_CORONARY_ANGIO", value1: "450000", value2: "42000", description: "AngioTAC coronaria para evaluación no invasiva de arterias coronarias (según indicación)." }, // 41 (PRODUCT - AngioTAC)
 
 { name: "Pericardiocentesis", code: "CARDIO_PERICARDIOCENTESIS", type: "MEDICAL_PROCEDURE", father_code: "CARDIOLOGY" }, // 42 (PROCEDURE - Pericardiocentesis)
-{ name: "Pericardiocentesis (procedimiento)", code: "CARDIO_PERICARDIOCENTESIS_PROC", type: "MEDICAL_PRODUCT", father_code: "CARDIO_PERICARDIOCENTESIS", value1: "980000", description: "Drenaje de líquido pericárdico guiado (ecografía/fluoroscopía según disponibilidad) por indicación clínica." }, // 43 (PRODUCT - Pericardiocentesis)
+{ name: "Pericardiocentesis (procedimiento)", code: "CARDIO_PERICARDIOCENTESIS_PROC", type: "MEDICAL_PRODUCT", father_code: "CARDIO_PERICARDIOCENTESIS", value1: "980000", value2: "48000", description: "Drenaje de líquido pericárdico guiado (ecografía/fluoroscopía según disponibilidad) por indicación clínica." }, // 43 (PRODUCT - Pericardiocentesis)
 
 { name: "Espirometría", code: "CARDIO_SPIROMETRY", type: "MEDICAL_PROCEDURE", father_code: "CARDIOLOGY" }, // 44 (PROCEDURE - Espirometría)
-{ name: "Espirometría (prueba)", code: "CARDIO_SPIROMETRY_TEST", type: "MEDICAL_PRODUCT", father_code: "CARDIO_SPIROMETRY", value1: "65000", description: "Prueba funcional respiratoria para apoyo diagnóstico (preoperatorio/seguimiento según indicación)." }, // 45 (PRODUCT - Espirometría)
+{ name: "Espirometría (prueba)", code: "CARDIO_SPIROMETRY_TEST", type: "MEDICAL_PRODUCT", father_code: "CARDIO_SPIROMETRY", value1: "65000", value2: "36000", description: "Prueba funcional respiratoria para apoyo diagnóstico (preoperatorio/seguimiento según indicación)." }, // 45 (PRODUCT - Espirometría)
 
 { name: "Valoración pre-operatoria (incluye el electrocardiograma)", code: "CARDIO_PREOP_EVALUATION", type: "MEDICAL_PROCEDURE", father_code: "CARDIOLOGY" }, // 46 (PROCEDURE - Preoperatoria)
-{ name: "Valoración pre-operatoria (incluye ECG)", code: "CARDIO_PREOP_EVALUATION_PACKAGE", type: "MEDICAL_PRODUCT", father_code: "CARDIO_PREOP_EVALUATION", value1: "125000", description: "Valoración cardiológica preoperatoria con ECG e informe de riesgo cardiovascular." }, // 47 (PRODUCT - Preoperatoria)
+{ name: "Valoración pre-operatoria (incluye ECG)", code: "CARDIO_PREOP_EVALUATION_PACKAGE", type: "MEDICAL_PRODUCT", father_code: "CARDIO_PREOP_EVALUATION", value1: "125000", value2: "33000", description: "Valoración cardiológica preoperatoria con ECG e informe de riesgo cardiovascular." }, // 47 (PRODUCT - Preoperatoria)
 
 { name: "Videoconsulta", code: "CARDIO_VIDEO_CONSULT", type: "MEDICAL_PROCEDURE", father_code: "CARDIOLOGY" }, // 48 (PROCEDURE - Videoconsulta)
-{ name: "Videoconsulta cardiología", code: "CARDIO_VIDEO_CONSULT_VISIT", type: "MEDICAL_PRODUCT", father_code: "CARDIO_VIDEO_CONSULT", value1: "55000", description: "Consulta por videollamada con orientación clínica y plan de manejo (según alcance del servicio)." }, // 49 (PRODUCT - Videoconsulta)
+{ name: "Videoconsulta cardiología", code: "CARDIO_VIDEO_CONSULT_VISIT", type: "MEDICAL_PRODUCT", father_code: "CARDIO_VIDEO_CONSULT", value1: "55000", value2: "27000", description: "Consulta por videollamada con orientación clínica y plan de manejo (según alcance del servicio)." }, // 49 (PRODUCT - Videoconsulta)
 
 
 
@@ -567,6 +580,7 @@ async function runSeed() {
             type: "MEDICAL_PRODUCT",
             father_code: "GASTRO_ENDOSCOPY",
             value1: "1645232",
+            value2: "44000",
             description: "Producto médico especializado utilizado en procedimientos avanzados"
         },
         {
@@ -575,6 +589,7 @@ async function runSeed() {
             type: "MEDICAL_PRODUCT",
             father_code: "GASTRO_ENDOSCOPY",
             value1: "870973",
+            value2: "28000",
             description: "Dispositivo o tratamiento con fines terapéuticos específicos"
         },
         { name: "Tratamiento de Úlceras", code: "GASTRO_ULCER_TREATMENT", type: "MEDICAL_PROCEDURE", father_code: "GASTROENTEROLOGY" },
@@ -584,6 +599,7 @@ async function runSeed() {
             type: "MEDICAL_PRODUCT",
             father_code: "GASTRO_ULCER_TREATMENT",
             value1: "1462123",
+            value2: "32000",
             description: "Intervención tecnológica aplicada en cirugía de precisión"
         },
         {
@@ -592,6 +608,7 @@ async function runSeed() {
             type: "MEDICAL_PRODUCT",
             father_code: "GASTRO_ULCER_TREATMENT",
             value1: "1463294",
+            value2: "35000",
             description: "Tratamiento innovador aprobado en medicina especializada"
         },
 
@@ -603,6 +620,7 @@ async function runSeed() {
             type: "MEDICAL_PRODUCT",
             father_code: "ORTHO_KNEE_SURGERY",
             value1: "1612106",
+            value2: "40000",
             description: "Producto médico especializado utilizado en procedimientos avanzados"
         },
         {
@@ -611,6 +629,7 @@ async function runSeed() {
             type: "MEDICAL_PRODUCT",
             father_code: "ORTHO_KNEE_SURGERY",
             value1: "1729026",
+            value2: "45000",
             description: "Elemento quirúrgico con alta eficacia en recuperación funcional"
         },
         { name: "Cirugía de Hombro", code: "ORTHO_SHOULDER_SURGERY", type: "MEDICAL_PROCEDURE", father_code: "ORTHOPEDICS_AND_TRAUMATOLOGY" },
@@ -620,6 +639,7 @@ async function runSeed() {
             type: "MEDICAL_PRODUCT",
             father_code: "ORTHO_SHOULDER_SURGERY",
             value1: "1300533",
+            value2: "30000",
             description: "Dispositivo o tratamiento con fines terapéuticos específicos"
         },
         {
@@ -628,6 +648,7 @@ async function runSeed() {
             type: "MEDICAL_PRODUCT",
             father_code: "ORTHO_SHOULDER_SURGERY",
             value1: "1611914",
+            value2: "38000",
             description: "Tratamiento innovador aprobado en medicina especializada"
         },
 
@@ -844,6 +865,202 @@ async function runSeed() {
     
     await udcRepository.upsert(languageProficiencyLevels, ["code"]);
     
+ 
+
+
+    //*************************************** */
+    //      Notifications
+    //*************************************** */
+    const notificationRepository = dataSource.getRepository(Notification);
+
+    const notifications = [
+    {
+        code: "appointmentStep1",
+        type: "APPOINTMENT",
+        subject: "Reservación de Cita de Valoración",
+        message: "El paciente {{ patientName }} ha solicitado una cita de valoración del procedimiento {{ procedureName }} / producto {{ productName }}.",
+        another_message: "El paciente {{ patientName }} ha solicitado una cita de valoración del procedimiento {{ procedureName }} / producto {{ productName }} del médico/centro médico {{ supplierName }}.",
+        required_send_email: true,
+        text_from_email_message_json: true,
+        email_template: "appointmentStep1",
+        action_url: "https://vitalink.cr/medicos/citas",
+        action_text: "Mis Citas Vitalink",
+        language: "es",
+    },
+    {
+        code: "appointmentStep1.2",
+        type: "APPOINTMENT",
+        subject: "Cita reservada - Espera Confirmación",
+        message: "La reserva de tu cita de valoración para el procedimiento {{ procedureName }} / producto {{ productName }} ha sido enviada al médico/centro médico {{ supplierName }}. Pronto tu médico te contactará.",
+        another_message: "El médico/centro médico {{ supplierName }} se pondrá en contacto con el paciente o confirmará cita de valoración del procedimiento {{ procedureName }} / producto {{ productName }} para el dia {{ appointmentDate }} a la hora {{ appointmentHour }} en los próximos días.",
+        required_send_email: true,
+        text_from_email_message_json: true,
+        email_template: "appointmentStep1.2",
+        action_url: "https://vitalink.cr/pacientes/citas",
+        action_text: "Mis Citas Vitalink",
+        language: "es",
+    },
+    {
+        code: "appointmentStep2",
+        type: "APPOINTMENT",
+        subject: "Confirmación de Cita de Valoración",
+        message: "El médico/centro médico {{ supplierName }} ha confirmado tu cita de valoración del procedimiento {{ procedureName }} / producto {{ productName }} para el día {{ appointmentDate }} a la hora {{ appointmentHour }}. Recordá presentarte 20 minutos antes de la cita.\n\nRecordá presentarte a la cita con tu identificación de {{ financeEntityName }} para acceder al descuento exclusivo de Vitalink.\n\nDetalle de pago:\n- Costo cita de valoración: {{ priceValorationAppointment }}",
+        another_message: "El médico/centro médico {{ supplierName }} ha confirmado la cita de valoración del procedimiento {{ procedureName }} / producto {{ productName }} del paciente {{ patientName }} para el dia {{ appointmentDate }} a la hora {{ appointmentHour }}.",
+        required_send_email: true,
+        text_from_email_message_json: true,
+        email_template: "appointmentStep2",
+        action_url: "https://vitalink.cr/pacientes/citas",
+        action_text: "Mis Citas Vitalink",
+        language: "es",
+    },
+    {
+        code: "appointmentStep3",
+        type: "APPOINTMENT",
+        subject: "Verificar Pago Cita Valoración",
+        message: "Se concretó la cita de valoración del procedimiento {{ procedureName }} / producto {{ productName }} del paciente {{ patientName }}. Favor verificar que se efectuó el pago de la cita.",
+        another_message: "Se concretó la cita de valoración del procedimiento {{ procedureName }} / producto {{ productName }} del paciente {{ patientName }} por medio de {{ paymentMethod }}. Favor verificar que se efectuó el pago de la cita.",
+        required_send_email: true,
+        text_from_email_message_json: true,
+        email_template: "appointmentStep3",
+        action_url: "https://vitalink.cr/medicos/citas",
+        action_text: "Mis Citas Vitalink",
+        language: "es",
+    },
+    {
+        code: "appointmentStep4Fit",
+        type: "APPOINTMENT",
+        subject: "Apto para Procedimiento",
+        message: "El médico/centro médico {{ supplierName }} ha confirmado que sos apto para el procedimiento {{ procedureName }} / producto {{ productName }}, por un monto de {{ priceProcedure }}. Podés descargar tu proforma y solicitar tu crédito, o reservar tu procedimiento pagando con tus propios medios. Hacé clic en \"mis citas\" para continuar.",
+        another_message: "El médico/centro médico {{ supplierName }} ha confirmado que el paciente {{ patientName }} es apto para el procedimiento {{ procedureName }} / producto {{ productName }}.",
+        required_send_email: true,
+        text_from_email_message_json: true,
+        email_template: "appointmentStep4Fit",
+        action_url: "https://vitalink.cr/pacientes/citas",
+        action_text: "Mis Citas Vitalink",
+        language: "es",
+    },
+    {
+        code: "appointmentStep4FitNo",
+        type: "APPOINTMENT",
+        subject: "No se requiere procedimiento adicional",
+        message: "De acuerdo a la valoración del médico/centro médico {{ supplierName }}, ha confirmado que no se requiere procedimiento adicional para {{ procedureName }} / producto {{ productName }}.",
+        another_message: "El médico/centro médico {{ supplierName }} ha confirmado que el paciente {{ patientName }} no requiere procedimiento adicional para {{ procedureName }} / producto {{ productName }}.",
+        required_send_email: true,
+        text_from_email_message_json: true,
+        email_template: "appointmentStep4FitNo",
+        action_url: "https://vitalink.cr/pacientes/citas",
+        action_text: "Mis Citas Vitalink",
+        language: "es",
+    },
+    {
+        code: "appointmentStep5",
+        type: "APPOINTMENT",
+        subject: "Reservación de Procedimiento Médico",
+        message: "El paciente {{ patientName }} ha solicitado una reservación del procedimiento {{ procedureName }} / producto {{ productName }} del médico/centro médico {{ supplierName }}.",
+        another_message: "El paciente {{ patientName }} ha solicitado una reservación del procedimiento {{ procedureName }} / producto {{ productName }} del médico/centro médico {{ supplierName }}.",
+        required_send_email: true,
+        text_from_email_message_json: true,
+        email_template: "appointmentStep5",
+        action_url: "https://vitalink.cr/medicos/citas",
+        action_text: "Mis Citas Vitalink",
+        language: "es",
+    },
+    {
+        code: "appointmentStep6",
+        type: "APPOINTMENT",
+        subject: "Confirmación de Reservación de Procedimiento Médico",
+        message: "El médico/centro médico {{ supplierName }} ha confirmado la reserva del procedimiento {{ procedureName }} / producto {{ productName }} para el día {{ appointmentDate }} a la hora {{ appointmentHour }}. Recordá presentarte 20 minutos antes de la cita.\n\nSi contás con un crédito aprobado, recordá presentar tu código en el consultorio antes del procedimiento para validarlo con el médico.\n\nDetalle de pago:\n- Costo del procedimiento: {{ priceProcedure }}\n- Descuento del procedimiento: {{ discountProcedure }}\n- Cubierto por crédito: {{ approvedAmountCredit }}\n- Total del procedimiento: {{ totalProcedure }}",
+        another_message: "El médico/centro médico {{ supplierName }} ha confirmado la reserva del procedimiento {{ procedureName }} / producto {{ productName }} del paciente {{ patientName }} para el dia {{ appointmentDate }} a la hora {{ appointmentHour }}.",
+        required_send_email: true,
+        text_from_email_message_json: true,
+        email_template: "appointmentStep6",
+        action_url: "https://vitalink.cr/pacientes/citas",
+        action_text: "Mis Citas Vitalink",
+        language: "es",
+    },
+    {
+        code: "appointmentStep7",
+        type: "APPOINTMENT",
+        subject: "Verificar Pago Procedimiento Médico",
+        message: "Se concretó el procedimiento {{ procedureName }} / producto {{ productName }} del paciente {{ patientName }}. Favor verificar que se efectuó el pago de la cita.",
+        another_message: "Se concretó el procedimiento {{ procedureName }} / producto {{ productName }} del paciente {{ patientName }} por medio de {{ paymentMethod }}. Favor verificar que se efectuó el pago de la cita.",
+        required_send_email: true,
+        text_from_email_message_json: true,
+        email_template: "appointmentStep7",
+        action_url: "https://vitalink.cr/medicos/citas",
+        action_text: "Mis Citas Vitalink",
+        language: "es",
+    },
+    {
+        code: "appointmentStep8",
+        type: "APPOINTMENT",
+        subject: "Procedimiento Médico Realizado",
+        message: "El médico/centro médico {{ supplierName }} ha confirmado la realización del procedimiento médico {{ procedureName }} / producto {{ productName }}.\n\nDetalle de pago:\n- Costo del procedimiento: {{ priceProcedure }}\n- Cubierto por crédito: {{ approvedAmountCredit }}\n- Descuento del procedimiento: {{ discountProcedure }}\n- Total del procedimiento: {{ totalProcedure }}",
+        another_message: "El médico/centro médico {{ supplierName }} ha confirmado la realización del procedimiento médico {{ procedureName }} / producto {{ productName }} del paciente {{ patientName }}.",
+        required_send_email: true,
+        text_from_email_message_json: true,
+        email_template: "appointmentStep8",
+        action_url: "https://vitalink.cr/pacientes/citas",
+        action_text: "Mis Citas Vitalink",
+        language: "es",
+    },
+    {
+        code: "appointmentCreditStep1",
+        type: "APPOINTMENT",
+        subject: "Solicitud de Crédito",
+        message: "El paciente {{ patientName }} ha solicitado un crédito de {{ requestAmount }} para el procedimiento {{ procedureName }} / producto {{ productName }} del médico/centro médico {{ supplierName }}.",
+        another_message: "El paciente {{ patientName }} ha solicitado un crédito de {{ requestAmount }} para el procedimiento {{ procedureName }} / producto {{ productName }} del médico/centro médico {{ supplierName }}.",
+        required_send_email: true,
+        text_from_email_message_json: true,
+        email_template: "appointmentCreditStep1",
+        action_url: "https://vitalink.cr",
+        action_text: "Mis Citas Vitalink",
+        language: "es",
+    },
+    {
+        code: "appointmentCreditStep2",
+        type: "APPOINTMENT",
+        subject: "Crédito Aprobado",
+        message: "La Asociación Solidarista {{ financeEntityName }} ha aprobado el crédito por un monto de {{ approvedAmountCredit }} para el procedimiento {{ procedureName }} / producto {{ productName }}. Por favor revisá el documento de pagaré.\n\nCódigo: {{ creditCode }}\n\nTotal a pagar restante: {{ totalProcedure }}",
+        another_message: "La Asociación Solidarista {{ financeEntityName }} ha aprobado el crédito por un monto de {{ approvedAmountCredit }} para el procedimiento {{ procedureName }} / producto {{ productName }}.",
+        required_send_email: true,
+        text_from_email_message_json: true,
+        email_template: "appointmentCreditStep2",
+        action_url: "https://vitalink.cr/pacientes/citas",
+        action_text: "Mis Citas Vitalink",
+        language: "es",
+    },
+    {
+        code: "appointmentCreditStep2No",
+        type: "APPOINTMENT",
+        subject: "Crédito Rechazado",
+        message: "La Asociación Solidarista {{ financeEntityName }} ha rechazado el crédito para el procedimiento {{ procedureName }} / producto {{ productName }}. Hacé clic en \"mis citas\" para continuar.",
+        another_message: "La Asociación Solidarista {{ financeEntityName }} ha rechazado el crédito para el procedimiento {{ procedureName }} / producto {{ productName }}.",
+        required_send_email: true,
+        text_from_email_message_json: true,
+        email_template: "appointmentCreditStep2No",
+        action_url: "https://vitalink.cr/pacientes/citas",
+        action_text: "Mis Citas Vitalink",
+        language: "es",
+    },
+    {
+        code: "appointmentCreditStep4",
+        type: "APPOINTMENT",
+        subject: "Crédito Utilizado",
+        message: "El médico/centro médico {{ supplierName }} ha marcado como utilizado el crédito del paciente {{ patientName }}.\n\nDetalle de pago:\n- Costo del procedimiento: {{ priceProcedure }}\n- Cubierto por crédito: {{ approvedAmountCredit }}\n- Descuento del procedimiento: {{ discountProcedure }}\n- Total a pagar: {{ totalProcedure }}",
+        another_message: "El médico/centro médico {{ supplierName }} ha marcado como utilizado el crédito del paciente {{ patientName }} para el procedimiento {{ procedureName }} / producto {{ productName }}.",
+        required_send_email: true,
+        text_from_email_message_json: true,
+        email_template: "appointmentCreditStep4",
+        action_url: "https://vitalink.cr",
+        action_text: "Mis Citas Vitalink",
+        language: "es",
+    }
+    ];
+
+    await notificationRepository.upsert(notifications, ["code"]);
+
+
     if (dataSource.isInitialized) {
             await dataSource.destroy();
     }

@@ -96,6 +96,7 @@ export class Database {
                         adminUser.user_name = config.SUPER_ADMIN.USERNAME;
                         adminUser.role_code = config.SUPER_ADMIN.ROLE_CODE; 
                         adminUser.is_active_from_email = true;
+                        adminUser.is_active_from_super_admin = true;
                         adminUser.account_status = "active";
 
                         await userRepository.save(adminUser);

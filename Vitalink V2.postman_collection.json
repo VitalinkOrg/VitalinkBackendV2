@@ -33,7 +33,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\r\n  \"email\": \"vitalinkcr2@gmail.com\",\r\n  \"user_name\": null,\r\n  \"password\": \"ZUup3r4dm1n!*\"\r\n}",
+                      "raw": "{\r\n  \"email\": \"vitalink.crc@gmail.com\",\r\n  \"user_name\": null,\r\n  \"password\": \"VitalinkCR2*\"\r\n}",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -71,7 +71,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\r\n  \"email\": \"vitalinkcr2+lfernandez@gmail.com\",\r\n  \"user_name\": null,\r\n  \"password\": \"Vitatest25*\"\r\n}\r\n\r\n",
+                      "raw": "{\r\n  \"email\": \"backupsvitalink+customer@gmail.com\",\r\n  \"user_name\": null,\r\n  \"password\": \"Vitatest25*\"\r\n}\r\n\r\n",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -137,7 +137,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\r\n  \"email\": \"vitalinkcr2+gulate@gmail.com\",\r\n  \"password\": \"Vitatest25*\"\r\n}\r\n\r\n",
+                      "raw": "{\r\n  \"email\": \"backupsvitalink+legalrep1@gmail.com\",\r\n  \"password\": \"Vitatest25*\"\r\n}\r\n\r\n",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -199,7 +199,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\r\n  \"card_id\": \"7777777\",\r\n  \"id_type\":\"PHYSICAL_DNI\", // PHYSICAL_DNI, JURIDICAL_DNI, DIMEX, PASSPORT\r\n  \"name\": \"Clinica Biblica\",\r\n  \"email\": \"fabian7593+test4@gmail.com\",\r\n  \"password\": \"Fabian7593+test4@gmail.com\",\r\n  \"gender\": \"O\", // \"M,\"F\",\"O\"\r\n  \"role_code\" : \"FINANCE_ENTITY\" // \"CUSTOMER\",\r\n  //\"finance_entity\": \"a232-b42c-sd2h-87ce\" \r\n  //\"user_name\": \"\" //CAN LOGIN WITH THIS\r\n  //\"phone_number\": \"\",\r\n  //\"birth_date\": \"\",\r\n  //\"country_iso_code\": \"\",\r\n  //\"province\": \"\",\r\n  //\"address\": \"\",\r\n  //\"city_name\": \"\",\r\n  //\"postal_code\": \"\",\r\n  //\"latitude\": \"10.12301023\",\r\n  //\"longitude\": \"-9.12341212\",\r\n  //\"profile_picture_url\": \"\",\r\n  \r\n}\r\n\r\n",
+                      "raw": "{\r\n  \"card_id\": \"7777777\",\r\n  \"id_type\":\"PHYSICAL_DNI\", // PHYSICAL_DNI, JURIDICAL_DNI, DIMEX, PASSPORT\r\n  \"name\": \"Entidad Financiera Vitalink\",\r\n  \"email\": \"backupsvitalink+financeentity@gmail.com\",\r\n  \"password\": \"Vitatest25*\",\r\n  \"gender\": \"O\", // \"M,\"F\",\"O\"\r\n  \"role_code\" : \"FINANCE_ENTITY\" // \"CUSTOMER\",\r\n  //\"finance_entity\": \"a232-b42c-sd2h-87ce\" \r\n  //\"user_name\": \"\" //CAN LOGIN WITH THIS\r\n  //\"phone_number\": \"\",\r\n  //\"birth_date\": \"\",\r\n  //\"country_iso_code\": \"\",\r\n  //\"province\": \"\",\r\n  //\"address\": \"\",\r\n  //\"city_name\": \"\",\r\n  //\"postal_code\": \"\",\r\n  //\"latitude\": \"10.12301023\",\r\n  //\"longitude\": \"-9.12341212\",\r\n  //\"profile_picture_url\": \"\",\r\n  \r\n}\r\n\r\n",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -232,7 +232,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\r\n  \"card_id\": \"117456623\",\r\n  \"id_type\":\"PHYSICAL_DNI\", // PHYSICAL_DNI, JURIDICAL_DNI, DIMEX, PASSPORT\r\n  \"name\": \"Emanuel Loaiza\",\r\n  \"email\": \"fabian7593+test5@gmail.com\",\r\n  \"password\": \"Fabian7593+test4@gmail.com\",\r\n  \"gender\": \"M\", // \"M,\"F\",\"O\"\r\n  \"role_code\" : \"LEGAL_REPRESENTATIVE\",\r\n  \"phone_number\": \"87273307\",\r\n  //\"birth_date\": \"\",\r\n  \"country_iso_code\": \"CRC\",\r\n  \"province\": \"San Jose\",\r\n  //\"address\": \"\",\r\n  //\"city_name\": \"\",\r\n  //\"postal_code\": \"\",\r\n  //\"latitude\": \"10.12301023\",\r\n  //\"longitude\": \"-9.12341212\",\r\n  \"profile_picture_url\": \"https://vitalink-v2-s3.s3.us-east-2.amazonaws.com/PublicFiles/TestLegalRepresentaive.png\",\r\n  \"code_contract\":\"PRIVATE_CONTRACT____6__DOC__452025224523\"\r\n  \r\n}\r\n\r\n",
+                      "raw": "{\r\n  \"card_id\": \"1174566233232\",\r\n  \"id_type\":\"PHYSICAL_DNI\", // PHYSICAL_DNI, JURIDICAL_DNI, DIMEX, PASSPORT\r\n  \"name\": \"Legal Rep Vitalink\",\r\n  \"email\": \"backupsvitalink+legalrep2@gmail.com\",\r\n  \"password\": \"Vitatest25*\",\r\n  \"gender\": \"M\", // \"M,\"F\",\"O\"\r\n  \"role_code\" : \"LEGAL_REPRESENTATIVE\",\r\n  \"phone_number\": \"87273307\",\r\n  //\"birth_date\": \"\",\r\n  \"country_iso_code\": \"CRC\",\r\n  \"province\": \"San Jose\",\r\n  //\"address\": \"\",\r\n  //\"city_name\": \"\",\r\n  //\"postal_code\": \"\",\r\n  //\"latitude\": \"10.12301023\",\r\n  //\"longitude\": \"-9.12341212\",\r\n  \"profile_picture_url\": \"https://vitalink-v2-s3.s3.us-east-2.amazonaws.com/PublicFiles/TestLegalRepresentaive.png\",\r\n  \"code_contract\":\"PRIVATE_CONTRACT____6__DOC__452025224523\"\r\n  \r\n}\r\n\r\n",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -265,7 +265,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\r\n  \"card_id\": \"1174566235\",\r\n  \"id_type\":\"PHYSICAL_DNI\", // PHYSICAL_DNI, JURIDICAL_DNI, DIMEX, PASSPORT\r\n  \"name\": \"Emanuel Loaiza\",\r\n  \"email\": \"fabian7593+test56@gmail.com\",\r\n  \"password\": \"Fabian7593+test56@gmail.com\",\r\n  \"finance_entity\" : \"7ce0ef43-3d86-417f-b7fe-298051689c78\",\r\n  \"gender\": \"M\", // \"M,\"F\",\"O\"\r\n  \"role_code\" : \"CUSTOMER\",\r\n  \"phone_number\": \"87273307\",\r\n  //\"birth_date\": \"\",\r\n  \"country_iso_code\": \"CRC\",\r\n  \"province\": \"San Jose\",\r\n  //\"address\": \"\",\r\n  //\"city_name\": \"\",\r\n  //\"postal_code\": \"\",\r\n  //\"latitude\": \"10.12301023\",\r\n  //\"longitude\": \"-9.12341212\",\r\n  \"profile_picture_url\": \"https://vitalink-v2-s3.s3.us-east-2.amazonaws.com/PublicFiles/TestLegalRepresentaive.png\",\r\n  \"code_contract\":\"PRIVATE_CONTRACT____6__DOC__452025224523\"\r\n  \r\n}\r\n\r\n",
+                      "raw": "{\r\n    \"card_id\": \"3212324433222\",\r\n    \"id_type\": \"PHYSICAL_DNI\", // PHYSICAL_DNI, JURIDICAL_DNI, DIMEX, PASSPORT\r\n    \"name\": \"Customer Vitalink\",\r\n    \"email\": \"backupsvitalink+customer2@gmail.com\",\r\n    \"password\": \"Vitatest25*\",\r\n    \"finance_entity\": \"8401b1be-7e1d-4357-a632-15172a647b8d\",\r\n    \"gender\": \"M\", // \"M,\"F\",\"O\"\r\n    \"role_code\": \"CUSTOMER\",\r\n    \"phone_number\": \"87273307\",\r\n    //\"birth_date\": \"\",\r\n    \"country_iso_code\": \"CRC\",\r\n    \"province\": \"San Jose\",\r\n    //\"address\": \"\",\r\n    //\"city_name\": \"\",\r\n    //\"postal_code\": \"\",\r\n    //\"latitude\": \"10.12301023\",\r\n    //\"longitude\": \"-9.12341212\",\r\n    \"profile_picture_url\": \"https://vitalink-v2-s3.s3.us-east-2.amazonaws.com/PublicFiles/TestLegalRepresentaive.png\",\r\n    \"code_contract\": \"PRIVATE_CONTRACT____6__DOC__452025224523\"\r\n}",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -335,6 +335,24 @@
                     }
                   },
                   "response": []
+                },
+                {
+                  "name": "Confirmation Register By User Admin",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{host}}/confirmation_register_by_super_admin/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwiZW1haWwiOiJiYWNrdXBzdml0YWxpbmsrbGVnYWxyZXAxQGdtYWlsLmNvbSIsInJvbGUiOiJMRUdBTF9SRVBSRVNFTlRBVElWRSIsImlhdCI6MTc3NzY2MTI4N30.4uiUD2RWob859qLk6OskuvmsA_Zny8gmFt_NhRpjLvc",
+                      "host": [
+                        "{{host}}"
+                      ],
+                      "path": [
+                        "confirmation_register_by_super_admin",
+                        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwiZW1haWwiOiJiYWNrdXBzdml0YWxpbmsrbGVnYWxyZXAxQGdtYWlsLmNvbSIsInJvbGUiOiJMRUdBTF9SRVBSRVNFTlRBVElWRSIsImlhdCI6MTc3NzY2MTI4N30.4uiUD2RWob859qLk6OskuvmsA_Zny8gmFt_NhRpjLvc"
+                      ]
+                    }
+                  },
+                  "response": []
                 }
               ]
             },
@@ -395,7 +413,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\r\n  \"email\": \"fabian7593@gmail.com\"\r\n}\r\n\r\n",
+                      "raw": "{\r\n  \"email\": \"backupsvitalink+customer2@gmail.com\"\r\n}\r\n\r\n",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -2413,7 +2431,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"supplier_id\": 7,\n  \"medical_specialty_code\": \"CARDIOLOGY\"\n}",
+                  "raw": "{\n  \"supplier_id\": 2,\n  \"medical_specialty_code\": \"CARDIOLOGY\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4116,7 +4134,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\n  \"customer_id\": \"\",\n  \"appointment_date\": null,\n  \"appointment_hour\": null,\n  \"supplier_id\": 1,\n  \"package_id\": 5\n}\n\n\n",
+                      "raw": "{\n  \"customer_id\": \"f1635823-7d9a-4df9-bd1e-ad8bd985de0b\",\n  \"appointment_date\": null,\n  \"appointment_hour\": null,\n  \"supplier_id\": 1,\n  \"package_id\": 5\n}\n\n\n",
                       "options": {
                         "raw": {
                           "language": "json"

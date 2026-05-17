@@ -53,6 +53,7 @@ interface JwtConfig {
     REFRESH_TOKEN: JwtTokenConfig;
     FORGOT_PASS_TOKEN: JwtTokenConfig;
     REGISTER_TOKEN: JwtTokenConfig;
+    SUPER_ADMIN_TOKEN: JwtTokenConfig;
 }
 
 interface GeneralFileConfig {

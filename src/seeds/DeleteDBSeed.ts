@@ -24,7 +24,7 @@ async function deleteDB() {
   await tempDataSource.initialize();
 
   // Step 2: Create the database if it does not exist
-  await tempDataSource.query(`DROP DATABASE \`${config.DB.NAME}\``);
+  await tempDataSource.query(`DROP DATABASE IF EXISTS \`${config.DB.NAME}\``);
   await tempDataSource.destroy(); 
 }
 

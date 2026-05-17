@@ -14,7 +14,9 @@ export class ConstUrls{
 }
 
 export class ConstTemplate{
+    public static readonly SUPERADMIN_VALIDATION: string = "superadminValidation";
     public static readonly REGISTER_EMAIL: string = "registerEmail";
+    public static readonly SUPER_ADMIN_REVIEW_USER: string = "superAdminReviewUser";
     public static readonly RECOVER_USER_EMAIL: string = "recoverUserByEmail";
     public static readonly FORGOT_PASSWORD_EMAIL: string = "forgotPasswordEmail";
     public static readonly GENERIC_TEMPLATE_EMAIL: string = "genericTemplateEmail";
