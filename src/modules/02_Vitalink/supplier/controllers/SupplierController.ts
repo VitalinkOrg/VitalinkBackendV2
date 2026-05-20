@@ -192,7 +192,8 @@ export default class SupplierController extends GenericController {
       supplier.date_availability = next?.date_availability || null;
       supplier.hour_availability = next?.hour_availability || null;
       supplier.location_number = locations.length;
-    
+      supplier.locations = locations;
+
       supplier.services_names = services.map(s => s.medical_specialty.name);
       supplier.procedures     = services;
     
