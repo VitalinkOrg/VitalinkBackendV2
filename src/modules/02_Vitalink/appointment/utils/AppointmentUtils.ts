@@ -10,6 +10,7 @@ import GenericRepository from "@TenshiJS/generics/Repository/GenericRepository";
 import EmailService from "@TenshiJS/services/EmailServices/EmailService";
 import { format12Hour, formatNormalDate } from "@TenshiJS/utils/formatDateUtils";
 import { getMessageEmail, replaceVariables } from "@TenshiJS/utils/htmlTemplateUtils";
+import { formatCurrency } from "@index/utils/GeneralUtils";
 
 /**
          * Handles sending a notification email and saving an appointment flow log.
@@ -91,48 +92,48 @@ import { getMessageEmail, replaceVariables } from "@TenshiJS/utils/htmlTemplateU
 
             // Only access credit-specific fields if a credit entity was provided
             if (appointmentCredit !== null) {
-              
+
                 if (variable === "requestAmount") {
-                    jsonData[variable] = appointmentCredit.requested_amount;
+                    jsonData[variable] = formatCurrency(appointmentCredit.requested_amount ?? 0);
                 }
 
 
                 if (variable === "approvedAmountCredit") {
-                    jsonData[variable] = appointmentCredit.approved_amount;
+                    jsonData[variable] = formatCurrency(appointmentCredit.approved_amount ?? 0);
                 }
             }else{
                 if (variable === "requestAmount") {
-                    jsonData[variable] = 0;
+                    jsonData[variable] = formatCurrency(0);
                 }
 
                 if (variable === "approvedAmountCredit") {
-                    jsonData[variable] = 0;
+                    jsonData[variable] = formatCurrency(0);
                 }
             }
 
             if (variable === "priceValorationAppointment") {
-                jsonData[variable] = appointment.price_valoration_appointment;
+                jsonData[variable] = formatCurrency(appointment.price_valoration_appointment);
             }
 
             if (variable === "priceProcedure") {
-                jsonData[variable] = appointment.price_procedure;
+                jsonData[variable] = formatCurrency(appointment.price_procedure);
             }
 
             //Actualmente el discount es unicamente para procedimiento no para el precio de valoracion
             if (variable === "discountProcedure") {
-                jsonData[variable] = appointment.package?.discount ? appointment.package.discount : 0;
+                jsonData[variable] = formatCurrency(appointment.package?.discount ? appointment.package.discount : 0);
             }
 
             if (variable === "totalProcedure") {
                 const price = appointment.price_procedure || 0;
                 const discount = appointment.package?.discount || 0;
                 let creditDiscount = 0;
-                
+
                 if (appointmentCredit !== null) {
                     creditDiscount = appointmentCredit.approved_amount || 0;
                 }
 
-                jsonData[variable] = price - creditDiscount;
+                jsonData[variable] = formatCurrency(price - creditDiscount);
             }
 
 
