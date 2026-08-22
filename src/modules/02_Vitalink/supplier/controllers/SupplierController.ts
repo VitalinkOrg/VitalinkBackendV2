@@ -13,6 +13,11 @@ import { Package } from "@index/entity/Package";
 import { ReviewDetail } from "@index/entity/ReviewDetail";
 import { UnitDynamicCentral } from "@TenshiJS/entity/UnitDynamicCentral";
 import { General } from "@index/consts/Const";
+import { FindManyOptions } from "typeorm";
+import { Like } from "typeorm";
+import ConfigManager from "@TenshiJS/config/ConfigManager";
+import HttpAction from "@TenshiJS/helpers/HttpAction";
+import JWTObject from "@TenshiJS/objects/JWTObject";
 
 
 export default class SupplierController extends GenericController {
@@ -512,6 +517,121 @@ export default class SupplierController extends GenericController {
         }
       });
     }
-    
+
+    /**
+     * Admin panel: lists ALL suppliers (active and inactive), with search and pagination.
+     * Only SUPER_ADMIN is allowed to call this.
+     */
+    async getSuppliersAdmin(reqHandler: RequestHandler): Promise<any> {
+      return this.getService().getAllService(reqHandler, async (jwtData, httpExec, page: number, size: number) => {
+        try {
+          const config = ConfigManager.getInstance().getConfig();
+          if (!jwtData || jwtData.role !== config.SUPER_ADMIN.ROLE_CODE) {
+            return httpExec.unauthorizedError(ConstMessagesJson.ROLE_AUTH_ERROR);
+          }
+
+          const search = getUrlParam("search", reqHandler.getRequest()) || null;
+          const isDeletedParam = getUrlParam("isDeleted", reqHandler.getRequest());
+          const limitParam = getUrlParam("limit", reqHandler.getRequest());
+
+          const where: any = {};
+          if (isDeletedParam === "0" || isDeletedParam === "1") {
+            where.is_deleted = parseInt(isDeletedParam, 10);
+          }
+          if (search) {
+            where.name = Like(`%${search}%`);
+          }
+
+          // "limit" is the name requested for the admin panel; keep "size" (page query param
+          // used by the rest of the API) working too by falling back to it.
+          const effectiveSize = limitParam && !isNaN(Number(limitParam)) ? parseInt(limitParam, 10) : size;
+
+          const filters: FindManyOptions = {
+            relations: ["id_type", "medical_type", "legal_representative"],
+            where
+          };
+
+          const [suppliers, pagination, allSpecialties] = await Promise.all([
+            this.getRepository().findAll(false, filters, page, effectiveSize),
+            this.getRepository().count(false, filters, page, effectiveSize),
+            this.specialtyBySupplierRepository.findByOptions(false, true, { relations: ["supplier", "medical_specialty"] })
+          ]);
+
+          if (!suppliers) {
+            return httpExec.dynamicError(ConstStatusJson.NOT_FOUND, ConstMessagesJson.DONT_EXISTS);
+          }
+
+          // Group specialties by supplier so they can be attached without an extra query per row
+          const specialtiesBySupplier = new Map<number, UnitDynamicCentral[]>();
+          allSpecialties.forEach((s: SpecialtyBySupplier) => {
+            const supId = s.supplier?.id;
+            if (!supId) return;
+            if (!specialtiesBySupplier.has(supId)) specialtiesBySupplier.set(supId, []);
+            specialtiesBySupplier.get(supId)!.push(s.medical_specialty);
+          });
+
+          suppliers.forEach((supplier: any) => {
+            supplier.specialties = specialtiesBySupplier.get(supplier.id) || [];
+          });
+
+          return httpExec.successAction(
+            (reqHandler.getAdapter() as SupplierDTO).entitiesToResponseAdmin(suppliers),
+            ConstHTTPRequest.GET_ALL_SUCCESS,
+            pagination
+          );
+        } catch (error: any) {
+          return await httpExec.databaseError(error, jwtData?.id?.toString(), reqHandler.getMethod(), this.getControllerName());
+        }
+      });
+    }
+
+    /**
+     * Admin panel: enables/disables a supplier's visibility on the platform by
+     * toggling suppliers.is_deleted. Only SUPER_ADMIN is allowed to call this.
+     */
+    async toggleActive(reqHandler: RequestHandler): Promise<any> {
+      const httpExec: HttpAction = reqHandler.getResponse().locals.httpExec;
+      const jwtData: JWTObject = reqHandler.getResponse().locals.jwtData;
+
+      try {
+        const config = ConfigManager.getInstance().getConfig();
+        if (!jwtData || jwtData.role !== config.SUPER_ADMIN.ROLE_CODE) {
+          return httpExec.unauthorizedError(ConstMessagesJson.ROLE_AUTH_ERROR);
+        }
+
+        const { supplierId, isDeleted } = reqHandler.getRequest().body;
+
+        if (supplierId == null || isNaN(Number(supplierId))) {
+          return httpExec.paramsError();
+        }
+        if (isDeleted !== 0 && isDeleted !== 1) {
+          return httpExec.validationError(ConstMessagesJson.INVALID_BODY_REQUEST);
+        }
+
+        const existing = await this.getRepository().findById(supplierId, false, {});
+        if (!existing) {
+          return httpExec.dynamicError(ConstStatusJson.NOT_FOUND, ConstMessagesJson.DONT_EXISTS);
+        }
+
+        // Pass hasLogicalDeleted = false so the row can still be found right after
+        // being disabled (the generic update() re-fetches with is_deleted = 0 otherwise).
+        const updated: any = await this.getRepository().update(supplierId, { is_deleted: isDeleted }, false);
+
+        const specialties = await this.specialtyBySupplierRepository.findByOptions(
+          false,
+          true,
+          { where: { supplier: { id: supplierId } }, relations: ["medical_specialty"] }
+        );
+        updated.specialties = specialties.map((s: SpecialtyBySupplier) => s.medical_specialty);
+
+        return httpExec.successAction(
+          (reqHandler.getAdapter() as SupplierDTO).entityToResponseAdmin(updated),
+          ConstHTTPRequest.UPDATE_SUCCESS
+        );
+      } catch (error: any) {
+        return await httpExec.databaseError(error, jwtData?.id?.toString(), reqHandler.getMethod(), this.getControllerName());
+      }
+    }
+
 }
   

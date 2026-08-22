@@ -191,4 +191,31 @@ export default class SupplierDTO implements IAdapterFromBody {
         return response;
     }
 
+    // GET (admin panel) / PATCH toggle-active response
+    entityToResponseAdmin(entity: any): any {
+        return {
+            id: entity.id,
+            name: entity.name,
+            email: entity.email,
+            phone_number: entity.phone_number,
+            is_hospital: entity.is_hospital,
+            is_deleted: entity.is_deleted,
+            profile_picture_url: entity.profile_picture_url,
+            legal_representative: entity.legal_representative,
+            specialties: entity.specialties,
+            created_date: entity.created_date,
+            updated_date: entity.updated_date,
+        };
+    }
+
+    entitiesToResponseAdmin(entities: any[] | null): any {
+        const response: any[] = [];
+        if (entities != null) {
+            for (const entity of entities) {
+                response.push(this.entityToResponseAdmin(entity));
+            }
+        }
+        return response;
+    }
+
 }
