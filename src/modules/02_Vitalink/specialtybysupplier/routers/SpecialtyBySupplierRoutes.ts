@@ -1,10 +1,12 @@
-import { Request, Response, 
-         RequestHandler, RequestHandlerBuilder, 
+import { Request, Response,
+         RequestHandler, RequestHandlerBuilder,
          GenericController, GenericRoutes,
          FindManyOptions,
          getUrlParam} from "@modules/index";
 import { SpecialtyBySupplier } from "@index/entity/SpecialtyBySupplier";
 import SpecialtyBySupplierDTO from "@modules/02_Vitalink/specialtybysupplier/dtos/SpecialtyBySupplierDTO";
+import { Package } from "@index/entity/Package";
+import { Database } from "tenshi/persistance/TypeORMConnection";
 
 class SpecialtyBySupplierRoutes extends GenericRoutes {
     
@@ -96,11 +98,13 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
         });
         
         this.router.put(`${this.getRouterName()}/edit`, async (req: Request, res: Response) => {
-            const requestHandler: RequestHandler = 
+            const filters = this.buildBaseFilters();
+            const requestHandler: RequestHandler =
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new SpecialtyBySupplierDTO(req))
                                     .setMethod("updateSpecialtyBySupplier")
                                     .isValidateRole("SPECIALTY_BY_SUPPLIER")
+                                    .setFilters(filters)
                                     .setDynamicRoleValidationByEntityField([
                                         ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
                                       ])
@@ -110,16 +114,27 @@ class SpecialtyBySupplierRoutes extends GenericRoutes {
         });
         
         this.router.delete(`${this.getRouterName()}/delete`, async (req: Request, res: Response) => {
-            const requestHandler: RequestHandler = 
+            const filters = this.buildBaseFilters();
+            const requestHandler: RequestHandler =
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new SpecialtyBySupplierDTO(req))
                                     .setMethod("deleteSpecialtyBySupplier")
                                     .isValidateRole("SPECIALTY_BY_SUPPLIER")
+                                    .setFilters(filters)
                                     .setDynamicRoleValidationByEntityField([
                                         ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
                                       ])
                                     .build();
-        
+
+            const specialtyId = req.query.id;
+            if (specialtyId) {
+                const dataSource = await Database.getInstance();
+                await dataSource.getRepository(Package).delete({
+                    specialty: { id: Number(specialtyId) },
+                    is_deleted: true
+                });
+            }
+
             this.getController().delete(requestHandler);
         });
     }

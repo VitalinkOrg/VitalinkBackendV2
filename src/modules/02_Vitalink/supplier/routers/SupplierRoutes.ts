@@ -70,6 +70,32 @@ class SupplierRoutes extends GenericRoutes {
             (this.getController() as SupplierController).getSuppliersMainDashboard(requestHandler);
         });
         
+        // Admin panel: list ALL suppliers (active and inactive), with search/pagination.
+        // Only SUPER_ADMIN can access this — enforced inside SupplierController.getSuppliersAdmin.
+        this.router.get(`${this.getRouterName()}/admin/get_all`, async (req: Request, res: Response) => {
+
+            const requestHandler: RequestHandler =
+                                    new RequestHandlerBuilder(res, req)
+                                    .setAdapter(new SupplierDTO(req))
+                                    .setMethod("getSuppliersAdmin")
+                                    .build();
+
+            (this.getController() as SupplierController).getSuppliersAdmin(requestHandler);
+        });
+
+        // Admin panel: enable/disable a supplier's visibility (toggles suppliers.is_deleted).
+        // Only SUPER_ADMIN can access this — enforced inside SupplierController.toggleActive.
+        this.router.patch(`${this.getRouterName()}/toggle-active`, async (req: Request, res: Response) => {
+
+            const requestHandler: RequestHandler =
+                                    new RequestHandlerBuilder(res, req)
+                                    .setAdapter(new SupplierDTO(req))
+                                    .setMethod("toggleActive")
+                                    .build();
+
+            (this.getController() as SupplierController).toggleActive(requestHandler);
+        });
+
         this.router.post(`${this.getRouterName()}/add`, async (req: Request, res: Response) => {
 
             const requiredBodyList: Array<string> = [

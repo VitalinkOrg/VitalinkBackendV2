@@ -82,11 +82,13 @@ class AvailabilityRoutes extends GenericRoutes {
         });
         
         this.router.put(`${this.getRouterName()}/edit`, async (req: Request, res: Response) => {
-            const requestHandler: RequestHandler = 
+            const filters = this.buildBaseFilters();
+            const requestHandler: RequestHandler =
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new AvailabilityDTO(req))
                                     .setMethod("updateAvailability")
                                     .isValidateRole("AVAILABILITY")
+                                    .setFilters(filters)
                                     .setDynamicRoleValidationByEntityField([
                                         ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
                                       ])
@@ -96,11 +98,13 @@ class AvailabilityRoutes extends GenericRoutes {
         });
         
         this.router.delete(`${this.getRouterName()}/delete`, async (req: Request, res: Response) => {
-            const requestHandler: RequestHandler = 
+            const filters = this.buildBaseFilters();
+            const requestHandler: RequestHandler =
                                     new RequestHandlerBuilder(res, req)
                                     .setAdapter(new AvailabilityDTO(req))
                                     .setMethod("deleteAvailability")
                                     .isValidateRole("AVAILABILITY")
+                                    .setFilters(filters)
                                     .setDynamicRoleValidationByEntityField([
                                         ["LEGAL_REPRESENTATIVE", "supplier.legal_representative.id"]
                                       ])

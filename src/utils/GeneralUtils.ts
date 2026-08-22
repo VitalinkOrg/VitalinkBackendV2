@@ -1,5 +1,24 @@
 import crypto from "node:crypto";
 
+export function formatCurrency(
+  amount: number | string,
+  options?: {
+    currency?: string;
+    locale?: string;
+    decimalPlaces?: number;
+  },
+): string {
+  const { currency = "₡", locale = "es-CR", decimalPlaces = 2 } = options || {};
+  const numericAmount = Number(amount) || 0;
+  return (
+    currency +
+    numericAmount.toLocaleString(locale, {
+      minimumFractionDigits: decimalPlaces,
+      maximumFractionDigits: decimalPlaces,
+    })
+  );
+}
+
 type SplitResult = { firstName: string; lastName: string };
 export function splitName(name: string): SplitResult {
   const parts = (name ?? "").trim().split(/\s+/).filter(Boolean);
