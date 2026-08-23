@@ -9,7 +9,7 @@ unbreakable.config.json
 unbreakable.local.json
 unbreakable.empty.json
 logs/
-0dev.tenshi-config.json
+tenshi-config.dev.json
 0stg.tenshi-config.json
 tenshi-config.localhost.reallocal.json
 tenshi-config.localhost.2.json
